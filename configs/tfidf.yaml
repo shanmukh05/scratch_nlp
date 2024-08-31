@@ -1,0 +1,14 @@
+paths:
+  input_folder: D:\Learning\NLP\Projects\scratch_nlp\data\imdb_reviews\train
+  output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\tfidf
+dataset:
+  num_samples: 60
+  explore_folder: True
+model:
+  tf_mode: frequency
+  idf_mode: log_scaled
+  output_label: True
+preprocess:
+  operations: [lcase, remalpha, stopwords, stemming]
+  randomize: True
+visualize: True
