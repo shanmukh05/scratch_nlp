@@ -4,9 +4,9 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from torch.utils.data import TensorDataset, DataLoader
 
-from core.word2vec.dataset import CBOWDataset
+from core.word2vec.dataset import Word2VecDataset
 
-class GloVeDataset(CBOWDataset):
+class GloVeDataset(Word2VecDataset):
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict

@@ -1,13 +1,15 @@
 paths:
   input_folder: D:\Learning\NLP\Projects\scratch_nlp\data\imdb_reviews\train
+  test_folder: D:\Learning\NLP\Projects\scratch_nlp\data\imdb_reviews\test
   output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\rnn
 dataset:
-  num_samples: 10
+  num_samples: 64
+  test_samples: 20
   explore_folder: True
   num_vocab: 100
   seed: 2023
   val_split: 0.2
-  batch_size: 8
+  batch_size: 16
   seq_len: 100
   num_classes: 2
 preprocess:
@@ -21,6 +23,6 @@ model:
   clf_dim: [32, 16, 8]
   device: cpu
 train:
-  epochs: 1
+  epochs: 3
   lr: 0.05
 visualize: True

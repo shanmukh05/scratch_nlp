@@ -4,9 +4,8 @@ import torch
 import logging
 
 from preprocess.utils import preprocess_text
-from .train import fit_model
-from .model import CBOW
-from .dataset import create_dataloader, CBOWDataset
+from .model import Word2VecModel, Word2VecTrainer
+from .dataset import create_dataloader, Word2VecDataset
 from .utils import plot_embed
 
 class Word2Vec():
@@ -15,7 +14,7 @@ class Word2Vec():
         self.config_dict = config_dict
 
     def run(self):
-        self.cbow_ds = CBOWDataset(self.config_dict)
+        self.cbow_ds = Word2VecDataset(self.config_dict)
         l_cxt, r_cxt, l_lbl, r_lbl = self.cbow_ds.make_pairs()
 
         val_split = self.config_dict["dataset"]["val_split"]
@@ -25,9 +24,10 @@ class Word2Vec():
         train_loader = (train_left_loader, train_right_loader)
         val_loader = (val_left_loader, val_right_loader)
         
-        self.model = CBOW(self.config_dict)
+        self.model = Word2VecModel(self.config_dict)
         optim = torch.optim.Adam(self.model.parameters(), lr=self.config_dict["train"]["lr"])
-        self.history = fit_model(self.model, optim, train_loader, val_loader, self.config_dict)
+        self.trainer = Word2VecTrainer(self.model, optim, self.config_dict)
+        self.history = self.trainer.fit(train_loader, val_loader)
         self.save_output()
 
     def get_embeddings(self, sentence):

@@ -50,7 +50,9 @@ class GloVe():
         with open(os.path.join(output_folder, "training_history.json"), 'w') as fp:
             json.dump(self.history, fp)
         self.model.load_state_dict(torch.load(os.path.join(output_folder, "best_model.pt"), weights_only=True))
+        
         embeds = self.model.ctr_embedding.weight.detach().numpy()
         vocab = list(self.glove_ds.vocab_freq.keys())
         plot_embed(embeds, vocab, output_folder)
+        
         plot_topk_cooccur_matrix(self.glove_ds.cooccur_mat, vocab, output_folder)

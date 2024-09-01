@@ -10,6 +10,7 @@ from core.tfidf import tfidf
 from core.hmm import hmm
 from core.word2vec import word2vec
 from core.glove import glove
+from core.rnn import rnn
 
 os.environ["LOKY_MAX_CPU_COUNT"] = "4"
 
@@ -81,6 +82,10 @@ def main():
         algo = glove.GloVe(config_dict)
         algo.run()
         # python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\glove.yaml" --algo "GLOVE" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\glove"
+    elif algo == "RNN":
+        algo = rnn.RNN(config_dict)
+        algo.run()
+        # python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\rnn.yaml" --algo "RNN" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\rnn"
 
 if __name__ == "__main__":
     main()

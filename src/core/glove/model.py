@@ -7,7 +7,6 @@ from collections import defaultdict
 
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 
 class GloVeModel(nn.Module):

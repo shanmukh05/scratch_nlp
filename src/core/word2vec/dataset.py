@@ -11,7 +11,7 @@ from preprocess.imdb_reviews import PreprocessIMDB
 from .huffman import HuffmanBTree
 
 
-class CBOWDataset():
+class Word2VecDataset():
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
