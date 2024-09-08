@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 
 def plot_history(history, output_folder):
     num_plots = len(history)//2
-    num_x, num_y = 3, int(np.ceil(num_plots/3))
+    num_y, num_x = 3, int(np.ceil(num_plots/3))
 
-    fig, ax = plt.subplots(num_x, num_y, figsize=(15, 5*num_y))
+    fig, ax = plt.subplots(num_x, num_y, figsize=(18, 8*num_y))
     keys = list(set([i.split("_")[1] for i in history.keys()]))
 
     for i, key in enumerate(keys):

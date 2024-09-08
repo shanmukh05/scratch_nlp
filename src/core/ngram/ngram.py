@@ -27,7 +27,7 @@ class NGRAM(BOW):
         self.vocab = []
         for text in text_ls:
             tokens = text.split()
-            uniq_words = [" ".join([tokens[j+k] for k in range(self.n)]) for j in range(len(tokens)-self.n)]
+            uniq_words = [" ".join([tokens[j+k] for k in range(self.n)]) for j in range(len(tokens)-self.n+1)]
             self.vocab.extend(uniq_words)
             self.vocab = list(set(self.vocab))
     
