@@ -3,12 +3,12 @@ import numpy as np
 import pandas as pd
 import logging
 
-from core.bow.bow import BOWModel
+from core.bow.bow import BOW
 from core.bow.utils import plot_topk_freq, plot_wordcloud
 from .utils import plot_pie_chart
 
 
-class NGRAMModel(BOWModel):
+class NGRAM(BOW):
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict

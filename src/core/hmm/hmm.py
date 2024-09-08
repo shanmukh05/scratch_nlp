@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 
 from .utils import viz_metrics, plot_hist_dataset, plot_transition_matrix, pca_emission_matrix
 
-class HMMModel():
+class HMM():
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict

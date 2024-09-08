@@ -101,7 +101,7 @@ class RNNTrainer(nn.Module):
         for batch_id, (X, y) in pbar:
             y_hat = self.model(X)
 
-            loss = self.loss_fn(y, y_hat)
+            loss = self.loss_fn(y_hat, y)
             loss.backward()
             self.optim.step()
             self.optim.zero_grad()

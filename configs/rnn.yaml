@@ -18,7 +18,7 @@ preprocess:
 model:
   embed_dim: 128
   num_layers: 2
-  h_dim: [64, 32, 16]
+  h_dim: [64, 32]
   x_dim: [128, 64, 32]
   clf_dim: [32, 16, 8]
   device: cpu

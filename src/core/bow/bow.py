@@ -6,7 +6,7 @@ from preprocess.imdb_reviews import PreprocessIMDB
 from .utils import plot_topk_freq, plot_wordcloud
 
 
-class BOWModel:
+class BOW:
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict

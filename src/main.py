@@ -11,6 +11,7 @@ from core.hmm import hmm
 from core.word2vec import word2vec
 from core.glove import glove
 from core.rnn import rnn
+from core.lstm import lstm
 
 os.environ["LOKY_MAX_CPU_COUNT"] = "4"
 
@@ -59,19 +60,19 @@ def main():
     config_dict = load_config(config_path)
 
     if algo == "BOW":
-        algo = bow.BOWModel(config_dict)
+        algo = bow.BOW(config_dict)
         algo.run()
         # python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\bow.yaml" --algo "BOW" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\bow"
     elif algo == "NGRAM":
-        algo = ngram.NGRAMModel(config_dict)
+        algo = ngram.NGRAM(config_dict)
         algo.run()
         # python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\ngram.yaml" --algo "NGRAM" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\ngram"
     elif algo == "TFIDF":
-        algo = tfidf.TFIDFModel(config_dict)
+        algo = tfidf.TFIDF(config_dict)
         algo.run()
         # python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\tfidf.yaml" --algo "TFIDF" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\tfidf"
     elif algo == "HMM":
-        algo = hmm.HMMModel(config_dict)
+        algo = hmm.HMM(config_dict)
         algo.run()
         # python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\hmm.yaml" --algo "HMM" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\hmm"
     elif algo == "WORD2VEC":
@@ -86,6 +87,10 @@ def main():
         algo = rnn.RNN(config_dict)
         algo.run()
         # python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\rnn.yaml" --algo "RNN" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\rnn"
+    elif algo == "LSTM":
+        algo = lstm.LSTM(config_dict)
+        algo.run()
+        # python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\lstm.yaml" --algo "LSTM" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\lstm"
 
 if __name__ == "__main__":
     main()

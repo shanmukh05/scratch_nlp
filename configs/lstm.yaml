@@ -1,0 +1,28 @@
+paths:
+  image_folder: D:\Learning\NLP\Projects\scratch_nlp\data\flickr_8k\Images
+  captions_file: D:\Learning\NLP\Projects\scratch_nlp\data\flickr_8k\captions.txt
+  output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\lstm
+dataset: 
+  train_samples: 32
+  test_samples: 8
+  val_split: 0.2
+  num_vocab: 100
+  seq_len: 16
+  seed: 2023
+  batch_size: 4
+preprocess:
+  operations: [lcase, remalpha, stopwords]
+  randomize: False
+  image_dim: [3, 64, 64]
+model:
+  embed_dim: 128
+  num_layers: 2
+  h_dim: [64, 32]
+  x_dim: [128, 64, 32]
+  device: cpu
+  image_backbone: "mobilenetv3_small_050"
+train:
+  epochs: 3
+  lr: 0.05
+  eval_metric: "Perplexity"
+visualize: True

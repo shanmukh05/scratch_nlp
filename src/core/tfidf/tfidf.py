@@ -3,11 +3,11 @@ import numpy as np
 import pandas as pd
 import logging
 
-from core.bow.bow import BOWModel
+from core.bow.bow import BOW
 from .utils import plot_pca_pairplot
 
 
-class TFIDFModel(BOWModel):
+class TFIDF(BOW):
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
