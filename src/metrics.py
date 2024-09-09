@@ -1,6 +1,6 @@
-import torch
 import itertools
 import numpy as np
+from collections import Counter
 
 class TextGenerationMetrics():
     def __init__(self, config_dict):
@@ -31,8 +31,24 @@ class TextGenerationMetrics():
             "CIDER": self.cider_score(references, predictions)
         }
 
-    def bleu_score(self, references, candidates, n=4):
-        return 0.5
+    def bleu_score(self, references, predictions, n=4):
+        predictions = np.max(predictions, axis=-1)
+        num_instances = references.shape[0]
+        log_score_corpus = 0
+        w = 1/n
+
+        for ref, pred in zip(references, predictions):
+            ref_len, pred_len = len(ref), len(pred)
+            bp = min(0, 1-ref_len/pred_len)
+            log_score = bp
+
+            for i in range(1, n+1):
+                p, _, _ = self._get_metrics_ngram(ref, pred, i, True)
+                log_score += w*np.log(1 + p)
+
+            log_score_corpus += log_score/num_instances
+                
+        return log_score_corpus
 
     def perplexity_score(self, predictions):
         predictions = np.max(predictions, axis=-1)
@@ -52,14 +68,10 @@ class TextGenerationMetrics():
         precision, recall, f1score = 0, 0, 0
 
         for ref, pred in zip(references, predictions):
-            ref_n = [" ".join([str(ref[j+k]) for k in range(n)]) for j in range(len(ref)-n+1)]
-            pred_n = [" ".join([str(pred[j+k]) for k in range(n)]) for j in range(len(pred)-n+1)]
-
-            n_unq_ngrams = len(set(ref_n) & set(pred_n))
-            p, r = n_unq_ngrams/len(pred_n), n_unq_ngrams/len(ref_n)
+            p, r, f = self._get_metrics_ngram(ref, pred, n)
             precision += p
             recall += r
-            f1score += 2*p*r/(p + r + 1e-8)
+            f1score += f
 
         return precision/num_instances, recall/num_instances, f1score/num_instances
 
@@ -98,7 +110,27 @@ class TextGenerationMetrics():
         return precision/num_instances, recall/num_instances, f1score/num_instances
 
     def cider_score(self, references, predictions):
+        predictions = np.argmax(predictions, axis=-1)
         return 0.5
+
+    def _get_metrics_ngram(self, ref, pred, n, clip=False):
+        ref_n = [" ".join([str(ref[j+k]) for k in range(n)]) for j in range(len(ref)-n+1)]
+        pred_n = [" ".join([str(pred[j+k]) for k in range(n)]) for j in range(len(pred)-n+1)]
+        
+        if clip:
+            n_common_ngrams = 0
+            ref_cnt_dict = Counter(ref)
+            pred_cnt_dict = Counter(pred)
+            for k in pred_cnt_dict.keys():
+                cnt_k = min(pred_cnt_dict[k], ref_cnt_dict.get(k, 0))
+                n_common_ngrams += cnt_k
+        else:
+            n_common_ngrams = len(set(ref_n) & set(pred_n))
+        p, r = n_common_ngrams/len(pred_n), n_common_ngrams/len(ref_n)
+        f = 2*p*r/(p + r + 1e-8)
+
+        return p, r, f
+
     
     def _lcs(self, arr1, arr2):
         m = len(arr1)
