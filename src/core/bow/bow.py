@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import logging
 from preprocess.imdb_reviews import PreprocessIMDB
-from .utils import plot_topk_freq, plot_wordcloud
+from plot_utils import plot_topk_freq, plot_wordcloud
 
 
 class BOW:

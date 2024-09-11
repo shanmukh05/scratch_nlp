@@ -6,7 +6,7 @@ import logging
 from preprocess.utils import preprocess_text
 from .model import Word2VecModel, Word2VecTrainer
 from .dataset import create_dataloader, Word2VecDataset
-from .utils import plot_embed
+from plot_utils import plot_embed
 
 class Word2Vec():
     def __init__(self, config_dict):

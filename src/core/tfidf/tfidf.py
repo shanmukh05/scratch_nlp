@@ -4,7 +4,7 @@ import pandas as pd
 import logging
 
 from core.bow.bow import BOW
-from .utils import plot_pca_pairplot
+from plot_utils import plot_pca_pairplot
 
 
 class TFIDF(BOW):

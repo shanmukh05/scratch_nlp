@@ -6,7 +6,7 @@ import logging
 from preprocess.utils import preprocess_text
 from .model import GloVeTrainer, GloVeModel
 from .dataset import create_dataloader, GloVeDataset
-from core.word2vec.utils import plot_embed
+from plot_utils import plot_embed
 from .utils import plot_topk_cooccur_matrix
 
 

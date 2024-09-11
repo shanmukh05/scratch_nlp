@@ -4,8 +4,7 @@ import pandas as pd
 import logging
 
 from core.bow.bow import BOW
-from core.bow.utils import plot_topk_freq, plot_wordcloud
-from .utils import plot_pie_chart
+from plot_utils import plot_topk_freq, plot_wordcloud, plot_ngram_pie_chart
 
 
 class NGRAM(BOW):
@@ -72,6 +71,6 @@ class NGRAM(BOW):
         if visualize:
             plot_topk_freq(self.vocab_freq, output_folder)
             plot_wordcloud(self.vocab_freq, output_folder)
-            plot_pie_chart(df, self.n, output_folder)
+            plot_ngram_pie_chart(df, self.n, output_folder)
 
 

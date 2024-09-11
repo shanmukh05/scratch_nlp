@@ -2,6 +2,13 @@ import itertools
 import numpy as np
 from collections import Counter
 
+class ClassificationMetrics():
+    def __init__(self, config_dict):
+        self.config_dict = config_dict
+
+    def get_metrics(self, references, predictions, num_classes):
+        pass
+
 class TextGenerationMetrics():
     def __init__(self, config_dict):
         self.config_dict = config_dict

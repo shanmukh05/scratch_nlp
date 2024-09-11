@@ -1,0 +1,25 @@
+paths:
+  output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\gru
+dataset: 
+  train_corpus: ["treebank", "brown"]
+  train_samples: 128
+  val_split: 0.2
+  test_corpus: ["con11"]
+  test_samples: 16
+  num_vocab: 100
+  seq_len: 16
+  seed: 2023
+  batch_size: 4
+preprocess:
+  operations: [lcase]
+  randomize: True
+model:
+  embed_dim: 128
+  h_dim: 64
+  x_dim: 128
+  device: cpu
+train:
+  epochs: 3
+  lr: 0.05
+  eval_metric: "auc"
+visualize: True

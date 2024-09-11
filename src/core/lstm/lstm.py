@@ -7,8 +7,7 @@ import pandas as pd
 from preprocess.flickr import PreprocessFlickr
 from .model import LSTMModel, LSTMTrainer
 from .dataset import create_dataloader
-from .utils import plot_history
-from core.word2vec.utils import plot_embed
+from plot_utils import plot_history, plot_embed
 
 
 class LSTM:

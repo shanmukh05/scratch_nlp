@@ -7,8 +7,7 @@ from torch.utils.data import TensorDataset, DataLoader
 from preprocess.utils import preprocess_text
 from .model import RNNModel, RNNTrainer
 from .dataset import create_dataloader, RNNDataset
-from .utils import plot_conf_matrix, plot_history
-from core.word2vec.utils import plot_embed
+from plot_utils import plot_embed, plot_history, plot_conf_matrix
 
 class RNN():
     def __init__(self, config_dict):
