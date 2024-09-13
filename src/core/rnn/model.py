@@ -90,6 +90,7 @@ class RNNTrainer(nn.Module):
         self.config_dict = config_dict
         self.metric_cls = ClassificationMetrics(config_dict)
         self.eval_metric = config_dict["train"]["eval_metric"]
+        self.target_names = list(config_dict["dataset"]["labels"])
 
     def train_one_epoch(self, data_loader, epoch):
         self.model.train()
@@ -117,7 +118,7 @@ class RNNTrainer(nn.Module):
 
         y_true = np.concatenate(y_true, axis=0)
         y_pred = np.concatenate(y_pred, axis=0)
-        train_metrics = self.metric_cls.get_metrics(y_true, y_pred)
+        train_metrics = self.metric_cls.get_metrics(y_true, y_pred, self.target_names)
 
         return train_loss, train_metrics
 
@@ -144,7 +145,7 @@ class RNNTrainer(nn.Module):
         
         y_true = np.concatenate(y_true, axis=0)
         y_pred = np.concatenate(y_pred, axis=0)
-        val_metrics = self.metric_cls.get_metrics(y_true, y_pred)
+        val_metrics = self.metric_cls.get_metrics(y_true, y_pred, self.target_names)
 
         return val_loss, val_metrics
     
@@ -155,7 +156,7 @@ class RNNTrainer(nn.Module):
 
         pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Inference")
         for batch_id, X in pbar:
-            y_hat = self.model(X)
+            y_hat = self.model(X[0])
 
             y_pred.append(y_hat.cpu().detach().numpy())
         
@@ -167,7 +168,7 @@ class RNNTrainer(nn.Module):
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
-        best_val_metric = -np.inf
+        best_val_metric = np.inf
         history = defaultdict(list)
 
         start = time.time()
@@ -185,7 +186,7 @@ class RNNTrainer(nn.Module):
             for key in train_metrics.keys():
                 self.logger.info(f"Train {key} : {train_metrics[key]} - Val {key} : {val_metrics[key]}")
 
-            if val_metrics[self.eval_metric] <= best_val_metric:
+            if val_metrics[self.eval_metric] >= best_val_metric:
                 self.logger.info(f"Validation {self.eval_metric} score improved from {best_val_metric} to {val_metrics[self.eval_metric]}")
                 best_val_metric = val_metrics[self.eval_metric]
                 torch.save(self.model.state_dict(), os.path.join(output_folder, "best_model.pt"))

@@ -33,7 +33,7 @@ class RNNDataset(Word2VecDataset):
     def get_test_data(self):
         root_path = self.config_dict["paths"]["test_folder"]
         explore_folder = self.config_dict["dataset"]["explore_folder"]
-        num_samples = self.config_dict["dataset"]["num_samples"]
+        num_samples = self.config_dict["dataset"]["test_samples"]
         operations = self.config_dict["preprocess"]["operations"]
         randomize = self.config_dict["preprocess"]["randomize"]
 

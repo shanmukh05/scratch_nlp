@@ -17,6 +17,7 @@ class RNN():
     def run(self):
         self.rnn_ds = RNNDataset(self.config_dict)
         X, y = self.rnn_ds.get_data()
+        self.config_dict["dataset"]["labels"] = list(self.rnn_ds.label_encoder.categories_[0])
 
         val_split = self.config_dict["dataset"]["val_split"]
         batch_size = self.config_dict["dataset"]["batch_size"]
