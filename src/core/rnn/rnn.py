@@ -32,15 +32,15 @@ class RNN():
         self.save_output()
 
     def run_infer(self):
-        test_x, test_y = self.rnn_ds.get_test_data()
-        test_ds = TensorDataset(torch.Tensor(test_x), torch.Tensor(test_y))
+        test_x, y_true = self.rnn_ds.get_test_data()
+        test_ds = TensorDataset(torch.Tensor(test_x))
         test_loader = DataLoader(
             test_ds, 
             batch_size=self.config_dict["dataset"]["batch_size"], 
             shuffle=True, drop_last=False, num_workers=1, pin_memory=True
             )
         
-        y_true, y_pred = self.trainer.predict(test_loader)
+        y_pred = self.trainer.predict(test_loader)
 
         return y_true, y_pred
 

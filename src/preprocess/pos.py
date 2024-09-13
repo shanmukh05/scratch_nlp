@@ -26,6 +26,7 @@ class PreprocessPOS:
         self.label_encoder = OneHotEncoder()
 
         self.corpus, self.test_corpus = self.extract_data()
+        self.get_vocab(self.corpus)
 
     def get_data(self, corpus):
         X, y = self.preprocess_corpus(corpus)
@@ -43,10 +44,9 @@ class PreprocessPOS:
                 bool_ = word in self.vocabX
                 tokenX[i][j] = self.word2idX[word] if bool_ else self.word2idX["<UNK>"]
                 sent_labels[j] = self.posEnc[word_pos] if bool_ else self.posEnc["<UNK>"]
-            labels[i] = self.label_encoder.transform(labels.reshape(-1, 1)).tparray()
+            labels[i] = self.label_encoder.transform(sent_labels.reshape(-1, 1)).toarray()
 
         return tokenX, labels
-            
 
     def get_vocab(self, corpus):
         self.logger.info("Building Vocabulary for Words and POS tags from training data")
@@ -69,9 +69,9 @@ class PreprocessPOS:
     
     def extract_data(self):
         self.logger.info("Extracting Train and Test corpus from global CORPUS variable")
-        train_corpus = []
+        corpus = []
         for name in self.config_dict["dataset"]["train_corpus"]:
-            train_corpus += CORPUS[name]
+            corpus += CORPUS[name]
         
         test_corpus = []
         for name in self.config_dict["dataset"]["test_corpus"]:
@@ -81,13 +81,13 @@ class PreprocessPOS:
         num_train = self.config_dict["dataset"]["train_samples"]
         num_test = self.config_dict["dataset"]["test_samples"]
         if randomize:
-            train_ids = np.random.choice(len(train_corpus), num_train, replace=False)
+            train_ids = np.random.choice(len(corpus), num_train, replace=False)
             test_ids = np.random.choice(len(test_corpus), num_test, replace=False)
         else:
             train_ids = np.arange(num_train)
             test_ids = np.arange(num_test)
 
-        return train_corpus[train_ids], test_corpus[test_ids]
+        return [corpus[i] for i in train_ids], [test_corpus[i] for i in test_ids]
 
     def preprocess_corpus(self, corpus):
         X = [[i[0] for i in sent] for sent in corpus]

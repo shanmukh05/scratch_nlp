@@ -25,4 +25,5 @@ model:
 train:
   epochs: 3
   lr: 0.05
+  eval_metric: "Accuracy"
 visualize: True

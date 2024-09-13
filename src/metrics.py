@@ -1,13 +1,27 @@
 import itertools
 import numpy as np
 from collections import Counter
+from sklearn.metrics import classification_report
 
 class ClassificationMetrics():
     def __init__(self, config_dict):
         self.config_dict = config_dict
 
-    def get_metrics(self, references, predictions, num_classes):
-        pass
+    def get_metrics(self, references, predictions, target_names):
+        predictions = np.argmax(predictions, axis=-1)
+
+        labels = np.arange(len(target_names))
+        clf_report = classification_report(references, predictions, labels=labels, target_names=target_names, output_dict=True, zero_division=0.0)
+        metric_dict = {}
+
+        metric_dict["Accuracy"] = clf_report["accuracy"]
+        for name in target_names + ["macro avg", "weighted avg"]:
+            metric_dict[f"{name}-Precision"] = clf_report[name]["precision"]
+            metric_dict[f"{name}-Recall"] = clf_report[name]["recall"]
+            metric_dict[f"{name}-F1Score"] = clf_report[name]["f1-score"]
+
+        return metric_dict
+
 
 class TextGenerationMetrics():
     def __init__(self, config_dict):
@@ -39,7 +53,7 @@ class TextGenerationMetrics():
         }
 
     def bleu_score(self, references, predictions, n=4):
-        predictions = np.max(predictions, axis=-1)
+        predictions = np.argmax(predictions, axis=-1)
         num_instances = references.shape[0]
         log_score_corpus = 0
         w = 1/n

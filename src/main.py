@@ -12,6 +12,7 @@ from core.word2vec import word2vec
 from core.glove import glove
 from core.rnn import rnn
 from core.lstm import lstm
+from core.gru import gru
 
 os.environ["LOKY_MAX_CPU_COUNT"] = "4"
 
@@ -91,6 +92,11 @@ def main():
         algo = lstm.LSTM(config_dict)
         algo.run()
         # python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\lstm.yaml" --algo "LSTM" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\lstm"
+    elif algo == "GRU":
+        algo = gru.GRU(config_dict)
+        algo.run()
+        # python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\gru.yaml" --algo "GRU" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\gru"
+
 
 if __name__ == "__main__":
     main()

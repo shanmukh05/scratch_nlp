@@ -76,7 +76,7 @@ def plot_history(history, output_folder):
     num_plots = len(history)//2
     num_y, num_x = 3, int(np.ceil(num_plots/3))
 
-    fig, ax = plt.subplots(num_x, num_y, figsize=(18, 8*num_y))
+    fig, ax = plt.subplots(num_x, num_y, figsize=(18, 12*num_y))
     keys = list(set([i.split("_")[1] for i in history.keys()]))
 
     for i, key in enumerate(keys):
@@ -105,7 +105,8 @@ def plot_embed(embeds, vocab, output_folder):
 
 
 def plot_conf_matrix(y_true, y_pred, classes, output_folder):
-    conf_display = ConfusionMatrixDisplay.from_predictions(y_true, y_pred, labels=classes)
+    fig, ax = plt.subplots(1, 1, figsize=(15, 15))
+    conf_display = ConfusionMatrixDisplay.from_predictions(y_true, y_pred, labels=classes, ax=ax)
 
     fig = conf_display.figure_
     fig.savefig(os.path.join(output_folder, "Confusion Matrix.png")) 
