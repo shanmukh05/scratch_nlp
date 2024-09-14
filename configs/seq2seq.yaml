@@ -1,0 +1,28 @@
+paths:
+  input_file: D:\Learning\NLP\Projects\scratch_nlp\data\eng2tel\english_telugu_data.txt
+  output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\lstm
+dataset: 
+  num_samples: 128
+  val_split: 0.2
+  test_split: 0.2
+  num_src_vocab: 128
+  num_tgt_vocab: 256
+  seq_len: 16
+  seed: 2023
+  batch_size: 4
+preprocess:
+  randomize: False
+model:
+  embed_dim: 256
+  num_layers: 2
+  h_dim: [128, 128]
+  x_dim: [256, 128, 128]
+  device: cpu
+train:
+  epochs: 3
+  lr: 0.05
+  eval_metric: "Perplexity"
+  bleu_n: 4
+  rouge_n_n: 2
+  rouge_s_n: 2
+visualize: True

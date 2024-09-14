@@ -90,7 +90,7 @@ def plot_history(history, output_folder):
     fig.savefig(os.path.join(output_folder, "History.png"))
 
 
-def plot_embed(embeds, vocab, output_folder):
+def plot_embed(embeds, vocab, output_folder, fname="Word Embeddings TSNE"):
     tsne = TSNE(n_components=3)
     embeds_tsne = tsne.fit_transform(embeds)
 
@@ -101,7 +101,7 @@ def plot_embed(embeds, vocab, output_folder):
         "Word": vocab
     })
     fig = px.scatter_3d(tsne_df, x="X", y="Y", z="Z", text="Word")
-    fig.write_html(os.path.join(output_folder, "Word Embeddings TSNE.html"))
+    fig.write_html(os.path.join(output_folder, f"{fname}.html"))
 
 
 def plot_conf_matrix(y_true, y_pred, classes, output_folder):
