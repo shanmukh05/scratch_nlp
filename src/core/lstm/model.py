@@ -92,7 +92,7 @@ class LSTMModel(nn.Module):
             x_embed = self.embed_layer(tokens.to(torch.long))
             yt = x_embed[:, 0, :]
         else:
-            start_token = torch.zeros(1, 1).to(torch.long)
+            start_token = torch.zeros(self.num_samples, 1).to(torch.long)
             yt = self.embed_layer(start_token)[:, 0, :]
 
         pts = []

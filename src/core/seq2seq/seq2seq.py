@@ -6,7 +6,7 @@ import pandas as pd
 
 from preprocess.eng2tel import PreprocessSeq2Seq
 from .dataset import create_dataloader
-# from .model import Seq2SeqModel, Seq2SeqTrainer
+from .model import Seq2SeqModel, Seq2SeqTrainer
 from plot_utils import plot_embed, plot_history
 
 
@@ -22,18 +22,17 @@ class Seq2Seq:
     def run(self):
         self.seq2seq_ds = PreprocessSeq2Seq(self.config_dict)
         tokenSrc, tokenTgt = self.seq2seq_ds.get_data(self.seq2seq_ds.df)
-        self.config_dict["dataset"]["tgt_vocab"] = self.seq2seq_ds.vocabTgt
 
         train_loader, val_loader = create_dataloader(tokenSrc, tokenTgt, self.val_split, self.batch_size, self.seed, "train")
 
-        # self.model = Seq2SeqModel(self.config_dict)
-        # lr = self.config_dict["train"]["lr"]
-        # optim = torch.optim.Adam(self.model.parameters(), lr=lr)
-        # self.trainer = Seq2SeqTrainer(self.model, optim, self.config_dict)
+        self.model = Seq2SeqModel(self.config_dict)
+        lr = self.config_dict["train"]["lr"]
+        optim = torch.optim.Adam(self.model.parameters(), lr=lr)
+        self.trainer = Seq2SeqTrainer(self.model, optim, self.config_dict)
 
-        # self.history = self.trainer.fit(train_loader, val_loader)
-        # self.save_output()
-        return train_loader, val_loader
+        self.history = self.trainer.fit(train_loader, val_loader)
+        self.save_output()
+        return self.history
 
     def run_infer(self):
         tokenSrc, tokenTgt = self.seq2seq_ds.get_data(self.seq2seq_ds.test_df)
@@ -45,17 +44,17 @@ class Seq2Seq:
         output_folder = self.config_dict["paths"]["output_folder"]
 
         self.logger.info(f"Saving Outputs {output_folder}")
-        # with open(os.path.join(output_folder, "training_history.json"), 'w') as fp:
-        #     json.dump(self.history, fp)
+        with open(os.path.join(output_folder, "training_history.json"), 'w') as fp:
+            json.dump(self.history, fp)
 
-        # src_embeds = self.model.src_embed_layer.weights.detach().numpy()
-        # src_vocab = list(self.seq2seq_ds.word2idSrc.keys())
-        # plot_embed(src_embeds, src_vocab, output_folder, fname="Source Embeddings TSNE")
+        src_embeds = self.model.encoder.src_embed_layer.weight.detach().numpy()
+        src_vocab = list(self.seq2seq_ds.word2idSrc.keys())
+        plot_embed(src_embeds, src_vocab, output_folder, fname="Source Embeddings TSNE")
 
-        # tgt_embeds = self.model.tgt_embed_layer.weights.detach().numpy()
-        # tgt_vocab = list(self.seq2seq_ds.word2idTgt.keys())
-        # plot_embed(tgt_embeds, tgt_vocab, output_folder, fname="Target Embeddings TSNE")
+        tgt_embeds = self.model.decoder.tgt_embed_layer.weight.detach().numpy()
+        tgt_vocab = list(self.seq2seq_ds.word2idTgt.keys())
+        plot_embed(tgt_embeds, tgt_vocab, output_folder, fname="Target Embeddings TSNE")
 
-        # plot_history(self.history, output_folder)
+        plot_history(self.history, output_folder)
     
 

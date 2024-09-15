@@ -1,6 +1,6 @@
 paths:
   input_file: D:\Learning\NLP\Projects\scratch_nlp\data\eng2tel\english_telugu_data.txt
-  output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\lstm
+  output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\seq2seq
 dataset: 
   num_samples: 128
   val_split: 0.2
@@ -15,8 +15,9 @@ preprocess:
 model:
   embed_dim: 256
   num_layers: 2
-  h_dim: [128, 128]
-  x_dim: [256, 128, 128]
+  encoder_h_dim: [128, 128]
+  encoder_x_dim: [256, 128]
+  decoder_y_dim: 128
   device: cpu
 train:
   epochs: 3
