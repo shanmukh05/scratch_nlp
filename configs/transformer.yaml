@@ -6,20 +6,20 @@ dataset:
   val_split: 0.2
   test_split: 0.2
   num_vocab: 256
-  seq_len: 32
+  seq_len: 64
   seed: 2023
   batch_size: 16
 preprocess:
   randomize: False
-  operations: [lcase]
+  operations: [lcase, remalpha]
 model:
-  d_model: 256
-  d_ff: 512
+  d_model: 64
+  d_ff: 128
   num_heads: 8
   num_layers: 4
   dropout: 0.3
 train:
-  epochs: 4
+  epochs: 20
   lr: 0.001
   eval_metric: "Perplexity"
   bleu_n: 4

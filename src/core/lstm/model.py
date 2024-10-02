@@ -213,7 +213,7 @@ class LSTMTrainer(nn.Module):
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
-        best_val_metric = -np.inf
+        best_val_metric = np.inf
         history = defaultdict(list)
 
         start = time.time()
@@ -231,7 +231,7 @@ class LSTMTrainer(nn.Module):
             for key in train_metrics.keys():
                 self.logger.info(f"Train {key} : {train_metrics[key]} - Val {key} : {val_metrics[key]}")
 
-            if val_metrics[self.eval_metric] >= best_val_metric:
+            if val_metrics[self.eval_metric] <= best_val_metric:
                 self.logger.info(f"Validation {self.eval_metric} score improved from {best_val_metric} to {val_metrics[self.eval_metric]}")
                 best_val_metric = val_metrics[self.eval_metric]
                 torch.save(self.model.state_dict(), os.path.join(output_folder, "best_model.pt"))

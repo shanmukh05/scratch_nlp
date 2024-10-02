@@ -14,6 +14,7 @@ from core.rnn import rnn
 from core.lstm import lstm
 from core.gru import gru
 from core.seq2seq import seq2seq
+from core.transformer import transformer
 
 os.environ["LOKY_MAX_CPU_COUNT"] = "4"
 
@@ -101,6 +102,10 @@ def main():
         algo = seq2seq.Seq2Seq(config_dict)
         algo.run()
         # python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\seq2seq.yaml" --algo "SEQ2SEQ" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\seq2seq"
+    elif algo == "TRANSFORMER":
+        algo = transformer.Transformer(config_dict)
+        algo.run()
+        # python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\transformer.yaml" --algo "TRANSFORMER" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\transformer"
 
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@ model:
   decoder_y_dim: 128
   device: cpu
 train:
-  epochs: 3
+  epochs: 1
   lr: 0.05
   eval_metric: "Perplexity"
   bleu_n: 4

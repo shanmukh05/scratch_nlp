@@ -35,10 +35,17 @@ class Seq2Seq:
         return self.history
 
     def run_infer(self):
-        tokenSrc, tokenTgt = self.seq2seq_ds.get_data(self.seq2seq_ds.test_df)
-        test_loader = create_dataloader(tokenSrc, None, None, self.batch_size, None, "test")
+        tokens_src, tokens_tgt = self.seq2seq_ds.get_data(self.seq2seq_ds.test_df)
+        test_loader = create_dataloader(tokens_src, None, None, self.batch_size, None, "test")
 
-        return test_loader
+        tokens_tgt_pred = self.trainer.predict(test_loader)
+        tokens_tgt_pred = tokens_tgt_pred.argmax(axis=-1).astype("int")
+
+        sents_src = self.seq2seq_ds.batched_ids2tokens(tokens_src, "src")
+        sents_tgt = self.seq2seq_ds.batched_ids2tokens(tokens_tgt, "tgt")
+        sents_tgt_pred = self.seq2seq_ds.batched_ids2tokens(tokens_tgt, "tgt")
+
+        return sents_src, sents_tgt, sents_tgt_pred
     
     def save_output(self):
         output_folder = self.config_dict["paths"]["output_folder"]
@@ -56,5 +63,13 @@ class Seq2Seq:
         plot_embed(tgt_embeds, tgt_vocab, output_folder, fname="Target Embeddings TSNE")
 
         plot_history(self.history, output_folder)
+
+        sents_src, sents_tgt, sents_tgt_pred = self.run_infer()
+        test_df = pd.DataFrame.from_dict({
+            "Source": sents_src,
+            "Target": sents_tgt,
+            "Prediction": sents_tgt_pred
+        })
+        test_df.to_csv(os.path.join(output_folder, "Test Predictions.csv"), index=False)
     
 

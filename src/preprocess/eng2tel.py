@@ -61,6 +61,26 @@ class PreprocessSeq2Seq:
         self.word2idTgt = {w:i for i, w in enumerate(self.vocabTgt)}
         self.id2wordTgt = {v:k for k,v in self.word2idTgt.items()}
 
+    
+    def batched_ids2tokens(self, tokens, type="src"):
+        if type == "src":
+            func = lambda x : self.id2wordSrc[x]
+        else:
+            func = lambda x : self.id2wordTgt[x]
+        vect_func = np.vectorize(func)
+
+        tokens = vect_func(tokens)
+
+        sentences = []
+        for words in tokens:
+            txt = ""
+            for word in words:
+                if word not in  ["<SOS>", "<EOS>", "<PAD>"]:
+                    txt += f"{word} "
+            sentences.append(txt[:-1])
+        return sentences
+
+    
     def preprocess_src(self, text):
         text = text.lower().strip()
         text = re.sub(r'([?.!,¿_])',r' \1 ',text)

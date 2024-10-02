@@ -73,8 +73,11 @@ class TextGenerationMetrics():
 
     def perplexity_score(self, predictions):
         predictions = np.max(predictions, axis=-1)
-        probs_prod = np.prod(predictions, axis=1)
-        probs_prod_inv_norm = 1/np.pow(probs_prod, 1/self.seq_len)
+        probs_sum = -np.sum(np.log(predictions), axis=1)/self.seq_len
+        probs_prod_inv_norm = np.exp(probs_sum)
+
+        # probs_prod = np.prod(predictions, axis=1)
+        # probs_prod_inv_norm = 1/np.pow(probs_prod, 1/self.seq_len)
 
         score = np.mean(probs_prod_inv_norm).item()
         return score

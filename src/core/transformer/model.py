@@ -147,9 +147,9 @@ class DecoderLayer(nn.Module):
         return output
     
 
-class Transformer(nn.Module):
+class TransformerModel(nn.Module):
     def __init__(self, config_dict):
-        super(Transformer, self).__init__()
+        super(TransformerModel, self).__init__()
 
         embed_dim = config_dict["model"]["d_model"]
         num_vocab = config_dict["dataset"]["num_vocab"]
@@ -182,7 +182,8 @@ class Transformer(nn.Module):
         for layer in self.decoder_layers:
             dec_output = layer(enc_output, dec_output)
         
-        output = nn.Softmax(dim=-1)(dec_output)
+        output = self.classifier_layer(dec_output)
+        output = nn.Softmax(dim=-1)(output)
 
         return output
 
@@ -206,10 +207,12 @@ class TransformerTrainer(nn.Module):
         self.logger.info(f"-----------Epoch {epoch}/{self.config_dict['train']['epochs']}-----------")
         pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Training")
 
-        for batch_id, (src, tgt) in pbar:
+        for batch_id, sent in pbar:
+            src, tgt = sent[0][:, :-1], sent[0][:, 1:]
+            src = src.to(torch.long)
             tgt = tgt.to(torch.long)
             tgt_hat = self.model(src, tgt)
-
+            
             loss = self.calc_loss(tgt_hat, tgt)
             loss.backward()
             self.optim.step()
@@ -237,7 +240,9 @@ class TransformerTrainer(nn.Module):
 
         pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Validation")
 
-        for batch_id, (src, tgt) in pbar:
+        for batch_id, sent in pbar:
+            src, tgt = sent[0][:, :-1], sent[0][:, 1:]
+            src = src.to(torch.long)
             tgt = tgt.to(torch.long)
             tgt_hat = self.model(src, tgt)
 
@@ -260,23 +265,29 @@ class TransformerTrainer(nn.Module):
     @torch.no_grad()
     def predict(self, data_loader):
         self.model.eval()
-        y_pred = []
+        y_pred, sents = [], []
 
         pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Inference")
 
-        for batch_id, src in pbar:
-            tgt_hat= self.model(src[0])
+        for batch_id, sent in pbar:
+            src, tgt = sent[0][:, :-1], sent[0][:, 1:]
+            src = src.to(torch.long)
+            tgt = tgt.to(torch.long)
+            tgt_hat= self.model(src, tgt)
+
             y_pred.append(tgt_hat.cpu().detach().numpy())
+            sents.append(sent[0].cpu().detach().numpy())
         
         y_pred = np.concatenate(y_pred, axis=0)
+        sents = np.concatenate(sents, axis=0)
 
-        return y_pred
+        return sents, y_pred
 
     def fit(self, train_loader, val_loader):
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
-        best_val_metric = -np.inf
+        best_val_metric = np.inf
         history = defaultdict(list)
 
         start = time.time()
@@ -294,7 +305,7 @@ class TransformerTrainer(nn.Module):
             for key in train_metrics.keys():
                 self.logger.info(f"Train {key} : {train_metrics[key]} - Val {key} : {val_metrics[key]}")
 
-            if val_metrics[self.eval_metric] >= best_val_metric:
+            if val_metrics[self.eval_metric] <= best_val_metric:
                 self.logger.info(f"Validation {self.eval_metric} score improved from {best_val_metric} to {val_metrics[self.eval_metric]}")
                 best_val_metric = val_metrics[self.eval_metric]
                 torch.save(self.model.state_dict(), os.path.join(output_folder, "best_model.pt"))
