@@ -34,13 +34,44 @@ class BytePairEncoding:
 
         return words
 
-    def preprocess(self, text_ls):
+    def transform(self, text_ls):
+        words = self.preprocess(text_ls, "test")
+        vocab = list(self.vocab_freq.keys())
+
+        for i, word in enumerate(words):
+            words[i] = self.merge_chars(word, vocab)
+
+        return words
+
+    def merge_chars(self, word, vocab):
+        merge = True
+        while merge:
+            tokens = word.split()
+            merge_count = 0
+
+            for j in range(len(tokens)-1):
+                pair_ = (tokens[j], tokens[j+1])
+                best_chars = re.escape(" ".join(pair_))
+                replace = re.compile(r'(?<!\S)' + best_chars + r'(?!\S)')
+
+                if "".join(pair_) in vocab:
+                    word = replace.sub("".join(pair_), word)
+                    merge_count += 1
+                    break
+            
+            if merge_count == 0:
+                merge=False
+        return word
+
+    def preprocess(self, text_ls, data="train"):
         corpus = " ".join(text_ls)
         words = corpus.split()
         words = [" ".join(list(w))+ " </w>" for w in words]
-        self.vocab_freq = Counter(list(corpus))
-        del self.vocab_freq[" "]
-        self.vocab_freq["</w>"] = len(words)
+        
+        if data == "train":
+            self.vocab_freq = Counter(list(corpus))
+            del self.vocab_freq[" "]
+            self.vocab_freq["</w>"] = len(words)
 
         return words
 
@@ -53,7 +84,7 @@ class BytePairEncoding:
                 pair_dict[(chars[i], chars[i+1])] += freq
         return pair_dict
     
-    def merge_chars(self, words):
+    def build_vocab(self, words):
         pair_dict = self.get_stats(words)
         best_pair = max(pair_dict, key=pair_dict.get)
         best_pair_count = pair_dict[best_pair]
@@ -77,5 +108,5 @@ class BytePairEncoding:
         self.logger.info("Merging characters to achieve desired vocabulary")
         num_merges = self.num_vocab - len(self.vocab_freq)
         for _ in range(num_merges):
-            words = self.merge_chars(words)
+            words = self.build_vocab(words)
         return words
