@@ -58,13 +58,13 @@ class PreprocessFlickr:
 
     def get_vocab(self, train_df):
         self.logger.info("Building Vocabulary from training data captions")
-        num_vocab = self.config_dict["dataset"]["num_vocab"]
+        num_vocab = self.config_dict["dataset"]["num_vocab"] - self.config_dict["dataset"]["num_extra_tokens"]
         all_words = []
 
         for text in train_df["Caption"]:
             all_words += text.split()
 
-        topk_vocab_freq = Counter(all_words).most_common(num_vocab-4)
+        topk_vocab_freq = Counter(all_words).most_common(num_vocab)
         self.vocab = ["<START>", "<END>", "<PAD>", "<UNK>"] + [i[0] for i in topk_vocab_freq]
         self.word2id = {w:i for i,w in enumerate(self.vocab)}
         self.id2word = {v:k for k,v in self.word2id.items()}

@@ -7,7 +7,7 @@ from nltk.corpus import stopwords
 # nltk.download("stopwords")
 
 
-def preprocess_text(text, operations):
+def preprocess_text(text, operations=None):
     if "lcase" in operations or operations is None:
         text = text.lower()
     if "remalpha" in operations or operations is None:
@@ -25,7 +25,7 @@ class BytePairEncoding:
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
 
-        self.num_vocab = config_dict["dataset"]["num_vocab"] - 1
+        self.num_vocab = config_dict["dataset"]["num_vocab"] - config_dict["dataset"]["num_extra_tokens"] 
         self.operations = config_dict["preprocess"]["operations"]
 
     def fit(self, text_ls):
@@ -110,3 +110,108 @@ class BytePairEncoding:
         for _ in range(num_merges):
             words = self.build_vocab(words)
         return words
+
+
+class WordPiece:
+    def __init__(self, config_dict):
+        self.logger = logging.getLogger(__name__)
+
+        self.num_vocab = config_dict["dataset"]["num_vocab"] - config_dict["dataset"]["num_extra_tokens"] 
+        self.operations = config_dict["preprocess"]["operations"]
+
+    def fit(self, text_ls):
+        corpus = self.preprocess(text_ls)
+        corpus = self.run_merge(corpus)
+
+        return corpus
+
+    def transform(self, text_ls):
+        corpus = self.preprocess(text_ls, "test")
+        vocab = list(self.vocab_freq.keys())
+
+        for i, word in enumerate(corpus):
+            corpus[i] = self.merge_chars(word, vocab)
+
+        return corpus
+    
+    def merge_chars(self, word, vocab):
+        j = 0
+        while j < len(word) - 1:
+            ch1, ch2 = word[j], word[j+1]
+            new_ch = self.combine((ch1, ch2))
+            if new_ch in vocab:
+                word = word[:j] + [new_ch] + word[j+2:]
+            else:
+                j+=1
+        return word
+    
+    def preprocess(self, text_ls, data="train"):
+        words = " ".join(text_ls).split()
+        corpus = []
+
+        self.vocab_freq = defaultdict()
+        for word in words:
+            chars = []
+            for i, ch in enumerate(word):
+                if i != 0: ch = f"##{ch}"
+                chars.append(ch)
+                if data == "train": self.vocab_freq[ch] = self.vocab_freq.get(ch, 0) + 1
+            corpus.append(chars)
+
+        return corpus
+    
+    def get_stats(self, corpus):
+        pair_freq = defaultdict(int)
+        for corp in corpus:
+            if len(corp) == 1:
+                continue
+            for i in range(len(corp)-1):
+                pair_freq[(corp[i], corp[i+1])] += 1
+        return pair_freq
+    
+    def get_likelihood(self, pair, pair_freq):
+        p12 = pair_freq[pair]
+        p1, p2 = self.vocab_freq[pair[0]], self.vocab_freq[pair[1]]
+        lkhd = p12/(p1*p2)
+
+        return lkhd
+
+    def combine(self, pair):
+        token1, token2 = pair
+        return token1 + token2[2:] if token2.startswith("##") else token1 + token2
+    
+    def build_vocab(self, corpus):
+        pair_freq = self.get_stats(corpus)
+        best_pair = max(pair_freq.keys(), key=lambda x: self.get_likelihood(x, pair_freq))
+        new_ch = self.combine(best_pair)
+        best_pair_count = pair_freq[best_pair]
+
+        for i, corp in enumerate(corpus):
+            if len(corp) == 1:
+                continue
+            j = 0
+            while j < len(corp) - 1:
+                if (corp[j], corp[j+1]) == best_pair:
+                    corp = corp[:j] + [new_ch] + corp[j+2:]
+                else:
+                    j += 1
+            corpus[i] = corp
+
+        self.vocab_freq[new_ch] = best_pair_count
+        self.vocab_freq[best_pair[0]] -= best_pair_count
+        self.vocab_freq[best_pair[1]] -= best_pair_count
+
+        if self.vocab_freq[best_pair[0]] == 0: del self.vocab_freq[best_pair[0]]
+        if best_pair[0] != best_pair[1]: 
+            if self.vocab_freq[best_pair[1]] == 0: del self.vocab_freq[best_pair[1]]
+        
+        return corpus
+    
+    def run_merge(self, corpus):
+        if len(self.vocab_freq) < self.num_vocab:
+            while len(self.vocab_freq) < self.num_vocab:
+                corpus = self.build_vocab(corpus)
+        else:
+            while len(self.vocab_freq) > self.num_vocab:
+                corpus = self.build_vocab(corpus)
+        return corpus

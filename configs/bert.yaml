@@ -1,17 +1,24 @@
 paths:
-    input_file: D:\Learning\NLP\Projects\scratch_nlp\data\genius_lyrics\english_lyrics.csv
+    input_file: D:\Learning\NLP\Projects\scratch_nlp\data\wiki_en\wiki_en.csv
     output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\bert
 dataset:
   num_samples: 128
   val_split: 0.2
   test_split: 0.2
   num_vocab: 256
-  seq_len: 64
+  num_extra_tokens: 5
+  seq_len: 128
   seed: 2023
   batch_size: 16
 preprocess:
   randomize: False
-  operations: [lcase, remalpha]
+  operations: ["remalpha", "lcase"]
+  replace_token:
+    prediction: 0.15
+    mask: 0.8
+    random: 0.1
+  sentence_pair:
+    next: 0.5
 model:
   d_model: 64
   d_ff: 128

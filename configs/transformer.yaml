@@ -6,6 +6,7 @@ dataset:
   val_split: 0.2
   test_split: 0.2
   num_vocab: 256
+  num_extra_tokens: 1
   seq_len: 64
   seed: 2023
   batch_size: 16
