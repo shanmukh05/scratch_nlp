@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 from preprocess.utils import preprocess_text, WordPiece
 
 
-class PreprocessBERT:
+class PreprocessBERTPretrain:
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
 
@@ -101,7 +101,7 @@ class PreprocessBERT:
         return df["text"]
 
 
-class BERTDataset(Dataset):
+class BERTPretrainDataset(Dataset):
     def __init__(self, text_tokens, nsp_labels, config_dict, word2id):
         self.text_tokens = text_tokens
         self.nsp_labels = nsp_labels
@@ -144,17 +144,17 @@ class BERTDataset(Dataset):
         return text_token, lbl_mask  
 
 
-def create_dataloader(X, y, config_dict, word2id, val_split=0.2, test_split=0.2, batch_size=32, seed=2024): 
+def create_dataloader_pretrain(X, y, config_dict, word2id, val_split=0.2, test_split=0.2, batch_size=32, seed=2024): 
     train_X, val_X, train_y, val_y = train_test_split(X, y, test_size=val_split+test_split, random_state=seed)
     val_X, test_X, val_y, test_y = train_test_split(X, y, test_size=test_split/(val_split+test_split), random_state=seed)
 
-    train_ds = BERTDataset(torch.Tensor(train_X), torch.Tensor(train_y), config_dict, word2id)
+    train_ds = BERTPretrainDataset(torch.Tensor(train_X), torch.Tensor(train_y), config_dict, word2id)
     train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True, drop_last=True, num_workers=1, pin_memory=True)
 
-    val_ds = BERTDataset(torch.Tensor(val_X), torch.Tensor(val_y), config_dict, word2id)
+    val_ds = BERTPretrainDataset(torch.Tensor(val_X), torch.Tensor(val_y), config_dict, word2id)
     val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False, drop_last=True, num_workers=1, pin_memory=True)
         
-    test_ds = BERTDataset(torch.Tensor(test_X), torch.Tensor(test_y), config_dict, word2id)
+    test_ds = BERTPretrainDataset(torch.Tensor(test_X), torch.Tensor(test_y), config_dict, word2id)
     test_loader = DataLoader(test_ds, batch_size=batch_size, shuffle=False, drop_last=False, num_workers=1, pin_memory=False)
     
     return train_loader, val_loader, test_loader
