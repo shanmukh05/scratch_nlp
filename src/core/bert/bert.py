@@ -5,7 +5,7 @@ import logging
 import pandas as pd
 
 from .dataset_pretrain import create_dataloader_pretrain, PreprocessBERTPretrain
-from .model import BERTModel
+from .model import BERTPretrainModel
 from .pretrain import BERTPretrainTrainer
 from plot_utils import plot_embed, plot_history
 
@@ -14,11 +14,6 @@ class BERT:
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
-        self.val_split = self.config_dict["dataset"]["val_split"]
-        self.test_split = self.config_dict["dataset"]["test_split"]
-        self.batch_size = self.config_dict["dataset"]["batch_size"]
-        self.seed = self.config_dict["dataset"]["seed"]
-
     def run(self):
         self.trainer_pretrain, self.pretrain_history = self.run_pretrain()
         self.model_pretrain = self.trainer_pretrain.model
@@ -26,17 +21,22 @@ class BERT:
         self.save_output()
 
     def run_pretrain(self):
+        val_split = self.config_dict["dataset"]["val_split"]
+        test_split = self.config_dict["dataset"]["test_split"]
+        batch_size = self.config_dict["dataset"]["batch_size"]
+        seed = self.config_dict["dataset"]["seed"]
+
         self.bert_pretrain_ds = PreprocessBERTPretrain(self.config_dict)
         text_tokens, nsp_labels = self.bert_pretrain_ds.get_data()
         word2id = self.bert_pretrain_ds.word2id
 
         train_loader, val_loader, self.test_loader_pretrain = create_dataloader_pretrain(
             text_tokens, nsp_labels, 
-            self.config_dict, word2id, self.val_split, 
-            self.test_split, self.batch_size, self.seed
+            self.config_dict, word2id, val_split, 
+            test_split, batch_size, seed
             )
 
-        model = BERTModel(self.config_dict)
+        model = BERTPretrainModel(self.config_dict)
         lr = self.config_dict["train"]["lr"]
         optim = torch.optim.Adam(model.parameters(), lr=lr)
         trainer = BERTPretrainTrainer(model, optim, self.config_dict)

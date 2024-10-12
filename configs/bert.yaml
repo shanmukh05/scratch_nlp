@@ -12,7 +12,7 @@ dataset:
   batch_size: 16
 preprocess:
   randomize: False
-  operations: ["remalpha", "lcase"]
+  operations: ["lcase", "remalpha"]
   replace_token:
     prediction: 0.15
     mask: 0.8
@@ -28,8 +28,21 @@ model:
 train:
   epochs: 2
   lr: 0.001
-  eval_metric: "Perplexity"
-  bleu_n: 4
-  rouge_n_n: 2
-  rouge_s_n: 2
 visualize: True
+
+finetune:
+  paths:
+    input_file: D:\Learning\NLP\Projects\scratch_nlp\data\squad\squad_v1.json
+    pretrain_weights: D:\Learning\NLP\Projects\scratch_nlp\output\bert\best_model_pretrain.pt
+  dataset:
+    num_topics: 25
+    val_split: 0.2
+    test_split: 0.2
+    seed: 2023
+    batch_size: 16
+  preprocess:
+    randomize: False
+    operations: ["lcase"]
+  train:
+    epochs: 2
+    lr: 0.001

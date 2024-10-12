@@ -1,4 +1,3 @@
-import cv2
 import torch
 import logging
 import numpy as np
@@ -21,7 +20,7 @@ class PreprocessBERTPretrain:
 
         self.wordpiece = WordPiece(config_dict)
 
-    def  get_data(self):
+    def get_data(self):
         text_ls = self.extract_data()
         text_ls = self.preprocess_text(text_ls)
         text_lens = [len(text.split()) for text in text_ls]
@@ -32,7 +31,7 @@ class PreprocessBERTPretrain:
         text_tokens_a = np.zeros((len(text_ls), half_seq_len+1))
         text_tokens_b = np.zeros((len(text_ls), half_seq_len+1))
         count = 0
-        for i, text_len in enumerate(text_lens):
+        for id, text_len in enumerate(text_lens):
             tokens_ls = corpus[count: count+text_len]
             tokens = [i for ls in tokens_ls for i in ls]
             text = " ".join(tokens).split()
@@ -43,8 +42,8 @@ class PreprocessBERTPretrain:
             if len(text) < self.seq_len:
                 text = text + ["<PAD>"]*(self.seq_len - len(text))
 
-            text_tokens_a[i] = np.array([self.word2id[ch] for ch in ["<CLS>"] + text[:half_seq_len]])
-            text_tokens_b[i] = np.array([self.word2id[ch] for ch in ["<SEP>"] + text[half_seq_len:2*half_seq_len]])
+            text_tokens_a[id] = np.array([self.word2id[ch] for ch in ["<CLS>"] + text[:half_seq_len]])
+            text_tokens_b[id] = np.array([self.word2id[ch] for ch in ["<SEP>"] + text[half_seq_len:2*half_seq_len]])
 
         reorder_tokens_b = np.random.choice(len(text_ls), len(text_ls), replace=False)
         text_tokens_a = np.concatenate([text_tokens_a, text_tokens_a], axis=0)

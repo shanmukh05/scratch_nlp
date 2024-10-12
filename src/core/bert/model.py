@@ -5,9 +5,9 @@ import torch.nn.functional as F
 from core.transformer.model import EncoderLayer, PositionalEncoding
 
 
-class BERTModel(nn.Module):
+class BERTPretrainModel(nn.Module):
     def __init__(self, config_dict):
-        super(BERTModel, self).__init__()
+        super(BERTPretrainModel, self).__init__()
 
         embed_dim = config_dict["model"]["d_model"]
         num_vocab = config_dict["dataset"]["num_vocab"]
