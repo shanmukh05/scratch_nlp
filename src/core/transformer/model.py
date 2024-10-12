@@ -155,7 +155,6 @@ class TransformerModel(nn.Module):
         num_vocab = config_dict["dataset"]["num_vocab"]
         num_layers = config_dict["model"]["num_layers"]
         dropout = config_dict["model"]["dropout"]
-        self.seq_len = config_dict["dataset"]["seq_len"]
 
         self.src_embed_layer = nn.Embedding(num_vocab, embed_dim)
         self.tgt_embed_layer = nn.Embedding(num_vocab, embed_dim)

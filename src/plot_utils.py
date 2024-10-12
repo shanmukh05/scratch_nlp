@@ -72,22 +72,25 @@ def plot_pca_pairplot(X, y, output_folder, num_pcs=6, name="TFIDF PCA Pairplot")
     fig.savefig(os.path.join(output_folder, f"{name}.png"), bbox_inches='tight')  
 
 
-def plot_history(history, output_folder):
+def plot_history(history, output_folder, name="History"):
     num_plots = len(history)//2
-    num_y, num_x = 3, int(np.ceil(num_plots/3))
+    num_x = int(np.ceil(num_plots/3))
+    if num_x == 1:
+        num_x += 1
+    num_y = 3
 
     fig, ax = plt.subplots(num_x, num_y, figsize=(18, 12*num_y))
-    keys = list(set([i.split("_")[1] for i in history.keys()]))
+    keys = list(set(["_".join(i.split("_")[1:]) for i in history.keys()]))
 
     for i, key in enumerate(keys):
-        r, c = i//3, i%3
+        r, c = i//3+1, i%3
         x = np.arange(len(history[f"train_{key}"]))
         ax[r, c].plot(x, history[f"train_{key}"], label=f"train_{key}")
         ax[r, c].plot(x, history[f"val_{key}"], label=f"val_{key}")
         ax[r, c].set_title(key)
         ax[r, c].legend()
 
-    fig.savefig(os.path.join(output_folder, "History.png"))
+    fig.savefig(os.path.join(output_folder, f"{name}.png"))
 
 
 def plot_embed(embeds, vocab, output_folder, fname="Word Embeddings TSNE"):

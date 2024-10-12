@@ -64,7 +64,7 @@ class PreprocessBERTPretrain:
         return text_ls
     
     def get_vocab(self, text_ls):
-        self.logger.info("Building Vocabulary using Byte Pair Encoding method")
+        self.logger.info("Building Vocabulary using Word piece Tokenization method")
         corpus = self.wordpiece.fit(text_ls)
         vocab = ["<PAD>", "<UNK>", "<CLS>", "<SEP>", "<MASK>"] + list(self.wordpiece.vocab_freq.keys())
 

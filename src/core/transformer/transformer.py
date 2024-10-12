@@ -49,7 +49,7 @@ class Transformer:
             json.dump(self.history, fp)
 
         src_embeds = self.model.src_embed_layer.weight.detach().numpy()
-        vocab = list(self.transformer_ds.id2word.keys())
+        vocab = list(self.transformer_ds.word2id.keys())
         plot_embed(src_embeds, vocab, output_folder, fname="Tokens Embeddings TSNE")
 
         plot_history(self.history, output_folder)

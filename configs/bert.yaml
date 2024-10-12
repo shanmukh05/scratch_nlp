@@ -26,7 +26,7 @@ model:
   num_layers: 4
   dropout: 0.3
 train:
-  epochs: 20
+  epochs: 2
   lr: 0.001
   eval_metric: "Perplexity"
   bleu_n: 4
