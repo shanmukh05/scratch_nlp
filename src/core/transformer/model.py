@@ -182,7 +182,7 @@ class TransformerModel(nn.Module):
             dec_output = layer(enc_output, dec_output)
         
         output = self.classifier_layer(dec_output)
-        output = nn.Softmax(dim=-1)(output)
+        # output = nn.Softmax(dim=-1)(output)
 
         return output
 

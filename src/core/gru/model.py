@@ -64,7 +64,8 @@ class GRUModel(nn.Module):
 
         for i in range(self.seq_len):
             ht, yt = self.gru_cell(ht, x_embed[:, i, :])
-            yprob = nn.Softmax()(self.classifier_layer(yt))
+            # yprob = nn.Softmax()(self.classifier_layer(yt))
+            yprob = self.classifier_layer(yt)
             yprobs.append(yprob[:, None, :])
 
         return torch.concat(yprobs, dim=1)

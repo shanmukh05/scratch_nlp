@@ -188,7 +188,8 @@ class Seq2SeqDecoder(nn.Module):
 
             st, ct, yt = self.dec_lstm_cell(st, ct, yt)
             yt = self.tgt_word_classifier(yt)
-            pt = nn.Softmax()(yt)[:, None, :]
+            # pt = nn.Softmax()(yt)[:, None, :]
+            pt = yt[:, None, :]
             pts.append(pt)
             attn_weights.append(weights)
 

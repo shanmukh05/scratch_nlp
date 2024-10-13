@@ -103,7 +103,8 @@ class LSTMModel(nn.Module):
                 hts[i], cts[i] = ht, ct
                 
             yt = self.word_classifier(yt)
-            pt = nn.Softmax()(yt)[:, None, :]
+            # pt = nn.Softmax()(yt)[:, None, :]
+            pt = yt[:, None, :]
             pts.append(pt)
             
             if j >=  self.seq_len - 1:

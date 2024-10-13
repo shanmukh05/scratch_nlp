@@ -64,8 +64,8 @@ class PreprocessBERTFinetune:
             if end_id <= half_seq_len:
                 cxt_tokens.append([self.word2id[ch] if ch in vocab else self.word2id["<UNK>"] for ch in ["<CLS>"] + cxt_token])
                 ques_tokens.append([self.word2id[ch] if ch in vocab else self.word2id["<UNK>"] for ch in ["<SEP>"] + ques_token])
-                start_ids.append(half_seq_len + 1 + start_id) 
-                end_ids.append(half_seq_len + 1 + end_id)
+                start_ids.append(start_id) 
+                end_ids.append(end_id)
                 topics.append(df.iloc[id]["Topic"])
             
             cxt_count += cxt_len

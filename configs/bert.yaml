@@ -26,7 +26,7 @@ model:
   num_layers: 4
   dropout: 0.3
 train:
-  epochs: 2
+  epochs: 10
   lr: 0.001
 visualize: True
 
@@ -44,5 +44,5 @@ finetune:
     randomize: False
     operations: ["lcase"]
   train:
-    epochs: 2
+    epochs: 10
     lr: 0.001
