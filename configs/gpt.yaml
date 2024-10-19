@@ -1,0 +1,33 @@
+paths:
+  input_folder: D:\Learning\NLP\Projects\scratch_nlp\data\lambada\novels
+  test_file: D:\Learning\NLP\Projects\scratch_nlp\data\lambada\test_sequences.txt
+  output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\gpt
+dataset:
+  num_sents_per_doc: 20
+  random_lines: False
+  val_split: 0.2
+  test_samples: 100
+  num_vocab: 256
+  num_extra_tokens: 2
+  seq_len: 64
+  seed: 2023
+  batch_size: 16
+preprocess:
+  randomize: False
+  operations: [lcase, remalpha]
+model:
+  d_model: 64
+  d_ff: 128
+  num_heads: 8
+  num_layers: 4
+  dropout: 0.3
+train:
+  epochs: 20
+  lr: 0.001
+  eval_metric: "Perplexity"
+  bleu_n: 4
+  rouge_n_n: 2
+  rouge_s_n: 2
+test:
+  predict_tokens: 32
+visualize: True

@@ -16,6 +16,7 @@ from core.gru import gru
 from core.seq2seq import seq2seq
 from core.transformer import transformer
 from core.bert import bert
+from core.gpt import gpt
 
 os.environ["LOKY_MAX_CPU_COUNT"] = "4"
 
@@ -111,6 +112,10 @@ def main():
         algo = bert.BERT(config_dict)
         algo.run()
         # python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\bert.yaml" --algo "BERT" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\bert"
+    elif algo == "GPT":
+        algo = gpt.GPT(config_dict)
+        algo.run()
+        # python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\gpt.yaml" --algo "GPT" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\gpt"
 
 
 if __name__ == "__main__":

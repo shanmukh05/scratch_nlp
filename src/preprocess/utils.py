@@ -106,8 +106,8 @@ class BytePairEncoding:
     
     def run_merge(self, words):
         self.logger.info("Merging characters to achieve desired vocabulary")
-        num_merges = self.num_vocab - len(self.vocab_freq)
-        for _ in range(num_merges):
+        
+        while len(self.vocab_freq) < self.num_vocab:
             words = self.build_vocab(words)
         return words
 

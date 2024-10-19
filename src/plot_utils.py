@@ -83,7 +83,7 @@ def plot_history(history, output_folder, name="History"):
     keys = list(set(["_".join(i.split("_")[1:]) for i in history.keys()]))
 
     for i, key in enumerate(keys):
-        r, c = i//3+1, i%3
+        r, c = i//3, i%3
         x = np.arange(len(history[f"train_{key}"]))
         ax[r, c].plot(x, history[f"train_{key}"], label=f"train_{key}")
         ax[r, c].plot(x, history[f"val_{key}"], label=f"val_{key}")
