@@ -1,6 +1,6 @@
 paths:
-  input_folder: D:\Learning\NLP\Projects\scratch_nlp\data\imdb_reviews\train
-  test_folder: D:\Learning\NLP\Projects\scratch_nlp\data\imdb_reviews\test
+  input_folder: D:\Learning\NLP\Projects\scratch_nlp\sample_data\imdb_reviews\train
+  test_folder: D:\Learning\NLP\Projects\scratch_nlp\sample_data\imdb_reviews\test
   output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\rnn
 dataset:
   num_samples: 64

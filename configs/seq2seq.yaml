@@ -1,5 +1,5 @@
 paths:
-  input_file: D:\Learning\NLP\Projects\scratch_nlp\data\eng2tel\english_telugu_data.txt
+  input_file: D:\Learning\NLP\Projects\scratch_nlp\sample_data\eng2tel\english_telugu_data.txt
   output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\seq2seq
 dataset: 
   num_samples: 128

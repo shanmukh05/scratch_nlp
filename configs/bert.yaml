@@ -1,5 +1,5 @@
 paths:
-    input_file: D:\Learning\NLP\Projects\scratch_nlp\data\wiki_en\wiki_en.csv
+    input_file: D:\Learning\NLP\Projects\scratch_nlp\sample_data\wiki_en\wiki_en.csv
     output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\bert
 dataset:
   num_samples: 128
@@ -32,7 +32,7 @@ visualize: True
 
 finetune:
   paths:
-    input_file: D:\Learning\NLP\Projects\scratch_nlp\data\squad\squad_v1.json
+    input_file: D:\Learning\NLP\Projects\scratch_nlp\sample_data\squad\squad_v1.json
     pretrain_weights: D:\Learning\NLP\Projects\scratch_nlp\output\bert\best_model_pretrain.pt
   dataset:
     num_topics: 25

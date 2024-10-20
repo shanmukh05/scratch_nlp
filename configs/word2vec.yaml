@@ -1,5 +1,5 @@
 paths:
-  input_folder: D:\Learning\NLP\Projects\scratch_nlp\data\imdb_reviews\train
+  input_folder: D:\Learning\NLP\Projects\scratch_nlp\sample_data\imdb_reviews\train
   output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\word2vec
 dataset:
   num_samples: 5

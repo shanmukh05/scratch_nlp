@@ -1,5 +1,5 @@
 paths:
-    input_file: D:\Learning\NLP\Projects\scratch_nlp\data\genius_lyrics\english_lyrics.csv
+    input_file: D:\Learning\NLP\Projects\scratch_nlp\sample_data\genius_lyrics\english_lyrics.csv
     output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\transformer
 dataset:
   num_samples: 128

@@ -1,6 +1,6 @@
 paths:
-  image_folder: D:\Learning\NLP\Projects\scratch_nlp\data\flickr_8k\Images
-  captions_file: D:\Learning\NLP\Projects\scratch_nlp\data\flickr_8k\captions.txt
+  image_folder: D:\Learning\NLP\Projects\scratch_nlp\sample_data\flickr_8k\Images
+  captions_file: D:\Learning\NLP\Projects\scratch_nlp\sample_data\flickr_8k\captions.txt
   output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\lstm
 dataset: 
   train_samples: 32

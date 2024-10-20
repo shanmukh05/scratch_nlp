@@ -1,6 +1,6 @@
 paths:
-  input_folder: D:\Learning\NLP\Projects\scratch_nlp\data\lambada\novels
-  test_file: D:\Learning\NLP\Projects\scratch_nlp\data\lambada\test_sequences.txt
+  input_folder: D:\Learning\NLP\Projects\scratch_nlp\sample_data\lambada\novels
+  test_file: D:\Learning\NLP\Projects\scratch_nlp\sample_data\lambada\test_sequences.txt
   output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\gpt
 dataset:
   num_sents_per_doc: 20
