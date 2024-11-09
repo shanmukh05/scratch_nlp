@@ -8,6 +8,16 @@ from nltk.corpus import stopwords
 
 
 def preprocess_text(text, operations=None):
+    """
+    _summary_
+
+    :param text: _description_
+    :type text: _type_
+    :param operations: _description_, defaults to None
+    :type operations: _type_, optional
+    :return: _description_
+    :rtype: _type_
+    """    
     if "lcase" in operations or operations is None:
         text = text.lower()
     if "remalpha" in operations or operations is None:
@@ -23,18 +33,40 @@ def preprocess_text(text, operations=None):
 
 class BytePairEncoding:
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
 
         self.num_vocab = config_dict["dataset"]["num_vocab"] - config_dict["dataset"]["num_extra_tokens"] 
         self.operations = config_dict["preprocess"]["operations"]
 
     def fit(self, text_ls):
+        """
+        _summary_
+
+        :param text_ls: _description_
+        :type text_ls: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         words = self.preprocess(text_ls)
         words = self.run_merge(words)
 
         return words
 
     def transform(self, text_ls):
+        """
+        _summary_
+
+        :param text_ls: _description_
+        :type text_ls: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         words = self.preprocess(text_ls, "test")
         vocab = list(self.vocab_freq.keys())
 
@@ -44,6 +76,16 @@ class BytePairEncoding:
         return words
 
     def merge_chars(self, word, vocab):
+        """
+        _summary_
+
+        :param word: _description_
+        :type word: _type_
+        :param vocab: _description_
+        :type vocab: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         merge = True
         while merge:
             tokens = word.split()
@@ -64,6 +106,16 @@ class BytePairEncoding:
         return word
 
     def preprocess(self, text_ls, data="train"):
+        """
+        _summary_
+
+        :param text_ls: _description_
+        :type text_ls: _type_
+        :param data: _description_, defaults to "train"
+        :type data: str, optional
+        :return: _description_
+        :rtype: _type_
+        """        
         corpus = " ".join(text_ls)
         words = corpus.split()
         words = [" ".join(list(w))+ " </w>" for w in words]
@@ -76,6 +128,14 @@ class BytePairEncoding:
         return words
 
     def get_stats(self, words):
+        """
+        _summary_
+
+        :param words: _description_
+        :type words: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         words_freq = Counter(words)
         pair_dict = defaultdict(int)
         for word, freq in words_freq.items():
@@ -85,6 +145,14 @@ class BytePairEncoding:
         return pair_dict
     
     def build_vocab(self, words):
+        """
+        _summary_
+
+        :param words: _description_
+        :type words: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         pair_dict = self.get_stats(words)
         best_pair = max(pair_dict, key=pair_dict.get)
         best_pair_count = pair_dict[best_pair]
@@ -105,6 +173,14 @@ class BytePairEncoding:
         return words
     
     def run_merge(self, words):
+        """
+        _summary_
+
+        :param words: _description_
+        :type words: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.logger.info("Merging characters to achieve desired vocabulary")
         
         while len(self.vocab_freq) < self.num_vocab:
@@ -114,18 +190,40 @@ class BytePairEncoding:
 
 class WordPiece:
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
 
         self.num_vocab = config_dict["dataset"]["num_vocab"] - config_dict["dataset"]["num_extra_tokens"] 
         self.operations = config_dict["preprocess"]["operations"]
 
     def fit(self, text_ls):
+        """
+        _summary_
+
+        :param text_ls: _description_
+        :type text_ls: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         corpus = self.preprocess(text_ls)
         corpus = self.run_merge(corpus)
 
         return corpus
 
     def transform(self, text_ls):
+        """
+        _summary_
+
+        :param text_ls: _description_
+        :type text_ls: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         corpus = self.preprocess(text_ls, "test")
         vocab = list(self.vocab_freq.keys())
 
@@ -135,6 +233,16 @@ class WordPiece:
         return corpus
     
     def merge_chars(self, word, vocab):
+        """
+        _summary_
+
+        :param word: _description_
+        :type word: _type_
+        :param vocab: _description_
+        :type vocab: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         j = 0
         while j < len(word) - 1:
             ch1, ch2 = word[j], word[j+1]
@@ -146,6 +254,16 @@ class WordPiece:
         return word
     
     def preprocess(self, text_ls, data="train"):
+        """
+        _summary_
+
+        :param text_ls: _description_
+        :type text_ls: _type_
+        :param data: _description_, defaults to "train"
+        :type data: str, optional
+        :return: _description_
+        :rtype: _type_
+        """        
         words = " ".join(text_ls).split()
         corpus = []
 
@@ -161,6 +279,14 @@ class WordPiece:
         return corpus
     
     def get_stats(self, corpus):
+        """
+        _summary_
+
+        :param corpus: _description_
+        :type corpus: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         pair_freq = defaultdict(int)
         for corp in corpus:
             if len(corp) == 1:
@@ -170,6 +296,16 @@ class WordPiece:
         return pair_freq
     
     def get_likelihood(self, pair, pair_freq):
+        """
+        _summary_
+
+        :param pair: _description_
+        :type pair: _type_
+        :param pair_freq: _description_
+        :type pair_freq: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         p12 = pair_freq[pair]
         p1, p2 = self.vocab_freq[pair[0]], self.vocab_freq[pair[1]]
         lkhd = p12/(p1*p2)
@@ -177,10 +313,26 @@ class WordPiece:
         return lkhd
 
     def combine(self, pair):
+        """
+        _summary_
+
+        :param pair: _description_
+        :type pair: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         token1, token2 = pair
         return token1 + token2[2:] if token2.startswith("##") else token1 + token2
     
     def build_vocab(self, corpus):
+        """
+        _summary_
+
+        :param corpus: _description_
+        :type corpus: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         pair_freq = self.get_stats(corpus)
         best_pair = max(pair_freq.keys(), key=lambda x: self.get_likelihood(x, pair_freq))
         new_ch = self.combine(best_pair)
@@ -208,6 +360,14 @@ class WordPiece:
         return corpus
     
     def run_merge(self, corpus):
+        """
+        _summary_
+
+        :param corpus: _description_
+        :type corpus: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         if len(self.vocab_freq) < self.num_vocab:
             while len(self.vocab_freq) < self.num_vocab:
                 corpus = self.build_vocab(corpus)

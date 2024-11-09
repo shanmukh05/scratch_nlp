@@ -8,6 +8,14 @@ import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
 
 def viz_metrics(metric_dict, output_folder):
+    """
+    _summary_
+
+    :param metric_dict: _description_
+    :type metric_dict: _type_
+    :param output_folder: _description_
+    :type output_folder: _type_
+    """    
     fig, ax = plt.subplots(1, 2, figsize=(40,15))
 
     sns.heatmap(metric_dict["conf_matrix"], ax=ax[0], annot=True, fmt='.10g', annot_kws={"size": 8})
@@ -25,6 +33,14 @@ def viz_metrics(metric_dict, output_folder):
 
 
 def plot_hist_dataset(data, output_folder):
+    """
+    _summary_
+
+    :param data: _description_
+    :type data: _type_
+    :param output_folder: _description_
+    :type output_folder: _type_
+    """    
     fig, ax = plt.subplots(1, 2, figsize=(20,10))
 
     train_x_len = [len(i) for i in data[0]]
@@ -47,11 +63,27 @@ def plot_hist_dataset(data, output_folder):
     fig.savefig(os.path.join(output_folder, "Data Analysis.png"), bbox_inches='tight')
 
 def plot_transition_matrix(trans_matrix_df, output_folder):
+    """
+    _summary_
+
+    :param trans_matrix_df: _description_
+    :type trans_matrix_df: _type_
+    :param output_folder: _description_
+    :type output_folder: _type_
+    """    
     fig, ax = plt.subplots(1, 1, figsize=(10,10))
     sns.heatmap(trans_matrix_df, ax=ax)
     fig.savefig(os.path.join(output_folder, "Transition Matrix.png"), bbox_inches='tight')
 
 def pca_emission_matrix(em_matrix_df, output_folder):
+    """
+    _summary_
+
+    :param em_matrix_df: _description_
+    :type em_matrix_df: _type_
+    :param output_folder: _description_
+    :type output_folder: _type_
+    """    
     vocab = list(em_matrix_df.columns)
     pos = list(em_matrix_df.index)
 

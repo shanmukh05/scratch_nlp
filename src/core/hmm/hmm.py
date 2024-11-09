@@ -11,10 +11,19 @@ from .utils import viz_metrics, plot_hist_dataset, plot_transition_matrix, pca_e
 
 class HMM():
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
     def run(self):
+        """
+        _summary_
+        """        
         trainX, testX, trainY, testY = self.preprocess()
         self.fit(trainX, trainY)
         testYP = self.predict(testX)
@@ -22,6 +31,14 @@ class HMM():
         self.save_output((trainX, testX, trainY, testY), metric_dict)
 
     def fit(self, X, y):
+        """
+        _summary_
+
+        :param X: _description_
+        :type X: _type_
+        :param y: _description_
+        :type y: _type_
+        """        
         if X is None or y is None:
             self.logger.error("X/&y is/are missing in fit() function")
 
@@ -51,6 +68,14 @@ class HMM():
 
 
     def predict(self, X):
+        """
+        _summary_
+
+        :param X: _description_
+        :type X: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         if X is None:
             self.logger.error("X is missing in predict() function")
         y_pred_total = []
@@ -79,6 +104,16 @@ class HMM():
                 
 
     def evaluate(self, Y, YP):
+        """
+        _summary_
+
+        :param Y: _description_
+        :type Y: _type_
+        :param YP: _description_
+        :type YP: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         metric_dict = {}
 
         y_true = list(itertools.chain.from_iterable(Y))
@@ -90,6 +125,12 @@ class HMM():
         return metric_dict
 
     def preprocess(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         num_samples = self.config_dict["dataset"]["num_samples"]
         seed = self.config_dict["dataset"]["seed"]
         test_size = self.config_dict["dataset"]["test_size"]
@@ -103,6 +144,14 @@ class HMM():
 
 
     def save_output(self, data, metric_dict):
+        """
+        _summary_
+
+        :param data: _description_
+        :type data: _type_
+        :param metric_dict: _description_
+        :type metric_dict: _type_
+        """        
         self.logger.info("Saving Vectors and Plots into Output Folder")
         output_folder = self.config_dict["paths"]["output_folder"]
         os.makedirs(output_folder, exist_ok=True)

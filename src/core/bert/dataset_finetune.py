@@ -11,6 +11,16 @@ from preprocess.utils import preprocess_text
 
 class PreprocessBERTFinetune:
     def __init__(self, config_dict, wordpiece, word2id):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        :param wordpiece: _description_
+        :type wordpiece: _type_
+        :param word2id: _description_
+        :type word2id: _type_
+        """        
         self.logger = logging.getLogger(__name__)
 
         self.input_path = config_dict["finetune"]["paths"]["input_file"]
@@ -23,6 +33,12 @@ class PreprocessBERTFinetune:
         self.id2word = {v:k for k,v in self.word2id.items()}
 
     def get_data(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         df = self.extract_data()
 
         df["Context"] = df["Context"].map(lambda x: self.preprocess_text(x))
@@ -76,11 +92,27 @@ class PreprocessBERTFinetune:
         return tokens, np.array(start_ids), np.array(end_ids), np.array(topics)
 
     def preprocess_text(self, text):
+        """
+        _summary_
+
+        :param text: _description_
+        :type text: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         text = preprocess_text(text, self.operations)
 
         return text
     
     def batched_ids2tokens(self, tokens):
+        """
+        _summary_
+
+        :param tokens: _description_
+        :type tokens: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         func = lambda x : self.id2word[x]
         vect_func = np.vectorize(func)
 
@@ -103,6 +135,12 @@ class PreprocessBERTFinetune:
         return sentences
     
     def extract_data(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         with open(self.input_path, 'r') as f:
             data = json.load(f)
 
@@ -144,6 +182,28 @@ class PreprocessBERTFinetune:
 
 
 def create_data_loader_finetune(tokens, start_ids, end_ids, topics, val_split=0.2, test_split=0.2, batch_size=32, seed=2024):
+    """
+    _summary_
+
+    :param tokens: _description_
+    :type tokens: _type_
+    :param start_ids: _description_
+    :type start_ids: _type_
+    :param end_ids: _description_
+    :type end_ids: _type_
+    :param topics: _description_
+    :type topics: _type_
+    :param val_split: _description_, defaults to 0.2
+    :type val_split: float, optional
+    :param test_split: _description_, defaults to 0.2
+    :type test_split: float, optional
+    :param batch_size: _description_, defaults to 32
+    :type batch_size: int, optional
+    :param seed: _description_, defaults to 2024
+    :type seed: int, optional
+    :return: _description_
+    :rtype: _type_
+    """    
     train_tokens, val_tokens, train_start_ids, val_start_ids, train_end_ids, val_end_ids, _, val_topics = train_test_split(tokens, start_ids, end_ids, topics, test_size=val_split+test_split, random_state=seed, stratify=topics)
     val_tokens, test_tokens, val_start_ids, test_start_ids, val_end_ids, test_end_ids, val_topics, _ = train_test_split(val_tokens, val_start_ids, val_end_ids, val_topics, test_size=test_split/(val_split+test_split), random_state=seed, stratify=val_topics)
 

@@ -8,6 +8,12 @@ from core.word2vec.dataset import Word2VecDataset
 
 class GloVeDataset(Word2VecDataset):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
         self.num_vocab = config_dict["dataset"]["num_vocab"]
@@ -20,6 +26,12 @@ class GloVeDataset(Word2VecDataset):
         self.get_vocab()
 
     def get_data(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         self.cooccur_mat = np.zeros((1+self.num_vocab, 1+self.num_vocab))
 
         for text in self.text_ls:
@@ -44,6 +56,24 @@ class GloVeDataset(Word2VecDataset):
 
 
 def create_dataloader(X_ctr, X_cxt, X_count, val_split, batch_size, seed):
+    """
+    _summary_
+
+    :param X_ctr: _description_
+    :type X_ctr: _type_
+    :param X_cxt: _description_
+    :type X_cxt: _type_
+    :param X_count: _description_
+    :type X_count: _type_
+    :param val_split: _description_
+    :type val_split: _type_
+    :param batch_size: _description_
+    :type batch_size: _type_
+    :param seed: _description_
+    :type seed: _type_
+    :return: _description_
+    :rtype: _type_
+    """    
     train_ctr, val_ctr, train_cxt, val_cxt, train_count, val_count = train_test_split(X_ctr, X_cxt, X_count, test_size=val_split, random_state=seed)
 
     train_ds = TensorDataset(torch.Tensor(train_ctr), torch.Tensor(train_cxt), torch.Tensor(train_count))

@@ -9,17 +9,34 @@ from plot_utils import plot_topk_freq, plot_wordcloud, plot_ngram_pie_chart
 
 class NGRAM(BOW):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
         self.return_label = self.config_dict["model"]["output_label"]
         self.n = self.config_dict["model"]["ngram"]
 
     def run(self):
+        """
+        _summary_
+        """        
         self.preprocess()
         X, y = self.fit_transform()
         self.save_output(X, y)
 
     def fit(self, text_ls=None, y=None):
+        """
+        _summary_
+
+        :param text_ls: _description_, defaults to None
+        :type text_ls: _type_, optional
+        :param y: _description_, defaults to None
+        :type y: _type_, optional
+        """        
         self.logger.info("Fitting NGRAM to Extracted Data")
         if text_ls is None:
             text_ls, y = self.text_ls, self.y
@@ -31,6 +48,16 @@ class NGRAM(BOW):
             self.vocab = list(set(self.vocab))
     
     def fit_transform(self, text_ls=None, y=None):
+        """
+        _summary_
+
+        :param text_ls: _description_, defaults to None
+        :type text_ls: _type_, optional
+        :param y: _description_, defaults to None
+        :type y: _type_, optional
+        :return: _description_
+        :rtype: _type_
+        """        
         if text_ls is None:
             text_ls, y = self.text_ls, self.y
         self.fit(text_ls, y)
@@ -38,6 +65,16 @@ class NGRAM(BOW):
         return X, y
     
     def transform(self, text_ls=None, y=None):
+        """
+        _summary_
+
+        :param text_ls: _description_, defaults to None
+        :type text_ls: _type_, optional
+        :param y: _description_, defaults to None
+        :type y: _type_, optional
+        :return: _description_
+        :rtype: _type_
+        """        
         self.logger.info("Transforming Txt Data into Vectors")
         if text_ls is None:
             text_ls, y = self.text_ls, self.y
@@ -55,6 +92,14 @@ class NGRAM(BOW):
         return X, y
     
     def save_output(self, X, y):
+        """
+        _summary_
+
+        :param X: _description_
+        :type X: _type_
+        :param y: _description_
+        :type y: _type_
+        """        
         self.logger.info("Saving Vectors and Plots into Output Folder")
         output_folder = self.config_dict["paths"]["output_folder"]
         os.makedirs(output_folder, exist_ok=True)

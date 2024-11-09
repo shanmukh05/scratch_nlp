@@ -10,12 +10,24 @@ from .utils import preprocess_text
 
 class PreprocessFlickr:
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """
         self.logger = logging.getLogger(__name__)
 
         self.config_dict = config_dict
         self.train_df, self.test_df = self.extract_data()
 
     def get_data(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """
         self.get_vocab(self.train_df)
         train_tokens = self.word_tokens(self.train_df)
 
@@ -24,6 +36,12 @@ class PreprocessFlickr:
         return list(self.train_df["Path"]), train_tokens, (train_transforms, test_transforms)
 
     def get_test_data(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """
         test_tokens = self.word_tokens(self.test_df)
         test_transforms = self.image_transforms("test")
 
@@ -31,6 +49,12 @@ class PreprocessFlickr:
     
     
     def extract_data(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """
         self.logger.info("Creating a DataFrame from images folder and captions txt file")
         im_folder = self.config_dict["paths"]["image_folder"]
         caption_file = self.config_dict["paths"]["captions_file"]
@@ -57,6 +81,12 @@ class PreprocessFlickr:
         return train_df, test_df
 
     def get_vocab(self, train_df):
+        """
+        _summary_
+
+        :param train_df: _description_
+        :type train_df: _type_
+        """
         self.logger.info("Building Vocabulary from training data captions")
         num_vocab = self.config_dict["dataset"]["num_vocab"] - self.config_dict["dataset"]["num_extra_tokens"]
         all_words = []
@@ -70,6 +100,14 @@ class PreprocessFlickr:
         self.id2word = {v:k for k,v in self.word2id.items()}
 
     def word_tokens(self, df):
+        """
+        _summary_
+
+        :param df: _description_
+        :type df: _type_
+        :return: _description_
+        :rtype: _type_
+        """
         seq_len = self.config_dict["dataset"]["seq_len"]
 
         tokens = np.zeros((len(df), seq_len))
@@ -89,6 +127,14 @@ class PreprocessFlickr:
         return tokens 
     
     def batched_ids2captions(self, tokens):
+        """
+        _summary_
+
+        :param tokens: _description_
+        :type tokens: _type_
+        :return: _description_
+        :rtype: _type_
+        """
         func = lambda x : self.id2word[x]
         vect_func = np.vectorize(func)
 
@@ -104,6 +150,14 @@ class PreprocessFlickr:
         return captions
 
     def image_transforms(self, data_type):
+        """
+        _summary_
+
+        :param data_type: _description_
+        :type data_type: _type_
+        :return: _description_
+        :rtype: _type_
+        """
         im_w, im_h = self.config_dict["preprocess"]["image_dim"][1:]
         train_transforms = A.Compose([
                                     A.Resize(im_w, im_h),

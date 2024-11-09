@@ -1,6 +1,6 @@
 paths:
-    input_file: D:\Learning\NLP\Projects\scratch_nlp\sample_data\wiki_en\wiki_en.csv
-    output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\bert
+  input_file: D:\Learning\NLP\Projects\scratch_nlp\sample_data\wiki_en\wiki_en.csv
+  output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\bert
 dataset:
   num_samples: 128
   val_split: 0.2

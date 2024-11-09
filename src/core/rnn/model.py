@@ -13,6 +13,16 @@ from metrics import ClassificationMetrics
 ### RNN Cell
 class RNNCell(nn.Module):
     def __init__(self, h_dim, inp_x_dim, out_x_dim):
+        """
+        _summary_
+
+        :param h_dim: _description_
+        :type h_dim: _type_
+        :param inp_x_dim: _description_
+        :type inp_x_dim: _type_
+        :param out_x_dim: _description_
+        :type out_x_dim: _type_
+        """        
         super(RNNCell, self).__init__()
         
         self.hh_dense = nn.Linear(h_dim, h_dim)
@@ -21,6 +31,16 @@ class RNNCell(nn.Module):
         self.xh_dense = nn.Linear(h_dim, out_x_dim)
 
     def forward(self, ht_1, xt):
+        """
+        _summary_
+
+        :param ht_1: _description_
+        :type ht_1: _type_
+        :param xt: _description_
+        :type xt: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         ht = nn.Tanh()(self.hh_dense(ht_1) + self.hx_dense(xt))
         yt = self.xh_dense(ht)
         return ht, yt
@@ -28,6 +48,12 @@ class RNNCell(nn.Module):
 ### Stacked RNN
 class RNNModel(nn.Module):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(RNNModel, self).__init__()
 
         self.seq_len = config_dict["dataset"]["seq_len"]
@@ -48,6 +74,14 @@ class RNNModel(nn.Module):
             self.rnn_cells.append(RNNCell(h_dim, inp_x_dim, out_x_dim))
 
     def forward(self, X):
+        """
+        _summary_
+
+        :param X: _description_
+        :type X: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         x_embed = self.embed_layer(X.to(torch.long))
         self.num_samples = x_embed.size(0)
         
@@ -74,6 +108,12 @@ class RNNModel(nn.Module):
         return out
 
     def init_hidden(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         hts = [nn.init.kaiming_uniform_(torch.empty(self.num_samples, dim)) for dim in self.h_dims]
 
         return hts
@@ -81,6 +121,16 @@ class RNNModel(nn.Module):
 
 class RNNTrainer(nn.Module):
     def __init__(self, model, optimizer, config_dict):
+        """
+        _summary_
+
+        :param model: _description_
+        :type model: _type_
+        :param optimizer: _description_
+        :type optimizer: _type_
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(RNNTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
 
@@ -93,6 +143,16 @@ class RNNTrainer(nn.Module):
         self.target_names = list(config_dict["dataset"]["labels"])
 
     def train_one_epoch(self, data_loader, epoch):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :param epoch: _description_
+        :type epoch: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.train()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
@@ -124,6 +184,14 @@ class RNNTrainer(nn.Module):
 
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
@@ -151,6 +219,14 @@ class RNNTrainer(nn.Module):
     
     @torch.no_grad()
     def predict(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         y_pred = []
 
@@ -165,6 +241,16 @@ class RNNTrainer(nn.Module):
         return y_pred
 
     def fit(self, train_loader, val_loader):
+        """
+        _summary_
+
+        :param train_loader: _description_
+        :type train_loader: _type_
+        :param val_loader: _description_
+        :type val_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 

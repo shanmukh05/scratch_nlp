@@ -16,7 +16,13 @@ from metrics import TextGenerationMetrics
 
 class DecoderLayer(nn.Module):
     def __init__(self, config_dict):
-        super(DecoderLayer, self).__init__()
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
+        super(DecoderLayer, self).__init__()     
 
         dropout = config_dict["model"]["dropout"]
         d_model = config_dict["model"]["d_model"]
@@ -30,6 +36,14 @@ class DecoderLayer(nn.Module):
         self.feed_forward = FeedForward(config_dict)
 
     def forward(self, tokens):
+        """
+        _summary_
+
+        :param tokens: _description_
+        :type tokens: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         tokens = self.layer_norm(tokens)
         masked_attn_output = self.mh_masked_self_attn(tokens, tokens, tokens, True)
         output = tokens + self.dropout1(masked_attn_output)
@@ -42,7 +56,13 @@ class DecoderLayer(nn.Module):
 
 class GPTModel(nn.Module):
     def __init__(self, config_dict):
-        super(GPTModel, self).__init__()
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
+        super(GPTModel, self).__init__()     
 
         embed_dim = config_dict["model"]["d_model"]
         num_vocab = config_dict["dataset"]["num_vocab"]
@@ -63,6 +83,14 @@ class GPTModel(nn.Module):
         self.classifier_layer = nn.Linear(embed_dim, num_vocab)
 
     def forward(self, tokens):
+        """
+        _summary_
+
+        :param tokens: _description_
+        :type tokens: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         embeds = self.dropout(self.positional_encoding(self.embed_layer(tokens)))
 
         dec_output = embeds
@@ -75,6 +103,14 @@ class GPTModel(nn.Module):
         return output
     
     def generate(self, tokens):
+        """
+        _summary_
+
+        :param tokens: _description_
+        :type tokens: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         tokens_pred = torch.zeros_like(tokens)
         tokens_pred[:, :self.seq_len] = tokens[:, :self.seq_len]
 
@@ -89,7 +125,17 @@ class GPTModel(nn.Module):
 
 class GPTTrainer(nn.Module):
     def __init__(self, model, optimizer, config_dict):
-        super(GPTTrainer, self).__init__()
+        """
+        _summary_
+
+        :param model: _description_
+        :type model: _type_
+        :param optimizer: _description_
+        :type optimizer: _type_
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
+        super(GPTTrainer, self).__init__()     
         self.logger = logging.getLogger(__name__)
 
         self.model = model
@@ -99,6 +145,16 @@ class GPTTrainer(nn.Module):
         self.eval_metric = config_dict["train"]["eval_metric"]
 
     def train_one_epoch(self, data_loader, epoch):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :param epoch: _description_
+        :type epoch: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.train()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
@@ -133,6 +189,14 @@ class GPTTrainer(nn.Module):
 
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
@@ -163,6 +227,14 @@ class GPTTrainer(nn.Module):
     
     @torch.no_grad()
     def predict(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         y_pred, sents = [], []
 
@@ -184,6 +256,14 @@ class GPTTrainer(nn.Module):
     
     @torch.no_grad()
     def generate(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         y_true, y_pred = [], []
 
@@ -202,6 +282,16 @@ class GPTTrainer(nn.Module):
 
 
     def fit(self, train_loader, val_loader):
+        """
+        _summary_
+
+        :param train_loader: _description_
+        :type train_loader: _type_
+        :param val_loader: _description_
+        :type val_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
@@ -239,6 +329,16 @@ class GPTTrainer(nn.Module):
         return history
     
     def calc_loss(self, y_pred, y_true):
+        """
+        _summary_
+
+        :param y_pred: _description_
+        :type y_pred: _type_
+        :param y_true: _description_
+        :type y_true: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         y_pred = torch.flatten(y_pred, end_dim=1)
 
         y_true = torch.flatten(y_true)

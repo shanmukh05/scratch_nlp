@@ -13,6 +13,14 @@ from metrics import TextGenerationMetrics
 
 class EncoderLSTMCell(nn.Module):
     def __init__(self, h_dim, inp_x_dim):
+        """
+        _summary_
+
+        :param h_dim: _description_
+        :type h_dim: _type_
+        :param inp_x_dim: _description_
+        :type inp_x_dim: _type_
+        """        
         super(EncoderLSTMCell, self).__init__()
 
         self.wf_dense = nn.Linear(h_dim, h_dim)
@@ -28,6 +36,18 @@ class EncoderLSTMCell(nn.Module):
         self.uc_dense = nn.Linear(inp_x_dim, h_dim)
 
     def forward(self, ht_1, ct_1, xt):
+        """
+        _summary_
+
+        :param ht_1: _description_
+        :type ht_1: _type_
+        :param ct_1: _description_
+        :type ct_1: _type_
+        :param xt: _description_
+        :type xt: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         ft = nn.Sigmoid()(self.wf_dense(ht_1) + self.uf_dense(xt))
         it = nn.Sigmoid()(self.wi_dense(ht_1) + self.ui_dense(xt))
         ot = nn.Sigmoid()(self.wo_dense(ht_1) + self.uo_dense(xt))
@@ -42,6 +62,16 @@ class EncoderLSTMCell(nn.Module):
 ### LSTM Cell
 class DecoderLSTMCell(nn.Module):
     def __init__(self, h_dim, inp_x_dim, out_x_dim):
+        """
+        _summary_
+
+        :param h_dim: _description_
+        :type h_dim: _type_
+        :param inp_x_dim: _description_
+        :type inp_x_dim: _type_
+        :param out_x_dim: _description_
+        :type out_x_dim: _type_
+        """        
         super(DecoderLSTMCell, self).__init__()
 
         self.wf_dense = nn.Linear(h_dim, h_dim)
@@ -59,6 +89,18 @@ class DecoderLSTMCell(nn.Module):
         self.xh_dense = nn.Linear(h_dim, out_x_dim)
 
     def forward(self, ht_1, ct_1, xt):
+        """
+        _summary_
+
+        :param ht_1: _description_
+        :type ht_1: _type_
+        :param ct_1: _description_
+        :type ct_1: _type_
+        :param xt: _description_
+        :type xt: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         ft = nn.Sigmoid()(self.wf_dense(ht_1) + self.uf_dense(xt))
         it = nn.Sigmoid()(self.wi_dense(ht_1) + self.ui_dense(xt))
         ot = nn.Sigmoid()(self.wo_dense(ht_1) + self.uo_dense(xt))
@@ -74,6 +116,12 @@ class DecoderLSTMCell(nn.Module):
 
 class Seq2SeqEncoder(nn.Module):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(Seq2SeqEncoder, self).__init__()
 
         self.seq_len = config_dict["dataset"]["seq_len"]
@@ -96,6 +144,14 @@ class Seq2SeqEncoder(nn.Module):
             self.enc_y_dense_layers.append(nn.Linear(2*h_dim, out_x_dim))
 
     def forward(self, src):
+        """
+        _summary_
+
+        :param src: _description_
+        :type src: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.num_samples = src.size(0)
 
         hts_fwd, cts_fwd = self.init_hidden(), self.init_hidden()
@@ -127,12 +183,24 @@ class Seq2SeqEncoder(nn.Module):
 
 
     def init_hidden(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         hts = [nn.init.kaiming_uniform_(torch.empty(self.num_samples, dim)) for dim in self.h_dims]
 
         return hts
 
 class Seq2SeqAttention(nn.Module):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(Seq2SeqAttention, self).__init__()
 
         decoder_s_dim = 2*config_dict["model"]["encoder_h_dim"][-1]
@@ -144,6 +212,16 @@ class Seq2SeqAttention(nn.Module):
         self.attn_weights = nn.Linear(decoder_s_dim, 1)
 
     def forward(self, si_1, yts):
+        """
+        _summary_
+
+        :param si_1: _description_
+        :type si_1: _type_
+        :param yts: _description_
+        :type yts: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         eij = self.attn_weights(self.si_dense(si_1.unsqueeze(1)) + self.yi_dense(yts))
         eij = eij.squeeze(2).unsqueeze(1)
 
@@ -154,6 +232,12 @@ class Seq2SeqAttention(nn.Module):
 
 class Seq2SeqDecoder(nn.Module):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(Seq2SeqDecoder, self).__init__()
 
         self.seq_len = config_dict["dataset"]["seq_len"]
@@ -171,6 +255,18 @@ class Seq2SeqDecoder(nn.Module):
         self.tgt_word_classifier = nn.Linear(decoder_y_dim, num_tgt_vocab)
 
     def forward(self, encoder_yts, encoder_h, tgt=None):
+        """
+        _summary_
+
+        :param encoder_yts: _description_
+        :type encoder_yts: _type_
+        :param encoder_h: _description_
+        :type encoder_h: _type_
+        :param tgt: _description_, defaults to None
+        :type tgt: _type_, optional
+        :return: _description_
+        :rtype: _type_
+        """        
         batch_size = encoder_yts.size(0)
         
         if tgt is None:
@@ -206,12 +302,28 @@ class Seq2SeqDecoder(nn.Module):
 
 class Seq2SeqModel(nn.Module):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(Seq2SeqModel, self).__init__()
 
         self.encoder = Seq2SeqEncoder(config_dict)
         self.decoder = Seq2SeqDecoder(config_dict)
 
     def forward(self, src, tgt=None):
+        """
+        _summary_
+
+        :param src: _description_
+        :type src: _type_
+        :param tgt: _description_, defaults to None
+        :type tgt: _type_, optional
+        :return: _description_
+        :rtype: _type_
+        """        
         encoder_yts, encoder_h = self.encoder(src)
         tgt_probs, attn_weights = self.decoder(encoder_yts, encoder_h, tgt)
 
@@ -220,6 +332,16 @@ class Seq2SeqModel(nn.Module):
 
 class Seq2SeqTrainer(nn.Module):
     def __init__(self, model, optimizer, config_dict):
+        """
+        _summary_
+
+        :param model: _description_
+        :type model: _type_
+        :param optimizer: _description_
+        :type optimizer: _type_
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(Seq2SeqTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
 
@@ -230,6 +352,16 @@ class Seq2SeqTrainer(nn.Module):
         self.eval_metric = config_dict["train"]["eval_metric"]
 
     def train_one_epoch(self, data_loader, epoch):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :param epoch: _description_
+        :type epoch: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.train()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
@@ -262,6 +394,14 @@ class Seq2SeqTrainer(nn.Module):
 
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
@@ -290,6 +430,14 @@ class Seq2SeqTrainer(nn.Module):
     
     @torch.no_grad()
     def predict(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         y_pred = []
 
@@ -304,6 +452,16 @@ class Seq2SeqTrainer(nn.Module):
         return y_pred
 
     def fit(self, train_loader, val_loader):
+        """
+        _summary_
+
+        :param train_loader: _description_
+        :type train_loader: _type_
+        :param val_loader: _description_
+        :type val_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
@@ -341,6 +499,16 @@ class Seq2SeqTrainer(nn.Module):
         return history
     
     def calc_loss(self, y_pred, y_true):
+        """
+        _summary_
+
+        :param y_pred: _description_
+        :type y_pred: _type_
+        :param y_true: _description_
+        :type y_true: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         y_pred = torch.flatten(y_pred, end_dim=1)
 
         y_true = torch.flatten(y_true)

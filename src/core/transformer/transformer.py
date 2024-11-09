@@ -11,6 +11,12 @@ from plot_utils import plot_embed, plot_history
 
 class Transformer:
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
@@ -20,6 +26,9 @@ class Transformer:
         self.seed = self.config_dict["dataset"]["seed"]
 
     def run(self):
+        """
+        _summary_
+        """        
         self.transformer_ds = PreprocessTransformer(self.config_dict)
         tokens = self.transformer_ds.get_data()
 
@@ -34,6 +43,12 @@ class Transformer:
         self.save_output()
     
     def run_infer(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         sents, tokens_pred = self.trainer.predict(self.test_loader)
         sents = self.transformer_ds.batched_ids2tokens(sents)
         tokens_pred = tokens_pred.argmax(axis=-1).astype("int")
@@ -42,6 +57,9 @@ class Transformer:
         return sents, tokens_pred
     
     def save_output(self):
+        """
+        _summary_
+        """        
         output_folder = self.config_dict["paths"]["output_folder"]
 
         self.logger.info(f"Saving Outputs {output_folder}")

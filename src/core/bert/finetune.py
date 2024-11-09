@@ -13,6 +13,16 @@ import torch.nn.functional as F
 
 class BERTFinetuneTrainer(nn.Module):
     def __init__(self, model, optimizer, config_dict):
+        """
+        _summary_
+
+        :param model: _description_
+        :type model: _type_
+        :param optimizer: _description_
+        :type optimizer: _type_
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(BERTFinetuneTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
 
@@ -21,6 +31,16 @@ class BERTFinetuneTrainer(nn.Module):
         self.config_dict = config_dict
 
     def train_one_epoch(self, data_loader, epoch):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :param epoch: _description_
+        :type epoch: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.train()
         total_loss, total_start_loss, total_end_loss, num_instances = 0, 0, 0, 0
 
@@ -52,6 +72,14 @@ class BERTFinetuneTrainer(nn.Module):
 
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         total_loss, total_start_loss, total_end_loss, num_instances = 0, 0, 0, 0
 
@@ -79,6 +107,14 @@ class BERTFinetuneTrainer(nn.Module):
     
     @torch.no_grad()
     def predict(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         y_start_ids, y_end_ids = [], []
         enc_outputs = []
@@ -103,6 +139,16 @@ class BERTFinetuneTrainer(nn.Module):
         return y_start_ids, y_end_ids, enc_outputs
 
     def fit(self, train_loader, val_loader):
+        """
+        _summary_
+
+        :param train_loader: _description_
+        :type train_loader: _type_
+        :param val_loader: _description_
+        :type val_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
@@ -139,6 +185,20 @@ class BERTFinetuneTrainer(nn.Module):
         return history
     
     def calc_loss(self, start_ids_prob, end_ids_prob, start_ids, end_ids):
+        """
+        _summary_
+
+        :param start_ids_prob: _description_
+        :type start_ids_prob: _type_
+        :param end_ids_prob: _description_
+        :type end_ids_prob: _type_
+        :param start_ids: _description_
+        :type start_ids: _type_
+        :param end_ids: _description_
+        :type end_ids: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         loss_fn = nn.NLLLoss()
 
         start_loss = loss_fn(start_ids_prob, start_ids)

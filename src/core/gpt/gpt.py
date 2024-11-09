@@ -10,6 +10,12 @@ from plot_utils import plot_embed, plot_history
 
 class GPT:
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
@@ -18,6 +24,9 @@ class GPT:
         self.seed = self.config_dict["dataset"]["seed"]
 
     def run(self):
+        """
+        _summary_
+        """        
         self.gpt_ds = PreprocessGPT(self.config_dict)
         tokens = self.gpt_ds.get_data()
 
@@ -32,6 +41,12 @@ class GPT:
         self.save_output()
     
     def run_infer(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         tokens = self.gpt_ds.get_test_data()
 
         test_loader = create_dataloader(tokens, "test", None, self.batch_size, self.seed)
@@ -43,6 +58,9 @@ class GPT:
         return tokens, tokens_pred
     
     def save_output(self):
+        """
+        _summary_
+        """        
         output_folder = self.config_dict["paths"]["output_folder"]
 
         self.logger.info(f"Saving Outputs {output_folder}")

@@ -15,6 +15,12 @@ from metrics import TextGenerationMetrics
 
 class MultiHeadAttention(nn.Module):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(MultiHeadAttention, self).__init__()
 
         self.seq_len = config_dict["dataset"]["seq_len"]
@@ -28,6 +34,20 @@ class MultiHeadAttention(nn.Module):
         self.Wo = nn.Linear(self.d_qkv*self.num_heads, self.d_model)
 
     def forward(self, Q, K, V, mask=False):
+        """
+        _summary_
+
+        :param Q: _description_
+        :type Q: _type_
+        :param K: _description_
+        :type K: _type_
+        :param V: _description_
+        :type V: _type_
+        :param mask: _description_, defaults to False
+        :type mask: bool, optional
+        :return: _description_
+        :rtype: _type_
+        """        
         batch_size = Q.size(0)
         Q = Q.view(batch_size, self.seq_len, self.num_heads, self.d_qkv).transpose(1, 2)
         K = K.view(batch_size, self.seq_len, self.num_heads, self.d_qkv).transpose(1, 2)
@@ -41,6 +61,20 @@ class MultiHeadAttention(nn.Module):
         return attn_qkv
 
     def _scaled_dotproduct_attention(self, Q, K, V, mask=None):
+        """
+        _summary_
+
+        :param Q: _description_
+        :type Q: _type_
+        :param K: _description_
+        :type K: _type_
+        :param V: _description_
+        :type V: _type_
+        :param mask: _description_, defaults to None
+        :type mask: _type_, optional
+        :return: _description_
+        :rtype: _type_
+        """        
         matmul = torch.matmul(Q, K.transpose(-1, -2))
         if mask:
             mask_ids = torch.triu_indices(self.seq_len, self.seq_len)
@@ -54,6 +88,12 @@ class MultiHeadAttention(nn.Module):
 
 class PositionalEncoding(nn.Module):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(PositionalEncoding, self).__init__()
 
         d_model = config_dict["model"]["d_model"]
@@ -67,6 +107,14 @@ class PositionalEncoding(nn.Module):
         self.pe = self.pe.unsqueeze(0)
 
     def forward(self, x):
+        """
+        _summary_
+
+        :param x: _description_
+        :type x: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         x = x + self.pe
 
         return x
@@ -74,6 +122,12 @@ class PositionalEncoding(nn.Module):
 
 class FeedForward(nn.Module):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(FeedForward, self).__init__()
 
         d_model = config_dict["model"]["d_model"]
@@ -83,6 +137,14 @@ class FeedForward(nn.Module):
         self.fc2 = nn.Linear(d_ff, d_model)
 
     def forward(self, x):
+        """
+        _summary_
+
+        :param x: _description_
+        :type x: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         x = self.fc1(x)
         x = self.fc2(x)
         x = nn.ReLU()(x)
@@ -92,6 +154,12 @@ class FeedForward(nn.Module):
 
 class EncoderLayer(nn.Module):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(EncoderLayer, self).__init__()
         dropout = config_dict["model"]["dropout"]
         d_model = config_dict["model"]["d_model"]
@@ -107,6 +175,14 @@ class EncoderLayer(nn.Module):
         self.dropout2 = nn.Dropout(dropout)
 
     def forward(self, src):
+        """
+        _summary_
+
+        :param src: _description_
+        :type src: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         attn_output = self.mh_self_attn(src, src, src)
         output = self.layer_norm1(src + self.dropout1(attn_output))
         ffwd_output = self.feed_forward(output)
@@ -117,6 +193,12 @@ class EncoderLayer(nn.Module):
 
 class DecoderLayer(nn.Module):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(DecoderLayer, self).__init__()
         dropout = config_dict["model"]["dropout"]
         d_model = config_dict["model"]["d_model"]
@@ -135,6 +217,16 @@ class DecoderLayer(nn.Module):
         self.feed_forward = FeedForward(config_dict)
 
     def forward(self, enc_output, tgt):
+        """
+        _summary_
+
+        :param enc_output: _description_
+        :type enc_output: _type_
+        :param tgt: _description_
+        :type tgt: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         masked_attn_output = self.mh_masked_self_attn(tgt, tgt, tgt, True)
         output = self.layer_norm1(tgt + self.dropout1(masked_attn_output))
 
@@ -149,6 +241,12 @@ class DecoderLayer(nn.Module):
 
 class TransformerModel(nn.Module):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(TransformerModel, self).__init__()
 
         embed_dim = config_dict["model"]["d_model"]
@@ -170,6 +268,16 @@ class TransformerModel(nn.Module):
         self.classifier_layer = nn.Linear(embed_dim, num_vocab)
 
     def forward(self, src, tgt):
+        """
+        _summary_
+
+        :param src: _description_
+        :type src: _type_
+        :param tgt: _description_
+        :type tgt: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         src_embed = self.dropout1(self.positional_encoding(self.src_embed_layer(src)))
         tgt_embed = self.dropout2(self.positional_encoding(self.tgt_embed_layer(tgt)))
 
@@ -189,6 +297,16 @@ class TransformerModel(nn.Module):
 
 class TransformerTrainer(nn.Module):
     def __init__(self, model, optimizer, config_dict):
+        """
+        _summary_
+
+        :param model: _description_
+        :type model: _type_
+        :param optimizer: _description_
+        :type optimizer: _type_
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(TransformerTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
 
@@ -199,6 +317,16 @@ class TransformerTrainer(nn.Module):
         self.eval_metric = config_dict["train"]["eval_metric"]
 
     def train_one_epoch(self, data_loader, epoch):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :param epoch: _description_
+        :type epoch: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.train()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
@@ -233,6 +361,14 @@ class TransformerTrainer(nn.Module):
 
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
@@ -263,6 +399,14 @@ class TransformerTrainer(nn.Module):
     
     @torch.no_grad()
     def predict(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         y_pred, sents = [], []
 
@@ -283,6 +427,16 @@ class TransformerTrainer(nn.Module):
         return sents, y_pred
 
     def fit(self, train_loader, val_loader):
+        """
+        _summary_
+
+        :param train_loader: _description_
+        :type train_loader: _type_
+        :param val_loader: _description_
+        :type val_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
@@ -320,6 +474,16 @@ class TransformerTrainer(nn.Module):
         return history
     
     def calc_loss(self, y_pred, y_true):
+        """
+        _summary_
+
+        :param y_pred: _description_
+        :type y_pred: _type_
+        :param y_true: _description_
+        :type y_true: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         y_pred = torch.flatten(y_pred, end_dim=1)
 
         y_true = torch.flatten(y_true)

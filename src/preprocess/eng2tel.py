@@ -8,6 +8,12 @@ from collections import Counter
 
 class PreprocessSeq2Seq:
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """
         self.logger = logging.getLogger(__name__)
 
         self.config_dict = config_dict
@@ -19,6 +25,14 @@ class PreprocessSeq2Seq:
         self.get_vocab(self.df)
 
     def get_data(self, df):
+        """
+        _summary_
+
+        :param df: _description_
+        :type df: _type_
+        :return: _description_
+        :rtype: _type_
+        """
         src = list(df["Source"].map(lambda x: self.preprocess_src(x)))
         tgt = list(df["Target"].map(lambda x: self.preprocess_tgt(x)))
 
@@ -44,6 +58,12 @@ class PreprocessSeq2Seq:
         return tokenSrc, tokenTgt
 
     def get_vocab(self, df):
+        """
+        _summary_
+
+        :param df: _description_
+        :type df: _type_
+        """
         self.logger.info("Building Vocabulary for Source and Target Languages using Training data")
 
         src = list(df["Source"].map(lambda x: self.preprocess_src(x)))
@@ -63,6 +83,16 @@ class PreprocessSeq2Seq:
 
     
     def batched_ids2tokens(self, tokens, type="src"):
+        """
+        _summary_
+
+        :param tokens: _description_
+        :type tokens: _type_
+        :param type: _description_, defaults to "src"
+        :type type: str, optional
+        :return: _description_
+        :rtype: _type_
+        """
         if type == "src":
             func = lambda x : self.id2wordSrc[x]
         else:
@@ -82,6 +112,14 @@ class PreprocessSeq2Seq:
 
     
     def preprocess_src(self, text):
+        """
+        _summary_
+
+        :param text: _description_
+        :type text: _type_
+        :return: _description_
+        :rtype: _type_
+        """
         text = text.lower().strip()
         text = re.sub(r'([?.!,¿_])',r' \1 ',text)
         text = re.sub(r'[" "]+', " ",text)
@@ -91,6 +129,14 @@ class PreprocessSeq2Seq:
         return text.split()
 
     def preprocess_tgt(self, text):
+        """
+        _summary_
+
+        :param text: _description_
+        :type text: _type_
+        :return: _description_
+        :rtype: _type_
+        """
         text = ''.join(
             c for c in unicodedata.normalize('NFD', text)
             if unicodedata.category(c) != 'BN'
@@ -102,6 +148,12 @@ class PreprocessSeq2Seq:
         return text.split()
     
     def extract_data(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """
         fpath = self.config_dict["paths"]["input_file"]
 
         with open(fpath, "r", encoding="utf-8") as f:

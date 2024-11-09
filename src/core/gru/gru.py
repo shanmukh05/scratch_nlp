@@ -11,6 +11,12 @@ from plot_utils import plot_embed, plot_history, plot_conf_matrix
 
 class GRU:
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
@@ -19,6 +25,9 @@ class GRU:
         self.seed = self.config_dict["dataset"]["seed"]
 
     def run(self):
+        """
+        _summary_
+        """        
         self.gru_ds = PreprocessPOS(self.config_dict)
         words, tags = self.gru_ds.get_data(self.gru_ds.corpus)
         self.config_dict["dataset"]["num_classes"] = len(self.gru_ds.unq_pos)
@@ -35,6 +44,12 @@ class GRU:
         self.save_output()
     
     def run_infer(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         test_words, test_tags = self.gru_ds.get_data(self.gru_ds.test_corpus)
         test_tags = test_tags.argmax(-1).flatten()
 
@@ -44,6 +59,9 @@ class GRU:
         return test_tags, test_tags_pred
 
     def save_output(self):
+        """
+        _summary_
+        """        
         output_folder = self.config_dict["paths"]["output_folder"]
 
         self.logger.info(f"Saving Outputs {output_folder}")

@@ -12,6 +12,12 @@ from plot_utils import plot_history, plot_embed
 
 class LSTM:
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
@@ -20,6 +26,9 @@ class LSTM:
         self.seed = self.config_dict["dataset"]["seed"]
 
     def run(self):
+        """
+        _summary_
+        """        
         self.lstm_ds = PreprocessFlickr(self.config_dict)
         train_paths, train_tokens, transforms = self.lstm_ds.get_data()
 
@@ -35,6 +44,12 @@ class LSTM:
     
     
     def run_infer(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         test_paths, test_tokens, transforms = self.lstm_ds.get_test_data()
         test_loader = create_dataloader(test_paths, test_tokens, transforms, self.val_split, self.batch_size, self.seed, "test")
 
@@ -47,6 +62,9 @@ class LSTM:
         return test_paths, test_captions, test_pred_captions
     
     def save_output(self):
+        """
+        _summary_
+        """        
         output_folder = self.config_dict["paths"]["output_folder"]
 
         self.logger.info(f"Saving Outputs {output_folder}")

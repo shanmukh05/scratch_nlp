@@ -10,10 +10,19 @@ from plot_utils import plot_embed
 
 class Word2Vec():
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
     def run(self):
+        """
+        _summary_
+        """        
         self.cbow_ds = Word2VecDataset(self.config_dict)
         l_cxt, r_cxt, l_lbl, r_lbl = self.cbow_ds.make_pairs()
 
@@ -31,6 +40,14 @@ class Word2Vec():
         self.save_output()
 
     def get_embeddings(self, sentence):
+        """
+        _summary_
+
+        :param sentence: _description_
+        :type sentence: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         operations = self.config_dict["preprocess"]["operations"]
         sentence = preprocess_text(sentence, operations)
         word_ls = sentence.split()
@@ -42,6 +59,9 @@ class Word2Vec():
         return word_embeds
 
     def save_output(self):
+        """
+        _summary_
+        """        
         output_folder = self.config_dict["paths"]["output_folder"]
         self.logger.info(f"Saving Outputs {output_folder}")
         

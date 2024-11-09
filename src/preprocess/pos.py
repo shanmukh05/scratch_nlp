@@ -16,6 +16,12 @@ CORPUS = {
 
 class PreprocessPOS:
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """
         self.logger = logging.getLogger(__name__)
 
         self.config_dict = config_dict
@@ -29,6 +35,14 @@ class PreprocessPOS:
         self.get_vocab(self.corpus)
 
     def get_data(self, corpus):
+        """
+        _summary_
+
+        :param corpus: _description_
+        :type corpus: _type_
+        :return: _description_
+        :rtype: _type_
+        """
         X, y = self.preprocess_corpus(corpus)
 
         tokenX = np.zeros((len(X), self.seq_len))
@@ -49,6 +63,12 @@ class PreprocessPOS:
         return tokenX, labels
 
     def get_vocab(self, corpus):
+        """
+        _summary_
+
+        :param corpus: _description_
+        :type corpus: _type_
+        """
         self.logger.info("Building Vocabulary for Words and POS tags from training data")
         X, y = self.preprocess_corpus(corpus)
 
@@ -68,6 +88,12 @@ class PreprocessPOS:
             
     
     def extract_data(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """
         self.logger.info("Extracting Train and Test corpus from global CORPUS variable")
         corpus = []
         for name in self.config_dict["dataset"]["train_corpus"]:
@@ -90,6 +116,14 @@ class PreprocessPOS:
         return [corpus[i] for i in train_ids], [test_corpus[i] for i in test_ids]
 
     def preprocess_corpus(self, corpus):
+        """
+        _summary_
+
+        :param corpus: _description_
+        :type corpus: _type_
+        :return: _description_
+        :rtype: _type_
+        """
         X = [[i[0] for i in sent] for sent in corpus]
         y = [[i[1] for i in sent] for sent in corpus]
 

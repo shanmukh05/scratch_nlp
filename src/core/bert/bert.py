@@ -17,10 +17,19 @@ from plot_utils import plot_embed, plot_history
 
 class BERT:
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
     def run(self):
+        """
+        _summary_
+        """        
         self.trainer_pretrain, self.pretrain_history = self.run_pretrain()
         self.model_pretrain = self.trainer_pretrain.model
 
@@ -30,6 +39,12 @@ class BERT:
         self.save_output()
 
     def run_pretrain(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         val_split = self.config_dict["dataset"]["val_split"]
         test_split = self.config_dict["dataset"]["test_split"]
         batch_size = self.config_dict["dataset"]["batch_size"]
@@ -57,6 +72,12 @@ class BERT:
         return trainer, history
     
     def run_finetune(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         val_split = self.config_dict["finetune"]["dataset"]["val_split"]
         test_split = self.config_dict["finetune"]["dataset"]["test_split"]
         batch_size = self.config_dict["finetune"]["dataset"]["batch_size"]
@@ -84,6 +105,12 @@ class BERT:
         return trainer, history
     
     def run_infer_finetune(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         start_ids, end_ids, enc_outputs = self.trainer_finetune.predict(self.test_loader)
         num_samples = len(start_ids)
         seq_len = self.config_dict["dataset"]["seq_len"]
@@ -115,6 +142,16 @@ class BERT:
 
 
     def load_pretrain_weights(self, pretrain_model, finetune_model):
+        """
+        _summary_
+
+        :param pretrain_model: _description_
+        :type pretrain_model: _type_
+        :param finetune_model: _description_
+        :type finetune_model: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         for i, layer in enumerate(pretrain_model.encoder_layers):
             finetune_model.encoder_layers[i].load_state_dict(layer.state_dict())
 
@@ -123,6 +160,9 @@ class BERT:
         return finetune_model
 
     def save_output(self):
+        """
+        _summary_
+        """        
         output_folder = self.config_dict["paths"]["output_folder"]
 
         self.logger.info(f"Saving Outputs {output_folder}")

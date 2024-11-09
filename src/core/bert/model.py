@@ -8,7 +8,13 @@ from core.transformer.model import EncoderLayer, PositionalEncoding
 
 class BERTPretrainModel(nn.Module):
     def __init__(self, config_dict):
-        super(BERTPretrainModel, self).__init__()
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
+        super(BERTPretrainModel, self).__init__()    
 
         embed_dim = config_dict["model"]["d_model"]
         num_vocab = config_dict["dataset"]["num_vocab"]
@@ -27,6 +33,14 @@ class BERTPretrainModel(nn.Module):
         self.nsp_classifier_layer = nn.LazyLinear(1)
 
     def forward(self, tokens):
+        """
+        _summary_
+
+        :param tokens: _description_
+        :type tokens: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         tokens_embed = self.dropout(self.positional_encoding(self.embed_layer(tokens)))
 
         enc_output = tokens_embed
@@ -43,7 +57,13 @@ class BERTPretrainModel(nn.Module):
 
 class BERTFinetuneModel(nn.Module):
     def __init__(self, config_dict):
-        super(BERTFinetuneModel, self).__init__()
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
+        super(BERTFinetuneModel, self).__init__()   
 
         embed_dim = config_dict["model"]["d_model"]
         num_vocab = config_dict["dataset"]["num_vocab"]
@@ -64,6 +84,14 @@ class BERTFinetuneModel(nn.Module):
         self.end = Variable(self.end, requires_grad=True)
 
     def forward(self, tokens):
+        """
+        _summary_
+
+        :param tokens: _description_
+        :type tokens: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         tokens_embed = self.dropout(self.positional_encoding(self.embed_layer(tokens)))
 
         enc_output = tokens_embed

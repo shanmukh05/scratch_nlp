@@ -10,6 +10,12 @@ from collections import defaultdict
 
 class Word2VecModel(nn.Module):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(Word2VecModel, self).__init__()
 
         self.embed_dim = config_dict["model"]["embed_dim"]
@@ -19,6 +25,20 @@ class Word2VecModel(nn.Module):
         self.lbl_embedding = nn.Embedding(self.num_vocab-1, self.embed_dim)
 
     def forward(self, l_cxt, r_cxt, l_lbl, r_lbl):
+        """
+        _summary_
+
+        :param l_cxt: _description_
+        :type l_cxt: _type_
+        :param r_cxt: _description_
+        :type r_cxt: _type_
+        :param l_lbl: _description_
+        :type l_lbl: _type_
+        :param r_lbl: _description_
+        :type r_lbl: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         l_cxt_emb = self.compute_cxt_embed(l_cxt)
         r_cxt_emb = self.compute_cxt_embed(r_cxt)
         l_lbl_emb = self.lbl_embedding(torch.LongTensor(l_lbl)-self.num_vocab)
@@ -35,11 +55,29 @@ class Word2VecModel(nn.Module):
         return -1 * loss
 
     def compute_cxt_embed(self, cxt):
+        """
+        _summary_
+
+        :param cxt: _description_
+        :type cxt: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         lbl_emb = self.cxt_embedding(torch.LongTensor(cxt))
         return torch.mean(lbl_emb, dim=1)
     
 class Word2VecTrainer(nn.Module):
     def __init__(self, model, optimizer, config_dict):
+        """
+        _summary_
+
+        :param model: _description_
+        :type model: _type_
+        :param optimizer: _description_
+        :type optimizer: _type_
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(Word2VecTrainer, self).__init__()
 
         self.logger = logging.getLogger(__name__)
@@ -49,6 +87,16 @@ class Word2VecTrainer(nn.Module):
         self.config_dict = config_dict
 
     def train_one_epoch(self, data_loader, epoch):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :param epoch: _description_
+        :type epoch: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.train()
         total_loss, num_instances = 0, 0
         left_loader, right_loader = data_loader
@@ -84,6 +132,14 @@ class Word2VecTrainer(nn.Module):
         
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         total_loss, num_instances = 0, 0
         left_loader, right_loader = data_loader
@@ -114,6 +170,16 @@ class Word2VecTrainer(nn.Module):
         return val_loss
 
     def fit(self, train_loader, val_loader):
+        """
+        _summary_
+
+        :param train_loader: _description_
+        :type train_loader: _type_
+        :param val_loader: _description_
+        :type val_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         logger = logging.getLogger(__name__)
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]

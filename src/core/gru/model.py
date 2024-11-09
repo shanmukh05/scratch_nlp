@@ -13,7 +13,17 @@ from metrics import ClassificationMetrics
 
 class GRUCell(nn.Module):
     def __init__(self, h_dim, inp_x_dim, out_x_dim):
-        super(GRUCell, self).__init__()
+        """
+        _summary_
+
+        :param h_dim: _description_
+        :type h_dim: _type_
+        :param inp_x_dim: _description_
+        :type inp_x_dim: _type_
+        :param out_x_dim: _description_
+        :type out_x_dim: _type_
+        """        
+        super(GRUCell, self).__init__()      
 
         self.zh_dense = nn.Linear(h_dim, h_dim)
         self.zx_dense = nn.Linear(inp_x_dim, h_dim)
@@ -27,6 +37,16 @@ class GRUCell(nn.Module):
         self.xh_dense = nn.Linear(h_dim, out_x_dim)
 
     def forward(self, ht_1, xt):
+        """
+        _summary_
+
+        :param ht_1: _description_
+        :type ht_1: _type_
+        :param xt: _description_
+        :type xt: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         zt = nn.Sigmoid()(self.zh_dense(ht_1) + self.zx_dense(xt))
         rt = nn.Sigmoid()(self.rh_dense(ht_1) + self.rx_dense(xt))
 
@@ -40,7 +60,13 @@ class GRUCell(nn.Module):
 
 class GRUModel(nn.Module):
     def __init__(self, config_dict):
-        super(GRUModel, self).__init__()
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
+        super(GRUModel, self).__init__()   
 
         self.seq_len = config_dict["dataset"]["seq_len"]
         self.h_dim = config_dict["model"]["h_dim"]
@@ -56,6 +82,14 @@ class GRUModel(nn.Module):
         self.classifier_layer = nn.Linear(self.x_dim, num_classes)
 
     def forward(self, X):
+        """
+        _summary_
+
+        :param X: _description_
+        :type X: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         x_embed = self.embed_layer(X.to(torch.long))
         self.num_samples = X.size(0)
 
@@ -72,13 +106,29 @@ class GRUModel(nn.Module):
 
 
     def init_hidden(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         ht = nn.init.kaiming_uniform_(torch.empty(self.num_samples, self.h_dim))
 
         return ht
 
 class GRUTrainer(nn.Module):
     def __init__(self, model, optimizer, config_dict):
-        super(GRUTrainer, self).__init__()
+        """
+        _summary_
+
+        :param model: _description_
+        :type model: _type_
+        :param optimizer: _description_
+        :type optimizer: _type_
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
+        super(GRUTrainer, self).__init__()    
         self.logger = logging.getLogger(__name__)
 
         self.model = model
@@ -89,6 +139,16 @@ class GRUTrainer(nn.Module):
         self.target_names = list(config_dict["dataset"]["labels"])
 
     def train_one_epoch(self, data_loader, epoch):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :param epoch: _description_
+        :type epoch: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.train()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
@@ -120,6 +180,14 @@ class GRUTrainer(nn.Module):
 
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
@@ -147,6 +215,14 @@ class GRUTrainer(nn.Module):
     
     @torch.no_grad()
     def predict(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         y_pred = []
 
@@ -161,6 +237,16 @@ class GRUTrainer(nn.Module):
         return y_pred
 
     def fit(self, train_loader, val_loader):
+        """
+        _summary_
+
+        :param train_loader: _description_
+        :type train_loader: _type_
+        :param val_loader: _description_
+        :type val_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
@@ -198,6 +284,16 @@ class GRUTrainer(nn.Module):
         return history
     
     def calc_loss(self, y_pred, y_true):
+        """
+        _summary_
+
+        :param y_pred: _description_
+        :type y_pred: _type_
+        :param y_true: _description_
+        :type y_true: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         y_pred = torch.reshape(y_pred, (-1, 2))
         y_true = torch.reshape(y_true, (-1, 2))
 

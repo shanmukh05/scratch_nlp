@@ -7,15 +7,24 @@ from preprocess.utils import preprocess_text
 from .model import GloVeTrainer, GloVeModel
 from .dataset import create_dataloader, GloVeDataset
 from plot_utils import plot_embed
-from .utils import plot_topk_cooccur_matrix
+from plot_utils import plot_topk_cooccur_matrix
 
 
 class GloVe():
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
     def run(self):
+        """
+        _summary_
+        """        
         self.glove_ds = GloVeDataset(self.config_dict)
         X_ctr, X_cxt, X_cnt = self.glove_ds.get_data()
 
@@ -33,6 +42,14 @@ class GloVe():
         self.save_output()
 
     def get_embeddings(self, sentence):
+        """
+        _summary_
+
+        :param sentence: _description_
+        :type sentence: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         operations = self.config_dict["preprocess"]["operations"]
         sentence = preprocess_text(sentence, operations)
         word_ls = sentence.split()
@@ -44,6 +61,9 @@ class GloVe():
         return word_embeds
     
     def save_output(self):
+        """
+        _summary_
+        """        
         output_folder = self.config_dict["paths"]["output_folder"]
         self.logger.info(f"Saving Outputs {output_folder}")
         

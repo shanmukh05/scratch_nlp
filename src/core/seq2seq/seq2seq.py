@@ -12,6 +12,12 @@ from plot_utils import plot_embed, plot_history
 
 class Seq2Seq:
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
@@ -20,6 +26,12 @@ class Seq2Seq:
         self.seed = self.config_dict["dataset"]["seed"]
 
     def run(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         self.seq2seq_ds = PreprocessSeq2Seq(self.config_dict)
         tokenSrc, tokenTgt = self.seq2seq_ds.get_data(self.seq2seq_ds.df)
 
@@ -35,6 +47,12 @@ class Seq2Seq:
         return self.history
 
     def run_infer(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         tokens_src, tokens_tgt = self.seq2seq_ds.get_data(self.seq2seq_ds.test_df)
         test_loader = create_dataloader(tokens_src, None, None, self.batch_size, None, "test")
 
@@ -48,6 +66,9 @@ class Seq2Seq:
         return sents_src, sents_tgt, sents_tgt_pred
     
     def save_output(self):
+        """
+        _summary_
+        """        
         output_folder = self.config_dict["paths"]["output_folder"]
 
         self.logger.info(f"Saving Outputs {output_folder}")

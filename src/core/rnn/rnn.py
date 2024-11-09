@@ -11,10 +11,19 @@ from plot_utils import plot_embed, plot_history, plot_conf_matrix
 
 class RNN():
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
     def run(self):
+        """
+        _summary_
+        """        
         self.rnn_ds = RNNDataset(self.config_dict)
         X, y = self.rnn_ds.get_data()
         self.config_dict["dataset"]["labels"] = list(self.rnn_ds.label_encoder.categories_[0])
@@ -33,6 +42,12 @@ class RNN():
         self.save_output()
 
     def run_infer(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         test_x, y_true = self.rnn_ds.get_test_data()
         test_ds = TensorDataset(torch.Tensor(test_x))
         test_loader = DataLoader(
@@ -47,6 +62,9 @@ class RNN():
 
 
     def save_output(self):
+        """
+        _summary_
+        """        
         output_folder = self.config_dict["paths"]["output_folder"]
 
         self.logger.info(f"Saving Outputs {output_folder}")

@@ -11,6 +11,12 @@ import torch.nn as nn
 
 class GloVeModel(nn.Module):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         super(GloVeModel, self).__init__()
 
         self.embed_dim = config_dict["model"]["embed_dim"]
@@ -22,6 +28,16 @@ class GloVeModel(nn.Module):
         self.ctr_bias_embedding = nn.Embedding(self.num_vocab, 1)
 
     def forward(self, ctr, cxt):
+        """
+        _summary_
+
+        :param ctr: _description_
+        :type ctr: _type_
+        :param cxt: _description_
+        :type cxt: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         ctr = ctr.to(dtype=torch.long)
         cxt = cxt.to(dtype=torch.long)
 
@@ -36,7 +52,17 @@ class GloVeModel(nn.Module):
 
 class GloVeTrainer(nn.Module):
     def __init__(self, model, optimizer, config_dict):
-        super(GloVeTrainer, self).__init__()
+        """
+        _summary_
+
+        :param model: _description_
+        :type model: _type_
+        :param optimizer: _description_
+        :type optimizer: _type_
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
+        super(GloVeTrainer, self).__init__()     
 
         self.logger = logging.getLogger(__name__)
 
@@ -48,6 +74,16 @@ class GloVeTrainer(nn.Module):
         self.alpha = config_dict["train"]["alpha"]
 
     def train_one_epoch(self, data_loader, epoch):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :param epoch: _description_
+        :type epoch: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.train()
         total_loss, num_instances = 0, 0
 
@@ -72,6 +108,14 @@ class GloVeTrainer(nn.Module):
     
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         total_loss, num_instances = 0, 0
 
@@ -90,6 +134,16 @@ class GloVeTrainer(nn.Module):
         return val_loss
 
     def fit(self, train_loader, val_loader):
+        """
+        _summary_
+
+        :param train_loader: _description_
+        :type train_loader: _type_
+        :param val_loader: _description_
+        :type val_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
@@ -122,6 +176,22 @@ class GloVeTrainer(nn.Module):
         return history
 
     def loss_fn(self, ctr_embed, cxt_embed, ctr_bias, cxt_bias, count):
+        """
+        _summary_
+
+        :param ctr_embed: _description_
+        :type ctr_embed: _type_
+        :param cxt_embed: _description_
+        :type cxt_embed: _type_
+        :param ctr_bias: _description_
+        :type ctr_bias: _type_
+        :param cxt_bias: _description_
+        :type cxt_bias: _type_
+        :param count: _description_
+        :type count: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         factor = torch.pow(count/self.x_max, self.alpha)
         factor[factor > 1] = 1
         log_count = torch.log(1 + count)

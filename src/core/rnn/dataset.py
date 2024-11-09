@@ -11,6 +11,12 @@ from core.word2vec.dataset import Word2VecDataset
 
 class RNNDataset(Word2VecDataset):
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
 
         self.config_dict = config_dict
@@ -19,6 +25,12 @@ class RNNDataset(Word2VecDataset):
         self.get_vocab()
 
     def get_data(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         self.word2id["<PAD>"] = len(self.word2id)
         self.id2word[len(self.id2word)] = "<PAD>"
 
@@ -31,6 +43,12 @@ class RNNDataset(Word2VecDataset):
         return np.array(X), y
     
     def get_test_data(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         root_path = self.config_dict["paths"]["test_folder"]
         explore_folder = self.config_dict["dataset"]["explore_folder"]
         num_samples = self.config_dict["dataset"]["test_samples"]
@@ -50,6 +68,14 @@ class RNNDataset(Word2VecDataset):
         return X_test, y_test
 
     def pad_slice_text(self, text_ls):
+        """
+        _summary_
+
+        :param text_ls: _description_
+        :type text_ls: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         seq_len = self.config_dict["dataset"]["seq_len"]
         X = []
         for text in text_ls:
@@ -67,6 +93,22 @@ class RNNDataset(Word2VecDataset):
         return X
     
 def create_dataloader(X, y, val_split, batch_size, seed):
+    """
+    _summary_
+
+    :param X: _description_
+    :type X: _type_
+    :param y: _description_
+    :type y: _type_
+    :param val_split: _description_
+    :type val_split: _type_
+    :param batch_size: _description_
+    :type batch_size: _type_
+    :param seed: _description_
+    :type seed: _type_
+    :return: _description_
+    :rtype: _type_
+    """    
     train_x, val_x, train_y, val_y = train_test_split(X, y, test_size=val_split, random_state=seed)
     train_x, val_x, train_y, val_y = train_test_split(X, y, test_size=val_split, random_state=seed)
 

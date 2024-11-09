@@ -14,6 +14,9 @@ import torch.nn.functional as F
 class BERTPretrainTrainer(nn.Module):
     def __init__(self, model, optimizer, config_dict):
         super(BERTPretrainTrainer, self).__init__()
+        """
+        _summary_
+        """        
         self.logger = logging.getLogger(__name__)
 
         self.model = model
@@ -21,6 +24,16 @@ class BERTPretrainTrainer(nn.Module):
         self.config_dict = config_dict
 
     def train_one_epoch(self, data_loader, epoch):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :param epoch: _description_
+        :type epoch: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.train()
         total_loss, total_clf_loss, total_nsp_loss, num_instances = 0, 0, 0, 0
 
@@ -49,6 +62,14 @@ class BERTPretrainTrainer(nn.Module):
 
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         total_loss, total_clf_loss, total_nsp_loss, num_instances = 0, 0, 0, 0
 
@@ -73,6 +94,14 @@ class BERTPretrainTrainer(nn.Module):
     
     @torch.no_grad()
     def predict(self, data_loader):
+        """
+        _summary_
+
+        :param data_loader: _description_
+        :type data_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         self.model.eval()
         y_tokens_pred, y_tokens_true = [], []
         y_nsp_pred, y_nsp_true = [], []
@@ -97,6 +126,16 @@ class BERTPretrainTrainer(nn.Module):
         return y_tokens_true, y_nsp_true, y_tokens_pred, y_nsp_pred
 
     def fit(self, train_loader, val_loader):
+        """
+        _summary_
+
+        :param train_loader: _description_
+        :type train_loader: _type_
+        :param val_loader: _description_
+        :type val_loader: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
@@ -133,6 +172,22 @@ class BERTPretrainTrainer(nn.Module):
         return history
     
     def calc_loss(self, tokens_pred, nsp_pred, tokens_true, nsp_labels, tokens_mask):
+        """
+        _summary_
+
+        :param tokens_pred: _description_
+        :type tokens_pred: _type_
+        :param nsp_pred: _description_
+        :type nsp_pred: _type_
+        :param tokens_true: _description_
+        :type tokens_true: _type_
+        :param nsp_labels: _description_
+        :type nsp_labels: _type_
+        :param tokens_mask: _description_
+        :type tokens_mask: _type_
+        :return: _description_
+        :rtype: _type_
+        """        
         num_vocab = self.config_dict["dataset"]["num_vocab"]
         nsp_loss_fn = nn.BCELoss()
         nsp_loss = nsp_loss_fn(nsp_pred.squeeze(), nsp_labels)

@@ -18,6 +18,8 @@ from core.transformer import transformer
 from core.bert import bert
 from core.gpt import gpt
 
+from utils import ValidateConfig
+
 os.environ["LOKY_MAX_CPU_COUNT"] = "4"
 
 ### TODO Set all seeds
@@ -38,7 +40,6 @@ parser.add_argument(
             "GLOVE",
             "RNN",
             "LSTM",
-            "BILSTM",
             "SEQ2SEQ",
             "GRU",
             "TRANSFORMER",
@@ -63,6 +64,8 @@ def main():
     config_path = args.config_path
 
     config_dict = load_config(config_path)
+    validate_config = ValidateConfig(config_dict, algo)
+    validate_config.run_verify()
 
     if algo == "BOW":
         algo = bow.BOW(config_dict)

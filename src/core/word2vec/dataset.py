@@ -13,6 +13,12 @@ from .huffman import HuffmanBTree
 
 class Word2VecDataset():
     def __init__(self, config_dict):
+        """
+        _summary_
+
+        :param config_dict: _description_
+        :type config_dict: _type_
+        """        
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
         self.num_vocab = config_dict["dataset"]["num_vocab"]
@@ -25,6 +31,9 @@ class Word2VecDataset():
         self.huffman = HuffmanBTree(self.vocabidx_freq)
 
     def preprocess(self):
+        """
+        _summary_
+        """        
         root_path = self.config_dict["paths"]["input_folder"]
         explore_folder = self.config_dict["dataset"]["explore_folder"]
         num_samples = self.config_dict["dataset"]["num_samples"]
@@ -39,6 +48,9 @@ class Word2VecDataset():
         self.text_ls = self.preproc_cls.text_ls
 
     def get_vocab(self):
+        """
+        _summary_
+        """        
         self.vocab_freq = {}
 
         all_text = " ".join(self.text_ls)
@@ -66,6 +78,12 @@ class Word2VecDataset():
         self.logger.info("Vocabulary Bulding done")
 
     def make_pairs(self):
+        """
+        _summary_
+
+        :return: _description_
+        :rtype: _type_
+        """        
         self.context = self.config_dict["dataset"]["context"]
         left_cxt_huff, right_cxt_huff, left_lbl_huff, right_lbl_huff = [], [], [], []
 
@@ -92,6 +110,26 @@ class Word2VecDataset():
     
 
 def create_dataloader(left_cxt, right_cxt, left_lbl, right_lbl, val_split, batch_size, seed):
+    """
+    _summary_
+
+    :param left_cxt: _description_
+    :type left_cxt: _type_
+    :param right_cxt: _description_
+    :type right_cxt: _type_
+    :param left_lbl: _description_
+    :type left_lbl: _type_
+    :param right_lbl: _description_
+    :type right_lbl: _type_
+    :param val_split: _description_
+    :type val_split: _type_
+    :param batch_size: _description_
+    :type batch_size: _type_
+    :param seed: _description_
+    :type seed: _type_
+    :return: _description_
+    :rtype: _type_
+    """    
     logger = logging.getLogger(__name__)
     train_left_cxt, val_left_cxt, train_left_lbl, val_left_lbl = train_test_split(left_cxt, left_lbl, test_size=val_split, random_state=seed)
     train_right_cxt, val_right_cxt, train_right_lbl, val_right_lbl = train_test_split(right_cxt, right_lbl, test_size=val_split, random_state=seed)
