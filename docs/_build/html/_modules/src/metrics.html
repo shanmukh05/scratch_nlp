@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>src.metrics</title>
+    
+          <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script src="../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../_static/theme-vendors.js"></script> -->
+      <script src="../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../genindex.html" />
+  <link rel="search" title="Search" href="../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../index.html" class="home-link">
+    
+      <span class="site-name">Scratch NLP</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../modules.html#src">src</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../src.html" class="reference internal ">src package</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../index.html">Module code</a> &raquo;</li>
+    
+    <li>src.metrics</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <h1>Source code for src.metrics</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+
+<div class="viewcode-block" id="ClassificationMetrics">
+<a class="viewcode-back" href="../../src.html#src.metrics.ClassificationMetrics">[docs]</a>
+<span class="k">class</span> <span class="nc">ClassificationMetrics</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Metrics for Classification Task. </span>
+
+<span class="sd">    :param config_dict: Config Dictionary</span>
+<span class="sd">    :type config_dict: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span> <span class="o">=</span> <span class="n">config_dict</span>
+
+<div class="viewcode-block" id="ClassificationMetrics.get_metrics">
+<a class="viewcode-back" href="../../src.html#src.metrics.ClassificationMetrics.get_metrics">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">target_names</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function that returns Metrics using References, Predictions and Class Labels</span>
+
+<span class="sd">        :param references: References, 1D array (N,)</span>
+<span class="sd">        :type references: numpy.array</span>
+<span class="sd">        :param predictions: Predictions, 2D array (NxC) with Probabilities </span>
+<span class="sd">        :type predictions: numpy.array</span>
+<span class="sd">        :param target_names: Class Labels</span>
+<span class="sd">        :type target_names: list</span>
+<span class="sd">        :return: Metrics Dictionary</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">target_names</span><span class="p">))</span>
+        <span class="n">clf_report</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="n">target_names</span><span class="p">,</span> <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">metric_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">metric_dict</span><span class="p">[</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clf_report</span><span class="p">[</span><span class="s2">&quot;accuracy&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">target_names</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;macro avg&quot;</span><span class="p">,</span> <span class="s2">&quot;weighted avg&quot;</span><span class="p">]:</span>
+            <span class="n">metric_dict</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">-Precision&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clf_report</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;precision&quot;</span><span class="p">]</span>
+            <span class="n">metric_dict</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">-Recall&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clf_report</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;recall&quot;</span><span class="p">]</span>
+            <span class="n">metric_dict</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">-F1Score&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clf_report</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="s2">&quot;f1-score&quot;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">metric_dict</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="TextGenerationMetrics">
+<a class="viewcode-back" href="../../src.html#src.metrics.TextGenerationMetrics">[docs]</a>
+<span class="k">class</span> <span class="nc">TextGenerationMetrics</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Metrics for Text Generation Task. </span>
+
+<span class="sd">    :param config_dict: Config Dictionary</span>
+<span class="sd">    :type config_dict: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span> <span class="o">=</span> <span class="n">config_dict</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rouge_n_n</span> <span class="o">=</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="s2">&quot;rouge_n_n&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rouge_s_n</span> <span class="o">=</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="s2">&quot;rouge_s_n&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bleu_n</span> <span class="o">=</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="s2">&quot;bleu_n&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span> <span class="o">=</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">][</span><span class="s2">&quot;seq_len&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="TextGenerationMetrics.get_metrics">
+<a class="viewcode-back" href="../../src.html#src.metrics.TextGenerationMetrics.get_metrics">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_metrics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function that returns Metrics using References, Predictions and Class Labels</span>
+
+<span class="sd">        :param references: References, 2D array (N,S)</span>
+<span class="sd">        :type references: numpy.array</span>
+<span class="sd">        :param predictions: Predictions, 3D array (NxSxC) with Probabilities </span>
+<span class="sd">        :type predictions: numpy.array</span>
+<span class="sd">        :return: Metrics Dictionary</span>
+<span class="sd">        :rtype: dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">rouge_n_p</span><span class="p">,</span> <span class="n">rouge_n_r</span><span class="p">,</span> <span class="n">rouge_n_f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rouge_n_score</span><span class="p">(</span><span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rouge_n_n</span><span class="p">)</span>
+        <span class="n">rouge_l_p</span><span class="p">,</span> <span class="n">rouge_l_r</span><span class="p">,</span> <span class="n">rouge_l_f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rouge_l_score</span><span class="p">(</span><span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+        <span class="n">rouge_s_p</span><span class="p">,</span> <span class="n">rouge_s_r</span><span class="p">,</span> <span class="n">rouge_s_f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rouge_s_score</span><span class="p">(</span><span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rouge_s_n</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="sa">f</span><span class="s2">&quot;BLEU-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bleu_n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">bleu_score</span><span class="p">(</span><span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">bleu_n</span><span class="p">),</span>
+            <span class="s2">&quot;Perplexity&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">perplexity_score</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span>
+            <span class="s2">&quot;METEOR&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">meteor_score</span><span class="p">(</span><span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">),</span>
+            <span class="sa">f</span><span class="s2">&quot;ROUGE-N-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rouge_n_n</span><span class="si">}</span><span class="s2">-Precision&quot;</span><span class="p">:</span> <span class="n">rouge_n_p</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;ROUGE-N-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rouge_n_n</span><span class="si">}</span><span class="s2">-Recall&quot;</span><span class="p">:</span> <span class="n">rouge_n_r</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;ROUGE-N-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rouge_n_n</span><span class="si">}</span><span class="s2">-F1score&quot;</span><span class="p">:</span> <span class="n">rouge_n_f</span><span class="p">,</span>
+            <span class="s2">&quot;ROUGE-L-Precision&quot;</span><span class="p">:</span> <span class="n">rouge_l_p</span><span class="p">,</span>
+            <span class="s2">&quot;ROUGE-L-Recall&quot;</span><span class="p">:</span> <span class="n">rouge_l_r</span><span class="p">,</span>
+            <span class="s2">&quot;ROUGE-L-F1score&quot;</span><span class="p">:</span> <span class="n">rouge_l_f</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;ROUGE-S-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rouge_s_n</span><span class="si">}</span><span class="s2">-Precision&quot;</span><span class="p">:</span> <span class="n">rouge_s_p</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;ROUGE-S-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rouge_s_n</span><span class="si">}</span><span class="s2">-Recall&quot;</span><span class="p">:</span> <span class="n">rouge_s_r</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">&quot;ROUGE-S-</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rouge_s_n</span><span class="si">}</span><span class="s2">-F1score&quot;</span><span class="p">:</span> <span class="n">rouge_s_f</span><span class="p">,</span>
+            <span class="s2">&quot;CIDER&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">cider_score</span><span class="p">(</span><span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="TextGenerationMetrics.bleu_score">
+<a class="viewcode-back" href="../../src.html#src.metrics.TextGenerationMetrics.bleu_score">[docs]</a>
+    <span class="k">def</span> <span class="nf">bleu_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        BLEU Score</span>
+
+<span class="sd">        :param references: References, 2D array (N,S)</span>
+<span class="sd">        :type references: numpy.array</span>
+<span class="sd">        :param predictions: Predictions, 3D array (NxSxC) with Probabilities </span>
+<span class="sd">        :type predictions: numpy.array</span>
+<span class="sd">        :param n: Max number of N gram, defaults to 4</span>
+<span class="sd">        :type n: int, optional</span>
+<span class="sd">        :return: BLEU score</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">num_instances</span> <span class="o">=</span> <span class="n">references</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">log_score_corpus</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">n</span>
+
+        <span class="k">for</span> <span class="n">ref</span><span class="p">,</span> <span class="n">pred</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
+            <span class="n">ref_len</span><span class="p">,</span> <span class="n">pred_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ref</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+            <span class="n">bp</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">-</span><span class="n">ref_len</span><span class="o">/</span><span class="n">pred_len</span><span class="p">)</span>
+            <span class="n">log_score</span> <span class="o">=</span> <span class="n">bp</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">p</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_metrics_ngram</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">pred</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                <span class="n">log_score</span> <span class="o">+=</span> <span class="n">w</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">p</span><span class="p">)</span>
+
+            <span class="n">log_score_corpus</span> <span class="o">+=</span> <span class="n">log_score</span><span class="o">/</span><span class="n">num_instances</span>
+                
+        <span class="k">return</span> <span class="n">log_score_corpus</span></div>
+
+
+<div class="viewcode-block" id="TextGenerationMetrics.perplexity_score">
+<a class="viewcode-back" href="../../src.html#src.metrics.TextGenerationMetrics.perplexity_score">[docs]</a>
+    <span class="k">def</span> <span class="nf">perplexity_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perplixity Score</span>
+
+<span class="sd">        :param predictions: Predictions, 3D array (NxSxC) with Probabilities </span>
+<span class="sd">        :type predictions: numpy.array</span>
+<span class="sd">        :return: Perplixity Score</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">probs_sum</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">predictions</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span>
+        <span class="n">probs_prod_inv_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">probs_sum</span><span class="p">)</span>
+
+        <span class="c1"># probs_prod = np.prod(predictions, axis=1)</span>
+        <span class="c1"># probs_prod_inv_norm = 1/np.pow(probs_prod, 1/self.seq_len)</span>
+
+        <span class="n">score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">probs_prod_inv_norm</span><span class="p">)</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">score</span></div>
+
+
+<div class="viewcode-block" id="TextGenerationMetrics.meteor_score">
+<a class="viewcode-back" href="../../src.html#src.metrics.TextGenerationMetrics.meteor_score">[docs]</a>
+    <span class="k">def</span> <span class="nf">meteor_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mf">0.5</span></div>
+
+
+<div class="viewcode-block" id="TextGenerationMetrics.rouge_n_score">
+<a class="viewcode-back" href="../../src.html#src.metrics.TextGenerationMetrics.rouge_n_score">[docs]</a>
+    <span class="k">def</span> <span class="nf">rouge_n_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        ROUGE N Score</span>
+
+<span class="sd">        :param references: References, 3D array (N,S)</span>
+<span class="sd">        :type references: numpy.array</span>
+<span class="sd">        :param predictions: Predictions, 3D array (NxSxC) with Probabilities </span>
+<span class="sd">        :type predictions: numpy.array</span>
+<span class="sd">        :param n: Max number of N gram, defaults to 4</span>
+<span class="sd">        :type n: int, optional</span>
+<span class="sd">        :return: ROUGE N score</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">num_instances</span> <span class="o">=</span> <span class="n">references</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">precision</span><span class="p">,</span> <span class="n">recall</span><span class="p">,</span> <span class="n">f1score</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">ref</span><span class="p">,</span> <span class="n">pred</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_metrics_ngram</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">pred</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+            <span class="n">precision</span> <span class="o">+=</span> <span class="n">p</span>
+            <span class="n">recall</span> <span class="o">+=</span> <span class="n">r</span>
+            <span class="n">f1score</span> <span class="o">+=</span> <span class="n">f</span>
+
+        <span class="k">return</span> <span class="n">precision</span><span class="o">/</span><span class="n">num_instances</span><span class="p">,</span> <span class="n">recall</span><span class="o">/</span><span class="n">num_instances</span><span class="p">,</span> <span class="n">f1score</span><span class="o">/</span><span class="n">num_instances</span></div>
+
+
+
+<div class="viewcode-block" id="TextGenerationMetrics.rouge_l_score">
+<a class="viewcode-back" href="../../src.html#src.metrics.TextGenerationMetrics.rouge_l_score">[docs]</a>
+    <span class="k">def</span> <span class="nf">rouge_l_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        ROUGE L Score</span>
+
+<span class="sd">        :param references: References, 2D array (N,S)</span>
+<span class="sd">        :type references: numpy.array</span>
+<span class="sd">        :param predictions: Predictions, 3D array (NxSxC) with Probabilities </span>
+<span class="sd">        :type predictions: numpy.array</span>
+<span class="sd">        :return: ROUGE L score</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">num_instances</span> <span class="o">=</span> <span class="n">references</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">precision</span><span class="p">,</span> <span class="n">recall</span><span class="p">,</span> <span class="n">f1score</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">ref</span><span class="p">,</span> <span class="n">pred</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
+            <span class="n">lcs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lcs</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">pred</span><span class="p">)</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">lcs</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">pred</span><span class="p">),</span> <span class="n">lcs</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+            <span class="n">precision</span> <span class="o">+=</span> <span class="n">p</span>
+            <span class="n">recall</span> <span class="o">+=</span> <span class="n">p</span>
+            <span class="n">f1score</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">p</span><span class="o">*</span><span class="n">r</span><span class="o">/</span><span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="n">r</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">precision</span><span class="o">/</span><span class="n">num_instances</span><span class="p">,</span> <span class="n">recall</span><span class="o">/</span><span class="n">num_instances</span><span class="p">,</span> <span class="n">f1score</span><span class="o">/</span><span class="n">num_instances</span></div>
+
+
+    
+<div class="viewcode-block" id="TextGenerationMetrics.rouge_s_score">
+<a class="viewcode-back" href="../../src.html#src.metrics.TextGenerationMetrics.rouge_s_score">[docs]</a>
+    <span class="k">def</span> <span class="nf">rouge_s_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        ROUGE S Score</span>
+
+<span class="sd">        :param references: References, 2D array (N,S)</span>
+<span class="sd">        :type references: numpy.array</span>
+<span class="sd">        :param predictions: Predictions, 3D array (NxSxC) with Probabilities </span>
+<span class="sd">        :type predictions: numpy.array</span>
+<span class="sd">        :param n: Max number of N gram, defaults to 4</span>
+<span class="sd">        :type n: int, optional</span>
+<span class="sd">        :return: ROUGE S score</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">num_instances</span> <span class="o">=</span> <span class="n">references</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">precision</span><span class="p">,</span> <span class="n">recall</span><span class="p">,</span> <span class="n">f1score</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">ref</span><span class="p">,</span> <span class="n">pred</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
+            <span class="n">ref_bi</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">ref</span><span class="p">[</span><span class="n">j</span><span class="p">]),</span> <span class="nb">str</span><span class="p">(</span><span class="n">ref</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">])])</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+            <span class="n">pred_skip_bi</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">pred</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="nb">str</span><span class="p">(</span><span class="n">pred</span><span class="p">[</span><span class="n">k</span><span class="p">])])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+            <span class="n">pred_skip_bi</span> <span class="o">=</span>  <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">pred_skip_bi</span><span class="p">))</span>
+
+            <span class="n">n_unq_ngrams</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ref_bi</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">pred_skip_bi</span><span class="p">))</span>
+            <span class="n">p</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">n_unq_ngrams</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">pred_skip_bi</span><span class="p">),</span> <span class="n">n_unq_ngrams</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">ref_bi</span><span class="p">)</span>
+            <span class="n">precision</span> <span class="o">+=</span> <span class="n">p</span>
+            <span class="n">recall</span> <span class="o">+=</span> <span class="n">r</span>
+            <span class="n">f1score</span> <span class="o">+=</span> <span class="mi">2</span><span class="o">*</span><span class="n">p</span><span class="o">*</span><span class="n">r</span><span class="o">/</span><span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="n">r</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">precision</span><span class="o">/</span><span class="n">num_instances</span><span class="p">,</span> <span class="n">recall</span><span class="o">/</span><span class="n">num_instances</span><span class="p">,</span> <span class="n">f1score</span><span class="o">/</span><span class="n">num_instances</span></div>
+
+
+<div class="viewcode-block" id="TextGenerationMetrics.cider_score">
+<a class="viewcode-back" href="../../src.html#src.metrics.TextGenerationMetrics.cider_score">[docs]</a>
+    <span class="k">def</span> <span class="nf">cider_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">references</span><span class="p">,</span> <span class="n">predictions</span><span class="p">):</span>
+        <span class="n">predictions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mf">0.5</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_get_metrics_ngram</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">pred</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">clip</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtain Precision, Recall and F1 score of NGRAM</span>
+
+<span class="sd">        :param ref: Reference Sentence, 1D Array (S,)</span>
+<span class="sd">        :type ref: numpy.array</span>
+<span class="sd">        :param pred: Predicted Sentence, 1D ARray (S,)</span>
+<span class="sd">        :type pred: numpy.array</span>
+<span class="sd">        :param n: Number of tokens in a base token</span>
+<span class="sd">        :type n: int</span>
+<span class="sd">        :param clip: _description_, defaults to False</span>
+<span class="sd">        :type clip: bool, optional</span>
+<span class="sd">        :return: Precision, Recall, F1 score</span>
+<span class="sd">        :rtype: float, float, float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ref_n</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">ref</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)])</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span><span class="o">-</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="n">pred_n</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">pred</span><span class="p">[</span><span class="n">j</span><span class="o">+</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)])</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span><span class="o">-</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+        
+        <span class="k">if</span> <span class="n">clip</span><span class="p">:</span>
+            <span class="n">n_common_ngrams</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">ref_cnt_dict</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+            <span class="n">pred_cnt_dict</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">pred_cnt_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">cnt_k</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">pred_cnt_dict</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">ref_cnt_dict</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+                <span class="n">n_common_ngrams</span> <span class="o">+=</span> <span class="n">cnt_k</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_common_ngrams</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ref_n</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">pred_n</span><span class="p">))</span>
+        <span class="n">p</span><span class="p">,</span> <span class="n">r</span> <span class="o">=</span> <span class="n">n_common_ngrams</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">pred_n</span><span class="p">),</span> <span class="n">n_common_ngrams</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">ref_n</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">p</span><span class="o">*</span><span class="n">r</span><span class="o">/</span><span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="n">r</span> <span class="o">+</span> <span class="mf">1e-8</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">f</span>
+
+    
+    <span class="k">def</span> <span class="nf">_lcs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arr1</span><span class="p">,</span> <span class="n">arr2</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find Longest Common Subsequence </span>
+
+<span class="sd">        :param arr1: First Array, 1D Array</span>
+<span class="sd">        :type arr1: numpy.array</span>
+<span class="sd">        :param arr2: Second Array, 1D Array</span>
+<span class="sd">        :type arr2: numpy.array</span>
+<span class="sd">        :return: Longest Common Subsequence Length</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr1</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">arr2</span><span class="p">)</span>
+
+        <span class="n">lcs_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">arr1</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">arr2</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">lcs_mat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">lcs_mat</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">lcs_mat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">lcs_mat</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">],</span> <span class="n">lcs_mat</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">lcs_mat</span><span class="p">[</span><span class="n">m</span><span class="p">][</span><span class="n">n</span><span class="p">])</span></div>
+
+
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2024, Shanmukha Sainath.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.3.7 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.9.1.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>
