@@ -4,7 +4,7 @@ import yaml
 import datetime
 import logging
 
-from config import configDictDType, MainKeysDict
+from configs import configDictDType, MainKeysDict
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +26,6 @@ def load_config(config_path):
 
     logging.info("Config File Loaded")
     return config_dict
-
 
 class ValidateConfig():
     """
@@ -64,6 +63,13 @@ class ValidateConfig():
     def check_list(self, key, val):
         pass
 
+    def compare_dtype(self, key, val):
+        type_abs = configDictDType[key]
+        type_cfg = type(val)
+
+        if type_abs != type_cfg:
+            logging.error(f"Dtype of {key} should be {type_abs}")
+
     def verify_values(self):
         """
         _summary_
@@ -71,25 +77,13 @@ class ValidateConfig():
         for k, v in self.config_dict.items():
             if isinstance(v, dict):
                 for k_, v_ in v.items():
-                    if type(v) is not dict:
-                        type_abs_v = configDictDType[k_]
-                        type_cfg_v = type(v_)
-
-                        if type_abs_v != type_cfg_v:
-                            logging.error(f"Dtype of {k_} should be {type_abs_v}")
-                    else:
+                    if type(v_) is dict:
                         for k__, v__ in v_.items():
-                            type_abs_v = configDictDType[k__]
-                            type_cfg_v = type(v__)
-
-                            if type_abs_v != type_cfg_v:
-                                logging.error(f"Dtype of {k__} should be {type_abs_v}")
+                            self.compare_dtype(k__, v__)
+                    else:
+                        self.compare_dtype(k_, v_)      
             else:
-                type_abs_v = configDictDType[k]
-                type_cfg_v = type(v)
-
-                if type_abs_v != type_cfg_v:
-                    logging.error(f"Dtype of {k} should be {type_abs_v}")
+                self.compare_dtype(k, v)
 
     def verify_main_keys(self, keys):
         """
@@ -99,10 +93,10 @@ class ValidateConfig():
         :type keys: _type_
         """
         for key in keys:
-            true_val = MainKeysDict[key]
-            cfg_val = list(self.config_dict[key].keys())
+            true_val = MainKeysDict[self.algo][key]
             
             if isinstance(true_val, list):
+                cfg_val = list(self.config_dict[key].keys())
                 true_val.sort()
                 cfg_val.sort()
 
@@ -110,7 +104,7 @@ class ValidateConfig():
                     logging.error(f"Config Keys for {key} doesn't match Default Config")
             elif isinstance(true_val, dict):
                 for k in self.config_dict[key].keys():
-                    true_val_k = MainKeysDict[k]
+                    true_val_k = MainKeysDict[self.algo][key][k]
                     cfg_val_k = list(self.config_dict[key][k].keys())
 
                     true_val_k.sort()
@@ -119,8 +113,9 @@ class ValidateConfig():
                     if true_val_k != cfg_val_k:
                         logging.error(f"Config Keys for {k} doesn't match Default Config")
             else:
-                if not isinstance(MainKeysDict[key], self.config_dict[key]):
-                    logging.error(f"Config Key {key} should be of type {MainKeysDict[key]}")
+                if not isinstance(self.config_dict[key], MainKeysDict[self.algo][key]):
+                    logging.error(f"Config Key {key} should be of type {MainKeysDict[self.algo][key]}")
+
 
 
 def get_logger(log_folder):

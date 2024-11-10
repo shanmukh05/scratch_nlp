@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+      <title>src.core.bert.finetune</title>
+    
+          <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+          <link rel="stylesheet" href="../../../../_static/theme.css " type="text/css" />
+      
+      <!-- sphinx script_files -->
+        <script src="../../../../_static/documentation_options.js?v=8d563738"></script>
+        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+
+      
+      <!-- bundled in js (rollup iife) -->
+      <!-- <script src="../../../../_static/theme-vendors.js"></script> -->
+      <script src="../../../../_static/theme.js" defer></script>
+    
+  <link rel="index" title="Index" href="../../../../genindex.html" />
+  <link rel="search" title="Search" href="../../../../search.html" /> 
+  </head>
+
+  <body>
+    <div id="app">
+    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
+  <router-link to="../../../../index.html" class="home-link">
+    
+      <span class="site-name">Scratch NLP</span>
+    
+  </router-link>
+
+  <div class="links">
+    <navlinks class="can-hide">
+
+
+
+    </navlinks>
+  </div>
+</navbar>
+
+      
+      <div class="sidebar-mask" @click="toggleSidebar(false)">
+      </div>
+        <sidebar @toggle-sidebar="toggleSidebar">
+          
+          <navlinks>
+            
+
+
+
+            
+          </navlinks><div id="searchbox" class="searchbox" role="search">
+  <div class="caption"><span class="caption-text">Quick search</span>
+    <div class="searchformwrapper">
+      <form class="search" action="../../../../search.html" method="get">
+        <input type="text" name="q" />
+        <input type="submit" value="Search" />
+        <input type="hidden" name="check_keywords" value="yes" />
+        <input type="hidden" name="area" value="default" />
+      </form>
+    </div>
+  </div>
+</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
+  
+    <div class="sidebar-group">
+      <p class="caption">
+        <span class="caption-text"><a href="../../../../modules.html#src">src</a></span>
+      </p>
+      <ul class="">
+        
+          <li class="toctree-l1 ">
+            
+              <a href="../../../../src.html" class="reference internal ">src package</a>
+            
+
+            
+          </li>
+
+        
+      </ul>
+    </div>
+  
+</div>
+        </sidebar>
+
+      <page>
+          <div class="body-header" role="navigation" aria-label="navigation">
+  
+  <ul class="breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+    
+      <li><a href="../../../index.html">Module code</a> &raquo;</li>
+    
+    <li>src.core.bert.finetune</li>
+  </ul>
+  
+
+  <ul class="page-nav">
+</ul>
+  
+</div>
+<hr>
+          <div class="content" role="main" v-pre>
+            
+  <h1>Source code for src.core.bert.finetune</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tqdm</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="nn">F</span>
+
+
+<div class="viewcode-block" id="BERTFinetuneTrainer">
+<a class="viewcode-back" href="../../../../src.core.bert.html#src.core.bert.finetune.BERTFinetuneTrainer">[docs]</a>
+<span class="k">class</span> <span class="nc">BERTFinetuneTrainer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        _summary_</span>
+
+<span class="sd">        :param model: _description_</span>
+<span class="sd">        :type model: _type_</span>
+<span class="sd">        :param optimizer: _description_</span>
+<span class="sd">        :type optimizer: _type_</span>
+<span class="sd">        :param config_dict: _description_</span>
+<span class="sd">        :type config_dict: _type_</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="nb">super</span><span class="p">(</span><span class="n">BERTFinetuneTrainer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">optim</span> <span class="o">=</span> <span class="n">optimizer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span> <span class="o">=</span> <span class="n">config_dict</span>
+
+<div class="viewcode-block" id="BERTFinetuneTrainer.train_one_epoch">
+<a class="viewcode-back" href="../../../../src.core.bert.html#src.core.bert.finetune.BERTFinetuneTrainer.train_one_epoch">[docs]</a>
+    <span class="k">def</span> <span class="nf">train_one_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">,</span> <span class="n">epoch</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        _summary_</span>
+
+<span class="sd">        :param data_loader: _description_</span>
+<span class="sd">        :type data_loader: _type_</span>
+<span class="sd">        :param epoch: _description_</span>
+<span class="sd">        :type epoch: _type_</span>
+<span class="sd">        :return: _description_</span>
+<span class="sd">        :rtype: _type_</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
+        <span class="n">total_loss</span><span class="p">,</span> <span class="n">total_start_loss</span><span class="p">,</span> <span class="n">total_end_loss</span><span class="p">,</span> <span class="n">num_instances</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;-----------Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">][</span><span class="s1">&#39;epochs&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">-----------&quot;</span><span class="p">)</span>
+        <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">data_loader</span><span class="p">),</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data_loader</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Training&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">batch_id</span><span class="p">,</span> <span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">start_ids</span><span class="p">,</span> <span class="n">end_ids</span><span class="p">)</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+            <span class="n">start_ids</span> <span class="o">=</span> <span class="n">start_ids</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+            <span class="n">end_ids</span> <span class="o">=</span> <span class="n">end_ids</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">start_ids_prob</span><span class="p">,</span> <span class="n">end_ids_prob</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+            
+            <span class="n">start_loss</span><span class="p">,</span> <span class="n">end_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_loss</span><span class="p">(</span><span class="n">start_ids_prob</span><span class="p">,</span> <span class="n">end_ids_prob</span><span class="p">,</span> <span class="n">start_ids</span><span class="p">,</span> <span class="n">end_ids</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">start_loss</span> <span class="o">+</span> <span class="n">end_loss</span>
+            <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+            <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span>
+            <span class="n">total_start_loss</span> <span class="o">+=</span> <span class="n">start_loss</span>
+            <span class="n">total_end_loss</span> <span class="o">+=</span> <span class="n">end_loss</span>
+            <span class="n">num_instances</span> <span class="o">+=</span> <span class="n">tokens</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">train_loss</span> <span class="o">=</span> <span class="n">total_loss</span><span class="o">/</span><span class="n">num_instances</span>
+        <span class="n">train_start_loss</span> <span class="o">=</span> <span class="n">total_start_loss</span><span class="o">/</span><span class="n">num_instances</span>
+        <span class="n">train_end_loss</span> <span class="o">=</span> <span class="n">total_end_loss</span><span class="o">/</span><span class="n">num_instances</span>
+
+        <span class="k">return</span> <span class="n">train_loss</span><span class="p">,</span> <span class="n">train_start_loss</span><span class="p">,</span> <span class="n">train_end_loss</span></div>
+
+
+<div class="viewcode-block" id="BERTFinetuneTrainer.val_one_epoch">
+<a class="viewcode-back" href="../../../../src.core.bert.html#src.core.bert.finetune.BERTFinetuneTrainer.val_one_epoch">[docs]</a>
+    <span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">val_one_epoch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        _summary_</span>
+
+<span class="sd">        :param data_loader: _description_</span>
+<span class="sd">        :type data_loader: _type_</span>
+<span class="sd">        :return: _description_</span>
+<span class="sd">        :rtype: _type_</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="n">total_loss</span><span class="p">,</span> <span class="n">total_start_loss</span><span class="p">,</span> <span class="n">total_end_loss</span><span class="p">,</span> <span class="n">num_instances</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+        <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">data_loader</span><span class="p">),</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data_loader</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Validation&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">batch_id</span><span class="p">,</span> <span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">start_ids</span><span class="p">,</span> <span class="n">end_ids</span><span class="p">)</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+            <span class="n">start_ids</span> <span class="o">=</span> <span class="n">start_ids</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+            <span class="n">end_ids</span> <span class="o">=</span> <span class="n">end_ids</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">start_ids_prob</span><span class="p">,</span> <span class="n">end_ids_prob</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+            
+            <span class="n">start_loss</span><span class="p">,</span> <span class="n">end_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calc_loss</span><span class="p">(</span><span class="n">start_ids_prob</span><span class="p">,</span> <span class="n">end_ids_prob</span><span class="p">,</span> <span class="n">start_ids</span><span class="p">,</span> <span class="n">end_ids</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">start_loss</span> <span class="o">+</span> <span class="n">end_loss</span>
+            
+            <span class="n">total_loss</span> <span class="o">+=</span> <span class="n">loss</span>
+            <span class="n">total_start_loss</span> <span class="o">+=</span> <span class="n">start_loss</span>
+            <span class="n">total_end_loss</span> <span class="o">+=</span> <span class="n">end_loss</span>
+            <span class="n">num_instances</span> <span class="o">+=</span> <span class="n">tokens</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">val_loss</span> <span class="o">=</span> <span class="n">total_loss</span><span class="o">/</span><span class="n">num_instances</span>
+        <span class="n">val_start_loss</span> <span class="o">=</span> <span class="n">total_start_loss</span><span class="o">/</span><span class="n">num_instances</span>
+        <span class="n">val_end_loss</span> <span class="o">=</span> <span class="n">total_end_loss</span><span class="o">/</span><span class="n">num_instances</span>
+
+        <span class="k">return</span> <span class="n">val_loss</span><span class="p">,</span> <span class="n">val_start_loss</span><span class="p">,</span> <span class="n">val_end_loss</span></div>
+
+    
+<div class="viewcode-block" id="BERTFinetuneTrainer.predict">
+<a class="viewcode-back" href="../../../../src.core.bert.html#src.core.bert.finetune.BERTFinetuneTrainer.predict">[docs]</a>
+    <span class="nd">@torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_loader</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        _summary_</span>
+
+<span class="sd">        :param data_loader: _description_</span>
+<span class="sd">        :type data_loader: _type_</span>
+<span class="sd">        :return: _description_</span>
+<span class="sd">        :rtype: _type_</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+        <span class="n">y_start_ids</span><span class="p">,</span> <span class="n">y_end_ids</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">enc_outputs</span> <span class="o">=</span> <span class="p">[]</span>
+        
+
+        <span class="n">pbar</span> <span class="o">=</span> <span class="n">tqdm</span><span class="o">.</span><span class="n">tqdm</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">data_loader</span><span class="p">),</span> <span class="n">total</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data_loader</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;Inference&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">batch_id</span><span class="p">,</span> <span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">start_ids</span><span class="p">,</span> <span class="n">end_ids</span><span class="p">)</span> <span class="ow">in</span> <span class="n">pbar</span><span class="p">:</span>
+            <span class="n">tokens</span> <span class="o">=</span> <span class="n">tokens</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+            <span class="n">start_ids</span> <span class="o">=</span> <span class="n">start_ids</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+            <span class="n">end_ids</span> <span class="o">=</span> <span class="n">end_ids</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">long</span><span class="p">)</span>
+            <span class="n">enc_output</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+
+            <span class="n">y_start_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_ids</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+            <span class="n">y_end_ids</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end_ids</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+            <span class="n">enc_outputs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">enc_output</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span>
+        
+        <span class="n">y_start_ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">y_start_ids</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">y_end_ids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">y_end_ids</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">enc_outputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">enc_outputs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">y_start_ids</span><span class="p">,</span> <span class="n">y_end_ids</span><span class="p">,</span> <span class="n">enc_outputs</span></div>
+
+
+<div class="viewcode-block" id="BERTFinetuneTrainer.fit">
+<a class="viewcode-back" href="../../../../src.core.bert.html#src.core.bert.finetune.BERTFinetuneTrainer.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        _summary_</span>
+
+<span class="sd">        :param train_loader: _description_</span>
+<span class="sd">        :type train_loader: _type_</span>
+<span class="sd">        :param val_loader: _description_</span>
+<span class="sd">        :type val_loader: _type_</span>
+<span class="sd">        :return: _description_</span>
+<span class="sd">        :rtype: _type_</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="n">num_epochs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="s2">&quot;epochs&quot;</span><span class="p">]</span>
+        <span class="n">output_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;paths&quot;</span><span class="p">][</span><span class="s2">&quot;output_folder&quot;</span><span class="p">]</span>
+
+        <span class="n">best_val_loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="n">history</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_epochs</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">train_loss</span><span class="p">,</span> <span class="n">train_start_loss</span><span class="p">,</span> <span class="n">train_end_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">train_one_epoch</span><span class="p">(</span><span class="n">train_loader</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
+            <span class="n">val_loss</span><span class="p">,</span> <span class="n">val_start_loss</span><span class="p">,</span> <span class="n">val_end_loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">val_one_epoch</span><span class="p">(</span><span class="n">val_loader</span><span class="p">)</span>
+                
+            <span class="n">history</span><span class="p">[</span><span class="s2">&quot;train_loss&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">train_loss</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+            <span class="n">history</span><span class="p">[</span><span class="s2">&quot;val_loss&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">val_loss</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+            <span class="n">history</span><span class="p">[</span><span class="s2">&quot;train_start_loss&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">train_start_loss</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+            <span class="n">history</span><span class="p">[</span><span class="s2">&quot;val_start_loss&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">val_start_loss</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+            <span class="n">history</span><span class="p">[</span><span class="s2">&quot;train_end_loss&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">train_end_loss</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+            <span class="n">history</span><span class="p">[</span><span class="s2">&quot;val_end_loss&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">val_end_loss</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Train Loss : </span><span class="si">{</span><span class="n">train_loss</span><span class="si">}</span><span class="s2"> - Val Loss : </span><span class="si">{</span><span class="n">val_loss</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">val_loss</span> <span class="o">&lt;=</span> <span class="n">best_val_loss</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation Loss score improved from </span><span class="si">{</span><span class="n">best_val_loss</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">val_loss</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">best_val_loss</span> <span class="o">=</span> <span class="n">val_loss</span>
+                <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_folder</span><span class="p">,</span> <span class="s2">&quot;best_model_finetune.pt&quot;</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Validation Loss score didn&#39;t improve from </span><span class="si">{</span><span class="n">best_val_loss</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">time_taken</span> <span class="o">=</span> <span class="n">end</span><span class="o">-</span><span class="n">start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Training completed in </span><span class="si">{:.0f}</span><span class="s1">h </span><span class="si">{:.0f}</span><span class="s1">m </span><span class="si">{:.0f}</span><span class="s1">s&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">time_taken</span> <span class="o">//</span> <span class="mi">3600</span><span class="p">,</span> <span class="p">(</span><span class="n">time_taken</span> <span class="o">%</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">//</span> <span class="mi">60</span><span class="p">,</span> <span class="p">(</span><span class="n">time_taken</span> <span class="o">%</span> <span class="mi">3600</span><span class="p">)</span> <span class="o">%</span> <span class="mi">60</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best Val Loss score: </span><span class="si">{</span><span class="n">best_val_loss</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">history</span></div>
+
+    
+<div class="viewcode-block" id="BERTFinetuneTrainer.calc_loss">
+<a class="viewcode-back" href="../../../../src.core.bert.html#src.core.bert.finetune.BERTFinetuneTrainer.calc_loss">[docs]</a>
+    <span class="k">def</span> <span class="nf">calc_loss</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_ids_prob</span><span class="p">,</span> <span class="n">end_ids_prob</span><span class="p">,</span> <span class="n">start_ids</span><span class="p">,</span> <span class="n">end_ids</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        _summary_</span>
+
+<span class="sd">        :param start_ids_prob: _description_</span>
+<span class="sd">        :type start_ids_prob: _type_</span>
+<span class="sd">        :param end_ids_prob: _description_</span>
+<span class="sd">        :type end_ids_prob: _type_</span>
+<span class="sd">        :param start_ids: _description_</span>
+<span class="sd">        :type start_ids: _type_</span>
+<span class="sd">        :param end_ids: _description_</span>
+<span class="sd">        :type end_ids: _type_</span>
+<span class="sd">        :return: _description_</span>
+<span class="sd">        :rtype: _type_</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="n">loss_fn</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">NLLLoss</span><span class="p">()</span>
+
+        <span class="n">start_loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">start_ids_prob</span><span class="p">,</span> <span class="n">start_ids</span><span class="p">)</span>
+        <span class="n">end_loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">end_ids_prob</span><span class="p">,</span> <span class="n">end_ids</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">start_loss</span><span class="p">,</span> <span class="n">end_loss</span></div>
+</div>
+
+</pre></div>
+
+          </div>
+          <div class="page-nav">
+            <div class="inner"><ul class="page-nav">
+</ul><div class="footer" role="contentinfo">
+      &#169; Copyright 2024, Shanmukha Sainath.
+    <br>
+    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.3.7 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.9.1.
+</div>
+            </div>
+          </div>
+      </page>
+    </div></div>
+    
+    
+  </body>
+</html>

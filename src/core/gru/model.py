@@ -69,8 +69,8 @@ class GRUModel(nn.Module):
         super(GRUModel, self).__init__()   
 
         self.seq_len = config_dict["dataset"]["seq_len"]
-        self.h_dim = config_dict["model"]["h_dim"]
-        self.x_dim = config_dict["model"]["x_dim"]
+        self.h_dim = config_dict["model"]["h_dim"][0]
+        self.x_dim = config_dict["model"]["x_dim"][0]
 
         num_vocab = config_dict["dataset"]["num_vocab"]
         embed_dim = config_dict["model"]["embed_dim"]

@@ -36,6 +36,7 @@ configDictDType = {
     "output_label": bool,
     "tf_mode": str,
     "idf_mode": str,
+    "ngram": int,
     "embed_dim": int,
     "device": str,
     "num_layers": int,
@@ -45,7 +46,7 @@ configDictDType = {
     "image_backbone": str,
     "encoder_h_dim": list,
     "encoder_x_dim": list,
-    "decoder_y_dim": list,
+    "decoder_y_dim": int,
     "d_model": int,
     "d_ff": int,
     "num_heads": int,
@@ -89,6 +90,7 @@ MainKeysDict = {
     "NGRAM": {
         "paths": ["input_folder", "output_folder"],
         "dataset": ["num_samples", "explore_folder"],
+        "model": ["output_label", "ngram"],
         "preprocess": ["operations", "randomize"],
         "visualize": bool
     },
@@ -140,7 +142,7 @@ MainKeysDict = {
     "SEQ2SEQ": {
         "paths": ["input_file", "output_folder"],
         "dataset": ["num_samples", "val_split", "test_split", "num_src_vocab", "num_tgt_vocab", "seq_len", "seed", "batch_size"],
-        "preprocess": ["operations", "randomize"],
+        "preprocess": ["randomize"],
         "model": ["embed_dim", "num_layers", "encoder_x_dim", "encoder_h_dim", "decoder_y_dim", "device"],
         "train": ["epochs", "lr", "eval_metric", "bleu_n", "rouge_n_n", "rouge_s_n"],
         "visualize": bool

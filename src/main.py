@@ -3,7 +3,10 @@ import sys
 import argparse
 import logging
 
-from utils import load_config, get_logger
+# src.preprocess
+#    src.core
+
+from utils import load_config, get_logger, ValidateConfig
 from core.bow import bow
 from core.ngram import ngram
 from core.tfidf import tfidf
@@ -17,8 +20,6 @@ from core.seq2seq import seq2seq
 from core.transformer import transformer
 from core.bert import bert
 from core.gpt import gpt
-
-from utils import ValidateConfig
 
 os.environ["LOKY_MAX_CPU_COUNT"] = "4"
 
