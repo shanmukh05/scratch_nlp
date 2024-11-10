@@ -5,7 +5,7 @@ from collections import Counter, defaultdict
 from nltk.stem.snowball import SnowballStemmer
 from nltk.corpus import stopwords
 
-# nltk.download("stopwords")
+nltk.download("stopwords")
 
 
 def preprocess_text(text, operations=None):
