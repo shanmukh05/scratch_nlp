@@ -20,7 +20,7 @@ class MultiHeadAttention(nn.Module):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         super(MultiHeadAttention, self).__init__()
 
         self.seq_len = config_dict["dataset"]["seq_len"]
@@ -31,7 +31,7 @@ class MultiHeadAttention(nn.Module):
         self.Wq = nn.Linear(self.d_model, self.d_model)
         self.Wk = nn.Linear(self.d_model, self.d_model)
         self.Wv = nn.Linear(self.d_model, self.d_model)
-        self.Wo = nn.Linear(self.d_qkv*self.num_heads, self.d_model)
+        self.Wo = nn.Linear(self.d_qkv * self.num_heads, self.d_model)
 
     def forward(self, Q, K, V, mask=False):
         """
@@ -47,14 +47,16 @@ class MultiHeadAttention(nn.Module):
         :type mask: bool, optional
         :return: _description_
         :rtype: _type_
-        """        
+        """
         batch_size = Q.size(0)
         Q = Q.view(batch_size, self.seq_len, self.num_heads, self.d_qkv).transpose(1, 2)
         K = K.view(batch_size, self.seq_len, self.num_heads, self.d_qkv).transpose(1, 2)
         V = V.view(batch_size, self.seq_len, self.num_heads, self.d_qkv).transpose(1, 2)
 
         attn_qkv = self._scaled_dotproduct_attention(Q, K, V, mask=mask)
-        attn_qkv = attn_qkv.transpose(1, 2).reshape(batch_size, self.seq_len, self.d_model)
+        attn_qkv = attn_qkv.transpose(1, 2).reshape(
+            batch_size, self.seq_len, self.d_model
+        )
 
         attn_qkv = self.Wo(attn_qkv)
 
@@ -74,17 +76,17 @@ class MultiHeadAttention(nn.Module):
         :type mask: _type_, optional
         :return: _description_
         :rtype: _type_
-        """        
+        """
         matmul = torch.matmul(Q, K.transpose(-1, -2))
         if mask:
             mask_ids = torch.triu_indices(self.seq_len, self.seq_len)
             matmul[:, :, mask_ids[0], mask_ids[1]] = -1e9
-        scale = matmul/math.sqrt(self.d_qkv)
+        scale = matmul / math.sqrt(self.d_qkv)
         softmax = nn.Softmax(dim=-1)(scale)
         attn_qkv = torch.matmul(softmax, V)
 
         return attn_qkv
-    
+
 
 class PositionalEncoding(nn.Module):
     def __init__(self, config_dict):
@@ -93,7 +95,7 @@ class PositionalEncoding(nn.Module):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         super(PositionalEncoding, self).__init__()
 
         d_model = config_dict["model"]["d_model"]
@@ -101,9 +103,9 @@ class PositionalEncoding(nn.Module):
 
         self.pe = torch.zeros(seq_len, d_model)
         pos = torch.arange(seq_len).unsqueeze(1)
-        denom = torch.pow(10000, torch.arange(0, d_model, 2)/d_model)
-        self.pe[:, 0::2] = torch.sin(pos/denom)
-        self.pe[:, 1::2] = torch.cos(pos/denom)
+        denom = torch.pow(10000, torch.arange(0, d_model, 2) / d_model)
+        self.pe[:, 0::2] = torch.sin(pos / denom)
+        self.pe[:, 1::2] = torch.cos(pos / denom)
         self.pe = self.pe.unsqueeze(0)
 
     def forward(self, x):
@@ -114,11 +116,11 @@ class PositionalEncoding(nn.Module):
         :type x: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         x = x + self.pe
 
         return x
-    
+
 
 class FeedForward(nn.Module):
     def __init__(self, config_dict):
@@ -127,7 +129,7 @@ class FeedForward(nn.Module):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         super(FeedForward, self).__init__()
 
         d_model = config_dict["model"]["d_model"]
@@ -144,7 +146,7 @@ class FeedForward(nn.Module):
         :type x: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         x = self.fc1(x)
         x = self.fc2(x)
         x = nn.ReLU()(x)
@@ -159,13 +161,13 @@ class EncoderLayer(nn.Module):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         super(EncoderLayer, self).__init__()
         dropout = config_dict["model"]["dropout"]
         d_model = config_dict["model"]["d_model"]
 
         self.mh_self_attn = MultiHeadAttention(config_dict)
-        
+
         self.feed_forward = FeedForward(config_dict)
 
         self.layer_norm1 = nn.LayerNorm(d_model)
@@ -182,7 +184,7 @@ class EncoderLayer(nn.Module):
         :type src: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         attn_output = self.mh_self_attn(src, src, src)
         output = self.layer_norm1(src + self.dropout1(attn_output))
         ffwd_output = self.feed_forward(output)
@@ -198,7 +200,7 @@ class DecoderLayer(nn.Module):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         super(DecoderLayer, self).__init__()
         dropout = config_dict["model"]["dropout"]
         d_model = config_dict["model"]["d_model"]
@@ -226,7 +228,7 @@ class DecoderLayer(nn.Module):
         :type tgt: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         masked_attn_output = self.mh_masked_self_attn(tgt, tgt, tgt, True)
         output = self.layer_norm1(tgt + self.dropout1(masked_attn_output))
 
@@ -237,7 +239,7 @@ class DecoderLayer(nn.Module):
         output = self.layer_norm3(output + self.dropout3(ffwd_output))
 
         return output
-    
+
 
 class TransformerModel(nn.Module):
     def __init__(self, config_dict):
@@ -246,7 +248,7 @@ class TransformerModel(nn.Module):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         super(TransformerModel, self).__init__()
 
         embed_dim = config_dict["model"]["d_model"]
@@ -261,7 +263,7 @@ class TransformerModel(nn.Module):
         self.dropout2 = nn.Dropout(dropout)
 
         self.positional_encoding = PositionalEncoding(config_dict)
- 
+
         self.encoder_layers = [EncoderLayer(config_dict) for _ in range(num_layers)]
         self.decoder_layers = [DecoderLayer(config_dict) for _ in range(num_layers)]
 
@@ -277,18 +279,18 @@ class TransformerModel(nn.Module):
         :type tgt: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         src_embed = self.dropout1(self.positional_encoding(self.src_embed_layer(src)))
         tgt_embed = self.dropout2(self.positional_encoding(self.tgt_embed_layer(tgt)))
 
         enc_output = src_embed
         for layer in self.encoder_layers:
             enc_output = layer(enc_output)
-        
+
         dec_output = tgt_embed
         for layer in self.decoder_layers:
             dec_output = layer(enc_output, dec_output)
-        
+
         output = self.classifier_layer(dec_output)
         # output = nn.Softmax(dim=-1)(output)
 
@@ -306,7 +308,7 @@ class TransformerTrainer(nn.Module):
         :type optimizer: _type_
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         super(TransformerTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
 
@@ -326,20 +328,24 @@ class TransformerTrainer(nn.Module):
         :type epoch: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.train()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
 
-        self.logger.info(f"-----------Epoch {epoch}/{self.config_dict['train']['epochs']}-----------")
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Training")
+        self.logger.info(
+            f"-----------Epoch {epoch}/{self.config_dict['train']['epochs']}-----------"
+        )
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Training"
+        )
 
         for batch_id, sent in pbar:
             src, tgt = sent[0][:, :-1], sent[0][:, 1:]
             src = src.to(torch.long)
             tgt = tgt.to(torch.long)
             tgt_hat = self.model(src, tgt)
-            
+
             loss = self.calc_loss(tgt_hat, tgt)
             loss.backward()
             self.optim.step()
@@ -351,7 +357,7 @@ class TransformerTrainer(nn.Module):
             y_true.append(tgt.cpu().detach().numpy())
             y_pred.append(tgt_hat.cpu().detach().numpy())
 
-        train_loss = total_loss/num_instances
+        train_loss = total_loss / num_instances
 
         y_true = np.concatenate(y_true, axis=0)
         y_pred = np.concatenate(y_pred, axis=0)
@@ -368,12 +374,14 @@ class TransformerTrainer(nn.Module):
         :type data_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.eval()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
 
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Validation")
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Validation"
+        )
 
         for batch_id, sent in pbar:
             src, tgt = sent[0][:, :-1], sent[0][:, 1:]
@@ -389,14 +397,14 @@ class TransformerTrainer(nn.Module):
             y_true.append(tgt.cpu().detach().numpy())
             y_pred.append(tgt_hat.cpu().detach().numpy())
 
-        val_loss = total_loss/num_instances
-        
+        val_loss = total_loss / num_instances
+
         y_true = np.concatenate(y_true, axis=0)
         y_pred = np.concatenate(y_pred, axis=0)
         val_metrics = self.metric_cls.get_metrics(y_true, y_pred)
 
         return val_loss, val_metrics
-    
+
     @torch.no_grad()
     def predict(self, data_loader):
         """
@@ -406,21 +414,23 @@ class TransformerTrainer(nn.Module):
         :type data_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.eval()
         y_pred, sents = [], []
 
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Inference")
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Inference"
+        )
 
         for batch_id, sent in pbar:
             src, tgt = sent[0][:, :-1], sent[0][:, 1:]
             src = src.to(torch.long)
             tgt = tgt.to(torch.long)
-            tgt_hat= self.model(src, tgt)
+            tgt_hat = self.model(src, tgt)
 
             y_pred.append(tgt_hat.cpu().detach().numpy())
             sents.append(sent[0].cpu().detach().numpy())
-        
+
         y_pred = np.concatenate(y_pred, axis=0)
         sents = np.concatenate(sents, axis=0)
 
@@ -436,7 +446,7 @@ class TransformerTrainer(nn.Module):
         :type val_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
@@ -444,10 +454,10 @@ class TransformerTrainer(nn.Module):
         history = defaultdict(list)
 
         start = time.time()
-        for epoch in range(1, num_epochs+1):
+        for epoch in range(1, num_epochs + 1):
             train_loss, train_metrics = self.train_one_epoch(train_loader, epoch)
             val_loss, val_metrics = self.val_one_epoch(val_loader)
-                
+
             history["train_loss"].append(float(train_loss.detach().numpy()))
             history["val_loss"].append(float(val_loss.detach().numpy()))
             for key in train_metrics.keys():
@@ -456,23 +466,35 @@ class TransformerTrainer(nn.Module):
 
             self.logger.info(f"Train Loss : {train_loss} - Val Loss : {val_loss}")
             for key in train_metrics.keys():
-                self.logger.info(f"Train {key} : {train_metrics[key]} - Val {key} : {val_metrics[key]}")
+                self.logger.info(
+                    f"Train {key} : {train_metrics[key]} - Val {key} : {val_metrics[key]}"
+                )
 
             if val_metrics[self.eval_metric] <= best_val_metric:
-                self.logger.info(f"Validation {self.eval_metric} score improved from {best_val_metric} to {val_metrics[self.eval_metric]}")
+                self.logger.info(
+                    f"Validation {self.eval_metric} score improved from {best_val_metric} to {val_metrics[self.eval_metric]}"
+                )
                 best_val_metric = val_metrics[self.eval_metric]
-                torch.save(self.model.state_dict(), os.path.join(output_folder, "best_model.pt"))
+                torch.save(
+                    self.model.state_dict(),
+                    os.path.join(output_folder, "best_model.pt"),
+                )
             else:
-                self.logger.info(f"Validation {self.eval_metric} score didn't improve from {best_val_metric}")
+                self.logger.info(
+                    f"Validation {self.eval_metric} score didn't improve from {best_val_metric}"
+                )
 
         end = time.time()
-        time_taken = end-start
-        self.logger.info('Training completed in {:.0f}h {:.0f}m {:.0f}s'.format(
-            time_taken // 3600, (time_taken % 3600) // 60, (time_taken % 3600) % 60))
+        time_taken = end - start
+        self.logger.info(
+            "Training completed in {:.0f}h {:.0f}m {:.0f}s".format(
+                time_taken // 3600, (time_taken % 3600) // 60, (time_taken % 3600) % 60
+            )
+        )
         self.logger.info(f"Best Val {self.eval_metric} score: {best_val_metric}")
 
         return history
-    
+
     def calc_loss(self, y_pred, y_true):
         """
         _summary_
@@ -483,15 +505,14 @@ class TransformerTrainer(nn.Module):
         :type y_true: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         y_pred = torch.flatten(y_pred, end_dim=1)
 
         y_true = torch.flatten(y_true)
         y_true = F.one_hot(
-            y_true,
-            num_classes = self.config_dict["dataset"]["num_vocab"]
+            y_true, num_classes=self.config_dict["dataset"]["num_vocab"]
         ).to(torch.float)
 
         loss_fn = nn.CrossEntropyLoss(reduce="sum")
 
-        return loss_fn(y_pred, y_true)        
+        return loss_fn(y_pred, y_true)

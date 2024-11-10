@@ -16,7 +16,7 @@ class GloVeModel(nn.Module):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         super(GloVeModel, self).__init__()
 
         self.embed_dim = config_dict["model"]["embed_dim"]
@@ -37,7 +37,7 @@ class GloVeModel(nn.Module):
         :type cxt: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         ctr = ctr.to(dtype=torch.long)
         cxt = cxt.to(dtype=torch.long)
 
@@ -61,8 +61,8 @@ class GloVeTrainer(nn.Module):
         :type optimizer: _type_
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
-        super(GloVeTrainer, self).__init__()     
+        """
+        super(GloVeTrainer, self).__init__()
 
         self.logger = logging.getLogger(__name__)
 
@@ -83,12 +83,16 @@ class GloVeTrainer(nn.Module):
         :type epoch: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.train()
         total_loss, num_instances = 0, 0
 
-        self.logger.info(f"-----------Epoch {epoch}/{self.config_dict['train']['epochs']}-----------")
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Training")
+        self.logger.info(
+            f"-----------Epoch {epoch}/{self.config_dict['train']['epochs']}-----------"
+        )
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Training"
+        )
 
         for batch_id, (ctr, cxt, cnt) in pbar:
             ctr_embed, cxt_embed, ctr_bias, cxt_bias = self.model(ctr, cxt)
@@ -101,11 +105,10 @@ class GloVeTrainer(nn.Module):
             total_loss += loss
             num_instances += cnt.size(0)
 
-        train_loss = total_loss/num_instances
+        train_loss = total_loss / num_instances
 
         return train_loss
-        
-    
+
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
         """
@@ -115,11 +118,13 @@ class GloVeTrainer(nn.Module):
         :type data_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.eval()
         total_loss, num_instances = 0, 0
 
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Validation")
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Validation"
+        )
 
         for batch_id, (ctr, cxt, cnt) in pbar:
             ctr_embed, cxt_embed, ctr_bias, cxt_bias = self.model(ctr, cxt)
@@ -129,7 +134,7 @@ class GloVeTrainer(nn.Module):
             total_loss += loss
             num_instances += cnt.size(0)
 
-        val_loss = total_loss/num_instances
+        val_loss = total_loss / num_instances
 
         return val_loss
 
@@ -143,7 +148,7 @@ class GloVeTrainer(nn.Module):
         :type val_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
@@ -151,26 +156,34 @@ class GloVeTrainer(nn.Module):
         history = defaultdict(list)
 
         start = time.time()
-        for epoch in range(1, num_epochs+1):
+        for epoch in range(1, num_epochs + 1):
             train_loss = self.train_one_epoch(train_loader, epoch)
             val_loss = self.val_one_epoch(val_loader)
 
             self.logger.info(f"Train Loss : {train_loss} - Val Loss : {val_loss}")
-            
+
             history["train_loss"].append(float(train_loss.detach().numpy()))
             history["val_loss"].append(float(val_loss.detach().numpy()))
 
             if val_loss <= best_val_loss:
-                self.logger.info(f"Validation Loss improved from {best_val_loss} to {val_loss}")
+                self.logger.info(
+                    f"Validation Loss improved from {best_val_loss} to {val_loss}"
+                )
                 best_val_loss = val_loss
-                torch.save(self.model.state_dict(), os.path.join(output_folder, "best_model.pt"))
+                torch.save(
+                    self.model.state_dict(),
+                    os.path.join(output_folder, "best_model.pt"),
+                )
             else:
                 self.logger.info(f"Validation loss didn't improve from {best_val_loss}")
 
         end = time.time()
-        time_taken = end-start
-        self.logger.info('Training completed in {:.0f}h {:.0f}m {:.0f}s'.format(
-            time_taken // 3600, (time_taken % 3600) // 60, (time_taken % 3600) % 60))
+        time_taken = end - start
+        self.logger.info(
+            "Training completed in {:.0f}h {:.0f}m {:.0f}s".format(
+                time_taken // 3600, (time_taken % 3600) // 60, (time_taken % 3600) % 60
+            )
+        )
         self.logger.info(f"Best Val RMSE: {best_val_loss}")
 
         return history
@@ -191,12 +204,12 @@ class GloVeTrainer(nn.Module):
         :type count: _type_
         :return: _description_
         :rtype: _type_
-        """        
-        factor = torch.pow(count/self.x_max, self.alpha)
+        """
+        factor = torch.pow(count / self.x_max, self.alpha)
         factor[factor > 1] = 1
         log_count = torch.log(1 + count)
 
-        embed_product = torch.sum(ctr_embed*cxt_embed, dim=1)
+        embed_product = torch.sum(ctr_embed * cxt_embed, dim=1)
 
-        loss = factor*torch.pow(embed_product + ctr_bias + cxt_bias - log_count, 2)
+        loss = factor * torch.pow(embed_product + ctr_bias + cxt_bias - log_count, 2)
         return torch.sum(loss)

@@ -11,6 +11,7 @@ import torch.nn.functional as F
 
 from metrics import ClassificationMetrics
 
+
 class GRUCell(nn.Module):
     def __init__(self, h_dim, inp_x_dim, out_x_dim):
         """
@@ -22,8 +23,8 @@ class GRUCell(nn.Module):
         :type inp_x_dim: _type_
         :param out_x_dim: _description_
         :type out_x_dim: _type_
-        """        
-        super(GRUCell, self).__init__()      
+        """
+        super(GRUCell, self).__init__()
 
         self.zh_dense = nn.Linear(h_dim, h_dim)
         self.zx_dense = nn.Linear(inp_x_dim, h_dim)
@@ -46,12 +47,12 @@ class GRUCell(nn.Module):
         :type xt: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         zt = nn.Sigmoid()(self.zh_dense(ht_1) + self.zx_dense(xt))
         rt = nn.Sigmoid()(self.rh_dense(ht_1) + self.rx_dense(xt))
 
-        ht_ = nn.Tanh()(self.uh_dense(rt*ht_1) + self.ux_dense(xt))
-        ht = (1-zt)*ht_1 + zt*ht_
+        ht_ = nn.Tanh()(self.uh_dense(rt * ht_1) + self.ux_dense(xt))
+        ht = (1 - zt) * ht_1 + zt * ht_
 
         yt = self.xh_dense(ht)
 
@@ -65,8 +66,8 @@ class GRUModel(nn.Module):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
-        super(GRUModel, self).__init__()   
+        """
+        super(GRUModel, self).__init__()
 
         self.seq_len = config_dict["dataset"]["seq_len"]
         self.h_dim = config_dict["model"]["h_dim"][0]
@@ -89,7 +90,7 @@ class GRUModel(nn.Module):
         :type X: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         x_embed = self.embed_layer(X.to(torch.long))
         self.num_samples = X.size(0)
 
@@ -104,17 +105,17 @@ class GRUModel(nn.Module):
 
         return torch.concat(yprobs, dim=1)
 
-
     def init_hidden(self):
         """
         _summary_
 
         :return: _description_
         :rtype: _type_
-        """        
+        """
         ht = nn.init.kaiming_uniform_(torch.empty(self.num_samples, self.h_dim))
 
         return ht
+
 
 class GRUTrainer(nn.Module):
     def __init__(self, model, optimizer, config_dict):
@@ -127,8 +128,8 @@ class GRUTrainer(nn.Module):
         :type optimizer: _type_
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
-        super(GRUTrainer, self).__init__()    
+        """
+        super(GRUTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
 
         self.model = model
@@ -148,13 +149,17 @@ class GRUTrainer(nn.Module):
         :type epoch: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.train()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
 
-        self.logger.info(f"-----------Epoch {epoch}/{self.config_dict['train']['epochs']}-----------")
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Training")
+        self.logger.info(
+            f"-----------Epoch {epoch}/{self.config_dict['train']['epochs']}-----------"
+        )
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Training"
+        )
 
         for batch_id, (X, y) in pbar:
             y_hat = self.model(X)
@@ -170,7 +175,7 @@ class GRUTrainer(nn.Module):
             y_true.append(y.cpu().detach().numpy().argmax(-1).flatten())
             y_pred.append(y_hat.cpu().detach().numpy().reshape(-1, y_hat.shape[-1]))
 
-        train_loss = total_loss/num_instances
+        train_loss = total_loss / num_instances
 
         y_true = np.concatenate(y_true, axis=0)
         y_pred = np.concatenate(y_pred, axis=0)
@@ -187,12 +192,14 @@ class GRUTrainer(nn.Module):
         :type data_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.eval()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
 
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Validation")
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Validation"
+        )
 
         for batch_id, (X, y) in pbar:
             y_hat = self.model(X)
@@ -205,14 +212,14 @@ class GRUTrainer(nn.Module):
             y_true.append(y.cpu().detach().numpy().argmax(-1).flatten())
             y_pred.append(y_hat.cpu().detach().numpy().reshape(-1, y_hat.shape[-1]))
 
-        val_loss = total_loss/num_instances
-        
+        val_loss = total_loss / num_instances
+
         y_true = np.concatenate(y_true, axis=0)
         y_pred = np.concatenate(y_pred, axis=0)
         val_metrics = self.metric_cls.get_metrics(y_true, y_pred, self.target_names)
 
         return val_loss, val_metrics
-    
+
     @torch.no_grad()
     def predict(self, data_loader):
         """
@@ -222,16 +229,18 @@ class GRUTrainer(nn.Module):
         :type data_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.eval()
         y_pred = []
 
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Inference")
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Inference"
+        )
 
         for batch_id, X in pbar:
             tokens_hat = self.model(X[0])
             y_pred.append(tokens_hat.cpu().detach().numpy().argmax(-1).flatten())
-        
+
         y_pred = np.concatenate(y_pred, axis=0)
 
         return y_pred
@@ -246,7 +255,7 @@ class GRUTrainer(nn.Module):
         :type val_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
@@ -254,10 +263,10 @@ class GRUTrainer(nn.Module):
         history = defaultdict(list)
 
         start = time.time()
-        for epoch in range(1, num_epochs+1):
+        for epoch in range(1, num_epochs + 1):
             train_loss, train_metrics = self.train_one_epoch(train_loader, epoch)
             val_loss, val_metrics = self.val_one_epoch(val_loader)
-                
+
             history["train_loss"].append(float(train_loss.detach().numpy()))
             history["val_loss"].append(float(val_loss.detach().numpy()))
             for key in train_metrics.keys():
@@ -266,23 +275,35 @@ class GRUTrainer(nn.Module):
 
             self.logger.info(f"Train Loss : {train_loss} - Val Loss : {val_loss}")
             for key in train_metrics.keys():
-                self.logger.info(f"Train {key} : {train_metrics[key]} - Val {key} : {val_metrics[key]}")
+                self.logger.info(
+                    f"Train {key} : {train_metrics[key]} - Val {key} : {val_metrics[key]}"
+                )
 
             if val_metrics[self.eval_metric] >= best_val_metric:
-                self.logger.info(f"Validation {self.eval_metric} score improved from {best_val_metric} to {val_metrics[self.eval_metric]}")
+                self.logger.info(
+                    f"Validation {self.eval_metric} score improved from {best_val_metric} to {val_metrics[self.eval_metric]}"
+                )
                 best_val_metric = val_metrics[self.eval_metric]
-                torch.save(self.model.state_dict(), os.path.join(output_folder, "best_model.pt"))
+                torch.save(
+                    self.model.state_dict(),
+                    os.path.join(output_folder, "best_model.pt"),
+                )
             else:
-                self.logger.info(f"Validation {self.eval_metric} score didn't improve from {best_val_metric}")
+                self.logger.info(
+                    f"Validation {self.eval_metric} score didn't improve from {best_val_metric}"
+                )
 
         end = time.time()
-        time_taken = end-start
-        self.logger.info('Training completed in {:.0f}h {:.0f}m {:.0f}s'.format(
-            time_taken // 3600, (time_taken % 3600) // 60, (time_taken % 3600) % 60))
+        time_taken = end - start
+        self.logger.info(
+            "Training completed in {:.0f}h {:.0f}m {:.0f}s".format(
+                time_taken // 3600, (time_taken % 3600) // 60, (time_taken % 3600) % 60
+            )
+        )
         self.logger.info(f"Best Val {self.eval_metric} score: {best_val_metric}")
 
         return history
-    
+
     def calc_loss(self, y_pred, y_true):
         """
         _summary_
@@ -293,11 +314,10 @@ class GRUTrainer(nn.Module):
         :type y_true: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         y_pred = torch.reshape(y_pred, (-1, 2))
         y_true = torch.reshape(y_true, (-1, 2))
 
         loss_fn = nn.CrossEntropyLoss(reduction="sum")
 
         return loss_fn(y_pred, y_true)
-

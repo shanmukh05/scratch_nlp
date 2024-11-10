@@ -55,7 +55,7 @@ class PreprocessIMDB:
         :param randomize: _description_
         :type randomize: _type_
         """
-        
+
         self.text_ls, self.label_ls = [], []
         if explore_folder:
             folders = os.listdir(root_path)

@@ -16,7 +16,7 @@ class RNNDataset(Word2VecDataset):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         self.logger = logging.getLogger(__name__)
 
         self.config_dict = config_dict
@@ -30,7 +30,7 @@ class RNNDataset(Word2VecDataset):
 
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.word2id["<PAD>"] = len(self.word2id)
         self.id2word[len(self.id2word)] = "<PAD>"
 
@@ -41,14 +41,14 @@ class RNNDataset(Word2VecDataset):
         y = np.array(self.preproc_cls.label_ls).reshape(-1, 1)
         y = self.label_encoder.fit_transform(y).toarray()
         return np.array(X), y
-    
+
     def get_test_data(self):
         """
         _summary_
 
         :return: _description_
         :rtype: _type_
-        """        
+        """
         root_path = self.config_dict["paths"]["test_folder"]
         explore_folder = self.config_dict["dataset"]["explore_folder"]
         num_samples = self.config_dict["dataset"]["test_samples"]
@@ -75,7 +75,7 @@ class RNNDataset(Word2VecDataset):
         :type text_ls: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         seq_len = self.config_dict["dataset"]["seq_len"]
         X = []
         for text in text_ls:
@@ -87,11 +87,12 @@ class RNNDataset(Word2VecDataset):
                     ls.append(self.word2id["<UNK>"])
             if len(ls) < seq_len:
                 num_pad = seq_len - len(ls)
-                ls.extend([self.word2id["<PAD>"]]*num_pad)
+                ls.extend([self.word2id["<PAD>"]] * num_pad)
             X.append(ls)
 
         return X
-    
+
+
 def create_dataloader(X, y, val_split, batch_size, seed):
     """
     _summary_
@@ -108,13 +109,31 @@ def create_dataloader(X, y, val_split, batch_size, seed):
     :type seed: _type_
     :return: _description_
     :rtype: _type_
-    """    
-    train_x, val_x, train_y, val_y = train_test_split(X, y, test_size=val_split, random_state=seed)
-    train_x, val_x, train_y, val_y = train_test_split(X, y, test_size=val_split, random_state=seed)
+    """
+    train_x, val_x, train_y, val_y = train_test_split(
+        X, y, test_size=val_split, random_state=seed
+    )
+    train_x, val_x, train_y, val_y = train_test_split(
+        X, y, test_size=val_split, random_state=seed
+    )
 
     train_ds = TensorDataset(torch.Tensor(train_x), torch.Tensor(train_y))
-    train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True, drop_last=True, num_workers=1, pin_memory=True)
+    train_loader = DataLoader(
+        train_ds,
+        batch_size=batch_size,
+        shuffle=True,
+        drop_last=True,
+        num_workers=1,
+        pin_memory=True,
+    )
 
     val_ds = TensorDataset(torch.Tensor(val_x), torch.Tensor(val_y))
-    val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False, drop_last=True, num_workers=1, pin_memory=True)
+    val_loader = DataLoader(
+        val_ds,
+        batch_size=batch_size,
+        shuffle=False,
+        drop_last=True,
+        num_workers=1,
+        pin_memory=True,
+    )
     return train_loader, val_loader

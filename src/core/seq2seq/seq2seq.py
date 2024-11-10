@@ -17,7 +17,7 @@ class Seq2Seq:
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
@@ -31,11 +31,13 @@ class Seq2Seq:
 
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.seq2seq_ds = PreprocessSeq2Seq(self.config_dict)
         tokenSrc, tokenTgt = self.seq2seq_ds.get_data(self.seq2seq_ds.df)
 
-        train_loader, val_loader = create_dataloader(tokenSrc, tokenTgt, self.val_split, self.batch_size, self.seed, "train")
+        train_loader, val_loader = create_dataloader(
+            tokenSrc, tokenTgt, self.val_split, self.batch_size, self.seed, "train"
+        )
 
         self.model = Seq2SeqModel(self.config_dict)
         lr = self.config_dict["train"]["lr"]
@@ -52,9 +54,11 @@ class Seq2Seq:
 
         :return: _description_
         :rtype: _type_
-        """        
+        """
         tokens_src, tokens_tgt = self.seq2seq_ds.get_data(self.seq2seq_ds.test_df)
-        test_loader = create_dataloader(tokens_src, None, None, self.batch_size, None, "test")
+        test_loader = create_dataloader(
+            tokens_src, None, None, self.batch_size, None, "test"
+        )
 
         tokens_tgt_pred = self.trainer.predict(test_loader)
         tokens_tgt_pred = tokens_tgt_pred.argmax(axis=-1).astype("int")
@@ -64,15 +68,15 @@ class Seq2Seq:
         sents_tgt_pred = self.seq2seq_ds.batched_ids2tokens(tokens_tgt, "tgt")
 
         return sents_src, sents_tgt, sents_tgt_pred
-    
+
     def save_output(self):
         """
         _summary_
-        """        
+        """
         output_folder = self.config_dict["paths"]["output_folder"]
 
         self.logger.info(f"Saving Outputs {output_folder}")
-        with open(os.path.join(output_folder, "training_history.json"), 'w') as fp:
+        with open(os.path.join(output_folder, "training_history.json"), "w") as fp:
             json.dump(self.history, fp)
 
         src_embeds = self.model.encoder.src_embed_layer.weight.detach().numpy()
@@ -86,11 +90,7 @@ class Seq2Seq:
         plot_history(self.history, output_folder)
 
         sents_src, sents_tgt, sents_tgt_pred = self.run_infer()
-        test_df = pd.DataFrame.from_dict({
-            "Source": sents_src,
-            "Target": sents_tgt,
-            "Prediction": sents_tgt_pred
-        })
+        test_df = pd.DataFrame.from_dict(
+            {"Source": sents_src, "Target": sents_tgt, "Prediction": sents_tgt_pred}
+        )
         test_df.to_csv(os.path.join(output_folder, "Test Predictions.csv"), index=False)
-    
-

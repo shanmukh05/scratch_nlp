@@ -16,7 +16,7 @@ class PreprocessBERTPretrain:
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         self.logger = logging.getLogger(__name__)
 
         self.input_path = config_dict["paths"]["input_file"]
@@ -32,42 +32,50 @@ class PreprocessBERTPretrain:
 
         :return: _description_
         :rtype: _type_
-        """        
+        """
         text_ls = self.extract_data()
         text_ls = self.preprocess_text(text_ls)
         text_lens = [len(text.split()) for text in text_ls]
 
         corpus = self.get_vocab(text_ls)
 
-        half_seq_len = self.seq_len//2 - 1
-        text_tokens_a = np.zeros((len(text_ls), half_seq_len+1))
-        text_tokens_b = np.zeros((len(text_ls), half_seq_len+1))
+        half_seq_len = self.seq_len // 2 - 1
+        text_tokens_a = np.zeros((len(text_ls), half_seq_len + 1))
+        text_tokens_b = np.zeros((len(text_ls), half_seq_len + 1))
         count = 0
         for id, text_len in enumerate(text_lens):
-            tokens_ls = corpus[count: count+text_len]
+            tokens_ls = corpus[count : count + text_len]
             tokens = [i for ls in tokens_ls for i in ls]
             text = " ".join(tokens).split()
             count += text_len
 
-            text = text[:self.seq_len]
+            text = text[: self.seq_len]
 
             if len(text) < self.seq_len:
-                text = text + ["<PAD>"]*(self.seq_len - len(text))
+                text = text + ["<PAD>"] * (self.seq_len - len(text))
 
-            text_tokens_a[id] = np.array([self.word2id[ch] for ch in ["<CLS>"] + text[:half_seq_len]])
-            text_tokens_b[id] = np.array([self.word2id[ch] for ch in ["<SEP>"] + text[half_seq_len:2*half_seq_len]])
+            text_tokens_a[id] = np.array(
+                [self.word2id[ch] for ch in ["<CLS>"] + text[:half_seq_len]]
+            )
+            text_tokens_b[id] = np.array(
+                [
+                    self.word2id[ch]
+                    for ch in ["<SEP>"] + text[half_seq_len : 2 * half_seq_len]
+                ]
+            )
 
         reorder_tokens_b = np.random.choice(len(text_ls), len(text_ls), replace=False)
         text_tokens_a = np.concatenate([text_tokens_a, text_tokens_a], axis=0)
-        text_tokens_b = np.concatenate([text_tokens_b, text_tokens_b[reorder_tokens_b]], axis=0)
+        text_tokens_b = np.concatenate(
+            [text_tokens_b, text_tokens_b[reorder_tokens_b]], axis=0
+        )
         text_tokens = np.concatenate([text_tokens_a, text_tokens_b], axis=-1)
-        
-        nsp_labels = np.array(["IsNext"]*len(text_ls) + ["NotNext"]*len(text_ls))
+
+        nsp_labels = np.array(["IsNext"] * len(text_ls) + ["NotNext"] * len(text_ls))
         self.lencoder = LabelEncoder()
         nsp_labels = self.lencoder.fit_transform(nsp_labels)
 
         return text_tokens, nsp_labels
-
 
     def preprocess_text(self, text_ls):
         """
@@ -77,11 +85,11 @@ class PreprocessBERTPretrain:
         :type text_ls: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         text_ls = [preprocess_text(text, self.operations) for text in text_ls]
 
         return text_ls
-    
+
     def get_vocab(self, text_ls):
         """
         _summary_
@@ -90,16 +98,18 @@ class PreprocessBERTPretrain:
         :type text_ls: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.logger.info("Building Vocabulary using Word piece Tokenization method")
         corpus = self.wordpiece.fit(text_ls)
-        vocab = ["<PAD>", "<UNK>", "<CLS>", "<SEP>", "<MASK>"] + list(self.wordpiece.vocab_freq.keys())
+        vocab = ["<PAD>", "<UNK>", "<CLS>", "<SEP>", "<MASK>"] + list(
+            self.wordpiece.vocab_freq.keys()
+        )
 
-        self.word2id = {w:i for i, w in enumerate(vocab)}
-        self.id2word = {v:k for k,v in self.word2id.items()}
+        self.word2id = {w: i for i, w in enumerate(vocab)}
+        self.id2word = {v: k for k, v in self.word2id.items()}
 
         return corpus
-    
+
     def batched_ids2tokens(self, tokens):
         """
         _summary_
@@ -108,8 +118,8 @@ class PreprocessBERTPretrain:
         :type tokens: _type_
         :return: _description_
         :rtype: _type_
-        """        
-        func = lambda x : self.id2word[x]
+        """
+        func = lambda x: self.id2word[x]
         vect_func = np.vectorize(func)
 
         tokens = vect_func(tokens)
@@ -121,13 +131,17 @@ class PreprocessBERTPretrain:
             for i, ch in enumerate(seq):
                 if "##" != ch[:2] and i != 0:
                     tokens = seq[start_id:i]
-                    word = "".join([w if i==0 else w[2:] for i,w in enumerate(tokens)])
+                    word = "".join(
+                        [w if i == 0 else w[2:] for i, w in enumerate(tokens)]
+                    )
                     words.append(word)
                     start_id = i
-            final_word = "".join([w if i==0 else w[2:] for i,w in enumerate(seq[start_id:])])
+            final_word = "".join(
+                [w if i == 0 else w[2:] for i, w in enumerate(seq[start_id:])]
+            )
             words.append(final_word)
             sentences.append(" ".join(words))
-        
+
         return sentences
 
     def extract_data(self):
@@ -136,7 +150,7 @@ class PreprocessBERTPretrain:
 
         :return: _description_
         :rtype: _type_
-        """        
+        """
         df = pd.read_csv(self.input_path, nrows=self.num_samples)
 
         return df["text"]
@@ -155,23 +169,23 @@ class BERTPretrainDataset(Dataset):
         :type config_dict: _type_
         :param word2id: _description_
         :type word2id: _type_
-        """        
+        """
         self.text_tokens = text_tokens
         self.nsp_labels = nsp_labels
         self.word2id = word2id
 
         self.num_vocab = config_dict["dataset"]["num_vocab"]
         self.seq_len = config_dict["dataset"]["seq_len"]
-        self.half_seq_len = self.seq_len//2 - 1
+        self.half_seq_len = self.seq_len // 2 - 1
 
         pred_prob = config_dict["preprocess"]["replace_token"]["prediction"]
         pred_mask = config_dict["preprocess"]["replace_token"]["mask"]
         pred_random = config_dict["preprocess"]["replace_token"]["random"]
         self.num_extra_tokens = config_dict["dataset"]["num_extra_tokens"]
 
-        self.num_pred_tokens_half = int(pred_prob*self.seq_len)
-        self.num_mask_tokens = int(2*self.num_pred_tokens_half*pred_mask)
-        self.num_rand_tokens = int(2*self.num_pred_tokens_half*pred_random)
+        self.num_pred_tokens_half = int(pred_prob * self.seq_len)
+        self.num_mask_tokens = int(2 * self.num_pred_tokens_half * pred_mask)
+        self.num_rand_tokens = int(2 * self.num_pred_tokens_half * pred_random)
 
     def __len__(self):
         """
@@ -179,9 +193,9 @@ class BERTPretrainDataset(Dataset):
 
         :return: _description_
         :rtype: _type_
-        """        
+        """
         return len(self.text_tokens)
-    
+
     def __getitem__(self, idx):
         """
         _summary_
@@ -190,13 +204,13 @@ class BERTPretrainDataset(Dataset):
         :type idx: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         nsp_label = self.nsp_labels[idx]
         text_token = self.text_tokens[idx].to(torch.int64)
         text_token, lbl_mask = self._apply_mask(text_token)
-        
+
         return text_token, lbl_mask, nsp_label
-    
+
     def _apply_mask(self, text_token):
         """
         _summary_
@@ -205,21 +219,38 @@ class BERTPretrainDataset(Dataset):
         :type text_token: _type_
         :return: _description_
         :rtype: _type_
-        """        
-        lbl_mask_ids_a = 1 + torch.randperm(self.half_seq_len)[:self.num_pred_tokens_half]
-        lbl_mask_ids_b = 1 + self.seq_len//2 + torch.randperm(self.half_seq_len)[:self.num_pred_tokens_half]
+        """
+        lbl_mask_ids_a = (
+            1 + torch.randperm(self.half_seq_len)[: self.num_pred_tokens_half]
+        )
+        lbl_mask_ids_b = (
+            1
+            + self.seq_len // 2
+            + torch.randperm(self.half_seq_len)[: self.num_pred_tokens_half]
+        )
         lbl_mask_ids = torch.concat([lbl_mask_ids_a, lbl_mask_ids_b], axis=0)
         lbl_mask = torch.zeros_like(text_token)
         lbl_mask[lbl_mask_ids] = 1
 
-        rand_tokens = torch.randperm(self.num_vocab-self.num_extra_tokens)[:self.num_rand_tokens] + self.num_extra_tokens
-        text_token[lbl_mask_ids[:self.num_mask_tokens]] = self.word2id["<MASK>"]
-        text_token[lbl_mask_ids[self.num_mask_tokens:self.num_mask_tokens+self.num_rand_tokens]] = rand_tokens
+        rand_tokens = (
+            torch.randperm(self.num_vocab - self.num_extra_tokens)[
+                : self.num_rand_tokens
+            ]
+            + self.num_extra_tokens
+        )
+        text_token[lbl_mask_ids[: self.num_mask_tokens]] = self.word2id["<MASK>"]
+        text_token[
+            lbl_mask_ids[
+                self.num_mask_tokens : self.num_mask_tokens + self.num_rand_tokens
+            ]
+        ] = rand_tokens
 
-        return text_token, lbl_mask  
+        return text_token, lbl_mask
 
 
-def create_dataloader_pretrain(X, y, config_dict, word2id, val_split=0.2, test_split=0.2, batch_size=32, seed=2024): 
+def create_dataloader_pretrain(
+    X, y, config_dict, word2id, val_split=0.2, test_split=0.2, batch_size=32, seed=2024
+):
     """
     _summary_
 
@@ -241,17 +272,48 @@ def create_dataloader_pretrain(X, y, config_dict, word2id, val_split=0.2, test_s
     :type seed: int, optional
     :return: _description_
     :rtype: _type_
-    """    
-    train_X, val_X, train_y, val_y = train_test_split(X, y, test_size=val_split+test_split, random_state=seed)
-    val_X, test_X, val_y, test_y = train_test_split(X, y, test_size=test_split/(val_split+test_split), random_state=seed)
+    """
+    train_X, val_X, train_y, val_y = train_test_split(
+        X, y, test_size=val_split + test_split, random_state=seed
+    )
+    val_X, test_X, val_y, test_y = train_test_split(
+        X, y, test_size=test_split / (val_split + test_split), random_state=seed
+    )
 
-    train_ds = BERTPretrainDataset(torch.Tensor(train_X), torch.Tensor(train_y), config_dict, word2id)
-    train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True, drop_last=True, num_workers=1, pin_memory=True)
+    train_ds = BERTPretrainDataset(
+        torch.Tensor(train_X), torch.Tensor(train_y), config_dict, word2id
+    )
+    train_loader = DataLoader(
+        train_ds,
+        batch_size=batch_size,
+        shuffle=True,
+        drop_last=True,
+        num_workers=1,
+        pin_memory=True,
+    )
 
-    val_ds = BERTPretrainDataset(torch.Tensor(val_X), torch.Tensor(val_y), config_dict, word2id)
-    val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False, drop_last=True, num_workers=1, pin_memory=True)
-        
-    test_ds = BERTPretrainDataset(torch.Tensor(test_X), torch.Tensor(test_y), config_dict, word2id)
-    test_loader = DataLoader(test_ds, batch_size=batch_size, shuffle=False, drop_last=False, num_workers=1, pin_memory=False)
-    
+    val_ds = BERTPretrainDataset(
+        torch.Tensor(val_X), torch.Tensor(val_y), config_dict, word2id
+    )
+    val_loader = DataLoader(
+        val_ds,
+        batch_size=batch_size,
+        shuffle=False,
+        drop_last=True,
+        num_workers=1,
+        pin_memory=True,
+    )
+
+    test_ds = BERTPretrainDataset(
+        torch.Tensor(test_X), torch.Tensor(test_y), config_dict, word2id
+    )
+    test_loader = DataLoader(
+        test_ds,
+        batch_size=batch_size,
+        shuffle=False,
+        drop_last=False,
+        num_workers=1,
+        pin_memory=False,
+    )
+
     return train_loader, val_loader, test_loader

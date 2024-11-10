@@ -21,8 +21,8 @@ class DecoderLayer(nn.Module):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
-        super(DecoderLayer, self).__init__()     
+        """
+        super(DecoderLayer, self).__init__()
 
         dropout = config_dict["model"]["dropout"]
         d_model = config_dict["model"]["d_model"]
@@ -43,7 +43,7 @@ class DecoderLayer(nn.Module):
         :type tokens: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         tokens = self.layer_norm(tokens)
         masked_attn_output = self.mh_masked_self_attn(tokens, tokens, tokens, True)
         output = tokens + self.dropout1(masked_attn_output)
@@ -52,7 +52,7 @@ class DecoderLayer(nn.Module):
         output = output + self.dropout2(ffwd_output)
 
         return output
-    
+
 
 class GPTModel(nn.Module):
     def __init__(self, config_dict):
@@ -61,8 +61,8 @@ class GPTModel(nn.Module):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
-        super(GPTModel, self).__init__()     
+        """
+        super(GPTModel, self).__init__()
 
         embed_dim = config_dict["model"]["d_model"]
         num_vocab = config_dict["dataset"]["num_vocab"]
@@ -90,7 +90,7 @@ class GPTModel(nn.Module):
         :type tokens: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         embeds = self.dropout(self.positional_encoding(self.embed_layer(tokens)))
 
         dec_output = embeds
@@ -101,7 +101,7 @@ class GPTModel(nn.Module):
         output = self.classifier_layer(output)
 
         return output
-    
+
     def generate(self, tokens):
         """
         _summary_
@@ -110,15 +110,15 @@ class GPTModel(nn.Module):
         :type tokens: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         tokens_pred = torch.zeros_like(tokens)
-        tokens_pred[:, :self.seq_len] = tokens[:, :self.seq_len]
+        tokens_pred[:, : self.seq_len] = tokens[:, : self.seq_len]
 
         for i in range(self.num_predict_tokens):
-            inputs = tokens_pred[:, i:i+self.seq_len]
+            inputs = tokens_pred[:, i : i + self.seq_len]
             outputs = self.forward(inputs)
             new_token = torch.argmax(outputs[:, -1, :], dim=-1)
-            tokens_pred[:, self.seq_len+i] = new_token.squeeze()
+            tokens_pred[:, self.seq_len + i] = new_token.squeeze()
 
         return tokens_pred
 
@@ -134,8 +134,8 @@ class GPTTrainer(nn.Module):
         :type optimizer: _type_
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
-        super(GPTTrainer, self).__init__()     
+        """
+        super(GPTTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
 
         self.model = model
@@ -154,20 +154,24 @@ class GPTTrainer(nn.Module):
         :type epoch: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.train()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
 
-        self.logger.info(f"-----------Epoch {epoch}/{self.config_dict['train']['epochs']}-----------")
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Training")
+        self.logger.info(
+            f"-----------Epoch {epoch}/{self.config_dict['train']['epochs']}-----------"
+        )
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Training"
+        )
 
         for batch_id, sent in pbar:
             src, tgt = sent[0][:, :-1], sent[0][:, 1:]
             src = src.to(torch.long)
             tgt = tgt.to(torch.long)
             tgt_hat = self.model(src)
-            
+
             loss = self.calc_loss(tgt_hat, tgt)
             loss.backward()
             self.optim.step()
@@ -179,7 +183,7 @@ class GPTTrainer(nn.Module):
             y_true.append(tgt.cpu().detach().numpy())
             y_pred.append(tgt_hat.cpu().detach().numpy())
 
-        train_loss = total_loss/num_instances
+        train_loss = total_loss / num_instances
 
         y_true = np.concatenate(y_true, axis=0)
         y_pred = np.concatenate(y_pred, axis=0)
@@ -196,12 +200,14 @@ class GPTTrainer(nn.Module):
         :type data_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.eval()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
 
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Validation")
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Validation"
+        )
 
         for batch_id, sent in pbar:
             src, tgt = sent[0][:, :-1], sent[0][:, 1:]
@@ -217,14 +223,14 @@ class GPTTrainer(nn.Module):
             y_true.append(tgt.cpu().detach().numpy())
             y_pred.append(tgt_hat.cpu().detach().numpy())
 
-        val_loss = total_loss/num_instances
-        
+        val_loss = total_loss / num_instances
+
         y_true = np.concatenate(y_true, axis=0)
         y_pred = np.concatenate(y_pred, axis=0)
         val_metrics = self.metric_cls.get_metrics(y_true, y_pred)
 
         return val_loss, val_metrics
-    
+
     @torch.no_grad()
     def predict(self, data_loader):
         """
@@ -234,26 +240,28 @@ class GPTTrainer(nn.Module):
         :type data_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.eval()
         y_pred, sents = [], []
 
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Inference")
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Inference"
+        )
 
         for batch_id, sent in pbar:
             src, tgt = sent[0][:, :-1], sent[0][:, 1:]
             src = src.to(torch.long)
             tgt = tgt.to(torch.long)
-            tgt_hat= self.model(src)
+            tgt_hat = self.model(src)
 
             y_pred.append(tgt_hat.cpu().detach().numpy())
             sents.append(sent[0].cpu().detach().numpy())
-        
+
         y_pred = np.concatenate(y_pred, axis=0)
         sents = np.concatenate(sents, axis=0)
 
         return sents, y_pred
-    
+
     @torch.no_grad()
     def generate(self, data_loader):
         """
@@ -263,23 +271,24 @@ class GPTTrainer(nn.Module):
         :type data_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.eval()
         y_true, y_pred = [], []
 
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Generation")
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Generation"
+        )
         for batch_id, tokens in pbar:
             tokens = tokens[0].to(torch.long)
             tokens_pred = self.model.generate(tokens)
 
             y_pred.append(tokens_pred.cpu().detach().numpy())
             y_true.append(tokens.cpu().detach().numpy())
-        
+
         y_pred = np.concatenate(y_pred, axis=0)
         y_true = np.concatenate(y_true, axis=0)
 
         return y_true, y_pred
-
 
     def fit(self, train_loader, val_loader):
         """
@@ -291,7 +300,7 @@ class GPTTrainer(nn.Module):
         :type val_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
@@ -299,10 +308,10 @@ class GPTTrainer(nn.Module):
         history = defaultdict(list)
 
         start = time.time()
-        for epoch in range(1, num_epochs+1):
+        for epoch in range(1, num_epochs + 1):
             train_loss, train_metrics = self.train_one_epoch(train_loader, epoch)
             val_loss, val_metrics = self.val_one_epoch(val_loader)
-                
+
             history["train_loss"].append(float(train_loss.detach().numpy()))
             history["val_loss"].append(float(val_loss.detach().numpy()))
             for key in train_metrics.keys():
@@ -311,23 +320,35 @@ class GPTTrainer(nn.Module):
 
             self.logger.info(f"Train Loss : {train_loss} - Val Loss : {val_loss}")
             for key in train_metrics.keys():
-                self.logger.info(f"Train {key} : {train_metrics[key]} - Val {key} : {val_metrics[key]}")
+                self.logger.info(
+                    f"Train {key} : {train_metrics[key]} - Val {key} : {val_metrics[key]}"
+                )
 
             if val_metrics[self.eval_metric] <= best_val_metric:
-                self.logger.info(f"Validation {self.eval_metric} score improved from {best_val_metric} to {val_metrics[self.eval_metric]}")
+                self.logger.info(
+                    f"Validation {self.eval_metric} score improved from {best_val_metric} to {val_metrics[self.eval_metric]}"
+                )
                 best_val_metric = val_metrics[self.eval_metric]
-                torch.save(self.model.state_dict(), os.path.join(output_folder, "best_model.pt"))
+                torch.save(
+                    self.model.state_dict(),
+                    os.path.join(output_folder, "best_model.pt"),
+                )
             else:
-                self.logger.info(f"Validation {self.eval_metric} score didn't improve from {best_val_metric}")
+                self.logger.info(
+                    f"Validation {self.eval_metric} score didn't improve from {best_val_metric}"
+                )
 
         end = time.time()
-        time_taken = end-start
-        self.logger.info('Training completed in {:.0f}h {:.0f}m {:.0f}s'.format(
-            time_taken // 3600, (time_taken % 3600) // 60, (time_taken % 3600) % 60))
+        time_taken = end - start
+        self.logger.info(
+            "Training completed in {:.0f}h {:.0f}m {:.0f}s".format(
+                time_taken // 3600, (time_taken % 3600) // 60, (time_taken % 3600) % 60
+            )
+        )
         self.logger.info(f"Best Val {self.eval_metric} score: {best_val_metric}")
 
         return history
-    
+
     def calc_loss(self, y_pred, y_true):
         """
         _summary_
@@ -338,15 +359,14 @@ class GPTTrainer(nn.Module):
         :type y_true: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         y_pred = torch.flatten(y_pred, end_dim=1)
 
         y_true = torch.flatten(y_true)
         y_true = F.one_hot(
-            y_true,
-            num_classes = self.config_dict["dataset"]["num_vocab"]
+            y_true, num_classes=self.config_dict["dataset"]["num_vocab"]
         ).to(torch.float)
 
         loss_fn = nn.CrossEntropyLoss(reduce="sum")
 
-        return loss_fn(y_pred, y_true)        
+        return loss_fn(y_pred, y_true)

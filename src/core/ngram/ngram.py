@@ -14,7 +14,7 @@ class NGRAM(BOW):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
         self.return_label = self.config_dict["model"]["output_label"]
@@ -23,7 +23,7 @@ class NGRAM(BOW):
     def run(self):
         """
         _summary_
-        """        
+        """
         self.preprocess()
         X, y = self.fit_transform()
         self.save_output(X, y)
@@ -36,17 +36,20 @@ class NGRAM(BOW):
         :type text_ls: _type_, optional
         :param y: _description_, defaults to None
         :type y: _type_, optional
-        """        
+        """
         self.logger.info("Fitting NGRAM to Extracted Data")
         if text_ls is None:
             text_ls, y = self.text_ls, self.y
         self.vocab = []
         for text in text_ls:
             tokens = text.split()
-            uniq_words = [" ".join([tokens[j+k] for k in range(self.n)]) for j in range(len(tokens)-self.n+1)]
+            uniq_words = [
+                " ".join([tokens[j + k] for k in range(self.n)])
+                for j in range(len(tokens) - self.n + 1)
+            ]
             self.vocab.extend(uniq_words)
             self.vocab = list(set(self.vocab))
-    
+
     def fit_transform(self, text_ls=None, y=None):
         """
         _summary_
@@ -57,13 +60,13 @@ class NGRAM(BOW):
         :type y: _type_, optional
         :return: _description_
         :rtype: _type_
-        """        
+        """
         if text_ls is None:
             text_ls, y = self.text_ls, self.y
         self.fit(text_ls, y)
         X, y = self.transform(text_ls, y)
         return X, y
-    
+
     def transform(self, text_ls=None, y=None):
         """
         _summary_
@@ -74,7 +77,7 @@ class NGRAM(BOW):
         :type y: _type_, optional
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.logger.info("Transforming Txt Data into Vectors")
         if text_ls is None:
             text_ls, y = self.text_ls, self.y
@@ -84,13 +87,13 @@ class NGRAM(BOW):
         for i, text in enumerate(text_ls):
             count_dict = {k: v for k, v in zip(self.vocab, [0] * len(self.vocab))}
             tokens = text.split()
-            for j in range(len(tokens)-self.n):
-                word = " ".join([tokens[j+k] for k in range(self.n)])
+            for j in range(len(tokens) - self.n):
+                word = " ".join([tokens[j + k] for k in range(self.n)])
                 count_dict[word] += 1
                 self.vocab_freq[word] += 1
             X[i] = list(count_dict.values())
         return X, y
-    
+
     def save_output(self, X, y):
         """
         _summary_
@@ -99,7 +102,7 @@ class NGRAM(BOW):
         :type X: _type_
         :param y: _description_
         :type y: _type_
-        """        
+        """
         self.logger.info("Saving Vectors and Plots into Output Folder")
         output_folder = self.config_dict["paths"]["output_folder"]
         os.makedirs(output_folder, exist_ok=True)
@@ -117,5 +120,3 @@ class NGRAM(BOW):
             plot_topk_freq(self.vocab_freq, output_folder)
             plot_wordcloud(self.vocab_freq, output_folder)
             plot_ngram_pie_chart(df, self.n, output_folder)
-
-

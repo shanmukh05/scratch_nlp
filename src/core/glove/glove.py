@@ -10,28 +10,30 @@ from plot_utils import plot_embed
 from plot_utils import plot_topk_cooccur_matrix
 
 
-class GloVe():
+class GloVe:
     def __init__(self, config_dict):
         """
         _summary_
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
     def run(self):
         """
         _summary_
-        """        
+        """
         self.glove_ds = GloVeDataset(self.config_dict)
         X_ctr, X_cxt, X_cnt = self.glove_ds.get_data()
 
         val_split = self.config_dict["dataset"]["val_split"]
         batch_size = self.config_dict["dataset"]["batch_size"]
         seed = self.config_dict["dataset"]["seed"]
-        train_loader, val_loader = create_dataloader(X_ctr, X_cxt, X_cnt, val_split, batch_size, seed)
+        train_loader, val_loader = create_dataloader(
+            X_ctr, X_cxt, X_cnt, val_split, batch_size, seed
+        )
 
         self.model = GloVeModel(self.config_dict)
         lr = self.config_dict["train"]["lr"]
@@ -49,7 +51,7 @@ class GloVe():
         :type sentence: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         operations = self.config_dict["preprocess"]["operations"]
         sentence = preprocess_text(sentence, operations)
         word_ls = sentence.split()
@@ -59,20 +61,22 @@ class GloVe():
         word_embeds = self.model.ctr_embedding(word_ids)
 
         return word_embeds
-    
+
     def save_output(self):
         """
         _summary_
-        """        
+        """
         output_folder = self.config_dict["paths"]["output_folder"]
         self.logger.info(f"Saving Outputs {output_folder}")
-        
-        with open(os.path.join(output_folder, "training_history.json"), 'w') as fp:
+
+        with open(os.path.join(output_folder, "training_history.json"), "w") as fp:
             json.dump(self.history, fp)
-        self.model.load_state_dict(torch.load(os.path.join(output_folder, "best_model.pt"), weights_only=True))
-        
+        self.model.load_state_dict(
+            torch.load(os.path.join(output_folder, "best_model.pt"), weights_only=True)
+        )
+
         embeds = self.model.ctr_embedding.weight.detach().numpy()
         vocab = list(self.glove_ds.vocab_freq.keys())
         plot_embed(embeds, vocab, output_folder)
-        
+
         plot_topk_cooccur_matrix(self.glove_ds.cooccur_mat, vocab, output_folder)

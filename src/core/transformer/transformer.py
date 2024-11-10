@@ -16,7 +16,7 @@ class Transformer:
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
@@ -28,11 +28,13 @@ class Transformer:
     def run(self):
         """
         _summary_
-        """        
+        """
         self.transformer_ds = PreprocessTransformer(self.config_dict)
         tokens = self.transformer_ds.get_data()
 
-        train_loader, val_loader, self.test_loader = create_dataloader(tokens, self.val_split, self.test_split, self.batch_size, self.seed)
+        train_loader, val_loader, self.test_loader = create_dataloader(
+            tokens, self.val_split, self.test_split, self.batch_size, self.seed
+        )
 
         self.model = TransformerModel(self.config_dict)
         lr = self.config_dict["train"]["lr"]
@@ -41,29 +43,29 @@ class Transformer:
 
         self.history = self.trainer.fit(train_loader, val_loader)
         self.save_output()
-    
+
     def run_infer(self):
         """
         _summary_
 
         :return: _description_
         :rtype: _type_
-        """        
+        """
         sents, tokens_pred = self.trainer.predict(self.test_loader)
         sents = self.transformer_ds.batched_ids2tokens(sents)
         tokens_pred = tokens_pred.argmax(axis=-1).astype("int")
         tokens_pred = self.transformer_ds.batched_ids2tokens(tokens_pred)
-        
+
         return sents, tokens_pred
-    
+
     def save_output(self):
         """
         _summary_
-        """        
+        """
         output_folder = self.config_dict["paths"]["output_folder"]
 
         self.logger.info(f"Saving Outputs {output_folder}")
-        with open(os.path.join(output_folder, "training_history.json"), 'w') as fp:
+        with open(os.path.join(output_folder, "training_history.json"), "w") as fp:
             json.dump(self.history, fp)
 
         src_embeds = self.model.src_embed_layer.weight.detach().numpy()
@@ -73,8 +75,5 @@ class Transformer:
         plot_history(self.history, output_folder)
 
         sents, tokens_pred = self.run_infer()
-        test_df = pd.DataFrame.from_dict({
-            "Sentence": sents,
-            "Prediction": tokens_pred
-        })
+        test_df = pd.DataFrame.from_dict({"Sentence": sents, "Prediction": tokens_pred})
         test_df.to_csv(os.path.join(output_folder, "Test Predictions.csv"), index=False)

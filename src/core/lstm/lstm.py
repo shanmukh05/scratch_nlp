@@ -17,7 +17,7 @@ class LSTM:
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
@@ -28,11 +28,19 @@ class LSTM:
     def run(self):
         """
         _summary_
-        """        
+        """
         self.lstm_ds = PreprocessFlickr(self.config_dict)
         train_paths, train_tokens, transforms = self.lstm_ds.get_data()
 
-        train_loader, val_loader = create_dataloader(train_paths, train_tokens, transforms, self.val_split, self.batch_size, self.seed, "train")
+        train_loader, val_loader = create_dataloader(
+            train_paths,
+            train_tokens,
+            transforms,
+            self.val_split,
+            self.batch_size,
+            self.seed,
+            "train",
+        )
 
         self.model = LSTMModel(self.config_dict)
         lr = self.config_dict["train"]["lr"]
@@ -41,17 +49,24 @@ class LSTM:
 
         self.history = self.trainer.fit(train_loader, val_loader)
         self.save_output()
-    
-    
+
     def run_infer(self):
         """
         _summary_
 
         :return: _description_
         :rtype: _type_
-        """        
+        """
         test_paths, test_tokens, transforms = self.lstm_ds.get_test_data()
-        test_loader = create_dataloader(test_paths, test_tokens, transforms, self.val_split, self.batch_size, self.seed, "test")
+        test_loader = create_dataloader(
+            test_paths,
+            test_tokens,
+            transforms,
+            self.val_split,
+            self.batch_size,
+            self.seed,
+            "test",
+        )
 
         test_pred_tokens = self.trainer.predict(test_loader)
         test_pred_tokens = test_pred_tokens.argmax(axis=-1).astype("int")
@@ -60,15 +75,15 @@ class LSTM:
         test_pred_captions = self.lstm_ds.batched_ids2captions(test_pred_tokens)
 
         return test_paths, test_captions, test_pred_captions
-    
+
     def save_output(self):
         """
         _summary_
-        """        
+        """
         output_folder = self.config_dict["paths"]["output_folder"]
 
         self.logger.info(f"Saving Outputs {output_folder}")
-        with open(os.path.join(output_folder, "training_history.json"), 'w') as fp:
+        with open(os.path.join(output_folder, "training_history.json"), "w") as fp:
             json.dump(self.history, fp)
 
         embeds = self.model.embed_layer.weight.detach().numpy()
@@ -78,9 +93,11 @@ class LSTM:
         plot_history(self.history, output_folder)
 
         test_paths, test_captions, test_pred_captions = self.run_infer()
-        test_df = pd.DataFrame.from_dict({
-            "Image": [os.path.basename(i) for i in test_paths],
-            "True Caption": test_captions,
-            "Generated Caption": test_pred_captions
-        })
+        test_df = pd.DataFrame.from_dict(
+            {
+                "Image": [os.path.basename(i) for i in test_paths],
+                "True Caption": test_captions,
+                "Generated Caption": test_pred_captions,
+            }
+        )
         test_df.to_csv(os.path.join(output_folder, "Test Predictions.csv"), index=False)

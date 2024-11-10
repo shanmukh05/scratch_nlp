@@ -8,6 +8,7 @@ from albumentations.pytorch import ToTensorV2
 
 from .utils import preprocess_text
 
+
 class PreprocessFlickr:
     def __init__(self, config_dict):
         """
@@ -33,7 +34,11 @@ class PreprocessFlickr:
 
         train_transforms, test_transforms = self.image_transforms("train")
 
-        return list(self.train_df["Path"]), train_tokens, (train_transforms, test_transforms)
+        return (
+            list(self.train_df["Path"]),
+            train_tokens,
+            (train_transforms, test_transforms),
+        )
 
     def get_test_data(self):
         """
@@ -46,8 +51,7 @@ class PreprocessFlickr:
         test_transforms = self.image_transforms("test")
 
         return list(self.test_df["Path"]), test_tokens, test_transforms
-    
-    
+
     def extract_data(self):
         """
         _summary_
@@ -55,7 +59,9 @@ class PreprocessFlickr:
         :return: _description_
         :rtype: _type_
         """
-        self.logger.info("Creating a DataFrame from images folder and captions txt file")
+        self.logger.info(
+            "Creating a DataFrame from images folder and captions txt file"
+        )
         im_folder = self.config_dict["paths"]["image_folder"]
         caption_file = self.config_dict["paths"]["captions_file"]
         operations = self.config_dict["preprocess"]["operations"]
@@ -65,14 +71,11 @@ class PreprocessFlickr:
 
         num_train = self.config_dict["dataset"]["train_samples"]
         num_test = self.config_dict["dataset"]["test_samples"]
-        rand_ids = np.random.choice(len(lines), num_train+num_test)
+        rand_ids = np.random.choice(len(lines), num_train + num_test)
 
         paths, captions = zip(*(s.split(",") for s in lines[rand_ids]))
         paths = [os.path.join(im_folder, i) for i in paths]
-        df = pd.DataFrame.from_dict({
-            "Path": paths,
-            "Caption": captions
-        })
+        df = pd.DataFrame.from_dict({"Path": paths, "Caption": captions})
         df["Caption"] = df["Caption"].map(lambda x: preprocess_text(x, operations))
 
         train_df = df.iloc[:num_train]
@@ -88,16 +91,21 @@ class PreprocessFlickr:
         :type train_df: _type_
         """
         self.logger.info("Building Vocabulary from training data captions")
-        num_vocab = self.config_dict["dataset"]["num_vocab"] - self.config_dict["dataset"]["num_extra_tokens"]
+        num_vocab = (
+            self.config_dict["dataset"]["num_vocab"]
+            - self.config_dict["dataset"]["num_extra_tokens"]
+        )
         all_words = []
 
         for text in train_df["Caption"]:
             all_words += text.split()
 
         topk_vocab_freq = Counter(all_words).most_common(num_vocab)
-        self.vocab = ["<START>", "<END>", "<PAD>", "<UNK>"] + [i[0] for i in topk_vocab_freq]
-        self.word2id = {w:i for i,w in enumerate(self.vocab)}
-        self.id2word = {v:k for k,v in self.word2id.items()}
+        self.vocab = ["<START>", "<END>", "<PAD>", "<UNK>"] + [
+            i[0] for i in topk_vocab_freq
+        ]
+        self.word2id = {w: i for i, w in enumerate(self.vocab)}
+        self.id2word = {v: k for k, v in self.word2id.items()}
 
     def word_tokens(self, df):
         """
@@ -113,19 +121,19 @@ class PreprocessFlickr:
         tokens = np.zeros((len(df), seq_len))
 
         for i, text in enumerate(df["Caption"]):
-            words = ["<START>"] + text.split()[:seq_len-2] 
+            words = ["<START>"] + text.split()[: seq_len - 2]
             if len(words) < seq_len - 1:
-                words += ["<PAD>"]*(seq_len-1-len(words))
+                words += ["<PAD>"] * (seq_len - 1 - len(words))
             words += ["<END>"]
 
             for j, w in enumerate(words):
                 if w in self.vocab:
-                    tokens[i, j] = self.word2id[w]   
+                    tokens[i, j] = self.word2id[w]
                 else:
-                    tokens[i, j] = self.word2id["<UNK>"]  
+                    tokens[i, j] = self.word2id["<UNK>"]
 
-        return tokens 
-    
+        return tokens
+
     def batched_ids2captions(self, tokens):
         """
         _summary_
@@ -135,7 +143,7 @@ class PreprocessFlickr:
         :return: _description_
         :rtype: _type_
         """
-        func = lambda x : self.id2word[x]
+        func = lambda x: self.id2word[x]
         vect_func = np.vectorize(func)
 
         tokens = vect_func(tokens)
@@ -144,7 +152,7 @@ class PreprocessFlickr:
         for words in tokens:
             txt = ""
             for word in words:
-                if word not in  ["<START>", "<END>", "<PAD>"]:
+                if word not in ["<START>", "<END>", "<PAD>"]:
                     txt += f"{word} "
             captions.append(txt[:-1])
         return captions
@@ -159,30 +167,37 @@ class PreprocessFlickr:
         :rtype: _type_
         """
         im_w, im_h = self.config_dict["preprocess"]["image_dim"][1:]
-        train_transforms = A.Compose([
-                                    A.Resize(im_w, im_h),
-                                    A.HorizontalFlip(p=0.5),
-                                    A.RandomBrightnessContrast(p=0.2),
-                                    A.Normalize(
-                                            mean=[0.485, 0.456, 0.406], 
-                                            std=[0.229, 0.224, 0.225], 
-                                            max_pixel_value=255.0, 
-                                            p=1.0 
-                                        ),
-                                    ToTensorV2()], p=1.0)
+        train_transforms = A.Compose(
+            [
+                A.Resize(im_w, im_h),
+                A.HorizontalFlip(p=0.5),
+                A.RandomBrightnessContrast(p=0.2),
+                A.Normalize(
+                    mean=[0.485, 0.456, 0.406],
+                    std=[0.229, 0.224, 0.225],
+                    max_pixel_value=255.0,
+                    p=1.0,
+                ),
+                ToTensorV2(),
+            ],
+            p=1.0,
+        )
 
-        test_transforms = A.Compose([
-                                    A.Resize(im_w, im_h),
-                                    A.Normalize(
-                                            mean=[0.485, 0.456, 0.406], 
-                                            std=[0.229, 0.224, 0.225], 
-                                            max_pixel_value=255.0, 
-                                            p=1.0 
-                                        ),
-                                    ToTensorV2()], p=1.0)
-        
+        test_transforms = A.Compose(
+            [
+                A.Resize(im_w, im_h),
+                A.Normalize(
+                    mean=[0.485, 0.456, 0.406],
+                    std=[0.229, 0.224, 0.225],
+                    max_pixel_value=255.0,
+                    p=1.0,
+                ),
+                ToTensorV2(),
+            ],
+            p=1.0,
+        )
+
         if data_type == "train":
             return train_transforms, test_transforms
         else:
             return test_transforms
-

@@ -1,2 +1,4 @@
-data/
 output/
+build/
+dist/
+scratch_nlp.egg-info/

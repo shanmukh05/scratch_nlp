@@ -3,9 +3,6 @@ import sys
 import argparse
 import logging
 
-# src.preprocess
-#    src.core
-
 from utils import load_config, get_logger, ValidateConfig
 from core.bow import bow
 from core.ngram import ngram
@@ -27,35 +24,36 @@ os.environ["LOKY_MAX_CPU_COUNT"] = "4"
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-        "-A",
-        "--algo",
-        type=str,
-        required=True,
-        help="Algorithm to Test",
-        choices=[
-            "BOW",
-            "NGRAM",
-            "TFIDF",
-            "HMM",
-            "WORD2VEC",
-            "GLOVE",
-            "RNN",
-            "LSTM",
-            "SEQ2SEQ",
-            "GRU",
-            "TRANSFORMER",
-            "BERT",
-            "GPT",
-        ],
+    "-A",
+    "--algo",
+    type=str,
+    required=True,
+    help="Algorithm to Test",
+    choices=[
+        "BOW",
+        "NGRAM",
+        "TFIDF",
+        "HMM",
+        "WORD2VEC",
+        "GLOVE",
+        "RNN",
+        "LSTM",
+        "SEQ2SEQ",
+        "GRU",
+        "TRANSFORMER",
+        "BERT",
+        "GPT",
+    ],
 )
 parser.add_argument(
-        "-C", "--config_path", type=str, required=True, help="Path to Config File"
+    "-C", "--config_path", type=str, required=True, help="Path to Config File"
 )
 parser.add_argument(
-        "-L", "--log_folder", type=str, required=True, help="Path to Log Folder"
+    "-L", "--log_folder", type=str, required=True, help="Path to Log Folder"
 )
 
 args = parser.parse_args()
+
 
 def main():
     log_folder = args.log_folder

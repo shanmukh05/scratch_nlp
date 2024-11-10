@@ -14,7 +14,7 @@ class TFIDF(BOW):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
         self.return_label = self.config_dict["model"]["output_label"]
@@ -22,7 +22,7 @@ class TFIDF(BOW):
     def run(self):
         """
         _summary_
-        """        
+        """
         self.preprocess()
         X, y = self.fit_transform()
         self.save_output(X, y)
@@ -35,7 +35,7 @@ class TFIDF(BOW):
         :type text_ls: _type_, optional
         :param y: _description_, defaults to None
         :type y: _type_, optional
-        """        
+        """
         self.logger.info("Fitting TF-IDF to Extracted Data")
         if text_ls is None:
             text_ls, y = self.text_ls, self.y
@@ -44,7 +44,7 @@ class TFIDF(BOW):
             uniq_words = list(set(text.split()))
             self.vocab.extend(uniq_words)
             self.vocab = list(set(self.vocab))
-        self.vocab_dict = {k:v for v,k in enumerate(self.vocab)}
+        self.vocab_dict = {k: v for v, k in enumerate(self.vocab)}
 
     def fit_transform(self, text_ls=None, y=None):
         """
@@ -56,13 +56,13 @@ class TFIDF(BOW):
         :type y: _type_, optional
         :return: _description_
         :rtype: _type_
-        """        
+        """
         if text_ls is None:
             text_ls, y = self.text_ls, self.y
         self.fit(text_ls, y)
         X, y = self.transform(text_ls, y)
         return X, y
-    
+
     def transform(self, text_ls=None, y=None):
         """
         _summary_
@@ -73,7 +73,7 @@ class TFIDF(BOW):
         :type y: _type_, optional
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.logger.info("Transforming Txt Data into Vectors")
         if text_ls is None:
             text_ls, y = self.text_ls, self.y
@@ -81,9 +81,9 @@ class TFIDF(BOW):
         self.tf_arr = self.get_tf(text_ls)
         self.idf_arr = self.get_idf(text_ls)
 
-        X = (self.tf_arr.T)*(self.idf_arr.T)
+        X = (self.tf_arr.T) * (self.idf_arr.T)
         return X, y
-    
+
     def get_tf(self, text_ls):
         """
         _summary_
@@ -92,14 +92,14 @@ class TFIDF(BOW):
         :type text_ls: _type_
         :return: _description_
         :rtype: _type_
-        """        
-        '''
+        """
+        """
             Binary
             Raw Count
             Term Frequency
             Log Norm
             Double Norm
-        '''
+        """
         self.logger.info("Calculating TF")
         tf_mode = self.config_dict["model"]["tf_mode"]
         tf_arr = np.zeros((len(self.vocab), len(text_ls)))
@@ -113,11 +113,11 @@ class TFIDF(BOW):
         elif tf_mode == "raw_count":
             tf_arr = tf_arr
         elif tf_mode == "term_frequency":
-            tf_arr = tf_arr/np.sum(tf_arr, axis=1)
+            tf_arr = tf_arr / np.sum(tf_arr, axis=1)
         elif tf_mode == "log_norm":
             tf_arr = np.log(1 + tf_arr)
         elif tf_mode == "double_norm":
-            tf_arr = 0.5 + 0.5*tf_arr/np.max(tf_arr, axis=1) 
+            tf_arr = 0.5 + 0.5 * tf_arr / np.max(tf_arr, axis=1)
         else:
             self.logger.error("Invalid TF Mode.")
 
@@ -131,14 +131,14 @@ class TFIDF(BOW):
         :type text_ls: _type_
         :return: _description_
         :rtype: _type_
-        """        
-        '''
+        """
+        """
             Unary
             Log Scaled
             Log Scaled Smoothing
             Log Scaled Max
             Log Scaled Probablistic
-        '''
+        """
         self.logger.info("Calculating IDF")
         idf_mode = self.config_dict["model"]["idf_mode"]
 
@@ -151,11 +151,11 @@ class TFIDF(BOW):
         elif idf_mode == "log_scaled":
             idf_arr = np.log(N / idf_arr)
         elif idf_mode == "log_scaled_smoothing":
-            idf_arr = 1 + np.log(N/(1+idf_arr))
+            idf_arr = 1 + np.log(N / (1 + idf_arr))
         elif idf_mode == "log_scaled_max":
-            idf_arr = np.log(np.max(idf_arr)/(1+idf_arr))
+            idf_arr = np.log(np.max(idf_arr) / (1 + idf_arr))
         elif idf_mode == "log_scaled_probablistic":
-            idf_arr = np.log(N/idf_arr - 1)
+            idf_arr = np.log(N / idf_arr - 1)
         else:
             self.logger.error("Invalid IDF Mode.")
 
@@ -169,7 +169,7 @@ class TFIDF(BOW):
         :type X: _type_
         :param y: _description_
         :type y: _type_
-        """        
+        """
         self.logger.info("Saving Vectors and Plots into Output Folder")
         output_folder = self.config_dict["paths"]["output_folder"]
         os.makedirs(output_folder, exist_ok=True)
@@ -181,9 +181,5 @@ class TFIDF(BOW):
         if visualize:
             plot_pca_pairplot(X, y, output_folder)
             plot_pca_pairplot(self.tf_arr.T, y, output_folder, name="TF PCA Pairplot")
-            idf_df = pd.DataFrame.from_dict({
-                "Token": self.vocab,
-                "IDF": self.idf_arr
-            })
+            idf_df = pd.DataFrame.from_dict({"Token": self.vocab, "IDF": self.idf_arr})
             idf_df.to_csv(os.path.join(output_folder, "IDF.csv"), index=False)
-    

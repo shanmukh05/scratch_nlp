@@ -3,13 +3,15 @@ import numpy as np
 from collections import Counter
 from sklearn.metrics import classification_report
 
-class ClassificationMetrics():
+
+class ClassificationMetrics:
     """
-    Metrics for Classification Task. 
+    Metrics for Classification Task.
 
     :param config_dict: Config Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         self.config_dict = config_dict
 
@@ -19,7 +21,7 @@ class ClassificationMetrics():
 
         :param references: References, 1D array (N,)
         :type references: numpy.array
-        :param predictions: Predictions, 2D array (NxC) with Probabilities 
+        :param predictions: Predictions, 2D array (NxC) with Probabilities
         :type predictions: numpy.array
         :param target_names: Class Labels
         :type target_names: list
@@ -29,7 +31,14 @@ class ClassificationMetrics():
         predictions = np.argmax(predictions, axis=-1)
 
         labels = np.arange(len(target_names))
-        clf_report = classification_report(references, predictions, labels=labels, target_names=target_names, output_dict=True, zero_division=0.0)
+        clf_report = classification_report(
+            references,
+            predictions,
+            labels=labels,
+            target_names=target_names,
+            output_dict=True,
+            zero_division=0.0,
+        )
         metric_dict = {}
 
         metric_dict["Accuracy"] = clf_report["accuracy"]
@@ -41,13 +50,14 @@ class ClassificationMetrics():
         return metric_dict
 
 
-class TextGenerationMetrics():
+class TextGenerationMetrics:
     """
-    Metrics for Text Generation Task. 
+    Metrics for Text Generation Task.
 
     :param config_dict: Config Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         self.config_dict = config_dict
         self.rouge_n_n = config_dict["train"]["rouge_n_n"]
@@ -61,17 +71,23 @@ class TextGenerationMetrics():
 
         :param references: References, 2D array (N,S)
         :type references: numpy.array
-        :param predictions: Predictions, 3D array (NxSxC) with Probabilities 
+        :param predictions: Predictions, 3D array (NxSxC) with Probabilities
         :type predictions: numpy.array
         :return: Metrics Dictionary
         :rtype: dict
         """
-        rouge_n_p, rouge_n_r, rouge_n_f = self.rouge_n_score(references, predictions, self.rouge_n_n)
+        rouge_n_p, rouge_n_r, rouge_n_f = self.rouge_n_score(
+            references, predictions, self.rouge_n_n
+        )
         rouge_l_p, rouge_l_r, rouge_l_f = self.rouge_l_score(references, predictions)
-        rouge_s_p, rouge_s_r, rouge_s_f = self.rouge_s_score(references, predictions, self.rouge_s_n)
+        rouge_s_p, rouge_s_r, rouge_s_f = self.rouge_s_score(
+            references, predictions, self.rouge_s_n
+        )
 
         return {
-            f"BLEU-{self.bleu_n}": self.bleu_score(references, predictions, self.bleu_n),
+            f"BLEU-{self.bleu_n}": self.bleu_score(
+                references, predictions, self.bleu_n
+            ),
             "Perplexity": self.perplexity_score(predictions),
             "METEOR": self.meteor_score(references, predictions),
             f"ROUGE-N-{self.rouge_n_n}-Precision": rouge_n_p,
@@ -83,7 +99,7 @@ class TextGenerationMetrics():
             f"ROUGE-S-{self.rouge_s_n}-Precision": rouge_s_p,
             f"ROUGE-S-{self.rouge_s_n}-Recall": rouge_s_r,
             f"ROUGE-S-{self.rouge_s_n}-F1score": rouge_s_f,
-            "CIDER": self.cider_score(references, predictions)
+            "CIDER": self.cider_score(references, predictions),
         }
 
     def bleu_score(self, references, predictions, n=4):
@@ -92,7 +108,7 @@ class TextGenerationMetrics():
 
         :param references: References, 2D array (N,S)
         :type references: numpy.array
-        :param predictions: Predictions, 3D array (NxSxC) with Probabilities 
+        :param predictions: Predictions, 3D array (NxSxC) with Probabilities
         :type predictions: numpy.array
         :param n: Max number of N gram, defaults to 4
         :type n: int, optional
@@ -102,32 +118,32 @@ class TextGenerationMetrics():
         predictions = np.argmax(predictions, axis=-1)
         num_instances = references.shape[0]
         log_score_corpus = 0
-        w = 1/n
+        w = 1 / n
 
         for ref, pred in zip(references, predictions):
             ref_len, pred_len = len(ref), len(pred)
-            bp = min(0, 1-ref_len/pred_len)
+            bp = min(0, 1 - ref_len / pred_len)
             log_score = bp
 
-            for i in range(1, n+1):
+            for i in range(1, n + 1):
                 p, _, _ = self._get_metrics_ngram(ref, pred, i, True)
-                log_score += w*np.log(1 + p)
+                log_score += w * np.log(1 + p)
 
-            log_score_corpus += log_score/num_instances
-                
+            log_score_corpus += log_score / num_instances
+
         return log_score_corpus
 
     def perplexity_score(self, predictions):
         """
         Perplixity Score
 
-        :param predictions: Predictions, 3D array (NxSxC) with Probabilities 
+        :param predictions: Predictions, 3D array (NxSxC) with Probabilities
         :type predictions: numpy.array
         :return: Perplixity Score
         :rtype: float
         """
         predictions = np.max(predictions, axis=-1)
-        probs_sum = -np.sum(np.log(predictions), axis=1)/self.seq_len
+        probs_sum = -np.sum(np.log(predictions), axis=1) / self.seq_len
         probs_prod_inv_norm = np.exp(probs_sum)
 
         # probs_prod = np.prod(predictions, axis=1)
@@ -146,7 +162,7 @@ class TextGenerationMetrics():
 
         :param references: References, 3D array (N,S)
         :type references: numpy.array
-        :param predictions: Predictions, 3D array (NxSxC) with Probabilities 
+        :param predictions: Predictions, 3D array (NxSxC) with Probabilities
         :type predictions: numpy.array
         :param n: Max number of N gram, defaults to 4
         :type n: int, optional
@@ -163,8 +179,11 @@ class TextGenerationMetrics():
             recall += r
             f1score += f
 
-        return precision/num_instances, recall/num_instances, f1score/num_instances
-
+        return (
+            precision / num_instances,
+            recall / num_instances,
+            f1score / num_instances,
+        )
 
     def rouge_l_score(self, references, predictions):
         """
@@ -172,7 +191,7 @@ class TextGenerationMetrics():
 
         :param references: References, 2D array (N,S)
         :type references: numpy.array
-        :param predictions: Predictions, 3D array (NxSxC) with Probabilities 
+        :param predictions: Predictions, 3D array (NxSxC) with Probabilities
         :type predictions: numpy.array
         :return: ROUGE L score
         :rtype: float
@@ -183,21 +202,24 @@ class TextGenerationMetrics():
 
         for ref, pred in zip(references, predictions):
             lcs = self._lcs(ref, pred)
-            p, r = lcs/len(pred), lcs/len(ref)
+            p, r = lcs / len(pred), lcs / len(ref)
             precision += p
             recall += p
-            f1score += 2*p*r/(p + r + 1e-8)
+            f1score += 2 * p * r / (p + r + 1e-8)
 
-        return precision/num_instances, recall/num_instances, f1score/num_instances
+        return (
+            precision / num_instances,
+            recall / num_instances,
+            f1score / num_instances,
+        )
 
-    
     def rouge_s_score(self, references, predictions, n=4):
         """
         ROUGE S Score
 
         :param references: References, 2D array (N,S)
         :type references: numpy.array
-        :param predictions: Predictions, 3D array (NxSxC) with Probabilities 
+        :param predictions: Predictions, 3D array (NxSxC) with Probabilities
         :type predictions: numpy.array
         :param n: Max number of N gram, defaults to 4
         :type n: int, optional
@@ -209,17 +231,29 @@ class TextGenerationMetrics():
         precision, recall, f1score = 0, 0, 0
 
         for ref, pred in zip(references, predictions):
-            ref_bi = [" ".join([str(ref[j]), str(ref[j+1])]) for j in range(len(ref)-1)]
-            pred_skip_bi = [[" ".join([str(pred[i]), str(pred[k])]) for k in range(i+1, min(len(pred)-1, i+n+1))] for i in range(len(pred)-1)]
-            pred_skip_bi =  list(itertools.chain.from_iterable(pred_skip_bi))
+            ref_bi = [
+                " ".join([str(ref[j]), str(ref[j + 1])]) for j in range(len(ref) - 1)
+            ]
+            pred_skip_bi = [
+                [
+                    " ".join([str(pred[i]), str(pred[k])])
+                    for k in range(i + 1, min(len(pred) - 1, i + n + 1))
+                ]
+                for i in range(len(pred) - 1)
+            ]
+            pred_skip_bi = list(itertools.chain.from_iterable(pred_skip_bi))
 
             n_unq_ngrams = len(set(ref_bi) & set(pred_skip_bi))
-            p, r = n_unq_ngrams/len(pred_skip_bi), n_unq_ngrams/len(ref_bi)
+            p, r = n_unq_ngrams / len(pred_skip_bi), n_unq_ngrams / len(ref_bi)
             precision += p
             recall += r
-            f1score += 2*p*r/(p + r + 1e-8)
+            f1score += 2 * p * r / (p + r + 1e-8)
 
-        return precision/num_instances, recall/num_instances, f1score/num_instances
+        return (
+            precision / num_instances,
+            recall / num_instances,
+            f1score / num_instances,
+        )
 
     def cider_score(self, references, predictions):
         predictions = np.argmax(predictions, axis=-1)
@@ -240,9 +274,15 @@ class TextGenerationMetrics():
         :return: Precision, Recall, F1 score
         :rtype: float, float, float
         """
-        ref_n = [" ".join([str(ref[j+k]) for k in range(n)]) for j in range(len(ref)-n+1)]
-        pred_n = [" ".join([str(pred[j+k]) for k in range(n)]) for j in range(len(pred)-n+1)]
-        
+        ref_n = [
+            " ".join([str(ref[j + k]) for k in range(n)])
+            for j in range(len(ref) - n + 1)
+        ]
+        pred_n = [
+            " ".join([str(pred[j + k]) for k in range(n)])
+            for j in range(len(pred) - n + 1)
+        ]
+
         if clip:
             n_common_ngrams = 0
             ref_cnt_dict = Counter(ref)
@@ -252,15 +292,14 @@ class TextGenerationMetrics():
                 n_common_ngrams += cnt_k
         else:
             n_common_ngrams = len(set(ref_n) & set(pred_n))
-        p, r = n_common_ngrams/len(pred_n), n_common_ngrams/len(ref_n)
-        f = 2*p*r/(p + r + 1e-8)
+        p, r = n_common_ngrams / len(pred_n), n_common_ngrams / len(ref_n)
+        f = 2 * p * r / (p + r + 1e-8)
 
         return p, r, f
 
-    
     def _lcs(self, arr1, arr2):
         """
-        Find Longest Common Subsequence 
+        Find Longest Common Subsequence
 
         :param arr1: First Array, 1D Array
         :type arr1: numpy.array
@@ -272,14 +311,13 @@ class TextGenerationMetrics():
         m = len(arr1)
         n = len(arr2)
 
-        lcs_mat = np.zeros((m+1, n+1))
+        lcs_mat = np.zeros((m + 1, n + 1))
 
-        for i in range(1, m+1):
-            for j in range(1, n+1):
-                if arr1[i-1] == arr2[j-1]:
-                    lcs_mat[i][j] = lcs_mat[i-1][j-1] + 1
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                if arr1[i - 1] == arr2[j - 1]:
+                    lcs_mat[i][j] = lcs_mat[i - 1][j - 1] + 1
                 else:
-                    lcs_mat[i][j] = max(lcs_mat[i-1][j], lcs_mat[i][j-1])
+                    lcs_mat[i][j] = max(lcs_mat[i - 1][j], lcs_mat[i][j - 1])
 
         return float(lcs_mat[m][n])
-

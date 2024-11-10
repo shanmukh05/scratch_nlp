@@ -25,8 +25,8 @@ class LSTMCell(nn.Module):
         :type inp_x_dim: _type_
         :param out_x_dim: _description_
         :type out_x_dim: _type_
-        """        
-        super(LSTMCell, self).__init__()      
+        """
+        super(LSTMCell, self).__init__()
 
         self.wf_dense = nn.Linear(h_dim, h_dim)
         self.uf_dense = nn.Linear(inp_x_dim, h_dim)
@@ -54,14 +54,14 @@ class LSTMCell(nn.Module):
         :type xt: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         ft = nn.Sigmoid()(self.wf_dense(ht_1) + self.uf_dense(xt))
         it = nn.Sigmoid()(self.wi_dense(ht_1) + self.ui_dense(xt))
         ot = nn.Sigmoid()(self.wo_dense(ht_1) + self.uo_dense(xt))
 
         ct_ = nn.Tanh()(self.wc_dense(ht_1) + self.uc_dense(xt))
-        ct = ft*ct_1 + it*ct_
-        ht = ot*nn.Tanh()(ct)
+        ct = ft * ct_1 + it * ct_
+        ht = ot * nn.Tanh()(ct)
 
         yt = self.xh_dense(ht)
 
@@ -76,7 +76,7 @@ class LSTMModel(nn.Module):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         super(LSTMModel, self).__init__()
 
         self.seq_len = config_dict["dataset"]["seq_len"]
@@ -88,7 +88,7 @@ class LSTMModel(nn.Module):
         num_vocab = config_dict["dataset"]["num_vocab"]
         embed_dim = config_dict["model"]["embed_dim"]
         self.embed_layer = nn.Embedding(num_vocab, embed_dim)
-        
+
         image_backbone = config_dict["model"]["image_backbone"]
         self.im_head = timm.create_model(image_backbone, pretrained=True, num_classes=0)
         im_feat_dim = self.im_head(torch.rand(tuple([1] + image_dim))).data.shape[-1]
@@ -99,7 +99,7 @@ class LSTMModel(nn.Module):
         self.lstm_cells = []
         for i in range(self.num_layers):
             h_dim = self.h_dims[i]
-            inp_x_dim, out_x_dim = self.x_dims[i], self.x_dims[i+1]
+            inp_x_dim, out_x_dim = self.x_dims[i], self.x_dims[i + 1]
             self.lstm_cells.append(LSTMCell(h_dim, inp_x_dim, out_x_dim))
 
     def forward(self, images, tokens=None):
@@ -112,7 +112,7 @@ class LSTMModel(nn.Module):
         :type tokens: _type_, optional
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.num_samples = images.size(0)
 
         hts = self.init_hidden()
@@ -139,22 +139,21 @@ class LSTMModel(nn.Module):
                 ht, ct = hts[i], cts[i]
                 ht, ct, yt = self.lstm_cells[i](ht, ct, yt)
                 hts[i], cts[i] = ht, ct
-                
+
             yt = self.word_classifier(yt)
             # pt = nn.Softmax()(yt)[:, None, :]
             pt = yt[:, None, :]
             pts.append(pt)
-            
-            if j >=  self.seq_len - 1:
+
+            if j >= self.seq_len - 1:
                 break
             if tokens is not None:
-                yt = x_embed[:, j+1, :]
+                yt = x_embed[:, j + 1, :]
             else:
                 yt = yt.argmax(axis=1)
                 yt = self.embed_layer(yt.to(torch.long))
 
         return torch.concat(pts, dim=1)
-
 
     def init_hidden(self):
         """
@@ -162,8 +161,11 @@ class LSTMModel(nn.Module):
 
         :return: _description_
         :rtype: _type_
-        """        
-        hts = [nn.init.kaiming_uniform_(torch.empty(self.num_samples, dim)) for dim in self.h_dims]
+        """
+        hts = [
+            nn.init.kaiming_uniform_(torch.empty(self.num_samples, dim))
+            for dim in self.h_dims
+        ]
 
         return hts
 
@@ -180,7 +182,7 @@ class LSTMTrainer(nn.Module):
         :type optimizer: _type_
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         super(LSTMTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
 
@@ -200,13 +202,17 @@ class LSTMTrainer(nn.Module):
         :type epoch: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.train()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
 
-        self.logger.info(f"-----------Epoch {epoch}/{self.config_dict['train']['epochs']}-----------")
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Training")
+        self.logger.info(
+            f"-----------Epoch {epoch}/{self.config_dict['train']['epochs']}-----------"
+        )
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Training"
+        )
 
         for batch_id, (images, tokens) in pbar:
             tokens = tokens.to(torch.long)
@@ -223,7 +229,7 @@ class LSTMTrainer(nn.Module):
             y_true.append(tokens.cpu().detach().numpy())
             y_pred.append(tokens_hat.cpu().detach().numpy())
 
-        train_loss = total_loss/num_instances
+        train_loss = total_loss / num_instances
 
         y_true = np.concatenate(y_true, axis=0)
         y_pred = np.concatenate(y_pred, axis=0)
@@ -240,12 +246,14 @@ class LSTMTrainer(nn.Module):
         :type data_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.eval()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
 
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Validation")
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Validation"
+        )
 
         for batch_id, (images, tokens) in pbar:
             tokens = tokens.to(torch.long)
@@ -259,14 +267,14 @@ class LSTMTrainer(nn.Module):
             y_true.append(tokens.cpu().detach().numpy())
             y_pred.append(tokens_hat.cpu().detach().numpy())
 
-        val_loss = total_loss/num_instances
-        
+        val_loss = total_loss / num_instances
+
         y_true = np.concatenate(y_true, axis=0)
         y_pred = np.concatenate(y_pred, axis=0)
         val_metrics = self.metric_cls.get_metrics(y_true, y_pred)
 
         return val_loss, val_metrics
-    
+
     @torch.no_grad()
     def predict(self, data_loader):
         """
@@ -276,16 +284,18 @@ class LSTMTrainer(nn.Module):
         :type data_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.eval()
         y_pred = []
 
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Inference")
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Inference"
+        )
 
         for batch_id, images in pbar:
             tokens_hat = self.model(images)
             y_pred.append(tokens_hat.cpu().detach().numpy())
-        
+
         y_pred = np.concatenate(y_pred, axis=0)
 
         return y_pred
@@ -300,7 +310,7 @@ class LSTMTrainer(nn.Module):
         :type val_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
@@ -308,10 +318,10 @@ class LSTMTrainer(nn.Module):
         history = defaultdict(list)
 
         start = time.time()
-        for epoch in range(1, num_epochs+1):
+        for epoch in range(1, num_epochs + 1):
             train_loss, train_metrics = self.train_one_epoch(train_loader, epoch)
             val_loss, val_metrics = self.val_one_epoch(val_loader)
-                
+
             history["train_loss"].append(float(train_loss.detach().numpy()))
             history["val_loss"].append(float(val_loss.detach().numpy()))
             for key in train_metrics.keys():
@@ -320,23 +330,35 @@ class LSTMTrainer(nn.Module):
 
             self.logger.info(f"Train Loss : {train_loss} - Val Loss : {val_loss}")
             for key in train_metrics.keys():
-                self.logger.info(f"Train {key} : {train_metrics[key]} - Val {key} : {val_metrics[key]}")
+                self.logger.info(
+                    f"Train {key} : {train_metrics[key]} - Val {key} : {val_metrics[key]}"
+                )
 
             if val_metrics[self.eval_metric] <= best_val_metric:
-                self.logger.info(f"Validation {self.eval_metric} score improved from {best_val_metric} to {val_metrics[self.eval_metric]}")
+                self.logger.info(
+                    f"Validation {self.eval_metric} score improved from {best_val_metric} to {val_metrics[self.eval_metric]}"
+                )
                 best_val_metric = val_metrics[self.eval_metric]
-                torch.save(self.model.state_dict(), os.path.join(output_folder, "best_model.pt"))
+                torch.save(
+                    self.model.state_dict(),
+                    os.path.join(output_folder, "best_model.pt"),
+                )
             else:
-                self.logger.info(f"Validation {self.eval_metric} score didn't improve from {best_val_metric}")
+                self.logger.info(
+                    f"Validation {self.eval_metric} score didn't improve from {best_val_metric}"
+                )
 
         end = time.time()
-        time_taken = end-start
-        self.logger.info('Training completed in {:.0f}h {:.0f}m {:.0f}s'.format(
-            time_taken // 3600, (time_taken % 3600) // 60, (time_taken % 3600) % 60))
+        time_taken = end - start
+        self.logger.info(
+            "Training completed in {:.0f}h {:.0f}m {:.0f}s".format(
+                time_taken // 3600, (time_taken % 3600) // 60, (time_taken % 3600) % 60
+            )
+        )
         self.logger.info(f"Best Val {self.eval_metric} score: {best_val_metric}")
 
         return history
-    
+
     def calc_loss(self, y_pred, y_true):
         """
         _summary_
@@ -347,13 +369,12 @@ class LSTMTrainer(nn.Module):
         :type y_true: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         y_pred = torch.flatten(y_pred, end_dim=1)
 
         y_true = torch.flatten(y_true)
         y_true = F.one_hot(
-            y_true,
-            num_classes = self.config_dict["dataset"]["num_vocab"]
+            y_true, num_classes=self.config_dict["dataset"]["num_vocab"]
         ).to(torch.float)
 
         loss_fn = nn.CrossEntropyLoss(reduce="sum")

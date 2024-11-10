@@ -27,7 +27,8 @@ def load_config(config_path):
     logging.info("Config File Loaded")
     return config_dict
 
-class ValidateConfig():
+
+class ValidateConfig:
     """
     _summary_
 
@@ -36,6 +37,7 @@ class ValidateConfig():
     :param algo: _description_
     :type algo: _type_
     """
+
     def __init__(self, config_dict, algo):
         self.config_dict = config_dict
         self.algo = algo
@@ -81,7 +83,7 @@ class ValidateConfig():
                         for k__, v__ in v_.items():
                             self.compare_dtype(k__, v__)
                     else:
-                        self.compare_dtype(k_, v_)      
+                        self.compare_dtype(k_, v_)
             else:
                 self.compare_dtype(k, v)
 
@@ -94,7 +96,7 @@ class ValidateConfig():
         """
         for key in keys:
             true_val = MainKeysDict[self.algo][key]
-            
+
             if isinstance(true_val, list):
                 cfg_val = list(self.config_dict[key].keys())
                 true_val.sort()
@@ -111,11 +113,14 @@ class ValidateConfig():
                     cfg_val_k.sort()
 
                     if true_val_k != cfg_val_k:
-                        logging.error(f"Config Keys for {k} doesn't match Default Config")
+                        logging.error(
+                            f"Config Keys for {k} doesn't match Default Config"
+                        )
             else:
                 if not isinstance(self.config_dict[key], MainKeysDict[self.algo][key]):
-                    logging.error(f"Config Key {key} should be of type {MainKeysDict[self.algo][key]}")
-
+                    logging.error(
+                        f"Config Key {key} should be of type {MainKeysDict[self.algo][key]}"
+                    )
 
 
 def get_logger(log_folder):

@@ -22,9 +22,9 @@ class RNNCell(nn.Module):
         :type inp_x_dim: _type_
         :param out_x_dim: _description_
         :type out_x_dim: _type_
-        """        
+        """
         super(RNNCell, self).__init__()
-        
+
         self.hh_dense = nn.Linear(h_dim, h_dim)
         self.hx_dense = nn.Linear(inp_x_dim, h_dim)
 
@@ -40,10 +40,11 @@ class RNNCell(nn.Module):
         :type xt: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         ht = nn.Tanh()(self.hh_dense(ht_1) + self.hx_dense(xt))
         yt = self.xh_dense(ht)
         return ht, yt
+
 
 ### Stacked RNN
 class RNNModel(nn.Module):
@@ -53,7 +54,7 @@ class RNNModel(nn.Module):
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         super(RNNModel, self).__init__()
 
         self.seq_len = config_dict["dataset"]["seq_len"]
@@ -70,7 +71,7 @@ class RNNModel(nn.Module):
         self.rnn_cells = []
         for i in range(self.num_layers):
             h_dim = self.h_dims[i]
-            inp_x_dim, out_x_dim = self.x_dims[i], self.x_dims[i+1]
+            inp_x_dim, out_x_dim = self.x_dims[i], self.x_dims[i + 1]
             self.rnn_cells.append(RNNCell(h_dim, inp_x_dim, out_x_dim))
 
     def forward(self, X):
@@ -81,10 +82,10 @@ class RNNModel(nn.Module):
         :type X: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         x_embed = self.embed_layer(X.to(torch.long))
         self.num_samples = x_embed.size(0)
-        
+
         yt_1s = x_embed
         hts = self.init_hidden()
         for i in range(self.num_layers):
@@ -99,8 +100,8 @@ class RNNModel(nn.Module):
             yt_1s = torch.transpose(torch.stack(yts), 0, 1)
 
         out = yt_1s[:, -1, :]
-        for i in range(len(self.clf_dims)-1):
-            out = nn.Linear(self.clf_dims[i], self.clf_dims[i+1])(out)
+        for i in range(len(self.clf_dims) - 1):
+            out = nn.Linear(self.clf_dims[i], self.clf_dims[i + 1])(out)
             out = nn.ReLU()(out)
 
         out = nn.Linear(self.clf_dims[-1], self.num_classes)(out)
@@ -113,11 +114,14 @@ class RNNModel(nn.Module):
 
         :return: _description_
         :rtype: _type_
-        """        
-        hts = [nn.init.kaiming_uniform_(torch.empty(self.num_samples, dim)) for dim in self.h_dims]
+        """
+        hts = [
+            nn.init.kaiming_uniform_(torch.empty(self.num_samples, dim))
+            for dim in self.h_dims
+        ]
 
         return hts
-    
+
 
 class RNNTrainer(nn.Module):
     def __init__(self, model, optimizer, config_dict):
@@ -130,7 +134,7 @@ class RNNTrainer(nn.Module):
         :type optimizer: _type_
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         super(RNNTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
 
@@ -152,13 +156,17 @@ class RNNTrainer(nn.Module):
         :type epoch: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.train()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
 
-        self.logger.info(f"-----------Epoch {epoch}/{self.config_dict['train']['epochs']}-----------")
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Training")
+        self.logger.info(
+            f"-----------Epoch {epoch}/{self.config_dict['train']['epochs']}-----------"
+        )
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Training"
+        )
 
         for batch_id, (X, y) in pbar:
             y_hat = self.model(X)
@@ -174,7 +182,7 @@ class RNNTrainer(nn.Module):
             y_true.append(y.cpu().detach().numpy().argmax(axis=1))
             y_pred.append(y_hat.cpu().detach().numpy())
 
-        train_loss = total_loss/num_instances
+        train_loss = total_loss / num_instances
 
         y_true = np.concatenate(y_true, axis=0)
         y_pred = np.concatenate(y_pred, axis=0)
@@ -191,12 +199,14 @@ class RNNTrainer(nn.Module):
         :type data_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.eval()
         total_loss, num_instances = 0, 0
         y_true, y_pred = [], []
 
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Validation")
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Validation"
+        )
 
         for batch_id, (X, y) in pbar:
             y_hat = self.model(X)
@@ -209,14 +219,14 @@ class RNNTrainer(nn.Module):
             y_true.append(y.cpu().detach().numpy().argmax(axis=1))
             y_pred.append(y_hat.cpu().detach().numpy())
 
-        val_loss = total_loss/num_instances
-        
+        val_loss = total_loss / num_instances
+
         y_true = np.concatenate(y_true, axis=0)
         y_pred = np.concatenate(y_pred, axis=0)
         val_metrics = self.metric_cls.get_metrics(y_true, y_pred, self.target_names)
 
         return val_loss, val_metrics
-    
+
     @torch.no_grad()
     def predict(self, data_loader):
         """
@@ -226,16 +236,18 @@ class RNNTrainer(nn.Module):
         :type data_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         self.model.eval()
         y_pred = []
 
-        pbar = tqdm.tqdm(enumerate(data_loader), total=len(data_loader), desc="Inference")
+        pbar = tqdm.tqdm(
+            enumerate(data_loader), total=len(data_loader), desc="Inference"
+        )
         for batch_id, X in pbar:
             y_hat = self.model(X[0])
 
             y_pred.append(y_hat.cpu().detach().numpy())
-        
+
         y_pred = np.concatenate(y_pred, axis=0)
 
         return y_pred
@@ -250,7 +262,7 @@ class RNNTrainer(nn.Module):
         :type val_loader: _type_
         :return: _description_
         :rtype: _type_
-        """        
+        """
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
 
@@ -258,10 +270,10 @@ class RNNTrainer(nn.Module):
         history = defaultdict(list)
 
         start = time.time()
-        for epoch in range(1, num_epochs+1):
+        for epoch in range(1, num_epochs + 1):
             train_loss, train_metrics = self.train_one_epoch(train_loader, epoch)
             val_loss, val_metrics = self.val_one_epoch(val_loader)
-                
+
             history["train_loss"].append(float(train_loss.detach().numpy()))
             history["val_loss"].append(float(val_loss.detach().numpy()))
             for key in train_metrics.keys():
@@ -270,21 +282,31 @@ class RNNTrainer(nn.Module):
 
             self.logger.info(f"Train Loss : {train_loss} - Val Loss : {val_loss}")
             for key in train_metrics.keys():
-                self.logger.info(f"Train {key} : {train_metrics[key]} - Val {key} : {val_metrics[key]}")
+                self.logger.info(
+                    f"Train {key} : {train_metrics[key]} - Val {key} : {val_metrics[key]}"
+                )
 
             if val_metrics[self.eval_metric] >= best_val_metric:
-                self.logger.info(f"Validation {self.eval_metric} score improved from {best_val_metric} to {val_metrics[self.eval_metric]}")
+                self.logger.info(
+                    f"Validation {self.eval_metric} score improved from {best_val_metric} to {val_metrics[self.eval_metric]}"
+                )
                 best_val_metric = val_metrics[self.eval_metric]
-                torch.save(self.model.state_dict(), os.path.join(output_folder, "best_model.pt"))
+                torch.save(
+                    self.model.state_dict(),
+                    os.path.join(output_folder, "best_model.pt"),
+                )
             else:
-                self.logger.info(f"Validation {self.eval_metric} score didn't improve from {best_val_metric}")
+                self.logger.info(
+                    f"Validation {self.eval_metric} score didn't improve from {best_val_metric}"
+                )
 
         end = time.time()
-        time_taken = end-start
-        self.logger.info('Training completed in {:.0f}h {:.0f}m {:.0f}s'.format(
-            time_taken // 3600, (time_taken % 3600) // 60, (time_taken % 3600) % 60))
+        time_taken = end - start
+        self.logger.info(
+            "Training completed in {:.0f}h {:.0f}m {:.0f}s".format(
+                time_taken // 3600, (time_taken % 3600) // 60, (time_taken % 3600) % 60
+            )
+        )
         self.logger.info(f"Best Val {self.eval_metric} score: {best_val_metric}")
 
         return history
-
-    

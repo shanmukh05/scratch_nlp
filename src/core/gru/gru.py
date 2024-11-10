@@ -9,6 +9,7 @@ from .dataset import create_dataloader
 from .model import GRUModel, GRUTrainer
 from plot_utils import plot_embed, plot_history, plot_conf_matrix
 
+
 class GRU:
     def __init__(self, config_dict):
         """
@@ -16,7 +17,7 @@ class GRU:
 
         :param config_dict: _description_
         :type config_dict: _type_
-        """        
+        """
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 
@@ -27,13 +28,15 @@ class GRU:
     def run(self):
         """
         _summary_
-        """        
+        """
         self.gru_ds = PreprocessPOS(self.config_dict)
         words, tags = self.gru_ds.get_data(self.gru_ds.corpus)
         self.config_dict["dataset"]["num_classes"] = len(self.gru_ds.unq_pos)
         self.config_dict["dataset"]["labels"] = self.gru_ds.unq_pos
 
-        train_loader, val_loader = create_dataloader(words, tags, self.val_split, self.batch_size, self.seed, "train")
+        train_loader, val_loader = create_dataloader(
+            words, tags, self.val_split, self.batch_size, self.seed, "train"
+        )
 
         self.model = GRUModel(self.config_dict)
         lr = self.config_dict["train"]["lr"]
@@ -42,18 +45,20 @@ class GRU:
 
         self.history = self.trainer.fit(train_loader, val_loader)
         self.save_output()
-    
+
     def run_infer(self):
         """
         _summary_
 
         :return: _description_
         :rtype: _type_
-        """        
+        """
         test_words, test_tags = self.gru_ds.get_data(self.gru_ds.test_corpus)
         test_tags = test_tags.argmax(-1).flatten()
 
-        test_loader = create_dataloader(test_words, None, None, self.batch_size, None, "test")
+        test_loader = create_dataloader(
+            test_words, None, None, self.batch_size, None, "test"
+        )
         test_tags_pred = self.trainer.predict(test_loader)
 
         return test_tags, test_tags_pred
@@ -61,11 +66,11 @@ class GRU:
     def save_output(self):
         """
         _summary_
-        """        
+        """
         output_folder = self.config_dict["paths"]["output_folder"]
 
         self.logger.info(f"Saving Outputs {output_folder}")
-        with open(os.path.join(output_folder, "training_history.json"), 'w') as fp:
+        with open(os.path.join(output_folder, "training_history.json"), "w") as fp:
             json.dump(self.history, fp)
 
         embeds = self.model.embed_layer.weight.detach().numpy()
