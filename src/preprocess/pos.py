@@ -6,6 +6,11 @@ from sklearn.preprocessing import OneHotEncoder
 
 from .utils import preprocess_text
 
+import nltk
+nltk.download('treebank')
+nltk.download("brown")
+nltk.download("conll2000")
+
 
 CORPUS = {
     "treebank": treebank.tagged_sents(tagset="universal"),
