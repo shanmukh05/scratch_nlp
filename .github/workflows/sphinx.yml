@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build HTML
-      uses: shanmukh05/scratch_nlp
+      uses: shanmukh05/scratch_nlp@main
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
