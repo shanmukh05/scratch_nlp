@@ -321,7 +321,7 @@ tomli==2.0.1
 tomlkit==0.13.2
 toolz==0.12.0
 torch==2.3.0
-torchvision==0.18.1a0
+torchvision==0.18.1
 tornado==6.4.1
 tqdm==4.66.5
 traitlets==5.14.3
