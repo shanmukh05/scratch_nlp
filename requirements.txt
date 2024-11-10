@@ -320,7 +320,7 @@ toml==0.10.2
 tomli==2.0.1
 tomlkit==0.13.2
 toolz==0.12.0
-torch==2.3.0
+torch==2.3.1
 torchvision==0.18.1
 tornado==6.4.1
 tqdm==4.66.5
