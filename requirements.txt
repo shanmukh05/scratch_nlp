@@ -244,7 +244,7 @@ pytz==2024.1
 pyuca==1.2
 pyviz_comms==3.0.2
 PyWavelets==1.7.0
-pywin32==305.1
+# pywin32==305.1
 pywin32-ctypes==0.2.2
 pywinpty==2.0.10
 PyYAML==6.0.2
