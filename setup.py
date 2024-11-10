@@ -32,7 +32,7 @@ setup(
     python_requires=">=3.12",                     # Specify the Python versions you support
     entry_points={                               # Optional console scripts
         "console_scripts": [
-            "your_command=your_module:main_function",
+            "your_command=src:main",
         ],
     },
     project_urls={                               # Additional URLs about your project

@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scratch_nlp"
+version = "1.0.0"
+description = "Library with NLP Algorithms implemented from scratch"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    { name = "Shanmukha Sainath", email = "venkatashanmukhasainathg@gmail.com" }
+]
+keywords = ["NLP", "Implementation", "Machine Learning"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+# dynamic = ["dependencies","optional-dependencies"]
+
+[project.urls]
+"Homepage" = "https://github.com/shanmukh05/scratch_nlp"
+"Bug Tracker" = "https://github.com/shanmukh05/scratch_nlp/issues"
+"Documentation" = "https://your_project.readthedocs.io/"
+"Source Code" = "https://github.com/shanmukh05/scratch_nlp"
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[project.optional-dependencies]
+dev = [
+    # "pytest>=6.0",
+    "black",
+]
+
+[project.scripts]
+your_command = "src:main"
