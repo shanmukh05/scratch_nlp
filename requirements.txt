@@ -92,7 +92,7 @@ huggingface-hub==0.26.2
 hvplot==0.11.1
 hyperlink==21.0.0
 idna==3.7
-imagecodecs==2023.1.23
+# imagecodecs==2023.1.23
 imageio==2.33.1
 imagesize==1.4.1
 imbalanced-learn==0.12.3
@@ -326,7 +326,7 @@ tornado==6.4.1
 tqdm==4.66.5
 traitlets==5.14.3
 Twisted==23.10.0
-twisted-iocpsupport==1.0.2
+# twisted-iocpsupport==1.0.2
 typing_extensions==4.11.0
 tzdata==2023.3
 uc-micro-py==1.0.1
