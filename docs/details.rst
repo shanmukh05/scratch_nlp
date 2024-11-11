@@ -1,10 +1,7 @@
 Documentation
 =============
 
-.. toctree::
-   :maxdepth: 1
-
-   modules
+:doc:`Docs <modules>` 
 
 Installation
 ============
