@@ -1,3 +1,4 @@
+accessible-pygments==0.0.5
 aiobotocore==2.12.3
 aiohappyeyeballs==2.4.0
 aiohttp==3.10.5
@@ -46,6 +47,7 @@ cloudpickle==3.0.0
 colorama==0.4.6
 colorcet==3.1.0
 comm==0.2.1
+commonmark==0.9.1
 constantly==23.10.4
 contourpy==1.2.0
 cookiecutter==2.6.0
@@ -75,6 +77,7 @@ flake8==7.1.1
 Flask==3.0.3
 flit_core==3.6.0
 fonttools==4.25.0
+fqdn==1.5.1
 frozenlist==1.5.0
 fsspec==2024.6.1
 future==1.0.0
@@ -92,7 +95,7 @@ huggingface-hub==0.26.2
 hvplot==0.11.1
 hyperlink==21.0.0
 idna==3.7
-# imagecodecs==2023.1.23
+imagecodecs==2023.1.23
 imageio==2.33.1
 imagesize==1.4.1
 imbalanced-learn==0.12.3
@@ -102,10 +105,11 @@ inflection==0.5.1
 iniconfig==1.1.1
 intake==2.0.7
 intervaltree==3.1.0
-# ipykernel==6.29.5
-# ipython==8.12.3
+ipykernel==6.29.5
+ipython==8.12.3
 ipython-genutils==0.2.0
-# ipywidgets==7.8.1
+ipywidgets==7.8.1
+isoduration==20.11.0
 isort==5.13.2
 itemadapter==0.3.0
 itemloaders==1.1.0
@@ -117,11 +121,12 @@ Jinja2==3.1.4
 jmespath==1.0.1
 joblib==1.4.2
 json5==0.9.25
+jsonpointer==3.0.0
 jsonschema==4.23.0
 jsonschema-specifications==2023.7.1
 jupyter==1.0.0
 jupyter_client==8.6.0
-# jupyter-console==6.6.3
+jupyter-console==6.6.3
 jupyter_core==5.7.2
 jupyter-events==0.10.0
 jupyter-lsp==2.2.0
@@ -152,7 +157,7 @@ mdurl==0.1.0
 mistune==2.0.4
 mkl_fft==1.3.11
 mkl_random==1.2.8
-mkl-service==2.4.2
+mkl-service==2.4.0
 more-itertools==10.3.0
 mpmath==1.3.0
 msgpack==1.0.3
@@ -167,6 +172,7 @@ nbconvert==7.16.4
 nbformat==5.10.4
 nest-asyncio==1.6.0
 networkx==3.3
+nh3==0.2.18
 nltk==3.7
 notebook==7.2.2
 notebook_shim==0.2.3
@@ -192,9 +198,12 @@ pickleshare==0.7.5
 pillow==10.4.0
 pip==24.2
 pip-tools==7.4.1
+pipreqs==0.5.0
+pkginfo==1.10.0
 platformdirs==3.10.0
 plotly==5.24.1
 pluggy==1.0.0
+plumbum==1.9.0
 ply==3.11
 prometheus-client==0.14.1
 prompt-toolkit==3.0.43
@@ -213,6 +222,7 @@ pyct==0.5.0
 pycurl==7.45.3
 pydantic==2.9.2
 pydantic_core==2.23.4
+pydata-sphinx-theme==0.16.0
 pydeck==0.8.0
 PyDispatcher==2.0.5
 pydocstyle==6.3.0
@@ -245,6 +255,7 @@ pytz==2024.1
 pyuca==1.2
 pyviz_comms==3.0.2
 PyWavelets==1.7.0
+pywin32==305.1
 pywin32-ctypes==0.2.2
 pywinpty==2.0.10
 PyYAML==6.0.2
@@ -255,11 +266,14 @@ QtAwesome==1.3.1
 qtconsole==5.6.0
 QtPy==2.4.1
 queuelib==1.6.2
+readme_renderer==44.0
 referencing==0.30.2
 regex==2024.9.11
 requests==2.32.3
 requests-file==1.5.1
+requests-toolbelt==1.0.0
 rfc3339-validator==0.1.4
+rfc3986==2.0.0
 rfc3986-validator==0.1.1
 rich==13.7.1
 rope==1.12.0
@@ -286,7 +300,6 @@ sortedcontainers==2.4.0
 soupsieve==2.5
 Sphinx==7.3.7
 sphinx_press_theme==0.9.1
-sphinx-rtd-theme==3.0.1
 sphinxcontrib-applehelp==1.0.2
 sphinxcontrib-devhelp==1.0.2
 sphinxcontrib-htmlhelp==2.0.0
@@ -294,6 +307,8 @@ sphinxcontrib-jquery==4.1
 sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.10
+spyder==6.0.1
+spyder-kernels==3.0.0
 SQLAlchemy==2.0.34
 stack-data==0.2.0
 statsmodels==0.14.2
@@ -318,23 +333,26 @@ toml==0.10.2
 tomli==2.0.1
 tomlkit==0.13.2
 toolz==0.12.0
-torch==2.3.1
-torchvision==0.18.1
+torch==2.3.0
+torchvision==0.18.1a0
 tornado==6.4.1
 tqdm==4.66.5
 traitlets==5.14.3
+twine==5.1.1
 Twisted==23.10.0
-# twisted-iocpsupport==1.0.2
+twisted-iocpsupport==1.0.2
 typing_extensions==4.11.0
 tzdata==2023.3
 uc-micro-py==1.0.1
 ujson==5.10.0
 unicodedata2==15.1.0
 Unidecode==1.3.8
+uri-template==1.3.0
 urllib3==2.2.3
 w3lib==2.1.2
 watchdog==4.0.1
 wcwidth==0.2.5
+webcolors==24.8.0
 webencodings==0.5.1
 websocket-client==1.8.0
 Werkzeug==3.0.6
