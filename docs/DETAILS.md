@@ -1,9 +1,4 @@
-![Logo](https://raw.githubusercontent.com/shanmukh05/scratch_nlp/main/assets/logo.png)
-
-A brief description of what this project does and who it's for
-
 # Documentation
-
 
 # Installation
 

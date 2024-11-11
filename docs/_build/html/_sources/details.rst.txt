@@ -1,15 +1,8 @@
-.. figure:: https://raw.githubusercontent.com/shanmukh05/scratch_nlp/main/assets/logo.png
-   :alt: Logo
-
-   Logo
-
-A brief description of what this project does and who it’s for
-
 Documentation
 =============
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    modules
 
