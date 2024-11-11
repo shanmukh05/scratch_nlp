@@ -161,6 +161,7 @@ multipledispatch==0.6.0
 munkres==1.1.4
 mypy==1.11.2
 mypy-extensions==1.0.0
+myst-parser==4.0.0
 nbclient==0.8.0
 nbconvert==7.16.4
 nbformat==5.10.4
@@ -244,7 +245,6 @@ pytz==2024.1
 pyuca==1.2
 pyviz_comms==3.0.2
 PyWavelets==1.7.0
-# pywin32==305.1
 pywin32-ctypes==0.2.2
 pywinpty==2.0.10
 PyYAML==6.0.2
@@ -294,8 +294,6 @@ sphinxcontrib-jquery==4.1
 sphinxcontrib-jsmath==1.0.1
 sphinxcontrib-qthelp==1.0.3
 sphinxcontrib-serializinghtml==1.1.10
-# spyder==6.0.1
-# spyder-kernels==3.0.0
 SQLAlchemy==2.0.34
 stack-data==0.2.0
 statsmodels==0.14.2
