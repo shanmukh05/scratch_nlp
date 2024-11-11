@@ -179,6 +179,7 @@ openpyxl==3.1.5
 overrides==7.4.0
 packaging==24.1
 pandas==2.2.2
+pandoc==2.12
 pandocfilters==1.5.0
 panel==1.5.3
 param==2.1.1

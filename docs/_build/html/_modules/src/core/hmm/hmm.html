@@ -1,109 +1,281 @@
+
 <!DOCTYPE html>
-<html  lang="en">
+
+
+<html lang="en" data-content_root="../../../../" >
+
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-      <title>src.core.hmm.hmm</title>
-    
-          <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-          <link rel="stylesheet" href="../../../../_static/theme.css " type="text/css" />
-      
-      <!-- sphinx script_files -->
-        <script src="../../../../_static/documentation_options.js?v=8d563738"></script>
-        <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>src.core.hmm.hmm &#8212; Scratch NLP 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
 
-      
-      <!-- bundled in js (rollup iife) -->
-      <!-- <script src="../../../../_static/theme-vendors.js"></script> -->
-      <script src="../../../../_static/theme.js" defer></script>
-    
-  <link rel="index" title="Index" href="../../../../genindex.html" />
-  <link rel="search" title="Search" href="../../../../search.html" /> 
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=362ab14a" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../../../../_static/documentation_options.js?v=8d563738"></script>
+    <script src="../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/src/core/hmm/hmm';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
   </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-  <body>
-    <div id="app">
-    <div class="theme-container" :class="pageClasses"><navbar @toggle-sidebar="toggleSidebar">
-  <router-link to="../../../../index.html" class="home-link">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
     
-      <span class="site-name">Scratch NLP</span>
+<form class="bd-search d-flex align-items-center"
+      action="../../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
     
-  </router-link>
+      <div class="navbar-item">
 
-  <div class="links">
-    <navlinks class="can-hide">
+  
+    
+  
 
-
-
-    </navlinks>
+<a class="navbar-brand logo" href="../../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Scratch NLP 1.0.0 documentation</p>
+  
+</a></div>
+    
   </div>
-</navbar>
-
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
       
-      <div class="sidebar-mask" @click="toggleSidebar(false)">
-      </div>
-        <sidebar @toggle-sidebar="toggleSidebar">
-          
-          <navlinks>
-            
-
-
-
-            
-          </navlinks><div id="searchbox" class="searchbox" role="search">
-  <div class="caption"><span class="caption-text">Quick search</span>
-    <div class="searchformwrapper">
-      <form class="search" action="../../../../search.html" method="get">
-        <input type="text" name="q" />
-        <input type="submit" value="Search" />
-        <input type="hidden" name="check_keywords" value="yes" />
-        <input type="hidden" name="area" value="default" />
-      </form>
-    </div>
-  </div>
-</div><div class="sidebar-links" role="navigation" aria-label="main navigation">
-  
-    <div class="sidebar-group">
-      <p class="caption">
-        <span class="caption-text"><a href="../../../../modules.html#src">src</a></span>
-      </p>
-      <ul class="">
-        
-          <li class="toctree-l1 ">
-            
-              <a href="../../../../src.html" class="reference internal ">src package</a>
-            
-
-            
-          </li>
-
-        
-      </ul>
-    </div>
-  
-</div>
-        </sidebar>
-
-      <page>
-          <div class="body-header" role="navigation" aria-label="navigation">
-  
-  <ul class="breadcrumbs">
-    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
     
-      <li><a href="../../../index.html">Module code</a> &raquo;</li>
-    
-    <li>src.core.hmm.hmm</li>
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../details.html">
+    Documentation
+  </a>
+</li>
+
   </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
   
 
-  <ul class="page-nav">
-</ul>
   
 </div>
-<hr>
-          <div class="content" role="main" v-pre>
-            
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../../details.html">
+    Documentation
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src.core.hmm.hmm</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <h1>Source code for src.core.hmm.hmm</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">nltk</span>
@@ -112,20 +284,26 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">classification_report</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>    
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 
-<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">viz_metrics</span><span class="p">,</span> <span class="n">plot_hist_dataset</span><span class="p">,</span> <span class="n">plot_transition_matrix</span><span class="p">,</span> <span class="n">pca_emission_matrix</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">viz_metrics</span><span class="p">,</span>
+    <span class="n">plot_hist_dataset</span><span class="p">,</span>
+    <span class="n">plot_transition_matrix</span><span class="p">,</span>
+    <span class="n">pca_emission_matrix</span><span class="p">,</span>
+<span class="p">)</span>
+
 
 <div class="viewcode-block" id="HMM">
 <a class="viewcode-back" href="../../../../src.core.hmm.html#src.core.hmm.hmm.HMM">[docs]</a>
-<span class="k">class</span> <span class="nc">HMM</span><span class="p">():</span>
+<span class="k">class</span> <span class="nc">HMM</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        _summary_</span>
 
 <span class="sd">        :param config_dict: _description_</span>
 <span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>        
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span> <span class="o">=</span> <span class="n">config_dict</span>
 
@@ -134,7 +312,7 @@
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        _summary_</span>
-<span class="sd">        &quot;&quot;&quot;</span>        
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">trainX</span><span class="p">,</span> <span class="n">testX</span><span class="p">,</span> <span class="n">trainY</span><span class="p">,</span> <span class="n">testY</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">trainX</span><span class="p">,</span> <span class="n">trainY</span><span class="p">)</span>
         <span class="n">testYP</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">testX</span><span class="p">)</span>
@@ -152,34 +330,35 @@
 <span class="sd">        :type X: _type_</span>
 <span class="sd">        :param y: _description_</span>
 <span class="sd">        :type y: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>        
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">X</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;X/&amp;y is/are missing in fit() function&quot;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">x_vocab</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">X</span><span class="p">)))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">x_vocab_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span><span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_vocab</span><span class="p">)}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_vocab_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_vocab</span><span class="p">)}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span><span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">)}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">v</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">)}</span>
 
         <span class="n">num_x</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_vocab</span><span class="p">)</span>
         <span class="n">num_y</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">)</span>
-        
+
         <span class="c1"># p(t/w) = p(w/t)*p(t)/p(w)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_y</span><span class="p">,</span> <span class="n">num_y</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">em_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_y</span><span class="p">,</span> <span class="n">num_x</span><span class="p">))</span>
 
         <span class="k">for</span> <span class="n">pos_sent</span> <span class="ow">in</span> <span class="n">y</span><span class="p">:</span>
-            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pos_sent</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-                <span class="n">pos_t0</span><span class="p">,</span> <span class="n">pos_t1</span> <span class="o">=</span> <span class="n">pos_sent</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">pos_sent</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="n">pos_t0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="n">pos_t1</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pos_sent</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">pos_t0</span><span class="p">,</span> <span class="n">pos_t1</span> <span class="o">=</span> <span class="n">pos_sent</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">pos_sent</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span><span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="n">pos_t0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="n">pos_t1</span><span class="p">]</span>
+                <span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-        <span class="k">for</span> <span class="n">sent</span><span class="p">,</span> <span class="n">pos_sent</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">sent</span><span class="p">,</span> <span class="n">pos_sent</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sent</span><span class="p">)):</span>
                 <span class="n">t</span><span class="p">,</span> <span class="n">pos_t</span> <span class="o">=</span> <span class="n">sent</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">pos_sent</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">em_matrix</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="n">pos_t</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_vocab_dict</span><span class="p">[</span><span class="n">t</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">em_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">em_matrix</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">em_matrix</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">em_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">em_matrix</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">em_matrix</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="HMM.predict">
@@ -192,7 +371,7 @@
 <span class="sd">        :type X: _type_</span>
 <span class="sd">        :return: _description_</span>
 <span class="sd">        :rtype: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>        
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">X</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;X is missing in predict() function&quot;</span><span class="p">)</span>
         <span class="n">y_pred_total</span> <span class="o">=</span> <span class="p">[]</span>
@@ -202,24 +381,29 @@
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sent</span><span class="p">):</span>
                 <span class="n">probs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">)))</span>
                 <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">pos_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">):</span>
-                    <span class="k">if</span>  <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                        <span class="n">trans_p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="s2">&quot;.&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="n">pos_</span><span class="p">]]</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">trans_p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span><span class="p">[</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="s2">&quot;.&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="n">pos_</span><span class="p">]</span>
+                        <span class="p">]</span>
                     <span class="k">else</span><span class="p">:</span>
-                        <span class="n">trans_p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="n">y_pred_sent</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="n">pos_</span><span class="p">]]</span>
-                    
-                    <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_vocab</span><span class="p">:</span>
-                        <span class="n">em_p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">em_matrix</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="n">pos_</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_vocab_dict</span><span class="p">[</span><span class="n">word</span><span class="p">]]</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">em_p</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">)</span>
+                        <span class="n">trans_p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span><span class="p">[</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="n">y_pred_sent</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]],</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="n">pos_</span><span class="p">]</span>
+                        <span class="p">]</span>
 
-                    <span class="n">probs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">trans_p</span><span class="o">*</span><span class="n">em_p</span>
+                    <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_vocab</span><span class="p">:</span>
+                        <span class="n">em_p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">em_matrix</span><span class="p">[</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">y_vocab_dict</span><span class="p">[</span><span class="n">pos_</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_vocab_dict</span><span class="p">[</span><span class="n">word</span><span class="p">]</span>
+                        <span class="p">]</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">em_p</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">)</span>
+
+                    <span class="n">probs</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">trans_p</span> <span class="o">*</span> <span class="n">em_p</span>
                 <span class="n">y_pred_sent</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">probs</span><span class="p">)])</span>
 
             <span class="n">y_pred_total</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y_pred_sent</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">y_pred_total</span></div>
 
-                
 
 <div class="viewcode-block" id="HMM.evaluate">
 <a class="viewcode-back" href="../../../../src.core.hmm.html#src.core.hmm.hmm.HMM.evaluate">[docs]</a>
@@ -233,15 +417,19 @@
 <span class="sd">        :type YP: _type_</span>
 <span class="sd">        :return: _description_</span>
 <span class="sd">        :rtype: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>        
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">metric_dict</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="n">y_true</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">Y</span><span class="p">))</span>
         <span class="n">y_pred</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">YP</span><span class="p">))</span>
 
-        <span class="n">metric_dict</span><span class="p">[</span><span class="s2">&quot;clf_report&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">,</span> <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">metric_dict</span><span class="p">[</span><span class="s2">&quot;clf_report&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">classification_report</span><span class="p">(</span>
+            <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">,</span> <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
         <span class="n">conf_matrix</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">)</span>
-        <span class="n">metric_dict</span><span class="p">[</span><span class="s2">&quot;conf_matrix&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">conf_matrix</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">)</span>
+        <span class="n">metric_dict</span><span class="p">[</span><span class="s2">&quot;conf_matrix&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="n">conf_matrix</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span>
+        <span class="p">)</span>
         <span class="k">return</span> <span class="n">metric_dict</span></div>
 
 
@@ -253,18 +441,19 @@
 
 <span class="sd">        :return: _description_</span>
 <span class="sd">        :rtype: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>        
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">num_samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">][</span><span class="s2">&quot;num_samples&quot;</span><span class="p">]</span>
         <span class="n">seed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">][</span><span class="s2">&quot;seed&quot;</span><span class="p">]</span>
         <span class="n">test_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">][</span><span class="s2">&quot;test_size&quot;</span><span class="p">]</span>
 
         <span class="n">sents</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">nltk</span><span class="o">.</span><span class="n">corpus</span><span class="o">.</span><span class="n">treebank</span><span class="o">.</span><span class="n">tagged_sents</span><span class="p">())[:</span><span class="n">num_samples</span><span class="p">]</span>
-        <span class="n">words</span> <span class="o">=</span> <span class="p">[[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">sents</span><span class="p">]</span>
-        <span class="n">pos</span> <span class="o">=</span> <span class="p">[[</span><span class="n">j</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">sents</span><span class="p">]</span>
-        <span class="n">trainX</span><span class="p">,</span> <span class="n">testX</span><span class="p">,</span> <span class="n">trainY</span><span class="p">,</span> <span class="n">testY</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="n">test_size</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="p">[[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">sents</span><span class="p">]</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="p">[[</span><span class="n">j</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">sents</span><span class="p">]</span>
+        <span class="n">trainX</span><span class="p">,</span> <span class="n">testX</span><span class="p">,</span> <span class="n">trainY</span><span class="p">,</span> <span class="n">testY</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+            <span class="n">words</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="n">test_size</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">seed</span>
+        <span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">trainX</span><span class="p">,</span> <span class="n">testX</span><span class="p">,</span> <span class="n">trainY</span><span class="p">,</span> <span class="n">testY</span> </div>
-
+        <span class="k">return</span> <span class="n">trainX</span><span class="p">,</span> <span class="n">testX</span><span class="p">,</span> <span class="n">trainY</span><span class="p">,</span> <span class="n">testY</span></div>
 
 
 <div class="viewcode-block" id="HMM.save_output">
@@ -277,14 +466,18 @@
 <span class="sd">        :type data: _type_</span>
 <span class="sd">        :param metric_dict: _description_</span>
 <span class="sd">        :type metric_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>        
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Saving Vectors and Plots into Output Folder&quot;</span><span class="p">)</span>
         <span class="n">output_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;paths&quot;</span><span class="p">][</span><span class="s2">&quot;output_folder&quot;</span><span class="p">]</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_folder</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">visualize</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;visualize&quot;</span><span class="p">]</span>
 
-        <span class="n">trans_matrix_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">)</span>
-        <span class="n">em_matrix_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">em_matrix</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x_vocab</span><span class="p">)</span>
+        <span class="n">trans_matrix_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trans_matrix</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span>
+        <span class="p">)</span>
+        <span class="n">em_matrix_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">em_matrix</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">y_vocab</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">x_vocab</span>
+        <span class="p">)</span>
 
         <span class="n">trans_matrix_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_folder</span><span class="p">,</span> <span class="s2">&quot;Transition Matrix.csv&quot;</span><span class="p">))</span>
         <span class="n">em_matrix_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">output_folder</span><span class="p">,</span> <span class="s2">&quot;Emission Matrix.csv&quot;</span><span class="p">))</span>
@@ -298,19 +491,74 @@
 
 </pre></div>
 
-          </div>
-          <div class="page-nav">
-            <div class="inner"><ul class="page-nav">
-</ul><div class="footer" role="contentinfo">
-      &#169; Copyright 2024, Shanmukha Sainath.
-    <br>
-    Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.3.7 with <a href="https://github.com/schettino72/sphinx_press_theme">Press Theme</a> 0.9.1.
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
 </div>
+                </footer>
+              
             </div>
+            
+            
+              
+            
           </div>
-      </page>
-    </div></div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
     
+      © Copyright 2024, Shanmukha Sainath.
+      <br/>
     
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
   </body>
 </html>
