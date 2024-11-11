@@ -14,10 +14,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2.3.4
-
-      - name: Set ownership
-        run: |
-          git config --global --add safe.directory "$PWD"
+      - run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
 
       - name: Set up Python
         uses: actions/setup-python@v2.2.1
@@ -44,7 +41,6 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m 'deploy'
-          git config --global --add safe.directory '*'
 
       - name: Force push to destination branch
         uses: ad-m/github-push-action@v0.5.0
