@@ -7,13 +7,13 @@ from core.transformer.model import EncoderLayer, PositionalEncoding
 
 
 class BERTPretrainModel(nn.Module):
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         super(BERTPretrainModel, self).__init__()
 
         embed_dim = config_dict["model"]["d_model"]
@@ -56,13 +56,13 @@ class BERTPretrainModel(nn.Module):
 
 
 class BERTFinetuneModel(nn.Module):
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         super(BERTFinetuneModel, self).__init__()
 
         embed_dim = config_dict["model"]["d_model"]

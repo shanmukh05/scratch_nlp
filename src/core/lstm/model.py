@@ -15,17 +15,17 @@ from metrics import TextGenerationMetrics
 
 ### LSTM Cell
 class LSTMCell(nn.Module):
-    def __init__(self, h_dim, inp_x_dim, out_x_dim):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param h_dim: _description_
-        :type h_dim: _type_
-        :param inp_x_dim: _description_
-        :type inp_x_dim: _type_
-        :param out_x_dim: _description_
-        :type out_x_dim: _type_
-        """
+    :param h_dim: _description_
+    :type h_dim: _type_
+    :param inp_x_dim: _description_
+    :type inp_x_dim: _type_
+    :param out_x_dim: _description_
+    :type out_x_dim: _type_
+    """
+    def __init__(self, h_dim, inp_x_dim, out_x_dim):
         super(LSTMCell, self).__init__()
 
         self.wf_dense = nn.Linear(h_dim, h_dim)
@@ -70,13 +70,13 @@ class LSTMCell(nn.Module):
 
 ### LSTM Model
 class LSTMModel(nn.Module):
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         super(LSTMModel, self).__init__()
 
         self.seq_len = config_dict["dataset"]["seq_len"]
@@ -172,17 +172,17 @@ class LSTMModel(nn.Module):
 
 ### LSTMTrainer
 class LSTMTrainer(nn.Module):
-    def __init__(self, model, optimizer, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param model: _description_
-        :type model: _type_
-        :param optimizer: _description_
-        :type optimizer: _type_
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param model: _description_
+    :type model: _type_
+    :param optimizer: _description_
+    :type optimizer: _type_
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, model, optimizer, config_dict):
         super(LSTMTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
 

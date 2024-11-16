@@ -2,19 +2,19 @@ import logging
 
 
 class Node:
-    def __init__(self, word_idx, freq, left=None, right=None):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param word_idx: _description_
-        :type word_idx: _type_
-        :param freq: _description_
-        :type freq: _type_
-        :param left: _description_, defaults to None
-        :type left: _type_, optional
-        :param right: _description_, defaults to None
-        :type right: _type_, optional
-        """
+    :param word_idx: _description_
+    :type word_idx: _type_
+    :param freq: _description_
+    :type freq: _type_
+    :param left: _description_, defaults to None
+    :type left: _type_, optional
+    :param right: _description_, defaults to None
+    :type right: _type_, optional
+    """
+    def __init__(self, word_idx, freq, left=None, right=None):
         self.word_idx = word_idx
         self.freq = freq
         self.huffman_code = []
@@ -24,13 +24,13 @@ class Node:
 
 
 class HuffmanBTree:
-    def __init__(self, vocab_freq_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param vocab_freq_dict: _description_
-        :type vocab_freq_dict: _type_
-        """
+    :param vocab_freq_dict: _description_
+    :type vocab_freq_dict: _type_
+    """
+    def __init__(self, vocab_freq_dict):
         self.logger = logging.getLogger(__name__)
         self.vocab = list(vocab_freq_dict.keys())
         self.freq = list(vocab_freq_dict.values())

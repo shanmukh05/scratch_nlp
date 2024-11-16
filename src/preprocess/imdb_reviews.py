@@ -8,21 +8,21 @@ from .utils import preprocess_text
 
 
 class PreprocessIMDB:
-    def __init__(self, root_path, explore_folder, num_samples, operations, randomize):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param root_path: _description_
-        :type root_path: _type_
-        :param explore_folder: _description_
-        :type explore_folder: _type_
-        :param num_samples: _description_
-        :type num_samples: _type_
-        :param operations: _description_
-        :type operations: _type_
-        :param randomize: _description_
-        :type randomize: _type_
-        """
+    :param root_path: _description_
+    :type root_path: _type_
+    :param explore_folder: _description_
+    :type explore_folder: _type_
+    :param num_samples: _description_
+    :type num_samples: _type_
+    :param operations: _description_
+    :type operations: _type_
+    :param randomize: _description_
+    :type randomize: _type_
+    """
+    def __init__(self, root_path, explore_folder, num_samples, operations, randomize):
         self.logger = logging.getLogger(__name__)
         self.extract_data(root_path, explore_folder, num_samples, randomize)
         self.logger.info("Extracted Data from TXT Files")

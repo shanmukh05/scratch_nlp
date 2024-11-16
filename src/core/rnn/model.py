@@ -12,17 +12,17 @@ from metrics import ClassificationMetrics
 
 ### RNN Cell
 class RNNCell(nn.Module):
-    def __init__(self, h_dim, inp_x_dim, out_x_dim):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param h_dim: _description_
-        :type h_dim: _type_
-        :param inp_x_dim: _description_
-        :type inp_x_dim: _type_
-        :param out_x_dim: _description_
-        :type out_x_dim: _type_
-        """
+    :param h_dim: _description_
+    :type h_dim: _type_
+    :param inp_x_dim: _description_
+    :type inp_x_dim: _type_
+    :param out_x_dim: _description_
+    :type out_x_dim: _type_
+    """
+    def __init__(self, h_dim, inp_x_dim, out_x_dim):
         super(RNNCell, self).__init__()
 
         self.hh_dense = nn.Linear(h_dim, h_dim)
@@ -48,13 +48,13 @@ class RNNCell(nn.Module):
 
 ### Stacked RNN
 class RNNModel(nn.Module):
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         super(RNNModel, self).__init__()
 
         self.seq_len = config_dict["dataset"]["seq_len"]
@@ -124,17 +124,17 @@ class RNNModel(nn.Module):
 
 
 class RNNTrainer(nn.Module):
-    def __init__(self, model, optimizer, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param model: _description_
-        :type model: _type_
-        :param optimizer: _description_
-        :type optimizer: _type_
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param model: _description_
+    :type model: _type_
+    :param optimizer: _description_
+    :type optimizer: _type_
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, model, optimizer, config_dict):
         super(RNNTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
 

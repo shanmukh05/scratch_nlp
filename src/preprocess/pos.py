@@ -20,13 +20,13 @@ CORPUS = {
 
 
 class PreprocessPOS:
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
 
         self.config_dict = config_dict

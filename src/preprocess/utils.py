@@ -33,13 +33,13 @@ def preprocess_text(text, operations=None):
 
 
 class BytePairEncoding:
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
 
         self.num_vocab = (
@@ -195,13 +195,13 @@ class BytePairEncoding:
 
 
 class WordPiece:
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
 
         self.num_vocab = (

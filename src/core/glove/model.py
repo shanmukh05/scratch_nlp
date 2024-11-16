@@ -10,13 +10,13 @@ import torch.nn as nn
 
 
 class GloVeModel(nn.Module):
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         super(GloVeModel, self).__init__()
 
         self.embed_dim = config_dict["model"]["embed_dim"]
@@ -51,17 +51,17 @@ class GloVeModel(nn.Module):
 
 
 class GloVeTrainer(nn.Module):
-    def __init__(self, model, optimizer, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param model: _description_
-        :type model: _type_
-        :param optimizer: _description_
-        :type optimizer: _type_
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param model: _description_
+    :type model: _type_
+    :param optimizer: _description_
+    :type optimizer: _type_
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, model, optimizer, config_dict):
         super(GloVeTrainer, self).__init__()
 
         self.logger = logging.getLogger(__name__)

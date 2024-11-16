@@ -1,7 +1,7 @@
 Documentation
 =============
 
-:doc:`Docs <modules>` 
+:doc:`Docs <modules>`
 
 Installation
 ============
@@ -10,8 +10,8 @@ Install my-project with npm
 
 .. code:: bash
 
-     npm install my-project
-     cd my-project
+   npm install my-project
+   cd my-project
 
 Run Locally
 ===========
@@ -20,25 +20,25 @@ Clone the project
 
 .. code:: bash
 
-     git clone https://link-to-project
+   git clone https://link-to-project
 
 Go to the project directory
 
 .. code:: bash
 
-     cd my-project
+   cd my-project
 
 Install dependencies
 
 .. code:: bash
 
-     npm install
+   npm install
 
 Start the server
 
 .. code:: bash
 
-     npm run start
+   npm run start
 
 Features
 ========

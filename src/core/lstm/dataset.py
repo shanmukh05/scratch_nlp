@@ -8,17 +8,17 @@ from torch.utils.data import Dataset, DataLoader
 
 
 class LSTMDataset(Dataset):
-    def __init__(self, paths, transforms, tokens=None):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param paths: _description_
-        :type paths: _type_
-        :param transforms: _description_
-        :type transforms: _type_
-        :param tokens: _description_, defaults to None
-        :type tokens: _type_, optional
-        """
+    :param paths: _description_
+    :type paths: _type_
+    :param transforms: _description_
+    :type transforms: _type_
+    :param tokens: _description_, defaults to None
+    :type tokens: _type_, optional
+    """
+    def __init__(self, paths, transforms, tokens=None):
         self.paths = paths
         self.tokens = tokens
         self.transforms = transforms

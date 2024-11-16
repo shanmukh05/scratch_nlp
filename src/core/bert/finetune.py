@@ -12,17 +12,17 @@ import torch.nn.functional as F
 
 
 class BERTFinetuneTrainer(nn.Module):
-    def __init__(self, model, optimizer, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param model: _description_
-        :type model: _type_
-        :param optimizer: _description_
-        :type optimizer: _type_
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param model: _description_
+    :type model: _type_
+    :param optimizer: _description_
+    :type optimizer: _type_
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, model, optimizer, config_dict):
         super(BERTFinetuneTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
 

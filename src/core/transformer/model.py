@@ -14,13 +14,13 @@ from metrics import TextGenerationMetrics
 
 
 class MultiHeadAttention(nn.Module):
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         super(MultiHeadAttention, self).__init__()
 
         self.seq_len = config_dict["dataset"]["seq_len"]
@@ -89,13 +89,13 @@ class MultiHeadAttention(nn.Module):
 
 
 class PositionalEncoding(nn.Module):
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         super(PositionalEncoding, self).__init__()
 
         d_model = config_dict["model"]["d_model"]
@@ -123,13 +123,13 @@ class PositionalEncoding(nn.Module):
 
 
 class FeedForward(nn.Module):
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         super(FeedForward, self).__init__()
 
         d_model = config_dict["model"]["d_model"]
@@ -155,13 +155,13 @@ class FeedForward(nn.Module):
 
 
 class EncoderLayer(nn.Module):
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         super(EncoderLayer, self).__init__()
         dropout = config_dict["model"]["dropout"]
         d_model = config_dict["model"]["d_model"]
@@ -194,13 +194,13 @@ class EncoderLayer(nn.Module):
 
 
 class DecoderLayer(nn.Module):
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         super(DecoderLayer, self).__init__()
         dropout = config_dict["model"]["dropout"]
         d_model = config_dict["model"]["d_model"]
@@ -242,13 +242,13 @@ class DecoderLayer(nn.Module):
 
 
 class TransformerModel(nn.Module):
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         super(TransformerModel, self).__init__()
 
         embed_dim = config_dict["model"]["d_model"]
@@ -298,17 +298,17 @@ class TransformerModel(nn.Module):
 
 
 class TransformerTrainer(nn.Module):
-    def __init__(self, model, optimizer, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param model: _description_
-        :type model: _type_
-        :param optimizer: _description_
-        :type optimizer: _type_
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param model: _description_
+    :type model: _type_
+    :param optimizer: _description_
+    :type optimizer: _type_
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, model, optimizer, config_dict):
         super(TransformerTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
 

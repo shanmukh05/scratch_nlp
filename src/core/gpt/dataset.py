@@ -10,13 +10,13 @@ from preprocess.utils import preprocess_text, BytePairEncoding
 
 
 class PreprocessGPT:
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
 
         self.input_folder = config_dict["paths"]["input_folder"]

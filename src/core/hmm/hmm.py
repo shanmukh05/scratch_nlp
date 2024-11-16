@@ -7,7 +7,7 @@ import logging
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.model_selection import train_test_split
 
-from .utils import (
+from plot_utils import (
     viz_metrics,
     plot_hist_dataset,
     plot_transition_matrix,
@@ -16,13 +16,13 @@ from .utils import (
 
 
 class HMM:
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
 

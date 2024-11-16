@@ -1,52 +1,52 @@
 # Documentation
 
+`Docs <modules>`{.interpreted-text role="doc"}
+
 # Installation
 
 Install my-project with npm
 
-```bash
-  npm install my-project
-  cd my-project
+``` {.bash}
+npm install my-project
+cd my-project
 ```
-    
+
 # Run Locally
 
 Clone the project
 
-```bash
-  git clone https://link-to-project
+``` {.bash}
+git clone https://link-to-project
 ```
 
 Go to the project directory
 
-```bash
-  cd my-project
+``` {.bash}
+cd my-project
 ```
 
 Install dependencies
 
-```bash
-  npm install
+``` {.bash}
+npm install
 ```
 
 Start the server
 
-```bash
-  npm run start
+``` {.bash}
+npm run start
 ```
-
 
 # Features
 
-- Light/dark mode toggle
-- Live previews
-- Fullscreen mode
-- Cross platform
-
+-   Light/dark mode toggle
+-   Live previews
+-   Fullscreen mode
+-   Cross platform
 
 # Examples
 
-```javascript
+``` {.javascript}
 import Component from 'my-project'
 
 function App() {
@@ -62,34 +62,32 @@ See `contributing.md` for ways to get started.
 
 Please adhere to this project's `code of conduct`.
 
-
 # Acknowledgements
 
- - [Awesome Readme Templates](https://awesomeopensource.com/project/elangosundar/awesome-README-templates)
- - [Awesome README](https://github.com/matiassingers/awesome-readme)
- - [How to write a Good readme](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
-
+-   [Awesome Readme
+    Templates](https://awesomeopensource.com/project/elangosundar/awesome-README-templates)
+-   [Awesome README](https://github.com/matiassingers/awesome-readme)
+-   [How to write a Good
+    readme](https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project)
 
 # About Me
-I'm a full stack developer...
 
+I'm a full stack developer...
 
 # Lessons Learned
 
-What did you learn while building this project? What challenges did you face and how did you overcome them?
-
+What did you learn while building this project? What challenges did you
+face and how did you overcome them?
 
 # License
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-
+[![MIT
+License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
 # Feedback
 
-If you have any feedback, please reach out to us at fake@fake.com
-
+If you have any feedback, please reach out to us at <fake@fake.com>
 
 # Appendix
 
 Any additional information goes here
-

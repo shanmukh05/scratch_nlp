@@ -10,13 +10,13 @@ from collections import defaultdict
 
 
 class Word2VecModel(nn.Module):
-    def __init__(self, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, config_dict):
         super(Word2VecModel, self).__init__()
 
         self.embed_dim = config_dict["model"]["embed_dim"]
@@ -69,17 +69,17 @@ class Word2VecModel(nn.Module):
 
 
 class Word2VecTrainer(nn.Module):
-    def __init__(self, model, optimizer, config_dict):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param model: _description_
-        :type model: _type_
-        :param optimizer: _description_
-        :type optimizer: _type_
-        :param config_dict: _description_
-        :type config_dict: _type_
-        """
+    :param model: _description_
+    :type model: _type_
+    :param optimizer: _description_
+    :type optimizer: _type_
+    :param config_dict: _description_
+    :type config_dict: _type_
+    """
+    def __init__(self, model, optimizer, config_dict):
         super(Word2VecTrainer, self).__init__()
 
         self.logger = logging.getLogger(__name__)

@@ -51,21 +51,69 @@ class ValidateConfig:
         self.verify_values()
 
     def check_float(self, key, val):
+        """
+        _summary_
+
+        :param key: _description_
+        :type key: _type_
+        :param val: _description_
+        :type val: _type_
+        """        
         pass
 
     def check_int(self, key, val):
+        """
+        _summary_
+
+        :param key: _description_
+        :type key: _type_
+        :param val: _description_
+        :type val: _type_
+        """        
         pass
 
     def check_string(self, key, val):
+        """
+        _summary_
+
+        :param key: _description_
+        :type key: _type_
+        :param val: _description_
+        :type val: _type_
+        """        
         pass
 
     def check_paths(self, key, val):
+        """
+        _summary_
+
+        :param key: _description_
+        :type key: _type_
+        :param val: _description_
+        :type val: _type_
+        """        
         pass
 
     def check_list(self, key, val):
+        """
+        _summary_
+
+        :param key: _description_
+        :type key: _type_
+        :param val: _description_
+        :type val: _type_
+        """        
         pass
 
     def compare_dtype(self, key, val):
+        """
+        _summary_
+
+        :param key: _description_
+        :type key: _type_
+        :param val: _description_
+        :type val: _type_
+        """        
         type_abs = configDictDType[key]
         type_cfg = type(val)
 

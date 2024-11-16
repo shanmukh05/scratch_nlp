@@ -10,17 +10,17 @@ from preprocess.utils import preprocess_text
 
 
 class PreprocessBERTFinetune:
-    def __init__(self, config_dict, wordpiece, word2id):
-        """
-        _summary_
+    """
+    _summary_
 
-        :param config_dict: _description_
-        :type config_dict: _type_
-        :param wordpiece: _description_
-        :type wordpiece: _type_
-        :param word2id: _description_
-        :type word2id: _type_
-        """
+    :param config_dict: _description_
+    :type config_dict: _type_
+    :param wordpiece: _description_
+    :type wordpiece: _type_
+    :param word2id: _description_
+    :type word2id: _type_
+    """
+    def __init__(self, config_dict, wordpiece, word2id):
         self.logger = logging.getLogger(__name__)
 
         self.input_path = config_dict["finetune"]["paths"]["input_file"]
