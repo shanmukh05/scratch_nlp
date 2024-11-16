@@ -92,7 +92,7 @@ class PreprocessIMDB:
 
         desc = f"Extracting from: {os.path.basename(fold_path)}"
         for id in tqdm(path_ids, desc=desc):
-            f = open(path_ls[id], "r", encoding="utf8")
+            f = open(path_ls[id], "r", encoding="utf8", errors="ignore")
             text = " ".join(f.readlines())
             text_ls.append(text)
             f.close()

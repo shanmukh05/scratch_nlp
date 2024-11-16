@@ -2,11 +2,11 @@ paths:
   input_folder: D:\Learning\NLP\Projects\scratch_nlp\sample_data\imdb_reviews\train
   output_folder: D:\Learning\NLP\Projects\scratch_nlp\output\bow
 dataset:
-  num_samples: 200
+  num_samples: 50
   explore_folder: True
 model:
   output_label: True
 preprocess:
   operations: [lcase, remalpha, stopwords, stemming]
-  randomize: True
+  randomize: False
 visualize: True
