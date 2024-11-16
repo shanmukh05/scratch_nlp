@@ -9,18 +9,18 @@ from .utils import preprocess_text
 
 class PreprocessIMDB:
     """
-    _summary_
+    Loading and Generating Reviews, labels for IMDB dataset
 
-    :param root_path: _description_
-    :type root_path: _type_
-    :param explore_folder: _description_
-    :type explore_folder: _type_
-    :param num_samples: _description_
-    :type num_samples: _type_
-    :param operations: _description_
-    :type operations: _type_
-    :param randomize: _description_
-    :type randomize: _type_
+    :param root_path: Root Folder with all the classes Folders with txt files for each sample or can have txt files
+    :type root_path: str
+    :param explore_folder: Whether the root_path has classes folder or txt files
+    :type explore_folder: bool
+    :param num_samples: How many samples to select from each folder
+    :type num_samples: int
+    :param operations: Any combinations of {'lcase', 'remalpha', 'stopwords', 'stemming'}. list of preprocessing Operations
+    :type operations: list
+    :param randomize: Select first num_samples or at random
+    :type randomize: bool
     """
     def __init__(self, root_path, explore_folder, num_samples, operations, randomize):
         self.logger = logging.getLogger(__name__)
@@ -30,32 +30,23 @@ class PreprocessIMDB:
 
     def run(self):
         """
-        _summary_
+        Preprocessing list of sentences
         """
-
-        # """
-        # lcase => Lowercase
-        # remalpha => remove Alpha Numeric characters
-        # stopwords => Remove Stopwords
-        # stemming => Reducing words to their stem
-        # """
-
         self.text_ls = [preprocess_text(i, self.operations) for i in self.text_ls]
 
     def extract_data(self, root_path, explore_folder, num_samples, randomize):
         """
-        _summary_
+        Extracting data from txt files
 
-        :param root_path: _description_
-        :type root_path: _type_
-        :param explore_folder: _description_
-        :type explore_folder: _type_
-        :param num_samples: _description_
-        :type num_samples: _type_
-        :param randomize: _description_
-        :type randomize: _type_
+        :param root_path: Root Folder with all the classes Folders with txt files for each sample or can have txt files
+        :type root_path: str
+        :param explore_folder: Whether the root_path has classes folder or txt files
+        :type explore_folder: bool
+        :param num_samples: How many samples to select from each folder
+        :type num_samples: int
+        :param randomize: Select first num_samples or at random
+        :type randomize: bool
         """
-
         self.text_ls, self.label_ls = [], []
         if explore_folder:
             folders = os.listdir(root_path)
@@ -72,16 +63,16 @@ class PreprocessIMDB:
 
     def extract_data_folder(self, fold_path, num_samples, randomize):
         """
-        _summary_
+        Extracting txt data from each folder
 
-        :param fold_path: _description_
-        :type fold_path: _type_
-        :param num_samples: _description_
-        :type num_samples: _type_
-        :param randomize: _description_
-        :type randomize: _type_
-        :return: _description_
-        :rtype: _type_
+        :param fold_path: Path to Folder
+        :type fold_path: str
+        :param num_samples: How many samples to select from each folder
+        :type num_samples: int
+        :param randomize: Select first num_samples or at random
+        :type randomize: bool
+        :return: List of sentences from the folder
+        :rtype: list
         """
         text_ls = []
         path_ls = glob.glob(f"{fold_path}/*.txt")

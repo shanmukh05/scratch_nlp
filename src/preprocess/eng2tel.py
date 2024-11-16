@@ -8,10 +8,10 @@ from collections import Counter
 
 class PreprocessSeq2Seq:
     """
-    _summary_
+    Loading Data and Generating Source, target Data for SEQ2SEQ Model Training. 
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -26,12 +26,12 @@ class PreprocessSeq2Seq:
 
     def get_data(self, df):
         """
-        _summary_
+        Generating Source and Target Array of Tokens
 
-        :param df: _description_
-        :type df: _type_
-        :return: _description_
-        :rtype: _type_
+        :param df: DataFrame with Source and Target sentences
+        :type df: pandas.DataFrame
+        :return: Source and Target Arrays
+        :rtype: tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples, seq_len])
         """
         src = list(df["Source"].map(lambda x: self.preprocess_src(x)))
         tgt = list(df["Target"].map(lambda x: self.preprocess_tgt(x)))
@@ -63,10 +63,10 @@ class PreprocessSeq2Seq:
 
     def get_vocab(self, df):
         """
-        _summary_
+        Generates Vocabulary 
 
-        :param df: _description_
-        :type df: _type_
+        :param df: DataFrame with Source and Target sentences
+        :type df: pandas.DataFrame
         """
         self.logger.info(
             "Building Vocabulary for Source and Target Languages using Training data"
@@ -95,14 +95,14 @@ class PreprocessSeq2Seq:
 
     def batched_ids2tokens(self, tokens, type="src"):
         """
-        _summary_
+        Converting sentence of ids to tokens
 
-        :param tokens: _description_
-        :type tokens: _type_
-        :param type: _description_, defaults to "src"
+        :param tokens: Tokens Array, 2D array (num_samples, seq_len)
+        :type tokens: numpy.ndarray
+        :param type: {'src', 'tgt'} Type of tokens, defaults to "src"
         :type type: str, optional
-        :return: _description_
-        :rtype: _type_
+        :return: List of decoded sentences
+        :rtype: list
         """
         if type == "src":
             func = lambda x: self.id2wordSrc[x]
@@ -123,12 +123,12 @@ class PreprocessSeq2Seq:
 
     def preprocess_src(self, text):
         """
-        _summary_
+        Preprocessing Source Sentence
 
-        :param text: _description_
-        :type text: _type_
-        :return: _description_
-        :rtype: _type_
+        :param text: Sentence
+        :type text: str
+        :return: Preprocessed sentence
+        :rtype: str
         """
         text = text.lower().strip()
         text = re.sub(r"([?.!,¿_])", r" \1 ", text)
@@ -140,12 +140,12 @@ class PreprocessSeq2Seq:
 
     def preprocess_tgt(self, text):
         """
-        _summary_
+        Preprocessing Target Sentence
 
-        :param text: _description_
-        :type text: _type_
-        :return: _description_
-        :rtype: _type_
+        :param text: Sentence
+        :type text: str
+        :return: Preprocessed sentence
+        :rtype: str
         """
         text = "".join(
             c
@@ -160,10 +160,10 @@ class PreprocessSeq2Seq:
 
     def extract_data(self):
         """
-        _summary_
+        Extracting Data from csv file
 
-        :return: _description_
-        :rtype: _type_
+        :return: Train and Test DataFrames with Source and Target sentences
+        :rtype: tuple, (pandas.DataFrame, pandas.DataFrame)
         """
         fpath = self.config_dict["paths"]["input_file"]
 

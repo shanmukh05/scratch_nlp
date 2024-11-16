@@ -1,3 +1,6 @@
+"""
+All the Config Parameters that are used in the lubrary with corresponding Data Type
+"""
 configDictDType = {
     ## paths
     "input_file": str,
@@ -72,6 +75,15 @@ configDictDType = {
     "visualize": bool,
 }
 
+"""
+Config Parameters Segregated for each algorithm and it's Parent Parameters.
+
+Format:
+    'Algo': {
+        'Parent Param': [Childran Params],
+        ....
+    }
+"""
 MainKeysDict = {
     "BOW": {
         "paths": ["input_folder", "output_folder"],

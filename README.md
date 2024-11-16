@@ -64,6 +64,10 @@ Start the server
   npm run start
 ```
 
+```bash
+python main.py --config_path "D:\Learning\NLP\Projects\scratch_nlp\configs\bow.yaml" --algo "BOW" --log_folder "D:\Learning\NLP\Projects\scratch_nlp\output\bow"
+```
+
 
 ## Features
 

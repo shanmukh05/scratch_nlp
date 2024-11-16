@@ -10,23 +10,27 @@ nltk.download("stopwords")
 
 def preprocess_text(text, operations=None):
     """
-    _summary_
+    Preprocesses Text
 
-    :param text: _description_
-    :type text: _type_
-    :param operations: _description_, defaults to None
-    :type operations: _type_, optional
-    :return: _description_
-    :rtype: _type_
+    :param text: string to preprocess
+    :type text: str
+    :param operations: List of operations from {'lcase', 'remalpha', 'stopwords', 'stemming'}, defaults to None
+    :type operations: list, optional
+    :return: Preprocessed text
+    :rtype: str
     """
     if "lcase" in operations or operations is None:
+        # Lowercases text
         text = text.lower()
     if "remalpha" in operations or operations is None:
+        # Removes Alpha Numeric characters
         text = re.sub(r"\W+", " ", text)
     if "stopwords" in operations or operations is None:
+        # Removes Stopwords
         swords = stopwords.words("english")
         text = " ".join([word for word in text.split() if word not in swords])
     if "stemming" in operations or operations is None:
+        # Reducing words to their stem
         snowball = SnowballStemmer(language="english")
         text = " ".join([snowball.stem(word) for word in text.split()])
     return text
@@ -34,10 +38,10 @@ def preprocess_text(text, operations=None):
 
 class BytePairEncoding:
     """
-    _summary_
+    Byte Pair Encoding Algorithm to convert a corpus to tokens
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -50,12 +54,12 @@ class BytePairEncoding:
 
     def fit(self, text_ls):
         """
-        _summary_
+        Fits BPE on List of sentences and Transforms into words
 
-        :param text_ls: _description_
-        :type text_ls: _type_
-        :return: _description_
-        :rtype: _type_
+        :param text_ls: List of sentences
+        :type text_ls: list
+        :return: List of words
+        :rtype: list
         """
         words = self.preprocess(text_ls)
         words = self.run_merge(words)
@@ -64,12 +68,12 @@ class BytePairEncoding:
 
     def transform(self, text_ls):
         """
-        _summary_
+        Transforms list of sentences into words
 
-        :param text_ls: _description_
-        :type text_ls: _type_
-        :return: _description_
-        :rtype: _type_
+        :param text_ls: List of sentences
+        :type text_ls: list
+        :return: List of words
+        :rtype: list
         """
         words = self.preprocess(text_ls, "test")
         vocab = list(self.vocab_freq.keys())
@@ -81,14 +85,14 @@ class BytePairEncoding:
 
     def merge_chars(self, word, vocab):
         """
-        _summary_
+        Merging characters in a word if it's concatenation present in vocabulary
 
-        :param word: _description_
-        :type word: _type_
-        :param vocab: _description_
-        :type vocab: _type_
-        :return: _description_
-        :rtype: _type_
+        :param word: Word
+        :type word: str
+        :param vocab: Vocabulary
+        :type vocab: list
+        :return: new word with merged characters
+        :rtype: str
         """
         merge = True
         while merge:
@@ -111,14 +115,14 @@ class BytePairEncoding:
 
     def preprocess(self, text_ls, data="train"):
         """
-        _summary_
+        Creating words from list of sentences. Words are created by adding space between each character and adding  </w> at the end. 
 
-        :param text_ls: _description_
-        :type text_ls: _type_
-        :param data: _description_, defaults to "train"
+        :param text_ls: List od sentences
+        :type text_ls: list
+        :param data: {'train', 'test'} Type of data, defaults to "train"
         :type data: str, optional
-        :return: _description_
-        :rtype: _type_
+        :return: List of words from all the sentences in one list
+        :rtype: list
         """
         corpus = " ".join(text_ls)
         words = corpus.split()
@@ -133,12 +137,12 @@ class BytePairEncoding:
 
     def get_stats(self, words):
         """
-        _summary_
+        Creates a dictionary with pair of consecutive characters as key and corresponding count in corpus as value
 
-        :param words: _description_
-        :type words: _type_
-        :return: _description_
-        :rtype: _type_
+        :param words: List of words from the corpus
+        :type words: list
+        :return: Dictionary with pairs of characters and frequency
+        :rtype: dict
         """
         words_freq = Counter(words)
         pair_dict = defaultdict(int)
@@ -150,12 +154,12 @@ class BytePairEncoding:
 
     def build_vocab(self, words):
         """
-        _summary_
+        Generates Vocabulary after updation of words by merging characters
 
-        :param words: _description_
-        :type words: _type_
-        :return: _description_
-        :rtype: _type_
+        :param words: List of words
+        :type words: list
+        :return: List of updated words
+        :rtype: list
         """
         pair_dict = self.get_stats(words)
         best_pair = max(pair_dict, key=pair_dict.get)
@@ -180,12 +184,12 @@ class BytePairEncoding:
 
     def run_merge(self, words):
         """
-        _summary_
+        Updates vocabulary until desired Vocabulary count is reached
 
-        :param words: _description_
-        :type words: _type_
-        :return: _description_
-        :rtype: _type_
+        :param words: List of words
+        :type words: list
+        :return: List of updated final words
+        :rtype: list
         """
         self.logger.info("Merging characters to achieve desired vocabulary")
 
@@ -196,10 +200,10 @@ class BytePairEncoding:
 
 class WordPiece:
     """
-    _summary_
+    WordPiece Tokenization Algorithm to tokenize a corpus and generate Vocabulary
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -212,12 +216,12 @@ class WordPiece:
 
     def fit(self, text_ls):
         """
-        _summary_
+        Fits WordPiece on List of sentences and Transforms the words
 
-        :param text_ls: _description_
-        :type text_ls: _type_
-        :return: _description_
-        :rtype: _type_
+        :param text_ls: List of sentences
+        :type text_ls: list
+        :return: List of words
+        :rtype: list
         """
         corpus = self.preprocess(text_ls)
         corpus = self.run_merge(corpus)
@@ -226,12 +230,12 @@ class WordPiece:
 
     def transform(self, text_ls):
         """
-        _summary_
+        Transforms list of sentences into words
 
-        :param text_ls: _description_
-        :type text_ls: _type_
-        :return: _description_
-        :rtype: _type_
+        :param text_ls: List of sentences
+        :type text_ls: list
+        :return: List of words
+        :rtype: list
         """
         corpus = self.preprocess(text_ls, "test")
         vocab = list(self.vocab_freq.keys())
@@ -243,14 +247,14 @@ class WordPiece:
 
     def merge_chars(self, word, vocab):
         """
-        _summary_
+        Merging characters in a word if it's concatenation present in vocabulary
 
-        :param word: _description_
-        :type word: _type_
-        :param vocab: _description_
-        :type vocab: _type_
-        :return: _description_
-        :rtype: _type_
+        :param word: Word
+        :type word: str
+        :param vocab: Vocabulary
+        :type vocab: list
+        :return: new word with merged characters
+        :rtype: str
         """
         j = 0
         while j < len(word) - 1:
@@ -264,14 +268,14 @@ class WordPiece:
 
     def preprocess(self, text_ls, data="train"):
         """
-        _summary_
+        Creating words from list of sentences. Words are created by adding ## at start each character (other than first character). 
 
-        :param text_ls: _description_
-        :type text_ls: _type_
-        :param data: _description_, defaults to "train"
+        :param text_ls: List od sentences
+        :type text_ls: list
+        :param data: {'train', 'test'} Type of data, defaults to "train"
         :type data: str, optional
-        :return: _description_
-        :rtype: _type_
+        :return: List of words from all the sentences in one list. Each word is a list of characters 
+        :rtype: list
         """
         words = " ".join(text_ls).split()
         corpus = []
@@ -291,12 +295,12 @@ class WordPiece:
 
     def get_stats(self, corpus):
         """
-        _summary_
+        Creates a dictionary with pair of consecutive characters as key and corresponding count in corpus as value
 
-        :param corpus: _description_
-        :type corpus: _type_
-        :return: _description_
-        :rtype: _type_
+        :param corpus: List of words 
+        :type corpus: list
+        :return: Dictionary with pairs of characters and frequency
+        :rtype: dict
         """
         pair_freq = defaultdict(int)
         for corp in corpus:
@@ -308,14 +312,14 @@ class WordPiece:
 
     def get_likelihood(self, pair, pair_freq):
         """
-        _summary_
+        Calculates likelihood of two characters being consecutive in a corpus
 
-        :param pair: _description_
-        :type pair: _type_
-        :param pair_freq: _description_
-        :type pair_freq: _type_
-        :return: _description_
-        :rtype: _type_
+        :param pair: Pair of characters
+        :type pair: tuple
+        :param pair_freq: Dictionary with pairs of characters and frequency
+        :type pair_freq: dict
+        :return: Likelihood (can be a value in [0, 1])
+        :rtype: float
         """
         p12 = pair_freq[pair]
         p1, p2 = self.vocab_freq[pair[0]], self.vocab_freq[pair[1]]
@@ -325,24 +329,24 @@ class WordPiece:
 
     def combine(self, pair):
         """
-        _summary_
+        Combines pair of characters based on their location in a word by removing ##
 
-        :param pair: _description_
-        :type pair: _type_
-        :return: _description_
-        :rtype: _type_
+        :param pair: Pair of characters
+        :type pair: tuple
+        :return: Combination of characters
+        :rtype: str
         """
         token1, token2 = pair
         return token1 + token2[2:] if token2.startswith("##") else token1 + token2
 
     def build_vocab(self, corpus):
         """
-        _summary_
+        Generates Vocabulary after updation of words by merging characters
 
-        :param corpus: _description_
-        :type corpus: _type_
-        :return: _description_
-        :rtype: _type_
+        :param corpus: List of words
+        :type corpus: list
+        :return: List of updated corpus
+        :rtype: list
         """
         pair_freq = self.get_stats(corpus)
         best_pair = max(
@@ -376,12 +380,12 @@ class WordPiece:
 
     def run_merge(self, corpus):
         """
-        _summary_
+        Updates vocabulary until desired Vocabulary count is reached
 
-        :param corpus: _description_
-        :type corpus: _type_
-        :return: _description_
-        :rtype: _type_
+        :param corpus: List of corpus
+        :type corpus: list
+        :return: List of updated final corpus
+        :rtype: list
         """
         if len(self.vocab_freq) < self.num_vocab:
             while len(self.vocab_freq) < self.num_vocab:

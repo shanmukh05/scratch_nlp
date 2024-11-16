@@ -8,7 +8,7 @@ class ClassificationMetrics:
     """
     Metrics for Classification Task.
 
-    :param config_dict: Config Dictionary
+    :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
 
@@ -19,10 +19,10 @@ class ClassificationMetrics:
         """
         Function that returns Metrics using References, Predictions and Class Labels
 
-        :param references: References, 1D array (N,)
-        :type references: numpy.array
-        :param predictions: Predictions, 2D array (NxC) with Probabilities
-        :type predictions: numpy.array
+        :param references: References, 1D array (num_samples,)
+        :type references: numpy.ndarray
+        :param predictions: Predictions, 2D array (num_samples, num_classes) with Probabilities
+        :type predictions: numpy.ndarray
         :param target_names: Class Labels
         :type target_names: list
         :return: Metrics Dictionary
@@ -54,7 +54,7 @@ class TextGenerationMetrics:
     """
     Metrics for Text Generation Task.
 
-    :param config_dict: Config Dictionary
+    :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
 
@@ -69,10 +69,10 @@ class TextGenerationMetrics:
         """
         Function that returns Metrics using References, Predictions and Class Labels
 
-        :param references: References, 2D array (N,S)
-        :type references: numpy.array
-        :param predictions: Predictions, 3D array (NxSxC) with Probabilities
-        :type predictions: numpy.array
+        :param references: References, 2D array (num_samples, seq_len)
+        :type references: numpy.ndarray
+        :param predictions: Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities
+        :type predictions: numpy.ndarray
         :return: Metrics Dictionary
         :rtype: dict
         """
@@ -106,10 +106,10 @@ class TextGenerationMetrics:
         """
         BLEU Score
 
-        :param references: References, 2D array (N,S)
-        :type references: numpy.array
-        :param predictions: Predictions, 3D array (NxSxC) with Probabilities
-        :type predictions: numpy.array
+        :param references: References, 2D array (num_samples, seq_len)
+        :type references: numpy.ndarray
+        :param predictions: Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities
+        :type predictions: numpy.ndarray
         :param n: Max number of N gram, defaults to 4
         :type n: int, optional
         :return: BLEU score
@@ -137,8 +137,8 @@ class TextGenerationMetrics:
         """
         Perplixity Score
 
-        :param predictions: Predictions, 3D array (NxSxC) with Probabilities
-        :type predictions: numpy.array
+        :param predictions: Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities
+        :type predictions: numpy.ndarray
         :return: Perplixity Score
         :rtype: float
         """
@@ -160,10 +160,10 @@ class TextGenerationMetrics:
         """
         ROUGE N Score
 
-        :param references: References, 3D array (N,S)
-        :type references: numpy.array
-        :param predictions: Predictions, 3D array (NxSxC) with Probabilities
-        :type predictions: numpy.array
+        :param references: References, 3D array (num_samples, seq_len)
+        :type references: numpy.ndarray
+        :param predictions: Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities
+        :type predictions: numpy.ndarray
         :param n: Max number of N gram, defaults to 4
         :type n: int, optional
         :return: ROUGE N score
@@ -189,10 +189,10 @@ class TextGenerationMetrics:
         """
         ROUGE L Score
 
-        :param references: References, 2D array (N,S)
-        :type references: numpy.array
-        :param predictions: Predictions, 3D array (NxSxC) with Probabilities
-        :type predictions: numpy.array
+        :param references: References, 2D array (num_samples, seq_len)
+        :type references: numpy.ndarray
+        :param predictions: Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities
+        :type predictions: numpy.ndarray
         :return: ROUGE L score
         :rtype: float
         """
@@ -217,10 +217,10 @@ class TextGenerationMetrics:
         """
         ROUGE S Score
 
-        :param references: References, 2D array (N,S)
-        :type references: numpy.array
-        :param predictions: Predictions, 3D array (NxSxC) with Probabilities
-        :type predictions: numpy.array
+        :param references: References, 2D array (num_samples, seq_len)
+        :type references: numpy.ndarray
+        :param predictions: Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities
+        :type predictions: numpy.ndarray
         :param n: Max number of N gram, defaults to 4
         :type n: int, optional
         :return: ROUGE S score
@@ -263,10 +263,10 @@ class TextGenerationMetrics:
         """
         Obtain Precision, Recall and F1 score of NGRAM
 
-        :param ref: Reference Sentence, 1D Array (S,)
-        :type ref: numpy.array
-        :param pred: Predicted Sentence, 1D ARray (S,)
-        :type pred: numpy.array
+        :param ref: Reference Sentence, 1D Array (seq_len,)
+        :type ref: numpy.ndarray
+        :param pred: Predicted Sentence, 1D ARray (seq_len,)
+        :type pred: numpy.ndarray
         :param n: Number of tokens in a base token
         :type n: int
         :param clip: _description_, defaults to False
@@ -302,9 +302,9 @@ class TextGenerationMetrics:
         Find Longest Common Subsequence
 
         :param arr1: First Array, 1D Array
-        :type arr1: numpy.array
+        :type arr1: numpy.ndarray
         :param arr2: Second Array, 1D Array
-        :type arr2: numpy.array
+        :type arr2: numpy.ndarray
         :return: Longest Common Subsequence Length
         :rtype: int
         """

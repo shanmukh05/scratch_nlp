@@ -11,10 +11,10 @@ from .utils import preprocess_text
 
 class PreprocessFlickr:
     """
-    _summary_
+    Preprocessing Flickr Dataset
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -24,10 +24,10 @@ class PreprocessFlickr:
 
     def get_data(self):
         """
-        _summary_
+        Preprocessing 
 
-        :return: _description_
-        :rtype: _type_
+        :return: Returns image paths, Train Tokens, (Train, Test Transforms)
+        :rtype: (list, numpy.ndarray [num_samples, seq_len], (albumentations.Compose, albumentations.Compose))
         """
         self.get_vocab(self.train_df)
         train_tokens = self.word_tokens(self.train_df)
@@ -42,10 +42,10 @@ class PreprocessFlickr:
 
     def get_test_data(self):
         """
-        _summary_
+        Generating test Data
 
-        :return: _description_
-        :rtype: _type_
+        :return: Returns image paths, Test Tokens, Test Transforms
+        :rtype: (list, numpy.ndarray [num_samples, seq_len], albumentations.Compose)
         """
         test_tokens = self.word_tokens(self.test_df)
         test_transforms = self.image_transforms("test")
@@ -54,10 +54,10 @@ class PreprocessFlickr:
 
     def extract_data(self):
         """
-        _summary_
+        Extracting Image and Captions Data 
 
-        :return: _description_
-        :rtype: _type_
+        :return: Train and Test DataFrames
+        :rtype: tuple (pandas.DataFrame, pandas.DataFrame)
         """
         self.logger.info(
             "Creating a DataFrame from images folder and captions txt file"
@@ -85,10 +85,10 @@ class PreprocessFlickr:
 
     def get_vocab(self, train_df):
         """
-        _summary_
+        Generates Vocabulary
 
-        :param train_df: _description_
-        :type train_df: _type_
+        :param train_df: DataFrame with Training Captions
+        :type train_df: pandas.DataFrame
         """
         self.logger.info("Building Vocabulary from training data captions")
         num_vocab = (
@@ -109,12 +109,12 @@ class PreprocessFlickr:
 
     def word_tokens(self, df):
         """
-        _summary_
+        Coverting Sentences to Tokens
 
-        :param df: _description_
-        :type df: _type_
-        :return: _description_
-        :rtype: _type_
+        :param df: Captions DataFrame
+        :type df: pandas.DataFrame
+        :return: Tokens array (num_samples, seq_len)
+        :rtype: numpy.ndarray
         """
         seq_len = self.config_dict["dataset"]["seq_len"]
 
@@ -136,12 +136,12 @@ class PreprocessFlickr:
 
     def batched_ids2captions(self, tokens):
         """
-        _summary_
+        Converting sentence of ids to tokens
 
-        :param tokens: _description_
-        :type tokens: _type_
-        :return: _description_
-        :rtype: _type_
+        :param tokens: Tokens Array, 2D array (num_samples, seq_len)
+        :type tokens: numpy.ndarray
+        :return: List of decoded sentences
+        :rtype: list
         """
         func = lambda x: self.id2word[x]
         vect_func = np.vectorize(func)
@@ -159,12 +159,12 @@ class PreprocessFlickr:
 
     def image_transforms(self, data_type):
         """
-        _summary_
+        Creating Albumentations Transforms for train or test data
 
-        :param data_type: _description_
-        :type data_type: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_type: {'train', 'test'}. Type of Data
+        :type data_type: str
+        :return: Transforms
+        :rtype: albumentations.Compose
         """
         im_w, im_h = self.config_dict["preprocess"]["image_dim"][1:]
         train_transforms = A.Compose(

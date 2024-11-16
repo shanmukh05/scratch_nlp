@@ -21,10 +21,10 @@ CORPUS = {
 
 class PreprocessPOS:
     """
-    _summary_
+    Generating POS data from data available in nltk ('treebank', 'brown', 'con11')
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -41,12 +41,12 @@ class PreprocessPOS:
 
     def get_data(self, corpus):
         """
-        _summary_
+        Generating Tokens and POS labels from corpus
 
-        :param corpus: _description_
-        :type corpus: _type_
-        :return: _description_
-        :rtype: _type_
+        :param corpus: List of nltk sentences with POS Labels
+        :type corpus: list
+        :return: Tokens and POS Labels 
+        :rtype: tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples, seq_len, num_pos])
         """
         X, y = self.preprocess_corpus(corpus)
 
@@ -73,10 +73,10 @@ class PreprocessPOS:
 
     def get_vocab(self, corpus):
         """
-        _summary_
+        Generates Vocabulary
 
-        :param corpus: _description_
-        :type corpus: _type_
+        :param corpus: List of nltk sentences with POS Labels
+        :type corpus: list
         """
         self.logger.info(
             "Building Vocabulary for Words and POS tags from training data"
@@ -104,10 +104,10 @@ class PreprocessPOS:
 
     def extract_data(self):
         """
-        _summary_
+        Extracting data from available corpus in nltk
 
-        :return: _description_
-        :rtype: _type_
+        :return: List of sentences along with POS labels
+        :rtype: list
         """
         self.logger.info("Extracting Train and Test corpus from global CORPUS variable")
         corpus = []
@@ -132,12 +132,12 @@ class PreprocessPOS:
 
     def preprocess_corpus(self, corpus):
         """
-        _summary_
+        Preprocessing Sentences
 
-        :param corpus: _description_
-        :type corpus: _type_
-        :return: _description_
-        :rtype: _type_
+        :param corpus: List of nltk sentences with POS Labels
+        :type corpus: list
+        :return: List of sentences, Labels
+        :rtype: tuple (list, list)
         """
         X = [[i[0] for i in sent] for sent in corpus]
         y = [[i[1] for i in sent] for sent in corpus]

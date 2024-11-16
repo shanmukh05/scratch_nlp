@@ -13,12 +13,12 @@ from sklearn.metrics import ConfusionMatrixDisplay
 
 def plot_wordcloud(vocab_freq, output_folder):
     """
-    _summary_
+    Generating Word Cloud Plot. Used in NGRAM, BOW
 
-    :param vocab_freq: _description_
-    :type vocab_freq: _type_
-    :param output_folder: _description_
-    :type output_folder: _type_
+    :param vocab_freq: Vocabulary Frequency in the Corpus
+    :type vocab_freq: dict
+    :param output_folder: Path to saving Wordcloud png file
+    :type output_folder: str
     """
     wordcloud = WordCloud().generate_from_frequencies(vocab_freq)
     fig, ax = plt.subplots(1, 1, figsize=(10, 10))
@@ -30,13 +30,13 @@ def plot_wordcloud(vocab_freq, output_folder):
 
 def plot_topk_freq(vocab_freq, output_folder, k=10):
     """
-    _summary_
+    Histogram of Top K frequent Vocabulary in the corpus. Used in NGRAM, BOW
 
-    :param vocab_freq: _description_
-    :type vocab_freq: _type_
-    :param output_folder: _description_
-    :type output_folder: _type_
-    :param k: _description_, defaults to 10
+    :param vocab_freq: Vocabulary Frequency in the Corpus
+    :type vocab_freq: dict
+    :param output_folder: Path to saving Histogram png file
+    :type output_folder: str
+    :param k: Number of Vocab to plot, defaults to 10
     :type k: int, optional
     """
     vocab, freq = np.array(list(vocab_freq.keys())), np.array(list(vocab_freq.values()))
@@ -51,18 +51,16 @@ def plot_topk_freq(vocab_freq, output_folder, k=10):
 
 def plot_ngram_pie_chart(vocab_df, n, output_folder, k=20):
     """
-    _summary_
+    Pie Chart Top K frequent Ngrams. Used in NGRAM
 
-    :param vocab_df: _description_
-    :type vocab_df: _type_
-    :param n: _description_
-    :type n: _type_
-    :param output_folder: _description_
-    :type output_folder: _type_
-    :param k: _description_, defaults to 20
+    :param vocab_df: DataFrame of Ngrams and their Frequency in Corpus
+    :type vocab_df: pandas.DataFrame
+    :param n: Number of terms in a Vocab (N of Ngram)
+    :type n: int
+    :param output_folder: Path to saving Pie Chart png file
+    :type output_folder: str
+    :param k: Number of Ngrams to plot, defaults to 20
     :type k: int, optional
-    :return: _description_
-    :rtype: _type_
     """
     vocab_df.sort_values(
         by="Frequency", ascending=False, ignore_index=True, inplace=True
@@ -104,17 +102,17 @@ def plot_ngram_pie_chart(vocab_df, n, output_folder, k=20):
 
 def plot_pca_pairplot(X, y, output_folder, num_pcs=6, name="TFIDF PCA Pairplot"):
     """
-    _summary_
+    Pairplot of Features Colored by Labels. Used in TFIDF
 
-    :param X: _description_
-    :type X: _type_
-    :param y: _description_
-    :type y: _type_
-    :param output_folder: _description_
-    :type output_folder: _type_
-    :param num_pcs: _description_, defaults to 6
+    :param X: Feature 2D array (num_samples, num_features)
+    :type X: numpy.ndarray
+    :param y: Labels array, (num_samples, )
+    :type y: numpy.ndarray
+    :param output_folder: Path to saving pairplot png file
+    :type output_folder: str
+    :param num_pcs: Number of Features to Plot, defaults to 6
     :type num_pcs: int, optional
-    :param name: _description_, defaults to "TFIDF PCA Pairplot"
+    :param name: Filename, defaults to "TFIDF PCA Pairplot"
     :type name: str, optional
     """
     pca = PCA(n_components=num_pcs)
@@ -131,12 +129,12 @@ def plot_pca_pairplot(X, y, output_folder, num_pcs=6, name="TFIDF PCA Pairplot")
 
 def viz_metrics(metric_dict, output_folder):
     """
-    _summary_
+    Visualizing Confusion Matrix and Classification Report Metrics. Used in HMM
 
-    :param metric_dict: _description_
-    :type metric_dict: _type_
-    :param output_folder: _description_
-    :type output_folder: _type_
+    :param metric_dict: Metrics Dictionary with conf_matrix and clf_report as keys
+    :type metric_dict: dict
+    :param output_folder: Path to saving Metrics png file
+    :type output_folder: str
     """
     fig, ax = plt.subplots(1, 2, figsize=(40, 15))
 
@@ -169,12 +167,12 @@ def viz_metrics(metric_dict, output_folder):
 
 def plot_hist_dataset(data, output_folder):
     """
-    _summary_
+    Plotting KDE plot of Sentence Length and Histogram of POS tag of each token. Used in HMM
 
-    :param data: _description_
-    :type data: _type_
-    :param output_folder: _description_
-    :type output_folder: _type_
+    :param data: Tuple of Train X, Test X, Train y, Test y
+    :type data: tuple of (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples, ], numpy.ndarray [num_samples, ])
+    :param output_folder: Path to saving Data Analysis png file
+    :type output_folder: str
     """
     fig, ax = plt.subplots(1, 2, figsize=(20, 10))
 
@@ -200,12 +198,12 @@ def plot_hist_dataset(data, output_folder):
 
 def plot_transition_matrix(trans_matrix_df, output_folder):
     """
-    _summary_
+    Heatmap of Transmission Matrix. Used in HMM
 
-    :param trans_matrix_df: _description_
-    :type trans_matrix_df: _type_
-    :param output_folder: _description_
-    :type output_folder: _type_
+    :param trans_matrix_df: DataFrame of Transmission Matrix
+    :type trans_matrix_df: pandas.DataFrame
+    :param output_folder: Path to saving Heatmap png file
+    :type output_folder: str
     """
     fig, ax = plt.subplots(1, 1, figsize=(10, 10))
     sns.heatmap(trans_matrix_df, ax=ax)
@@ -216,12 +214,12 @@ def plot_transition_matrix(trans_matrix_df, output_folder):
 
 def pca_emission_matrix(em_matrix_df, output_folder):
     """
-    _summary_
+    TSNE of Emission Matrix. Used in HMM
 
-    :param em_matrix_df: _description_
-    :type em_matrix_df: _type_
-    :param output_folder: _description_
-    :type output_folder: _type_
+    :param em_matrix_df: DataFrame of Emission Matrix
+    :type em_matrix_df: pandas.DataFrame
+    :param output_folder: Path to saving Scatter plot as HTML file
+    :type output_folder: str
     """
     vocab = list(em_matrix_df.columns)
     pos = list(em_matrix_df.index)
@@ -236,13 +234,13 @@ def pca_emission_matrix(em_matrix_df, output_folder):
 
 def plot_history(history, output_folder, name="History"):
     """
-    _summary_
+    Training History with Loss, Metrics tracked during Training
 
-    :param history: _description_
-    :type history: _type_
-    :param output_folder: _description_
-    :type output_folder: _type_
-    :param name: _description_, defaults to "History"
+    :param history: History Dictionary
+    :type history: dict
+    :param output_folder: Path to saving History png file
+    :type output_folder: str
+    :param name: Filename, defaults to "History"
     :type name: str, optional
     """
     num_plots = len(history) // 2
@@ -267,15 +265,15 @@ def plot_history(history, output_folder, name="History"):
 
 def plot_embed(embeds, vocab, output_folder, fname="Word Embeddings TSNE"):
     """
-    _summary_
+    3D TSNE of Word Embeddings from Embedding Matrix Layer
 
-    :param embeds: _description_
-    :type embeds: _type_
-    :param vocab: _description_
-    :type vocab: _type_
-    :param output_folder: _description_
-    :type output_folder: _type_
-    :param fname: _description_, defaults to "Word Embeddings TSNE"
+    :param embeds: Embeddings Array (num_samples, embed_dim)
+    :type embeds: numpy.ndarray
+    :param vocab: Vocabulary
+    :type vocab: list
+    :param output_folder: Path to saving Scatter plot as HTML file
+    :type output_folder: str
+    :param fname: Filename, defaults to "Word Embeddings TSNE"
     :type fname: str, optional
     """
     tsne = TSNE(n_components=3)
@@ -295,16 +293,16 @@ def plot_embed(embeds, vocab, output_folder, fname="Word Embeddings TSNE"):
 
 def plot_conf_matrix(y_true, y_pred, classes, output_folder):
     """
-    _summary_
+    Confusion Matrix of True Labels vs Prediction Labels. Used in GRU, RNN
 
-    :param y_true: _description_
-    :type y_true: _type_
-    :param y_pred: _description_
-    :type y_pred: _type_
-    :param classes: _description_
-    :type classes: _type_
-    :param output_folder: _description_
-    :type output_folder: _type_
+    :param y_true: True Labels
+    :type y_true: list
+    :param y_pred: Prediction labels
+    :type y_pred: list
+    :param classes: List of classes
+    :type classes: list
+    :param output_folder: Path to saving Confusion Matrix png file
+    :type output_folder: str
     """
     fig, ax = plt.subplots(1, 1, figsize=(15, 15))
     conf_display = ConfusionMatrixDisplay.from_predictions(
@@ -316,6 +314,18 @@ def plot_conf_matrix(y_true, y_pred, classes, output_folder):
 
 
 def plot_topk_cooccur_matrix(cooccur_mat, vocab, output_folder, k=20):
+    """
+    Coocurence Matrix of Tokens in GloVe Model. Used in GLOVE
+
+    :param cooccur_mat: CoOccurence Matrix
+    :type cooccur_mat: numpy.ndarray
+    :param vocab: List of Vocabulary
+    :type vocab: list
+    :param output_folder: Path to saving Coocurence matrix png file
+    :type output_folder: str
+    :param k: Number of Vocab to plot, defaults to 20
+    :type k: int, optional
+    """
     fig, ax = plt.subplots(1, 1, figsize=(15, 15))
     sns.heatmap(
         cooccur_mat[:k, :k], xticklabels=vocab[:k], yticklabels=vocab[:k], ax=ax

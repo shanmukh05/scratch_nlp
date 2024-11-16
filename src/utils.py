@@ -1,8 +1,11 @@
 import os
 import sys
 import yaml
+import torch
+import random
 import datetime
 import logging
+import numpy as np
 
 from configs import configDictDType, MainKeysDict
 
@@ -11,12 +14,12 @@ logger = logging.getLogger(__name__)
 
 def load_config(config_path):
     """
-    _summary_
+    Loading YAML Config file as a Dictionary 
 
-    :param config_path: _description_
-    :type config_path: _type_
-    :return: _description_
-    :rtype: _type_
+    :param config_path: Path to Config File
+    :type config_path: str
+    :return: Config Params Dictionary
+    :rtype: dict
     """
     with open(config_path, "r") as stream:
         try:
@@ -27,15 +30,30 @@ def load_config(config_path):
     logging.info("Config File Loaded")
     return config_dict
 
+def set_seed(seed):
+    """
+    Setting seed across Libraries to reproduce results
+
+    :param seed: Seed value
+    :type seed: int
+    """
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+
 
 class ValidateConfig:
     """
-    _summary_
+    Validating Config File
 
-    :param config_dict: _description_
-    :type config_dict: _type_
-    :param algo: _description_
-    :type algo: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
+    :param algo: Name of the Algorithm
+    :type algo: str
     """
 
     def __init__(self, config_dict, algo):
@@ -44,7 +62,7 @@ class ValidateConfig:
 
     def run_verify(self):
         """
-        _summary_
+        Config Params Keys and Values Verification 
         """
         logger.info("Validating Config File")
         self.verify_main_keys(self.config_dict.keys())
@@ -52,68 +70,68 @@ class ValidateConfig:
 
     def check_float(self, key, val):
         """
-        _summary_
+        To check whether given key whose value is float has a valid value or not
 
-        :param key: _description_
-        :type key: _type_
-        :param val: _description_
-        :type val: _type_
+        :param key: Param Key
+        :type key: str
+        :param val: Param value
+        :type val: float
         """        
         pass
 
     def check_int(self, key, val):
         """
-        _summary_
+        To check whether given key whose value is int has a valid value or not
 
-        :param key: _description_
-        :type key: _type_
-        :param val: _description_
-        :type val: _type_
-        """        
+        :param key: Param Key
+        :type key: str
+        :param val: Param value
+        :type val: int
+        """       
         pass
 
     def check_string(self, key, val):
         """
-        _summary_
+        To check whether given key whose value is str has a valid value or not
 
-        :param key: _description_
-        :type key: _type_
-        :param val: _description_
-        :type val: _type_
-        """        
+        :param key: Param Key
+        :type key: str
+        :param val: Param value
+        :type val: str
+        """       
         pass
 
     def check_paths(self, key, val):
         """
-        _summary_
+        To check whether given key whose value is a filepath has a valid value or not
 
-        :param key: _description_
-        :type key: _type_
-        :param val: _description_
-        :type val: _type_
-        """        
+        :param key: Param Key
+        :type key: str
+        :param val: Param value
+        :type val: str
+        """       
         pass
 
     def check_list(self, key, val):
         """
-        _summary_
+        To check whether given key whose value is list has a valid value or not
 
-        :param key: _description_
-        :type key: _type_
-        :param val: _description_
-        :type val: _type_
-        """        
+        :param key: Param Key
+        :type key: str
+        :param val: Param value
+        :type val: list
+        """  
         pass
 
     def compare_dtype(self, key, val):
         """
-        _summary_
+        To check whether given key whose value has a valid dtype or not
 
-        :param key: _description_
-        :type key: _type_
-        :param val: _description_
-        :type val: _type_
-        """        
+        :param key: Param Key
+        :type key: str
+        :param val: Param value
+        :type val: float/int/str/list
+        """      
         type_abs = configDictDType[key]
         type_cfg = type(val)
 
@@ -122,7 +140,7 @@ class ValidateConfig:
 
     def verify_values(self):
         """
-        _summary_
+        Verifying the Datatypes of all the Parameters in Config
         """
         for k, v in self.config_dict.items():
             if isinstance(v, dict):
@@ -137,10 +155,10 @@ class ValidateConfig:
 
     def verify_main_keys(self, keys):
         """
-        _summary_
+        Verifying whether Config has all the required keys or not
 
-        :param keys: _description_
-        :type keys: _type_
+        :param keys: Parent Config Parameters
+        :type keys: list
         """
         for key in keys:
             true_val = MainKeysDict[self.algo][key]
@@ -173,10 +191,10 @@ class ValidateConfig:
 
 def get_logger(log_folder):
     """
-    _summary_
+    Initializing Log File
 
-    :param log_folder: _description_
-    :type log_folder: _type_
+    :param log_folder: Path to folder where Log file is added
+    :type log_folder: str
     """
     os.makedirs(log_folder, exist_ok=True)
     current_time = datetime.datetime.now()
