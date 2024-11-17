@@ -1,0 +1,99 @@
+
+- **Algorithms**
+    - **Bag of Words**
+        - https://builtin.com/machine-learning/bag-of-words
+        - https://machinelearningmastery.com/gentle-introduction-bag-words-model/
+    - **N-gram model**
+        - https://github.com/mrzjy/sunburst/tree/master
+        - https://stackoverflow.com/questions/67507375/why-pythons-logging-module-stopped-working-suddenly
+    - **TF-IDF**
+        - https://www.kaggle.com/code/paulrohan2020/tf-idf-tutorial/notebook
+        - [https://en.wikipedia.org/wiki/Tf–idf](https://en.wikipedia.org/wiki/Tf%E2%80%93idf)
+        - https://towardsdatascience.com/tf-idf-for-document-ranking-from-scratch-in-python-on-real-world-dataset-796d339a4089
+    - **HMMs (Hidden Markov Models)**
+        - Part 1: https://medium.com/@ompramod9921/hidden-markov-models-the-secret-sauce-in-natural-language-processing-98cde0372721
+        - Part 2: https://medium.com/@ompramod9921/hidden-markov-models-the-secret-sauce-in-natural-language-processing-38fbcc010bda
+        - https://web.stanford.edu/~jurafsky/slp3/A.pdf
+        - https://wisdomml.in/hidden-markov-model-hmm-in-nlp-python/
+    - **Word2Vec**
+        - https://github.com/weberrr/pytorch_word2vec/tree/master
+    - **GloVe**
+        - NA
+    - **RNN [Many to One]**
+        - https://gist.github.com/Dvelezs94/dc34d1947ba6d3eb77c0d70328bfe03f
+    - **LSTM [One to Many]**
+        - [Image Captioning](https://www.kaggle.com/code/quadeer15sh/flickr8k-image-captioning-using-cnns-lstms)
+        - [BLEU](https://towardsdatascience.com/foundations-of-nlp-explained-bleu-score-and-wer-metrics-1a5ba06d812b)
+        - [ROUGE](https://medium.com/@sthanikamsanthosh1994/understanding-bleu-and-rouge-score-for-nlp-evaluation-1ab334ecadcb)
+        - [Metrics](https://towardsdatascience.com/how-to-evaluate-text-generation-models-metrics-for-automatic-evaluation-of-nlp-models-e1c251b04ec1)
+        - [METEOR](https://machinelearninginterview.com/topics/machine-learning/meteor-for-machine-translation/)
+        - [METEOR Implementation](https://github.com/zembrodt/pymeteor/blob/master/pymeteor/pymeteor.py)
+        - [ROUGE](https://www.freecodecamp.org/news/what-is-rouge-and-how-it-works-for-evaluation-of-summaries-e059fb8ac840/)
+    - **GRU [Many to Many Synced]**
+        - [POS Tagging](https://www.kaggle.com/code/tanyadayanand/pos-tagging-using-rnn)
+        - https://colah.github.io/posts/2015-08-Understanding-LSTMs/
+    - **Seq2Seq + Attention [Many to Many]**
+        - [indic_nlp](https://github.com/anoopkunchukuttan/indic_nlp_library)
+        - [Blog 1](https://jalammar.github.io/visualizing-neural-machine-translation-mechanics-of-seq2seq-models-with-attention/)
+        - [Blog 2](https://medium.com/analytics-vidhya/encoder-decoder-seq2seq-models-clearly-explained-c34186fbf49b)
+        - [PyTorch Tutorial](https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html)
+    - **Transformer**
+        - [BPE Karpathy](https://youtu.be/zduSFxRajkE?si=EE24TtrPxy6WqmdW)
+        - [Transformers from scratch](https://towardsdatascience.com/build-your-own-transformer-from-scratch-using-pytorch-84c850470dcb)
+        - [Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/)
+        - [BPE Github Karpathy](https://github.com/karpathy/minbpe)
+        - [BPE Implementation Arxiv](https://arxiv.org/pdf/1508.07909v5)
+    - **BERT**
+        - [Word Piece Tokenization](https://stackoverflow.com/questions/55382596/how-is-wordpiece-tokenization-helpful-to-effectively-deal-with-rare-words-proble/55416944#55416944)
+        - [Word Piece Blog](https://huggingface.co/learn/nlp-course/en/chapter6/6)
+    - **GPT-2**
+        - [GPT-2 Illustration](https://jalammar.github.io/illustrated-gpt2/)
+
+-  **Datasets**
+    -  [Dataset Blog](https://www.shaip.com/blog/15-nlp-dataset-for-nlp/)
+    -  [Making a Python Library](https://learnopencv.com/building-pip-installable-package-pypi/)
+    -  https://snap.stanford.edu/data/web-Amazon-links.html
+    -  https://cseweb.ucsd.edu/~jmcauley/datasets/amazon_v2/
+    -  https://github.com/sstoikov/piki-music-dataset/tree/main/data
+    -  https://www.upf.edu/web/mtg/mard
+    -  https://www.statmt.org/wmt14/translation-task.html#download
+    -  https://www.statmt.org/europarl/ [Seq2Seq]
+    -  [https://github.com/micbuffa/WasabiDataset](https://github.com/micbuffa/WasabiDataset?tab=readme-ov-file) [Text Generation]
+    -  https://huggingface.co/datasets/brunokreiner/genius-lyrics/tree/main [Text Generation]
+    -  https://www.kaggle.com/datasets/nbroad/wiki-20220301-en-sci [BERT Pretraining]
+    -  https://paperswithcode.com/dataset/lambada [GPT 2 Training]
+
+-  **Coding style**
+    -  https://docs.python-guide.org/writing/style/
+    -  https://packaging.python.org/en/latest/overview/
+    -  https://www.datacamp.com/blog/python-best-practices-for-better-code 
+
+-  **PIP**
+    -  https://betterscientificsoftware.github.io/python-for-hpc/tutorials/python-pypi-packaging/
+    -  https://packaging.python.org/en/latest/guides/writing-pyproject-toml/
+    -  https://github.com/github/gitignore/blob/main/Python.gitignore
+    -  https://medium.com/@blackary/publishing-a-python-package-from-github-to-pypi-in-2024-a6fb8635d45d / https://youtu.be/90PWQEc--6k?si=NK3byavwtsiFZyHK
+
+-  **Documentation**
+    -  https://testdriven.io/blog/documenting-python/
+    -  https://medium.com/@peterkong/comparison-of-python-documentation-generators-660203ca3804
+    -  https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html
+    -  https://samnicholls.net/2016/06/15/how-to-sphinx-readthedocs/ ***
+    -  https://stackoverflow.com/a/71489121
+    -  https://www.sphinx-doc.org/en/master/man/sphinx-apidoc.html [Sphinx RST Files Generator]
+    -  https://www.sphinx-doc.org/en/master/tutorial/deploying.html [Deploying]
+    -  https://redandgreen.co.uk/sphinx-to-github-pages-via-github-actions/
+    -  `conda install pandoc` instead of `pip install pandoc`
+    -  `pandac -s <md path> -o <rst path>`
+    -  Sample Documentation: https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html
+
+-  **README**
+    -  https://dev.to/scottydocs/how-to-write-a-kickass-readme-5af9
+    -  https://realpython.com/readme-python-project/
+    -  https://github.com/eli64s/README-AI
+    -  https://readme.so/
+    -  https://github.com/ikatyang/emoji-cheat-sheet/blob/master/README.md
+
+-  **Logging**
+    -  https://stackoverflow.com/a/15729700
+    -  https://blog.sentry.io/logging-in-python-a-developers-guide/
