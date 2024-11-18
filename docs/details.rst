@@ -88,9 +88,11 @@ Implementation Details
    <style>
    td {
        border: solid 2px lightgrey;
+       text-align: center;
    }
    th {
        border: solid 2px lightgrey;
+       text-align: center;
    }
    </style>
 

@@ -283,19 +283,19 @@
 <div class="viewcode-block" id="Node">
 <a class="viewcode-back" href="../../../../src.core.word2vec.html#src.core.word2vec.huffman.Node">[docs]</a>
 <span class="k">class</span> <span class="nc">Node</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word_idx</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    _summary_</span>
 
-<span class="sd">        :param word_idx: _description_</span>
-<span class="sd">        :type word_idx: _type_</span>
-<span class="sd">        :param freq: _description_</span>
-<span class="sd">        :type freq: _type_</span>
-<span class="sd">        :param left: _description_, defaults to None</span>
-<span class="sd">        :type left: _type_, optional</span>
-<span class="sd">        :param right: _description_, defaults to None</span>
-<span class="sd">        :type right: _type_, optional</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param word_idx: _description_</span>
+<span class="sd">    :type word_idx: _type_</span>
+<span class="sd">    :param freq: _description_</span>
+<span class="sd">    :type freq: _type_</span>
+<span class="sd">    :param left: _description_, defaults to None</span>
+<span class="sd">    :type left: _type_, optional</span>
+<span class="sd">    :param right: _description_, defaults to None</span>
+<span class="sd">    :type right: _type_, optional</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word_idx</span><span class="p">,</span> <span class="n">freq</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">word_idx</span> <span class="o">=</span> <span class="n">word_idx</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">freq</span> <span class="o">=</span> <span class="n">freq</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">huffman_code</span> <span class="o">=</span> <span class="p">[]</span>
@@ -308,13 +308,13 @@
 <div class="viewcode-block" id="HuffmanBTree">
 <a class="viewcode-back" href="../../../../src.core.word2vec.html#src.core.word2vec.huffman.HuffmanBTree">[docs]</a>
 <span class="k">class</span> <span class="nc">HuffmanBTree</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab_freq_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    _summary_</span>
 
-<span class="sd">        :param vocab_freq_dict: _description_</span>
-<span class="sd">        :type vocab_freq_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param vocab_freq_dict: _description_</span>
+<span class="sd">    :type vocab_freq_dict: _type_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab_freq_dict</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">vocab_freq_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">freq</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">vocab_freq_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>

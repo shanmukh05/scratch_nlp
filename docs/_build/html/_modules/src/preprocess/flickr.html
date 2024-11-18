@@ -291,13 +291,13 @@
 <div class="viewcode-block" id="PreprocessFlickr">
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.flickr.PreprocessFlickr">[docs]</a>
 <span class="k">class</span> <span class="nc">PreprocessFlickr</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Preprocessing Flickr Dataset</span>
 
-<span class="sd">        :param config_dict: _description_</span>
-<span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param config_dict: Config Params Dictionary</span>
+<span class="sd">    :type config_dict: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span> <span class="o">=</span> <span class="n">config_dict</span>
@@ -307,10 +307,10 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.flickr.PreprocessFlickr.get_data">[docs]</a>
     <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Preprocessing </span>
 
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :return: Returns image paths, Train Tokens, (Train, Test Transforms)</span>
+<span class="sd">        :rtype: (list, numpy.ndarray [num_samples, seq_len], (albumentations.Compose, albumentations.Compose))</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_vocab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_df</span><span class="p">)</span>
         <span class="n">train_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_tokens</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_df</span><span class="p">)</span>
@@ -328,10 +328,10 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.flickr.PreprocessFlickr.get_test_data">[docs]</a>
     <span class="k">def</span> <span class="nf">get_test_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Generating test Data</span>
 
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :return: Returns image paths, Test Tokens, Test Transforms</span>
+<span class="sd">        :rtype: (list, numpy.ndarray [num_samples, seq_len], albumentations.Compose)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">test_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">word_tokens</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_df</span><span class="p">)</span>
         <span class="n">test_transforms</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_transforms</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
@@ -343,10 +343,10 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.flickr.PreprocessFlickr.extract_data">[docs]</a>
     <span class="k">def</span> <span class="nf">extract_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Extracting Image and Captions Data </span>
 
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :return: Train and Test DataFrames</span>
+<span class="sd">        :rtype: tuple (pandas.DataFrame, pandas.DataFrame)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
             <span class="s2">&quot;Creating a DataFrame from images folder and captions txt file&quot;</span>
@@ -377,10 +377,10 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.flickr.PreprocessFlickr.get_vocab">[docs]</a>
     <span class="k">def</span> <span class="nf">get_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">train_df</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Generates Vocabulary</span>
 
-<span class="sd">        :param train_df: _description_</span>
-<span class="sd">        :type train_df: _type_</span>
+<span class="sd">        :param train_df: DataFrame with Training Captions</span>
+<span class="sd">        :type train_df: pandas.DataFrame</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Building Vocabulary from training data captions&quot;</span><span class="p">)</span>
         <span class="n">num_vocab</span> <span class="o">=</span> <span class="p">(</span>
@@ -404,12 +404,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.flickr.PreprocessFlickr.word_tokens">[docs]</a>
     <span class="k">def</span> <span class="nf">word_tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Coverting Sentences to Tokens</span>
 
-<span class="sd">        :param df: _description_</span>
-<span class="sd">        :type df: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param df: Captions DataFrame</span>
+<span class="sd">        :type df: pandas.DataFrame</span>
+<span class="sd">        :return: Tokens array (num_samples, seq_len)</span>
+<span class="sd">        :rtype: numpy.ndarray</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">seq_len</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">][</span><span class="s2">&quot;seq_len&quot;</span><span class="p">]</span>
 
@@ -434,12 +434,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.flickr.PreprocessFlickr.batched_ids2captions">[docs]</a>
     <span class="k">def</span> <span class="nf">batched_ids2captions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Converting sentence of ids to tokens</span>
 
-<span class="sd">        :param tokens: _description_</span>
-<span class="sd">        :type tokens: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param tokens: Tokens Array, 2D array (num_samples, seq_len)</span>
+<span class="sd">        :type tokens: numpy.ndarray</span>
+<span class="sd">        :return: List of decoded sentences</span>
+<span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id2word</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
         <span class="n">vect_func</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vectorize</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
@@ -460,12 +460,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.flickr.PreprocessFlickr.image_transforms">[docs]</a>
     <span class="k">def</span> <span class="nf">image_transforms</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_type</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Creating Albumentations Transforms for train or test data</span>
 
-<span class="sd">        :param data_type: _description_</span>
-<span class="sd">        :type data_type: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param data_type: {&#39;train&#39;, &#39;test&#39;}. Type of Data</span>
+<span class="sd">        :type data_type: str</span>
+<span class="sd">        :return: Transforms</span>
+<span class="sd">        :rtype: albumentations.Compose</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">im_w</span><span class="p">,</span> <span class="n">im_h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;preprocess&quot;</span><span class="p">][</span><span class="s2">&quot;image_dim&quot;</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
         <span class="n">train_transforms</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">Compose</span><span class="p">(</span>

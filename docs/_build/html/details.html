@@ -292,74 +292,267 @@
 </section>
 <section id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h1>
-<p>Install my-project with npm</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>npm<span class="w"> </span>install<span class="w"> </span>my-project
-<span class="nb">cd</span><span class="w"> </span>my-project
+<section id="install-using-pip">
+<h2>Install using pip<a class="headerlink" href="#install-using-pip" title="Link to this heading">#</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>scratch-nlp
 </pre></div>
 </div>
 </section>
-<section id="run-locally">
-<h1>Run Locally<a class="headerlink" href="#run-locally" title="Link to this heading">#</a></h1>
-<p>Clone the project</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://link-to-project
-</pre></div>
-</div>
-<p>Go to the project directory</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>my-project
+<section id="install-manually-for-development">
+<h2>Install Manually for development<a class="headerlink" href="#install-manually-for-development" title="Link to this heading">#</a></h2>
+<p>Clone the repo</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gh<span class="w"> </span>repo<span class="w"> </span>clone<span class="w"> </span>shanmukh05/scratch_nlp
 </pre></div>
 </div>
 <p>Install dependencies</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>npm<span class="w"> </span>install
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 </pre></div>
 </div>
-<p>Start the server</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>npm<span class="w"> </span>run<span class="w"> </span>start
-</pre></div>
-</div>
+</section>
 </section>
 <section id="features">
 <h1>Features<a class="headerlink" href="#features" title="Link to this heading">#</a></h1>
 <ul class="simple">
-<li><p>Light/dark mode toggle</p></li>
-<li><p>Live previews</p></li>
-<li><p>Fullscreen mode</p></li>
-<li><p>Cross platform</p></li>
+<li><p>Algorithms</p>
+<ul>
+<li><p>Bag of Words</p></li>
+<li><p>Ngram</p></li>
+<li><p>TF-IDF</p></li>
+<li><p>Hidden Markov Model</p></li>
+<li><p>Word2Vec</p></li>
+<li><p>GloVe</p></li>
+<li><p>RNN (Many to One)</p></li>
+<li><p>LSTM (One to Many)</p></li>
+<li><p>GRU (Many to Many Synced)</p></li>
+<li><p>Seq2Seq + Attention (Many to Many)</p></li>
+<li><p>Transformer</p></li>
+<li><p>BERT</p></li>
+<li><p>GPT-2</p></li>
 </ul>
+</li>
+<li><p>Tokenization</p>
+<ul>
+<li><p>BypePair Encoding</p></li>
+<li><p>WordPiece Tokenizer</p></li>
+</ul>
+</li>
+<li><p>Metrics</p>
+<ul>
+<li><p>BLEU</p></li>
+<li><p>ROUGE (-N, -L, -S)</p></li>
+<li><p>Perplexity</p></li>
+<li><p>METEOR</p></li>
+<li><p>CIDER</p></li>
+</ul>
+</li>
+<li><p>Datasets</p>
+<ul>
+<li><p>IMDB Reviews Dataset</p></li>
+<li><p>Flickr Dataset</p></li>
+<li><p>NLTK POS Datasets (treebank, brown, conll2000)</p></li>
+<li><p>SQuAD QA Dataset</p></li>
+<li><p>Genius Lyrics Dataset</p></li>
+<li><p>LAMBADA Dataset</p></li>
+<li><p>Wiki en dataset</p></li>
+<li><p>English to Telugu Translation Dataset</p></li>
+</ul>
+</li>
+<li><p>Tasks</p>
+<ul>
+<li><p>Sentiment Classification</p></li>
+<li><p>POS Tagging</p></li>
+<li><p>Image Captioning</p></li>
+<li><p>Machine Translation</p></li>
+<li><p>Question Answering</p></li>
+<li><p>Text Generation</p></li>
+</ul>
+</li>
+</ul>
+<section id="implementation-details">
+<h2>Implementation Details<a class="headerlink" href="#implementation-details" title="Link to this heading">#</a></h2>
+<style>
+td {
+    border: solid 2px lightgrey;
+    text-align: center;
+}
+th {
+    border: solid 2px lightgrey;
+    text-align: center;
+}
+</style><table><thead><tr><th><p>Algorithm</p>
+</th><th><p>Task</p>
+</th><th><p>Tokenization</p>
+</th><th><p>Output</p>
+</th><th><p>Dataset</p>
+</th></tr></thead><tbody><tr><td><p>BOW</p>
+</td><td><p>Text Representation</p>
+</td><td><p>Preprocessed words</p>
+</td><td><ul><li><p>Text Label, Vector npy files</p>
+</li><li><p>Top K Vocab Frequency Histogram png</p>
+</li><li><p>Vocab frequency csv</p>
+</li><li><p>Wordcloud png</p>
+</li></ul></td><td><p>IMDB Reviews</p>
+</td></tr><tr><td><p>Ngram</p>
+</td><td><p>Text Representation</p>
+</td><td><p>Preprocessed Words</p>
+</td><td><ul><li><p>Text Label, Vector npy files</p>
+</li><li><p>Top K Vocab Frequency Histogram png</p>
+</li><li><p>Top K ngrams Piechart ong</p>
+</li><li><p>Vocab frequency csv</p>
+</li><li><p>Wordcloud png</p>
+</li></ul></td><td><p>IMDB Reviews</p>
+</td></tr><tr><td><p>TF-IDF</p>
+</td><td><p>Text Representation</p>
+</td><td><p>Preprocessed words</p>
+</td><td><ul><li><p>Text Label, Vector npy files</p>
+</li><li><p>TF PCA Pairplot png</p>
+</li><li><p>TF-IDF PCA Pairplot png</p>
+</li><li><p>IDF csv</p>
+</li></ul></td><td><p>IMDB Reviews</p>
+</td></tr><tr><td><p>HMM</p>
+</td><td><p>Text Representation</p>
+</td><td><p>Preprocessed words</p>
+</td><td><ul><li><p>Data Analysis png (sent len, POS tags count)</p>
+</li><li><p>Emission Matrix TSNE html</p>
+</li><li><p>Emission matrix csv</p>
+</li><li><p>Test Predictions conf matrix, clf report png</p>
+</li><li><p>Transition Matrix csv, png</p>
+</li></ul></td><td><p>IMDB Reviews</p>
+</td></tr><tr><td><p>Word2Vec</p>
+</td><td><p>Text Representation</p>
+</td><td><p>Preprocessed words</p>
+</td><td><ul><li><p>Best Model pt</p>
+</li><li><p>Training History json</p>
+</li><li><p>Word Embeddings TSNE html</p>
+</li></ul></td><td><p>IMDB Reviews</p>
+</td></tr><tr><td><p>GloVe</p>
+</td><td><p>Text Representation</p>
+</td><td><p>Preprocessed words</p>
+</td><td><ul><li><p>Best Model pt</p>
+</li><li><p>Training History json</p>
+</li><li><p>Word Embeddings TSNE html</p>
+</li><li><p>Top K Cooccurence Matrix png</p>
+</li></ul></td><td><p>IMDB Reviews</p>
+</td></tr><tr><td><p>RNN</p>
+</td><td><p>Sentiment Classification</p>
+</td><td><p>Preprocessed words</p>
+</td><td><ul><li><p>Best Model pt</p>
+</li><li><p>Training History json</p>
+</li><li><p>Word Embeddings TSNE html</p>
+</li><li><p>Confusion Matrix png</p>
+</li><li><p>Training History png</p>
+</li></ul></td><td><p>IMDB Reviews</p>
+</td></tr><tr><td><p>LSTM</p>
+</td><td><p>Image Captioning</p>
+</td><td><p>Preprocessed words</p>
+</td><td><ul><li><p>Best Model pt</p>
+</li><li><p>Training History json</p>
+</li><li><p>Word Embeddings TSNE html</p>
+</li><li><p>Training History png</p>
+</li></ul></td><td><p>Flickr 8k</p>
+</td></tr><tr><td><p>GRU</p>
+</td><td><p>POS Tagging</p>
+</td><td><p>Preprocessed words</p>
+</td><td><ul><li><p>Best Model pt</p>
+</li><li><p>Training History json</p>
+</li><li><p>Word Embeddings TSNE html</p>
+</li><li><p>Confusion Matrix png</p>
+</li><li><p>Test predictions csv</p>
+</li><li><p>Training History png</p>
+</li></ul></td><td><p>NLTK Treebank, Broown, Conll2000</p>
+</td></tr><tr><td><p>Seq2Seq + Attention</p>
+</td><td><p>Machine Translation</p>
+</td><td><p>Tokenization</p>
+</td><td><ul><li><p>Best Model pt</p>
+</li><li><p>Training History json</p>
+</li><li><p>Source, Target Word Embeddings TSNE html</p>
+</li><li><p>Test predictions csv</p>
+</li><li><p>Training History png</p>
+</li></ul></td><td><p>English to Telugu Translation</p>
+</td></tr><tr><td><p>Transformer</p>
+</td><td><p>Lyrics Generation</p>
+</td><td><p>BytePairEncoding</p>
+</td><td><ul><li><p>Best Model pt</p>
+</li><li><p>Training History json</p>
+</li><li><p>Token Embeddings TSNE html</p>
+</li><li><p>Test predictions csv</p>
+</li><li><p>Training History png</p>
+</li></ul></td><td><p>Genius Lyrics</p>
+</td></tr><tr><td><p>BERT</p>
+</td><td><p>NSP Pretraining, QA Finetuning</p>
+</td><td><p>WordPiece</p>
+</td><td><ul><li><p>Best Model pt (pretrain, finetune)</p>
+</li><li><p>Training History json (pretrain, finetune)</p>
+</li><li><p>Token Embeddings TSNE html</p>
+</li><li><p>Finetune Test predictions csv</p>
+</li><li><p>Training History png (pretrain, finetune)</p>
+</li></ul></td><td><p>Wiki en, SQuAD v1</p>
+</td></tr><tr><td><p>GPT-2</p>
+</td><td><p>Sentence Completition</p>
+</td><td><p>BytePairEncoding</p>
+</td><td><ul><li><p>Best Model pt</p>
+</li><li><p>Training History json</p>
+</li><li><p>Token Embeddings TSNE html</p>
+</li><li><p>Test predictions csv</p>
+</li><li><p>Training History png</p>
+</li></ul></td><td><p>LAMBADA</p>
+</td></tr></tbody></table></section>
 </section>
 <section id="examples">
 <h1>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h1>
-<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="k">import</span><span class="w"> </span><span class="nx">Component</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s1">&#39;my-project&#39;</span>
+<p>Run Train and Inference directly through import</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">from</span> <span class="nn">scratch_nlp.src.core.gpt</span> <span class="kn">import</span> <span class="n">gpt</span>
 
-<span class="kd">function</span><span class="w"> </span><span class="nx">App</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="o">&lt;</span><span class="nx">Component</span><span class="w"> </span><span class="o">/&gt;</span>
-<span class="p">}</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
+  <span class="n">config_dict</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+
+<span class="n">gpt</span> <span class="o">=</span> <span class="n">gpt</span><span class="o">.</span><span class="n">GPT</span><span class="p">(</span><span class="n">config_dict</span><span class="p">)</span>
+<span class="n">gpt</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Run through CLI</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>src
+python<span class="w"> </span>main.py<span class="w"> </span>--config_path<span class="w"> </span><span class="s1">&#39;&lt;config_path&gt;&#39;</span><span class="w"> </span>--algo<span class="w"> </span><span class="s1">&#39;&lt;algo name&gt;&#39;</span><span class="w"> </span>--log_folder<span class="w"> </span><span class="s1">&#39;&lt;output folder&gt;&#39;</span>
 </pre></div>
 </div>
 </section>
 <section id="contributing">
 <h1>Contributing<a class="headerlink" href="#contributing" title="Link to this heading">#</a></h1>
 <p>Contributions are always welcome!</p>
-<p>See <code class="docutils literal notranslate"><span class="pre">contributing.md</span></code> for ways to get started.</p>
-<p>Please adhere to this project’s <code class="docutils literal notranslate"><span class="pre">code</span> <span class="pre">of</span> <span class="pre">conduct</span></code>.</p>
+<p>See <a class="reference external" href="CONTRIBUTING.md">CONTRIBUTING.md</a> for ways to get started.</p>
 </section>
 <section id="acknowledgements">
 <h1>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Link to this heading">#</a></h1>
-<ul class="simple">
-<li><p><a class="reference external" href="https://awesomeopensource.com/project/elangosundar/awesome-README-templates">Awesome Readme
-Templates</a></p></li>
-<li><p><a class="reference external" href="https://github.com/matiassingers/awesome-readme">Awesome README</a></p></li>
-<li><p><a class="reference external" href="https://bulldogjob.com/news/449-how-to-write-a-good-readme-for-your-github-project">How to write a Good
-readme</a></p></li>
-</ul>
+<p>I have referred to sa many online resources to create this project. I’m
+adding all the resources to <a class="reference external" href="RESOURCES.md">RESOURCES.md</a>. Thanks to
+all who has created those blogs/code/datasets.</p>
+<p>Thanks to <a class="reference external" href="https://web.stanford.edu/class/cs224n/">CS224N</a> course
+which gave me motivation to start this project</p>
 </section>
 <section id="about-me">
 <h1>About Me<a class="headerlink" href="#about-me" title="Link to this heading">#</a></h1>
-<p>I’m a full stack developer…</p>
+<p>I am Shanmukha Sainath, working as AI Engineer at KLA Corporation. I
+have done my Bachelors from Department of Electronics and Electrical
+Communication Engineering department with Minor in Computer Science
+Engineering and Micro in Artificial Intelligence and Applications from
+IIT Kharagpur.</p>
+<section id="connect-with-me">
+<h2>Connect with me<a class="headerlink" href="#connect-with-me" title="Link to this heading">#</a></h2>
+</section>
 </section>
 <section id="lessons-learned">
 <h1>Lessons Learned<a class="headerlink" href="#lessons-learned" title="Link to this heading">#</a></h1>
-<p>What did you learn while building this project? What challenges did you
-face and how did you overcome them?</p>
+<p>Most of the things present in this project are pretty new to me. I’m
+listing down my major learnings when creating this project</p>
+<ul class="simple">
+<li><p>NLP Algorithms</p></li>
+<li><p>Research paper Implementation</p></li>
+<li><p>Designing Project structure</p></li>
+<li><p>Documentation</p></li>
+<li><p>GitHub pages</p></li>
+<li><p>PIP packaging</p></li>
+</ul>
 </section>
 <section id="license">
 <h1>License<a class="headerlink" href="#license" title="Link to this heading">#</a></h1>
@@ -367,11 +560,8 @@ face and how did you overcome them?</p>
 </section>
 <section id="feedback">
 <h1>Feedback<a class="headerlink" href="#feedback" title="Link to this heading">#</a></h1>
-<p>If you have any feedback, please reach out to us at <a class="reference external" href="mailto:fake&#37;&#52;&#48;fake&#46;com">fake<span>&#64;</span>fake<span>&#46;</span>com</a></p>
-</section>
-<section id="appendix">
-<h1>Appendix<a class="headerlink" href="#appendix" title="Link to this heading">#</a></h1>
-<p>Any additional information goes here</p>
+<p>If you have any feedback, please reach out to me at
+<a class="reference external" href="mailto:venkatashanmukhasainathg&#37;&#52;&#48;gmail&#46;com">venkatashanmukhasainathg<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
 </section>
 
 
@@ -413,17 +603,25 @@ face and how did you overcome them?</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Documentation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#run-locally">Run Locally</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#features">Features</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-using-pip">Install using pip</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#install-manually-for-development">Install Manually for development</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#features">Features</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementation-details">Implementation Details</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#contributing">Contributing</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgements">Acknowledgements</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#about-me">About Me</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#about-me">About Me</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connect-with-me">Connect with me</a></li>
+</ul>
+</li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lessons-learned">Lessons Learned</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#license">License</a></li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#feedback">Feedback</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">Appendix</a></li>
 </ul>
 
   </nav></div>

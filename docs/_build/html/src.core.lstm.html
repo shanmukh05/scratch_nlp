@@ -315,6 +315,16 @@
 <dt class="sig sig-object py" id="src.core.lstm.dataset.LSTMDataset">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.lstm.dataset.</span></span><span class="sig-name descname"><span class="pre">LSTMDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transforms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/lstm/dataset.html#LSTMDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.lstm.dataset.LSTMDataset" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>paths</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>transforms</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>tokens</strong> (<em>_type_</em><em>, </em><em>optional</em>) – _description_, defaults to None</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -349,6 +359,12 @@
 <dt class="sig sig-object py" id="src.core.lstm.lstm.LSTM">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.lstm.lstm.</span></span><span class="sig-name descname"><span class="pre">LSTM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/lstm/lstm.html#LSTM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.lstm.lstm.LSTM" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>_type_</em>) – _description_</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.core.lstm.lstm.LSTM.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/lstm/lstm.html#LSTM.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.lstm.lstm.LSTM.run" title="Link to this definition">#</a></dt>
@@ -384,6 +400,16 @@
 <dt class="sig sig-object py" id="src.core.lstm.model.LSTMCell">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.lstm.model.</span></span><span class="sig-name descname"><span class="pre">LSTMCell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inp_x_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_x_dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/lstm/model.html#LSTMCell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.lstm.model.LSTMCell" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h_dim</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>inp_x_dim</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>out_x_dim</strong> (<em>_type_</em>) – _description_</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.core.lstm.model.LSTMCell.forward">
 <span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ht_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ct_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/lstm/model.html#LSTMCell.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.lstm.model.LSTMCell.forward" title="Link to this definition">#</a></dt>
@@ -411,6 +437,12 @@
 <dt class="sig sig-object py" id="src.core.lstm.model.LSTMModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.lstm.model.</span></span><span class="sig-name descname"><span class="pre">LSTMModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/lstm/model.html#LSTMModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.lstm.model.LSTMModel" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>_type_</em>) – _description_</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.core.lstm.model.LSTMModel.forward">
 <span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokens</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/lstm/model.html#LSTMModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.lstm.model.LSTMModel.forward" title="Link to this definition">#</a></dt>
@@ -451,6 +483,16 @@
 <dt class="sig sig-object py" id="src.core.lstm.model.LSTMTrainer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.lstm.model.</span></span><span class="sig-name descname"><span class="pre">LSTMTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/lstm/model.html#LSTMTrainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.lstm.model.LSTMTrainer" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>optimizer</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>config_dict</strong> (<em>_type_</em>) – _description_</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.core.lstm.model.LSTMTrainer.calc_loss">
 <span class="sig-name descname"><span class="pre">calc_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/lstm/model.html#LSTMTrainer.calc_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.lstm.model.LSTMTrainer.calc_loss" title="Link to this definition">#</a></dt>

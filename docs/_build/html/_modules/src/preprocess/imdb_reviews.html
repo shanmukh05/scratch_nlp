@@ -289,21 +289,21 @@
 <div class="viewcode-block" id="PreprocessIMDB">
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.imdb_reviews.PreprocessIMDB">[docs]</a>
 <span class="k">class</span> <span class="nc">PreprocessIMDB</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_path</span><span class="p">,</span> <span class="n">explore_folder</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">operations</span><span class="p">,</span> <span class="n">randomize</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loading and Generating Reviews, labels for IMDB dataset</span>
 
-<span class="sd">        :param root_path: _description_</span>
-<span class="sd">        :type root_path: _type_</span>
-<span class="sd">        :param explore_folder: _description_</span>
-<span class="sd">        :type explore_folder: _type_</span>
-<span class="sd">        :param num_samples: _description_</span>
-<span class="sd">        :type num_samples: _type_</span>
-<span class="sd">        :param operations: _description_</span>
-<span class="sd">        :type operations: _type_</span>
-<span class="sd">        :param randomize: _description_</span>
-<span class="sd">        :type randomize: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param root_path: Root Folder with all the classes Folders with txt files for each sample or can have txt files</span>
+<span class="sd">    :type root_path: str</span>
+<span class="sd">    :param explore_folder: Whether the root_path has classes folder or txt files</span>
+<span class="sd">    :type explore_folder: bool</span>
+<span class="sd">    :param num_samples: How many samples to select from each folder</span>
+<span class="sd">    :type num_samples: int</span>
+<span class="sd">    :param operations: Any combinations of {&#39;lcase&#39;, &#39;remalpha&#39;, &#39;stopwords&#39;, &#39;stemming&#39;}. list of preprocessing Operations</span>
+<span class="sd">    :type operations: list</span>
+<span class="sd">    :param randomize: Select first num_samples or at random</span>
+<span class="sd">    :type randomize: bool</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_path</span><span class="p">,</span> <span class="n">explore_folder</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">operations</span><span class="p">,</span> <span class="n">randomize</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">extract_data</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="n">explore_folder</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">randomize</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Extracted Data from TXT Files&quot;</span><span class="p">)</span>
@@ -313,16 +313,8 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.imdb_reviews.PreprocessIMDB.run">[docs]</a>
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Preprocessing list of sentences</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
-        <span class="c1"># &quot;&quot;&quot;</span>
-        <span class="c1"># lcase =&gt; Lowercase</span>
-        <span class="c1"># remalpha =&gt; remove Alpha Numeric characters</span>
-        <span class="c1"># stopwords =&gt; Remove Stopwords</span>
-        <span class="c1"># stemming =&gt; Reducing words to their stem</span>
-        <span class="c1"># &quot;&quot;&quot;</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">text_ls</span> <span class="o">=</span> <span class="p">[</span><span class="n">preprocess_text</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">operations</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_ls</span><span class="p">]</span></div>
 
 
@@ -330,18 +322,17 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.imdb_reviews.PreprocessIMDB.extract_data">[docs]</a>
     <span class="k">def</span> <span class="nf">extract_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root_path</span><span class="p">,</span> <span class="n">explore_folder</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">randomize</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Extracting data from txt files</span>
 
-<span class="sd">        :param root_path: _description_</span>
-<span class="sd">        :type root_path: _type_</span>
-<span class="sd">        :param explore_folder: _description_</span>
-<span class="sd">        :type explore_folder: _type_</span>
-<span class="sd">        :param num_samples: _description_</span>
-<span class="sd">        :type num_samples: _type_</span>
-<span class="sd">        :param randomize: _description_</span>
-<span class="sd">        :type randomize: _type_</span>
+<span class="sd">        :param root_path: Root Folder with all the classes Folders with txt files for each sample or can have txt files</span>
+<span class="sd">        :type root_path: str</span>
+<span class="sd">        :param explore_folder: Whether the root_path has classes folder or txt files</span>
+<span class="sd">        :type explore_folder: bool</span>
+<span class="sd">        :param num_samples: How many samples to select from each folder</span>
+<span class="sd">        :type num_samples: int</span>
+<span class="sd">        :param randomize: Select first num_samples or at random</span>
+<span class="sd">        :type randomize: bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-
         <span class="bp">self</span><span class="o">.</span><span class="n">text_ls</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">label_ls</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">explore_folder</span><span class="p">:</span>
             <span class="n">folders</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">root_path</span><span class="p">)</span>
@@ -361,16 +352,16 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.imdb_reviews.PreprocessIMDB.extract_data_folder">[docs]</a>
     <span class="k">def</span> <span class="nf">extract_data_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fold_path</span><span class="p">,</span> <span class="n">num_samples</span><span class="p">,</span> <span class="n">randomize</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Extracting txt data from each folder</span>
 
-<span class="sd">        :param fold_path: _description_</span>
-<span class="sd">        :type fold_path: _type_</span>
-<span class="sd">        :param num_samples: _description_</span>
-<span class="sd">        :type num_samples: _type_</span>
-<span class="sd">        :param randomize: _description_</span>
-<span class="sd">        :type randomize: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param fold_path: Path to Folder</span>
+<span class="sd">        :type fold_path: str</span>
+<span class="sd">        :param num_samples: How many samples to select from each folder</span>
+<span class="sd">        :type num_samples: int</span>
+<span class="sd">        :param randomize: Select first num_samples or at random</span>
+<span class="sd">        :type randomize: bool</span>
+<span class="sd">        :return: List of sentences from the folder</span>
+<span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">text_ls</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">path_ls</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fold_path</span><span class="si">}</span><span class="s2">/*.txt&quot;</span><span class="p">)</span>
@@ -381,7 +372,7 @@
 
         <span class="n">desc</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Extracting from: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">fold_path</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">path_ids</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="n">desc</span><span class="p">):</span>
-            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_ls</span><span class="p">[</span><span class="nb">id</span><span class="p">],</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">path_ls</span><span class="p">[</span><span class="nb">id</span><span class="p">],</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
             <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
             <span class="n">text_ls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
             <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>

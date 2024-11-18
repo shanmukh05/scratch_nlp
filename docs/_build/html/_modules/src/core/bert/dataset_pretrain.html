@@ -291,13 +291,13 @@
 <div class="viewcode-block" id="PreprocessBERTPretrain">
 <a class="viewcode-back" href="../../../../src.core.bert.html#src.core.bert.dataset_pretrain.PreprocessBERTPretrain">[docs]</a>
 <span class="k">class</span> <span class="nc">PreprocessBERTPretrain</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    _summary_</span>
 
-<span class="sd">        :param config_dict: _description_</span>
-<span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param config_dict: _description_</span>
+<span class="sd">    :type config_dict: _type_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">input_path</span> <span class="o">=</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;paths&quot;</span><span class="p">][</span><span class="s2">&quot;input_file&quot;</span><span class="p">]</span>
@@ -456,19 +456,19 @@
 <div class="viewcode-block" id="BERTPretrainDataset">
 <a class="viewcode-back" href="../../../../src.core.bert.html#src.core.bert.dataset_pretrain.BERTPretrainDataset">[docs]</a>
 <span class="k">class</span> <span class="nc">BERTPretrainDataset</span><span class="p">(</span><span class="n">Dataset</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_tokens</span><span class="p">,</span> <span class="n">nsp_labels</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">,</span> <span class="n">word2id</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    _summary_</span>
 
-<span class="sd">        :param text_tokens: _description_</span>
-<span class="sd">        :type text_tokens: _type_</span>
-<span class="sd">        :param nsp_labels: _description_</span>
-<span class="sd">        :type nsp_labels: _type_</span>
-<span class="sd">        :param config_dict: _description_</span>
-<span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        :param word2id: _description_</span>
-<span class="sd">        :type word2id: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param text_tokens: _description_</span>
+<span class="sd">    :type text_tokens: _type_</span>
+<span class="sd">    :param nsp_labels: _description_</span>
+<span class="sd">    :type nsp_labels: _type_</span>
+<span class="sd">    :param config_dict: _description_</span>
+<span class="sd">    :type config_dict: _type_</span>
+<span class="sd">    :param word2id: _description_</span>
+<span class="sd">    :type word2id: _type_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_tokens</span><span class="p">,</span> <span class="n">nsp_labels</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">,</span> <span class="n">word2id</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text_tokens</span> <span class="o">=</span> <span class="n">text_tokens</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nsp_labels</span> <span class="o">=</span> <span class="n">nsp_labels</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">word2id</span> <span class="o">=</span> <span class="n">word2id</span>

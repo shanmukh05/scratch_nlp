@@ -296,17 +296,17 @@
 <div class="viewcode-block" id="LSTMCell">
 <a class="viewcode-back" href="../../../../src.core.lstm.html#src.core.lstm.model.LSTMCell">[docs]</a>
 <span class="k">class</span> <span class="nc">LSTMCell</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h_dim</span><span class="p">,</span> <span class="n">inp_x_dim</span><span class="p">,</span> <span class="n">out_x_dim</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    _summary_</span>
 
-<span class="sd">        :param h_dim: _description_</span>
-<span class="sd">        :type h_dim: _type_</span>
-<span class="sd">        :param inp_x_dim: _description_</span>
-<span class="sd">        :type inp_x_dim: _type_</span>
-<span class="sd">        :param out_x_dim: _description_</span>
-<span class="sd">        :type out_x_dim: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param h_dim: _description_</span>
+<span class="sd">    :type h_dim: _type_</span>
+<span class="sd">    :param inp_x_dim: _description_</span>
+<span class="sd">    :type inp_x_dim: _type_</span>
+<span class="sd">    :param out_x_dim: _description_</span>
+<span class="sd">    :type out_x_dim: _type_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h_dim</span><span class="p">,</span> <span class="n">inp_x_dim</span><span class="p">,</span> <span class="n">out_x_dim</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">LSTMCell</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">wf_dense</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">h_dim</span><span class="p">,</span> <span class="n">h_dim</span><span class="p">)</span>
@@ -357,13 +357,13 @@
 <div class="viewcode-block" id="LSTMModel">
 <a class="viewcode-back" href="../../../../src.core.lstm.html#src.core.lstm.model.LSTMModel">[docs]</a>
 <span class="k">class</span> <span class="nc">LSTMModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    _summary_</span>
 
-<span class="sd">        :param config_dict: _description_</span>
-<span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param config_dict: _description_</span>
+<span class="sd">    :type config_dict: _type_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">LSTMModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span> <span class="o">=</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">][</span><span class="s2">&quot;seq_len&quot;</span><span class="p">]</span>
@@ -468,17 +468,17 @@
 <div class="viewcode-block" id="LSTMTrainer">
 <a class="viewcode-back" href="../../../../src.core.lstm.html#src.core.lstm.model.LSTMTrainer">[docs]</a>
 <span class="k">class</span> <span class="nc">LSTMTrainer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    _summary_</span>
 
-<span class="sd">        :param model: _description_</span>
-<span class="sd">        :type model: _type_</span>
-<span class="sd">        :param optimizer: _description_</span>
-<span class="sd">        :type optimizer: _type_</span>
-<span class="sd">        :param config_dict: _description_</span>
-<span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param model: _description_</span>
+<span class="sd">    :type model: _type_</span>
+<span class="sd">    :param optimizer: _description_</span>
+<span class="sd">    :type optimizer: _type_</span>
+<span class="sd">    :param config_dict: _description_</span>
+<span class="sd">    :type config_dict: _type_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">LSTMTrainer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 

@@ -315,6 +315,12 @@
 <dt class="sig sig-object py" id="src.core.glove.dataset.GloVeDataset">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.glove.dataset.</span></span><span class="sig-name descname"><span class="pre">GloVeDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/glove/dataset.html#GloVeDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.glove.dataset.GloVeDataset" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Word2VecDataset</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>_type_</em>) – _description_</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.core.glove.dataset.GloVeDataset.get_data">
 <span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/glove/dataset.html#GloVeDataset.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.glove.dataset.GloVeDataset.get_data" title="Link to this definition">#</a></dt>
@@ -362,6 +368,12 @@
 <dt class="sig sig-object py" id="src.core.glove.glove.GloVe">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.glove.glove.</span></span><span class="sig-name descname"><span class="pre">GloVe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/glove/glove.html#GloVe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.glove.glove.GloVe" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>_type_</em>) – _description_</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.core.glove.glove.GloVe.get_embeddings">
 <span class="sig-name descname"><span class="pre">get_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sentence</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/glove/glove.html#GloVe.get_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.glove.glove.GloVe.get_embeddings" title="Link to this definition">#</a></dt>
@@ -400,6 +412,12 @@
 <dt class="sig sig-object py" id="src.core.glove.model.GloVeModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.glove.model.</span></span><span class="sig-name descname"><span class="pre">GloVeModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/glove/model.html#GloVeModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.glove.model.GloVeModel" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>_type_</em>) – _description_</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.core.glove.model.GloVeModel.forward">
 <span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ctr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cxt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/glove/model.html#GloVeModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.glove.model.GloVeModel.forward" title="Link to this definition">#</a></dt>
@@ -426,6 +444,16 @@
 <dt class="sig sig-object py" id="src.core.glove.model.GloVeTrainer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.glove.model.</span></span><span class="sig-name descname"><span class="pre">GloVeTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/glove/model.html#GloVeTrainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.glove.model.GloVeTrainer" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>optimizer</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>config_dict</strong> (<em>_type_</em>) – _description_</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.core.glove.model.GloVeTrainer.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/glove/model.html#GloVeTrainer.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.glove.model.GloVeTrainer.fit" title="Link to this definition">#</a></dt>

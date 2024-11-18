@@ -294,15 +294,15 @@
 <div class="viewcode-block" id="EncoderLSTMCell">
 <a class="viewcode-back" href="../../../../src.core.seq2seq.html#src.core.seq2seq.model.EncoderLSTMCell">[docs]</a>
 <span class="k">class</span> <span class="nc">EncoderLSTMCell</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h_dim</span><span class="p">,</span> <span class="n">inp_x_dim</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    _summary_</span>
 
-<span class="sd">        :param h_dim: _description_</span>
-<span class="sd">        :type h_dim: _type_</span>
-<span class="sd">        :param inp_x_dim: _description_</span>
-<span class="sd">        :type inp_x_dim: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param h_dim: _description_</span>
+<span class="sd">    :type h_dim: _type_</span>
+<span class="sd">    :param inp_x_dim: _description_</span>
+<span class="sd">    :type inp_x_dim: _type_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h_dim</span><span class="p">,</span> <span class="n">inp_x_dim</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">EncoderLSTMCell</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">wf_dense</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">h_dim</span><span class="p">,</span> <span class="n">h_dim</span><span class="p">)</span>
@@ -349,17 +349,17 @@
 <div class="viewcode-block" id="DecoderLSTMCell">
 <a class="viewcode-back" href="../../../../src.core.seq2seq.html#src.core.seq2seq.model.DecoderLSTMCell">[docs]</a>
 <span class="k">class</span> <span class="nc">DecoderLSTMCell</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h_dim</span><span class="p">,</span> <span class="n">inp_x_dim</span><span class="p">,</span> <span class="n">out_x_dim</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    _summary_</span>
 
-<span class="sd">        :param h_dim: _description_</span>
-<span class="sd">        :type h_dim: _type_</span>
-<span class="sd">        :param inp_x_dim: _description_</span>
-<span class="sd">        :type inp_x_dim: _type_</span>
-<span class="sd">        :param out_x_dim: _description_</span>
-<span class="sd">        :type out_x_dim: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param h_dim: _description_</span>
+<span class="sd">    :type h_dim: _type_</span>
+<span class="sd">    :param inp_x_dim: _description_</span>
+<span class="sd">    :type inp_x_dim: _type_</span>
+<span class="sd">    :param out_x_dim: _description_</span>
+<span class="sd">    :type out_x_dim: _type_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h_dim</span><span class="p">,</span> <span class="n">inp_x_dim</span><span class="p">,</span> <span class="n">out_x_dim</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DecoderLSTMCell</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">wf_dense</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">h_dim</span><span class="p">,</span> <span class="n">h_dim</span><span class="p">)</span>
@@ -409,13 +409,13 @@
 <div class="viewcode-block" id="Seq2SeqEncoder">
 <a class="viewcode-back" href="../../../../src.core.seq2seq.html#src.core.seq2seq.model.Seq2SeqEncoder">[docs]</a>
 <span class="k">class</span> <span class="nc">Seq2SeqEncoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    _summary_</span>
 
-<span class="sd">        :param config_dict: _description_</span>
-<span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param config_dict: _description_</span>
+<span class="sd">    :type config_dict: _type_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Seq2SeqEncoder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span> <span class="o">=</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">][</span><span class="s2">&quot;seq_len&quot;</span><span class="p">]</span>
@@ -502,13 +502,13 @@
 <div class="viewcode-block" id="Seq2SeqAttention">
 <a class="viewcode-back" href="../../../../src.core.seq2seq.html#src.core.seq2seq.model.Seq2SeqAttention">[docs]</a>
 <span class="k">class</span> <span class="nc">Seq2SeqAttention</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    _summary_</span>
 
-<span class="sd">        :param config_dict: _description_</span>
-<span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param config_dict: _description_</span>
+<span class="sd">    :type config_dict: _type_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Seq2SeqAttention</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="n">decoder_s_dim</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">][</span><span class="s2">&quot;encoder_h_dim&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -546,13 +546,13 @@
 <div class="viewcode-block" id="Seq2SeqDecoder">
 <a class="viewcode-back" href="../../../../src.core.seq2seq.html#src.core.seq2seq.model.Seq2SeqDecoder">[docs]</a>
 <span class="k">class</span> <span class="nc">Seq2SeqDecoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    _summary_</span>
 
-<span class="sd">        :param config_dict: _description_</span>
-<span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param config_dict: _description_</span>
+<span class="sd">    :type config_dict: _type_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Seq2SeqDecoder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">seq_len</span> <span class="o">=</span> <span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">][</span><span class="s2">&quot;seq_len&quot;</span><span class="p">]</span>
@@ -623,13 +623,13 @@
 <div class="viewcode-block" id="Seq2SeqModel">
 <a class="viewcode-back" href="../../../../src.core.seq2seq.html#src.core.seq2seq.model.Seq2SeqModel">[docs]</a>
 <span class="k">class</span> <span class="nc">Seq2SeqModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    _summary_</span>
 
-<span class="sd">        :param config_dict: _description_</span>
-<span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param config_dict: _description_</span>
+<span class="sd">    :type config_dict: _type_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Seq2SeqModel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">Seq2SeqEncoder</span><span class="p">(</span><span class="n">config_dict</span><span class="p">)</span>
@@ -659,17 +659,17 @@
 <div class="viewcode-block" id="Seq2SeqTrainer">
 <a class="viewcode-back" href="../../../../src.core.seq2seq.html#src.core.seq2seq.model.Seq2SeqTrainer">[docs]</a>
 <span class="k">class</span> <span class="nc">Seq2SeqTrainer</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    _summary_</span>
 
-<span class="sd">        :param model: _description_</span>
-<span class="sd">        :type model: _type_</span>
-<span class="sd">        :param optimizer: _description_</span>
-<span class="sd">        :type optimizer: _type_</span>
-<span class="sd">        :param config_dict: _description_</span>
-<span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param model: _description_</span>
+<span class="sd">    :type model: _type_</span>
+<span class="sd">    :param optimizer: _description_</span>
+<span class="sd">    :type optimizer: _type_</span>
+<span class="sd">    :param config_dict: _description_</span>
+<span class="sd">    :type config_dict: _type_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Seq2SeqTrainer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 

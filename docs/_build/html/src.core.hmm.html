@@ -315,6 +315,12 @@
 <dt class="sig sig-object py" id="src.core.hmm.hmm.HMM">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.hmm.hmm.</span></span><span class="sig-name descname"><span class="pre">HMM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/hmm/hmm.html#HMM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.hmm.hmm.HMM" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>_type_</em>) – _description_</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.core.hmm.hmm.HMM.evaluate">
 <span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">YP</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/hmm/hmm.html#HMM.evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.hmm.hmm.HMM.evaluate" title="Link to this definition">#</a></dt>
@@ -403,65 +409,6 @@
 </dd></dl>
 
 </section>
-<section id="module-src.core.hmm.utils">
-<span id="src-core-hmm-utils-module"></span><h2>src.core.hmm.utils module<a class="headerlink" href="#module-src.core.hmm.utils" title="Link to this heading">#</a></h2>
-<dl class="py function">
-<dt class="sig sig-object py" id="src.core.hmm.utils.pca_emission_matrix">
-<span class="sig-prename descclassname"><span class="pre">src.core.hmm.utils.</span></span><span class="sig-name descname"><span class="pre">pca_emission_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">em_matrix_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/hmm/utils.html#pca_emission_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.hmm.utils.pca_emission_matrix" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>em_matrix_df</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>output_folder</strong> (<em>_type_</em>) – _description_</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="src.core.hmm.utils.plot_hist_dataset">
-<span class="sig-prename descclassname"><span class="pre">src.core.hmm.utils.</span></span><span class="sig-name descname"><span class="pre">plot_hist_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/hmm/utils.html#plot_hist_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.hmm.utils.plot_hist_dataset" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>output_folder</strong> (<em>_type_</em>) – _description_</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="src.core.hmm.utils.plot_transition_matrix">
-<span class="sig-prename descclassname"><span class="pre">src.core.hmm.utils.</span></span><span class="sig-name descname"><span class="pre">plot_transition_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trans_matrix_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/hmm/utils.html#plot_transition_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.hmm.utils.plot_transition_matrix" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>trans_matrix_df</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>output_folder</strong> (<em>_type_</em>) – _description_</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="src.core.hmm.utils.viz_metrics">
-<span class="sig-prename descclassname"><span class="pre">src.core.hmm.utils.</span></span><span class="sig-name descname"><span class="pre">viz_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/hmm/utils.html#viz_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.hmm.utils.viz_metrics" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>metric_dict</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>output_folder</strong> (<em>_type_</em>) – _description_</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-</section>
 <section id="module-src.core.hmm">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.core.hmm" title="Link to this heading">#</a></h2>
 </section>
@@ -507,13 +454,6 @@
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.hmm.hmm.HMM.save_output"><code class="docutils literal notranslate"><span class="pre">HMM.save_output()</span></code></a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.hmm.utils">src.core.hmm.utils module</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.hmm.utils.pca_emission_matrix"><code class="docutils literal notranslate"><span class="pre">pca_emission_matrix()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.hmm.utils.plot_hist_dataset"><code class="docutils literal notranslate"><span class="pre">plot_hist_dataset()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.hmm.utils.plot_transition_matrix"><code class="docutils literal notranslate"><span class="pre">plot_transition_matrix()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.hmm.utils.viz_metrics"><code class="docutils literal notranslate"><span class="pre">viz_metrics()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.hmm">Module contents</a></li>

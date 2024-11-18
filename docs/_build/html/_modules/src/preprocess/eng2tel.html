@@ -288,13 +288,13 @@
 <div class="viewcode-block" id="PreprocessSeq2Seq">
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.eng2tel.PreprocessSeq2Seq">[docs]</a>
 <span class="k">class</span> <span class="nc">PreprocessSeq2Seq</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loading Data and Generating Source, target Data for SEQ2SEQ Model Training. </span>
 
-<span class="sd">        :param config_dict: _description_</span>
-<span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param config_dict: Config Params Dictionary</span>
+<span class="sd">    :type config_dict: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span> <span class="o">=</span> <span class="n">config_dict</span>
@@ -309,12 +309,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.eng2tel.PreprocessSeq2Seq.get_data">[docs]</a>
     <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Generating Source and Target Array of Tokens</span>
 
-<span class="sd">        :param df: _description_</span>
-<span class="sd">        :type df: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param df: DataFrame with Source and Target sentences</span>
+<span class="sd">        :type df: pandas.DataFrame</span>
+<span class="sd">        :return: Source and Target Arrays</span>
+<span class="sd">        :rtype: tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples, seq_len])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">src</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Source&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_src</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
         <span class="n">tgt</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;Target&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_tgt</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
@@ -349,10 +349,10 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.eng2tel.PreprocessSeq2Seq.get_vocab">[docs]</a>
     <span class="k">def</span> <span class="nf">get_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Generates Vocabulary </span>
 
-<span class="sd">        :param df: _description_</span>
-<span class="sd">        :type df: _type_</span>
+<span class="sd">        :param df: DataFrame with Source and Target sentences</span>
+<span class="sd">        :type df: pandas.DataFrame</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
             <span class="s2">&quot;Building Vocabulary for Source and Target Languages using Training data&quot;</span>
@@ -384,14 +384,14 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.eng2tel.PreprocessSeq2Seq.batched_ids2tokens">[docs]</a>
     <span class="k">def</span> <span class="nf">batched_ids2tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokens</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;src&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Converting sentence of ids to tokens</span>
 
-<span class="sd">        :param tokens: _description_</span>
-<span class="sd">        :type tokens: _type_</span>
-<span class="sd">        :param type: _description_, defaults to &quot;src&quot;</span>
+<span class="sd">        :param tokens: Tokens Array, 2D array (num_samples, seq_len)</span>
+<span class="sd">        :type tokens: numpy.ndarray</span>
+<span class="sd">        :param type: {&#39;src&#39;, &#39;tgt&#39;} Type of tokens, defaults to &quot;src&quot;</span>
 <span class="sd">        :type type: str, optional</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :return: List of decoded sentences</span>
+<span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s2">&quot;src&quot;</span><span class="p">:</span>
             <span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">id2wordSrc</span><span class="p">[</span><span class="n">x</span><span class="p">]</span>
@@ -415,12 +415,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.eng2tel.PreprocessSeq2Seq.preprocess_src">[docs]</a>
     <span class="k">def</span> <span class="nf">preprocess_src</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Preprocessing Source Sentence</span>
 
-<span class="sd">        :param text: _description_</span>
-<span class="sd">        :type text: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param text: Sentence</span>
+<span class="sd">        :type text: str</span>
+<span class="sd">        :return: Preprocessed sentence</span>
+<span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
         <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;([?.!,¿_])&quot;</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot; \1 &quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
@@ -435,12 +435,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.eng2tel.PreprocessSeq2Seq.preprocess_tgt">[docs]</a>
     <span class="k">def</span> <span class="nf">preprocess_tgt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Preprocessing Target Sentence</span>
 
-<span class="sd">        :param text: _description_</span>
-<span class="sd">        :type text: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param text: Sentence</span>
+<span class="sd">        :type text: str</span>
+<span class="sd">        :return: Preprocessed sentence</span>
+<span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="n">c</span>
@@ -458,10 +458,10 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.eng2tel.PreprocessSeq2Seq.extract_data">[docs]</a>
     <span class="k">def</span> <span class="nf">extract_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Extracting Data from csv file</span>
 
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :return: Train and Test DataFrames with Source and Target sentences</span>
+<span class="sd">        :rtype: tuple, (pandas.DataFrame, pandas.DataFrame)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fpath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="p">[</span><span class="s2">&quot;paths&quot;</span><span class="p">][</span><span class="s2">&quot;input_file&quot;</span><span class="p">]</span>
 

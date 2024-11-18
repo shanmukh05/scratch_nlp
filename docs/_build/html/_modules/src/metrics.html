@@ -289,7 +289,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Metrics for Classification Task.</span>
 
-<span class="sd">    :param config_dict: Config Dictionary</span>
+<span class="sd">    :param config_dict: Config Params Dictionary</span>
 <span class="sd">    :type config_dict: dict</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -302,10 +302,10 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function that returns Metrics using References, Predictions and Class Labels</span>
 
-<span class="sd">        :param references: References, 1D array (N,)</span>
-<span class="sd">        :type references: numpy.array</span>
-<span class="sd">        :param predictions: Predictions, 2D array (NxC) with Probabilities</span>
-<span class="sd">        :type predictions: numpy.array</span>
+<span class="sd">        :param references: References, 1D array (num_samples,)</span>
+<span class="sd">        :type references: numpy.ndarray</span>
+<span class="sd">        :param predictions: Predictions, 2D array (num_samples, num_classes) with Probabilities</span>
+<span class="sd">        :type predictions: numpy.ndarray</span>
 <span class="sd">        :param target_names: Class Labels</span>
 <span class="sd">        :type target_names: list</span>
 <span class="sd">        :return: Metrics Dictionary</span>
@@ -341,7 +341,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Metrics for Text Generation Task.</span>
 
-<span class="sd">    :param config_dict: Config Dictionary</span>
+<span class="sd">    :param config_dict: Config Params Dictionary</span>
 <span class="sd">    :type config_dict: dict</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -358,10 +358,10 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Function that returns Metrics using References, Predictions and Class Labels</span>
 
-<span class="sd">        :param references: References, 2D array (N,S)</span>
-<span class="sd">        :type references: numpy.array</span>
-<span class="sd">        :param predictions: Predictions, 3D array (NxSxC) with Probabilities</span>
-<span class="sd">        :type predictions: numpy.array</span>
+<span class="sd">        :param references: References, 2D array (num_samples, seq_len)</span>
+<span class="sd">        :type references: numpy.ndarray</span>
+<span class="sd">        :param predictions: Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities</span>
+<span class="sd">        :type predictions: numpy.ndarray</span>
 <span class="sd">        :return: Metrics Dictionary</span>
 <span class="sd">        :rtype: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -398,10 +398,10 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        BLEU Score</span>
 
-<span class="sd">        :param references: References, 2D array (N,S)</span>
-<span class="sd">        :type references: numpy.array</span>
-<span class="sd">        :param predictions: Predictions, 3D array (NxSxC) with Probabilities</span>
-<span class="sd">        :type predictions: numpy.array</span>
+<span class="sd">        :param references: References, 2D array (num_samples, seq_len)</span>
+<span class="sd">        :type references: numpy.ndarray</span>
+<span class="sd">        :param predictions: Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities</span>
+<span class="sd">        :type predictions: numpy.ndarray</span>
 <span class="sd">        :param n: Max number of N gram, defaults to 4</span>
 <span class="sd">        :type n: int, optional</span>
 <span class="sd">        :return: BLEU score</span>
@@ -432,8 +432,8 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perplixity Score</span>
 
-<span class="sd">        :param predictions: Predictions, 3D array (NxSxC) with Probabilities</span>
-<span class="sd">        :type predictions: numpy.array</span>
+<span class="sd">        :param predictions: Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities</span>
+<span class="sd">        :type predictions: numpy.ndarray</span>
 <span class="sd">        :return: Perplixity Score</span>
 <span class="sd">        :rtype: float</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -461,10 +461,10 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        ROUGE N Score</span>
 
-<span class="sd">        :param references: References, 3D array (N,S)</span>
-<span class="sd">        :type references: numpy.array</span>
-<span class="sd">        :param predictions: Predictions, 3D array (NxSxC) with Probabilities</span>
-<span class="sd">        :type predictions: numpy.array</span>
+<span class="sd">        :param references: References, 3D array (num_samples, seq_len)</span>
+<span class="sd">        :type references: numpy.ndarray</span>
+<span class="sd">        :param predictions: Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities</span>
+<span class="sd">        :type predictions: numpy.ndarray</span>
 <span class="sd">        :param n: Max number of N gram, defaults to 4</span>
 <span class="sd">        :type n: int, optional</span>
 <span class="sd">        :return: ROUGE N score</span>
@@ -493,10 +493,10 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        ROUGE L Score</span>
 
-<span class="sd">        :param references: References, 2D array (N,S)</span>
-<span class="sd">        :type references: numpy.array</span>
-<span class="sd">        :param predictions: Predictions, 3D array (NxSxC) with Probabilities</span>
-<span class="sd">        :type predictions: numpy.array</span>
+<span class="sd">        :param references: References, 2D array (num_samples, seq_len)</span>
+<span class="sd">        :type references: numpy.ndarray</span>
+<span class="sd">        :param predictions: Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities</span>
+<span class="sd">        :type predictions: numpy.ndarray</span>
 <span class="sd">        :return: ROUGE L score</span>
 <span class="sd">        :rtype: float</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -524,10 +524,10 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        ROUGE S Score</span>
 
-<span class="sd">        :param references: References, 2D array (N,S)</span>
-<span class="sd">        :type references: numpy.array</span>
-<span class="sd">        :param predictions: Predictions, 3D array (NxSxC) with Probabilities</span>
-<span class="sd">        :type predictions: numpy.array</span>
+<span class="sd">        :param references: References, 2D array (num_samples, seq_len)</span>
+<span class="sd">        :type references: numpy.ndarray</span>
+<span class="sd">        :param predictions: Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities</span>
+<span class="sd">        :type predictions: numpy.ndarray</span>
 <span class="sd">        :param n: Max number of N gram, defaults to 4</span>
 <span class="sd">        :type n: int, optional</span>
 <span class="sd">        :return: ROUGE S score</span>
@@ -574,10 +574,10 @@
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtain Precision, Recall and F1 score of NGRAM</span>
 
-<span class="sd">        :param ref: Reference Sentence, 1D Array (S,)</span>
-<span class="sd">        :type ref: numpy.array</span>
-<span class="sd">        :param pred: Predicted Sentence, 1D ARray (S,)</span>
-<span class="sd">        :type pred: numpy.array</span>
+<span class="sd">        :param ref: Reference Sentence, 1D Array (seq_len,)</span>
+<span class="sd">        :type ref: numpy.ndarray</span>
+<span class="sd">        :param pred: Predicted Sentence, 1D ARray (seq_len,)</span>
+<span class="sd">        :type pred: numpy.ndarray</span>
 <span class="sd">        :param n: Number of tokens in a base token</span>
 <span class="sd">        :type n: int</span>
 <span class="sd">        :param clip: _description_, defaults to False</span>
@@ -613,9 +613,9 @@
 <span class="sd">        Find Longest Common Subsequence</span>
 
 <span class="sd">        :param arr1: First Array, 1D Array</span>
-<span class="sd">        :type arr1: numpy.array</span>
+<span class="sd">        :type arr1: numpy.ndarray</span>
 <span class="sd">        :param arr2: Second Array, 1D Array</span>
-<span class="sd">        :type arr2: numpy.array</span>
+<span class="sd">        :type arr2: numpy.ndarray</span>
 <span class="sd">        :return: Longest Common Subsequence Length</span>
 <span class="sd">        :rtype: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>

@@ -301,13 +301,13 @@
 <div class="viewcode-block" id="PreprocessPOS">
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.pos.PreprocessPOS">[docs]</a>
 <span class="k">class</span> <span class="nc">PreprocessPOS</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generating POS data from data available in nltk (&#39;treebank&#39;, &#39;brown&#39;, &#39;con11&#39;)</span>
 
-<span class="sd">        :param config_dict: _description_</span>
-<span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param config_dict: Config Params Dictionary</span>
+<span class="sd">    :type config_dict: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span> <span class="o">=</span> <span class="n">config_dict</span>
@@ -324,12 +324,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.pos.PreprocessPOS.get_data">[docs]</a>
     <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">corpus</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Generating Tokens and POS labels from corpus</span>
 
-<span class="sd">        :param corpus: _description_</span>
-<span class="sd">        :type corpus: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param corpus: List of nltk sentences with POS Labels</span>
+<span class="sd">        :type corpus: list</span>
+<span class="sd">        :return: Tokens and POS Labels </span>
+<span class="sd">        :rtype: tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples, seq_len, num_pos])</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess_corpus</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
 
@@ -359,10 +359,10 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.pos.PreprocessPOS.get_vocab">[docs]</a>
     <span class="k">def</span> <span class="nf">get_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">corpus</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Generates Vocabulary</span>
 
-<span class="sd">        :param corpus: _description_</span>
-<span class="sd">        :type corpus: _type_</span>
+<span class="sd">        :param corpus: List of nltk sentences with POS Labels</span>
+<span class="sd">        :type corpus: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
             <span class="s2">&quot;Building Vocabulary for Words and POS tags from training data&quot;</span>
@@ -393,10 +393,10 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.pos.PreprocessPOS.extract_data">[docs]</a>
     <span class="k">def</span> <span class="nf">extract_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Extracting data from available corpus in nltk</span>
 
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :return: List of sentences along with POS labels</span>
+<span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Extracting Train and Test corpus from global CORPUS variable&quot;</span><span class="p">)</span>
         <span class="n">corpus</span> <span class="o">=</span> <span class="p">[]</span>
@@ -424,12 +424,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.pos.PreprocessPOS.preprocess_corpus">[docs]</a>
     <span class="k">def</span> <span class="nf">preprocess_corpus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">corpus</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Preprocessing Sentences</span>
 
-<span class="sd">        :param corpus: _description_</span>
-<span class="sd">        :type corpus: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param corpus: List of nltk sentences with POS Labels</span>
+<span class="sd">        :type corpus: list</span>
+<span class="sd">        :return: List of sentences, Labels</span>
+<span class="sd">        :rtype: tuple (list, list)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">X</span> <span class="o">=</span> <span class="p">[[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sent</span><span class="p">]</span> <span class="k">for</span> <span class="n">sent</span> <span class="ow">in</span> <span class="n">corpus</span><span class="p">]</span>
         <span class="n">y</span> <span class="o">=</span> <span class="p">[[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sent</span><span class="p">]</span> <span class="k">for</span> <span class="n">sent</span> <span class="ow">in</span> <span class="n">corpus</span><span class="p">]</span>

@@ -291,23 +291,27 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.preprocess_text">[docs]</a>
 <span class="k">def</span> <span class="nf">preprocess_text</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">operations</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    _summary_</span>
+<span class="sd">    Preprocesses Text</span>
 
-<span class="sd">    :param text: _description_</span>
-<span class="sd">    :type text: _type_</span>
-<span class="sd">    :param operations: _description_, defaults to None</span>
-<span class="sd">    :type operations: _type_, optional</span>
-<span class="sd">    :return: _description_</span>
-<span class="sd">    :rtype: _type_</span>
+<span class="sd">    :param text: string to preprocess</span>
+<span class="sd">    :type text: str</span>
+<span class="sd">    :param operations: List of operations from {&#39;lcase&#39;, &#39;remalpha&#39;, &#39;stopwords&#39;, &#39;stemming&#39;}, defaults to None</span>
+<span class="sd">    :type operations: list, optional</span>
+<span class="sd">    :return: Preprocessed text</span>
+<span class="sd">    :rtype: str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="s2">&quot;lcase&quot;</span> <span class="ow">in</span> <span class="n">operations</span> <span class="ow">or</span> <span class="n">operations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Lowercases text</span>
         <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="k">if</span> <span class="s2">&quot;remalpha&quot;</span> <span class="ow">in</span> <span class="n">operations</span> <span class="ow">or</span> <span class="n">operations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Removes Alpha Numeric characters</span>
         <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\W+&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
     <span class="k">if</span> <span class="s2">&quot;stopwords&quot;</span> <span class="ow">in</span> <span class="n">operations</span> <span class="ow">or</span> <span class="n">operations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Removes Stopwords</span>
         <span class="n">swords</span> <span class="o">=</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s2">&quot;english&quot;</span><span class="p">)</span>
         <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">swords</span><span class="p">])</span>
     <span class="k">if</span> <span class="s2">&quot;stemming&quot;</span> <span class="ow">in</span> <span class="n">operations</span> <span class="ow">or</span> <span class="n">operations</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Reducing words to their stem</span>
         <span class="n">snowball</span> <span class="o">=</span> <span class="n">SnowballStemmer</span><span class="p">(</span><span class="n">language</span><span class="o">=</span><span class="s2">&quot;english&quot;</span><span class="p">)</span>
         <span class="n">text</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">snowball</span><span class="o">.</span><span class="n">stem</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()])</span>
     <span class="k">return</span> <span class="n">text</span></div>
@@ -317,13 +321,13 @@
 <div class="viewcode-block" id="BytePairEncoding">
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.BytePairEncoding">[docs]</a>
 <span class="k">class</span> <span class="nc">BytePairEncoding</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Byte Pair Encoding Algorithm to convert a corpus to tokens</span>
 
-<span class="sd">        :param config_dict: _description_</span>
-<span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param config_dict: Config Params Dictionary</span>
+<span class="sd">    :type config_dict: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">num_vocab</span> <span class="o">=</span> <span class="p">(</span>
@@ -336,12 +340,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.BytePairEncoding.fit">[docs]</a>
     <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_ls</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Fits BPE on List of sentences and Transforms into words</span>
 
-<span class="sd">        :param text_ls: _description_</span>
-<span class="sd">        :type text_ls: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param text_ls: List of sentences</span>
+<span class="sd">        :type text_ls: list</span>
+<span class="sd">        :return: List of words</span>
+<span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">text_ls</span><span class="p">)</span>
         <span class="n">words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_merge</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
@@ -353,12 +357,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.BytePairEncoding.transform">[docs]</a>
     <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_ls</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Transforms list of sentences into words</span>
 
-<span class="sd">        :param text_ls: _description_</span>
-<span class="sd">        :type text_ls: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param text_ls: List of sentences</span>
+<span class="sd">        :type text_ls: list</span>
+<span class="sd">        :return: List of words</span>
+<span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">text_ls</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span>
         <span class="n">vocab</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab_freq</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -373,14 +377,14 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.BytePairEncoding.merge_chars">[docs]</a>
     <span class="k">def</span> <span class="nf">merge_chars</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">vocab</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Merging characters in a word if it&#39;s concatenation present in vocabulary</span>
 
-<span class="sd">        :param word: _description_</span>
-<span class="sd">        :type word: _type_</span>
-<span class="sd">        :param vocab: _description_</span>
-<span class="sd">        :type vocab: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param word: Word</span>
+<span class="sd">        :type word: str</span>
+<span class="sd">        :param vocab: Vocabulary</span>
+<span class="sd">        :type vocab: list</span>
+<span class="sd">        :return: new word with merged characters</span>
+<span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">merge</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">while</span> <span class="n">merge</span><span class="p">:</span>
@@ -406,14 +410,14 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.BytePairEncoding.preprocess">[docs]</a>
     <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_ls</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Creating words from list of sentences. Words are created by adding space between each character and adding  &lt;/w&gt; at the end. </span>
 
-<span class="sd">        :param text_ls: _description_</span>
-<span class="sd">        :type text_ls: _type_</span>
-<span class="sd">        :param data: _description_, defaults to &quot;train&quot;</span>
+<span class="sd">        :param text_ls: List od sentences</span>
+<span class="sd">        :type text_ls: list</span>
+<span class="sd">        :param data: {&#39;train&#39;, &#39;test&#39;} Type of data, defaults to &quot;train&quot;</span>
 <span class="sd">        :type data: str, optional</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :return: List of words from all the sentences in one list</span>
+<span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">corpus</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text_ls</span><span class="p">)</span>
         <span class="n">words</span> <span class="o">=</span> <span class="n">corpus</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
@@ -431,12 +435,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.BytePairEncoding.get_stats">[docs]</a>
     <span class="k">def</span> <span class="nf">get_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Creates a dictionary with pair of consecutive characters as key and corresponding count in corpus as value</span>
 
-<span class="sd">        :param words: _description_</span>
-<span class="sd">        :type words: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param words: List of words from the corpus</span>
+<span class="sd">        :type words: list</span>
+<span class="sd">        :return: Dictionary with pairs of characters and frequency</span>
+<span class="sd">        :rtype: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">words_freq</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
         <span class="n">pair_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
@@ -451,12 +455,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.BytePairEncoding.build_vocab">[docs]</a>
     <span class="k">def</span> <span class="nf">build_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Generates Vocabulary after updation of words by merging characters</span>
 
-<span class="sd">        :param words: _description_</span>
-<span class="sd">        :type words: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param words: List of words</span>
+<span class="sd">        :type words: list</span>
+<span class="sd">        :return: List of updated words</span>
+<span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">pair_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stats</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
         <span class="n">best_pair</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">pair_dict</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">pair_dict</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
@@ -484,12 +488,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.BytePairEncoding.run_merge">[docs]</a>
     <span class="k">def</span> <span class="nf">run_merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">words</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Updates vocabulary until desired Vocabulary count is reached</span>
 
-<span class="sd">        :param words: _description_</span>
-<span class="sd">        :type words: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param words: List of words</span>
+<span class="sd">        :type words: list</span>
+<span class="sd">        :return: List of updated final words</span>
+<span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Merging characters to achieve desired vocabulary&quot;</span><span class="p">)</span>
 
@@ -503,13 +507,13 @@
 <div class="viewcode-block" id="WordPiece">
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.WordPiece">[docs]</a>
 <span class="k">class</span> <span class="nc">WordPiece</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    WordPiece Tokenization Algorithm to tokenize a corpus and generate Vocabulary</span>
 
-<span class="sd">        :param config_dict: _description_</span>
-<span class="sd">        :type config_dict: _type_</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">    :param config_dict: Config Params Dictionary</span>
+<span class="sd">    :type config_dict: dict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">num_vocab</span> <span class="o">=</span> <span class="p">(</span>
@@ -522,12 +526,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.WordPiece.fit">[docs]</a>
     <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_ls</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Fits WordPiece on List of sentences and Transforms the words</span>
 
-<span class="sd">        :param text_ls: _description_</span>
-<span class="sd">        :type text_ls: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param text_ls: List of sentences</span>
+<span class="sd">        :type text_ls: list</span>
+<span class="sd">        :return: List of words</span>
+<span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">corpus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">text_ls</span><span class="p">)</span>
         <span class="n">corpus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_merge</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
@@ -539,12 +543,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.WordPiece.transform">[docs]</a>
     <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_ls</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Transforms list of sentences into words</span>
 
-<span class="sd">        :param text_ls: _description_</span>
-<span class="sd">        :type text_ls: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param text_ls: List of sentences</span>
+<span class="sd">        :type text_ls: list</span>
+<span class="sd">        :return: List of words</span>
+<span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">corpus</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">text_ls</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">)</span>
         <span class="n">vocab</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab_freq</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -559,14 +563,14 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.WordPiece.merge_chars">[docs]</a>
     <span class="k">def</span> <span class="nf">merge_chars</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">word</span><span class="p">,</span> <span class="n">vocab</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Merging characters in a word if it&#39;s concatenation present in vocabulary</span>
 
-<span class="sd">        :param word: _description_</span>
-<span class="sd">        :type word: _type_</span>
-<span class="sd">        :param vocab: _description_</span>
-<span class="sd">        :type vocab: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param word: Word</span>
+<span class="sd">        :type word: str</span>
+<span class="sd">        :param vocab: Vocabulary</span>
+<span class="sd">        :type vocab: list</span>
+<span class="sd">        :return: new word with merged characters</span>
+<span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">while</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
@@ -583,14 +587,14 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.WordPiece.preprocess">[docs]</a>
     <span class="k">def</span> <span class="nf">preprocess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_ls</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Creating words from list of sentences. Words are created by adding ## at start each character (other than first character). </span>
 
-<span class="sd">        :param text_ls: _description_</span>
-<span class="sd">        :type text_ls: _type_</span>
-<span class="sd">        :param data: _description_, defaults to &quot;train&quot;</span>
+<span class="sd">        :param text_ls: List od sentences</span>
+<span class="sd">        :type text_ls: list</span>
+<span class="sd">        :param data: {&#39;train&#39;, &#39;test&#39;} Type of data, defaults to &quot;train&quot;</span>
 <span class="sd">        :type data: str, optional</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :return: List of words from all the sentences in one list. Each word is a list of characters </span>
+<span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">words</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">text_ls</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="n">corpus</span> <span class="o">=</span> <span class="p">[]</span>
@@ -613,12 +617,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.WordPiece.get_stats">[docs]</a>
     <span class="k">def</span> <span class="nf">get_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">corpus</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Creates a dictionary with pair of consecutive characters as key and corresponding count in corpus as value</span>
 
-<span class="sd">        :param corpus: _description_</span>
-<span class="sd">        :type corpus: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param corpus: List of words </span>
+<span class="sd">        :type corpus: list</span>
+<span class="sd">        :return: Dictionary with pairs of characters and frequency</span>
+<span class="sd">        :rtype: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">pair_freq</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">corp</span> <span class="ow">in</span> <span class="n">corpus</span><span class="p">:</span>
@@ -633,14 +637,14 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.WordPiece.get_likelihood">[docs]</a>
     <span class="k">def</span> <span class="nf">get_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pair</span><span class="p">,</span> <span class="n">pair_freq</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Calculates likelihood of two characters being consecutive in a corpus</span>
 
-<span class="sd">        :param pair: _description_</span>
-<span class="sd">        :type pair: _type_</span>
-<span class="sd">        :param pair_freq: _description_</span>
-<span class="sd">        :type pair_freq: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param pair: Pair of characters</span>
+<span class="sd">        :type pair: tuple</span>
+<span class="sd">        :param pair_freq: Dictionary with pairs of characters and frequency</span>
+<span class="sd">        :type pair_freq: dict</span>
+<span class="sd">        :return: Likelihood (can be a value in [0, 1])</span>
+<span class="sd">        :rtype: float</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">p12</span> <span class="o">=</span> <span class="n">pair_freq</span><span class="p">[</span><span class="n">pair</span><span class="p">]</span>
         <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocab_freq</span><span class="p">[</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocab_freq</span><span class="p">[</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
@@ -653,12 +657,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.WordPiece.combine">[docs]</a>
     <span class="k">def</span> <span class="nf">combine</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pair</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Combines pair of characters based on their location in a word by removing ##</span>
 
-<span class="sd">        :param pair: _description_</span>
-<span class="sd">        :type pair: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param pair: Pair of characters</span>
+<span class="sd">        :type pair: tuple</span>
+<span class="sd">        :return: Combination of characters</span>
+<span class="sd">        :rtype: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">token1</span><span class="p">,</span> <span class="n">token2</span> <span class="o">=</span> <span class="n">pair</span>
         <span class="k">return</span> <span class="n">token1</span> <span class="o">+</span> <span class="n">token2</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="k">if</span> <span class="n">token2</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;##&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">token1</span> <span class="o">+</span> <span class="n">token2</span></div>
@@ -668,12 +672,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.WordPiece.build_vocab">[docs]</a>
     <span class="k">def</span> <span class="nf">build_vocab</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">corpus</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Generates Vocabulary after updation of words by merging characters</span>
 
-<span class="sd">        :param corpus: _description_</span>
-<span class="sd">        :type corpus: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param corpus: List of words</span>
+<span class="sd">        :type corpus: list</span>
+<span class="sd">        :return: List of updated corpus</span>
+<span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">pair_freq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_stats</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
         <span class="n">best_pair</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
@@ -710,12 +714,12 @@
 <a class="viewcode-back" href="../../../src.preprocess.html#src.preprocess.utils.WordPiece.run_merge">[docs]</a>
     <span class="k">def</span> <span class="nf">run_merge</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">corpus</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Updates vocabulary until desired Vocabulary count is reached</span>
 
-<span class="sd">        :param corpus: _description_</span>
-<span class="sd">        :type corpus: _type_</span>
-<span class="sd">        :return: _description_</span>
-<span class="sd">        :rtype: _type_</span>
+<span class="sd">        :param corpus: List of corpus</span>
+<span class="sd">        :type corpus: list</span>
+<span class="sd">        :return: List of updated final corpus</span>
+<span class="sd">        :rtype: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab_freq</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_vocab</span><span class="p">:</span>
             <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab_freq</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_vocab</span><span class="p">:</span>

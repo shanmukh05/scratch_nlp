@@ -315,6 +315,12 @@
 <dt class="sig sig-object py" id="src.core.word2vec.dataset.Word2VecDataset">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.word2vec.dataset.</span></span><span class="sig-name descname"><span class="pre">Word2VecDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/dataset.html#Word2VecDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.dataset.Word2VecDataset" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>_type_</em>) – _description_</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.core.word2vec.dataset.Word2VecDataset.get_vocab">
 <span class="sig-name descname"><span class="pre">get_vocab</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/dataset.html#Word2VecDataset.get_vocab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.dataset.Word2VecDataset.get_vocab" title="Link to this definition">#</a></dt>
@@ -375,6 +381,12 @@
 <dt class="sig sig-object py" id="src.core.word2vec.huffman.HuffmanBTree">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.word2vec.huffman.</span></span><span class="sig-name descname"><span class="pre">HuffmanBTree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab_freq_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/huffman.html#HuffmanBTree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.huffman.HuffmanBTree" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vocab_freq_dict</strong> (<em>_type_</em>) – _description_</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.core.word2vec.huffman.HuffmanBTree.construct_tree">
 <span class="sig-name descname"><span class="pre">construct_tree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/huffman.html#HuffmanBTree.construct_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.huffman.HuffmanBTree.construct_tree" title="Link to this definition">#</a></dt>
@@ -408,6 +420,17 @@
 <dt class="sig sig-object py" id="src.core.word2vec.huffman.Node">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.word2vec.huffman.</span></span><span class="sig-name descname"><span class="pre">Node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/huffman.html#Node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.huffman.Node" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>word_idx</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>freq</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>left</strong> (<em>_type_</em><em>, </em><em>optional</em>) – _description_, defaults to None</p></li>
+<li><p><strong>right</strong> (<em>_type_</em><em>, </em><em>optional</em>) – _description_, defaults to None</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
@@ -417,6 +440,12 @@
 <dt class="sig sig-object py" id="src.core.word2vec.model.Word2VecModel">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.word2vec.model.</span></span><span class="sig-name descname"><span class="pre">Word2VecModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/model.html#Word2VecModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.model.Word2VecModel" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>_type_</em>) – _description_</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.core.word2vec.model.Word2VecModel.compute_cxt_embed">
 <span class="sig-name descname"><span class="pre">compute_cxt_embed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cxt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/model.html#Word2VecModel.compute_cxt_embed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.model.Word2VecModel.compute_cxt_embed" title="Link to this definition">#</a></dt>
@@ -462,6 +491,16 @@
 <dt class="sig sig-object py" id="src.core.word2vec.model.Word2VecTrainer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.word2vec.model.</span></span><span class="sig-name descname"><span class="pre">Word2VecTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/model.html#Word2VecTrainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.model.Word2VecTrainer" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>optimizer</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>config_dict</strong> (<em>_type_</em>) – _description_</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.core.word2vec.model.Word2VecTrainer.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/model.html#Word2VecTrainer.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.model.Word2VecTrainer.fit" title="Link to this definition">#</a></dt>
@@ -528,6 +567,12 @@
 <dt class="sig sig-object py" id="src.core.word2vec.word2vec.Word2Vec">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.word2vec.word2vec.</span></span><span class="sig-name descname"><span class="pre">Word2Vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/word2vec.html#Word2Vec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.word2vec.Word2Vec" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>_type_</em>) – _description_</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.core.word2vec.word2vec.Word2Vec.get_embeddings">
 <span class="sig-name descname"><span class="pre">get_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sentence</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/word2vec.html#Word2Vec.get_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.word2vec.Word2Vec.get_embeddings" title="Link to this definition">#</a></dt>

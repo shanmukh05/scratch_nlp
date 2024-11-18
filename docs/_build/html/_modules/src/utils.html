@@ -280,8 +280,11 @@
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">configs</span> <span class="kn">import</span> <span class="n">configDictDType</span><span class="p">,</span> <span class="n">MainKeysDict</span>
 
@@ -292,12 +295,12 @@
 <a class="viewcode-back" href="../../src.html#src.utils.load_config">[docs]</a>
 <span class="k">def</span> <span class="nf">load_config</span><span class="p">(</span><span class="n">config_path</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    _summary_</span>
+<span class="sd">    Loading YAML Config file as a Dictionary </span>
 
-<span class="sd">    :param config_path: _description_</span>
-<span class="sd">    :type config_path: _type_</span>
-<span class="sd">    :return: _description_</span>
-<span class="sd">    :rtype: _type_</span>
+<span class="sd">    :param config_path: Path to Config File</span>
+<span class="sd">    :type config_path: str</span>
+<span class="sd">    :return: Config Params Dictionary</span>
+<span class="sd">    :rtype: dict</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">stream</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -309,17 +312,35 @@
     <span class="k">return</span> <span class="n">config_dict</span></div>
 
 
+<div class="viewcode-block" id="set_seed">
+<a class="viewcode-back" href="../../src.html#src.utils.set_seed">[docs]</a>
+<span class="k">def</span> <span class="nf">set_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Setting seed across Libraries to reproduce results</span>
+
+<span class="sd">    :param seed: Seed value</span>
+<span class="sd">    :type seed: int</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed_all</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
 
 <div class="viewcode-block" id="ValidateConfig">
 <a class="viewcode-back" href="../../src.html#src.utils.ValidateConfig">[docs]</a>
 <span class="k">class</span> <span class="nc">ValidateConfig</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    _summary_</span>
+<span class="sd">    Validating Config File</span>
 
-<span class="sd">    :param config_dict: _description_</span>
-<span class="sd">    :type config_dict: _type_</span>
-<span class="sd">    :param algo: _description_</span>
-<span class="sd">    :type algo: _type_</span>
+<span class="sd">    :param config_dict: Config Params Dictionary</span>
+<span class="sd">    :type config_dict: dict</span>
+<span class="sd">    :param algo: Name of the Algorithm</span>
+<span class="sd">    :type algo: str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_dict</span><span class="p">,</span> <span class="n">algo</span><span class="p">):</span>
@@ -330,7 +351,7 @@
 <a class="viewcode-back" href="../../src.html#src.utils.ValidateConfig.run_verify">[docs]</a>
     <span class="k">def</span> <span class="nf">run_verify</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Config Params Keys and Values Verification </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Validating Config File&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verify_main_keys</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -340,36 +361,84 @@
 <div class="viewcode-block" id="ValidateConfig.check_float">
 <a class="viewcode-back" href="../../src.html#src.utils.ValidateConfig.check_float">[docs]</a>
     <span class="k">def</span> <span class="nf">check_float</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        To check whether given key whose value is float has a valid value or not</span>
+
+<span class="sd">        :param key: Param Key</span>
+<span class="sd">        :type key: str</span>
+<span class="sd">        :param val: Param value</span>
+<span class="sd">        :type val: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="ValidateConfig.check_int">
 <a class="viewcode-back" href="../../src.html#src.utils.ValidateConfig.check_int">[docs]</a>
     <span class="k">def</span> <span class="nf">check_int</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        To check whether given key whose value is int has a valid value or not</span>
+
+<span class="sd">        :param key: Param Key</span>
+<span class="sd">        :type key: str</span>
+<span class="sd">        :param val: Param value</span>
+<span class="sd">        :type val: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>       
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="ValidateConfig.check_string">
 <a class="viewcode-back" href="../../src.html#src.utils.ValidateConfig.check_string">[docs]</a>
     <span class="k">def</span> <span class="nf">check_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        To check whether given key whose value is str has a valid value or not</span>
+
+<span class="sd">        :param key: Param Key</span>
+<span class="sd">        :type key: str</span>
+<span class="sd">        :param val: Param value</span>
+<span class="sd">        :type val: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>       
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="ValidateConfig.check_paths">
 <a class="viewcode-back" href="../../src.html#src.utils.ValidateConfig.check_paths">[docs]</a>
     <span class="k">def</span> <span class="nf">check_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        To check whether given key whose value is a filepath has a valid value or not</span>
+
+<span class="sd">        :param key: Param Key</span>
+<span class="sd">        :type key: str</span>
+<span class="sd">        :param val: Param value</span>
+<span class="sd">        :type val: str</span>
+<span class="sd">        &quot;&quot;&quot;</span>       
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="ValidateConfig.check_list">
 <a class="viewcode-back" href="../../src.html#src.utils.ValidateConfig.check_list">[docs]</a>
     <span class="k">def</span> <span class="nf">check_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        To check whether given key whose value is list has a valid value or not</span>
+
+<span class="sd">        :param key: Param Key</span>
+<span class="sd">        :type key: str</span>
+<span class="sd">        :param val: Param value</span>
+<span class="sd">        :type val: list</span>
+<span class="sd">        &quot;&quot;&quot;</span>  
         <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="ValidateConfig.compare_dtype">
 <a class="viewcode-back" href="../../src.html#src.utils.ValidateConfig.compare_dtype">[docs]</a>
     <span class="k">def</span> <span class="nf">compare_dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        To check whether given key whose value has a valid dtype or not</span>
+
+<span class="sd">        :param key: Param Key</span>
+<span class="sd">        :type key: str</span>
+<span class="sd">        :param val: Param value</span>
+<span class="sd">        :type val: float/int/str/list</span>
+<span class="sd">        &quot;&quot;&quot;</span>      
         <span class="n">type_abs</span> <span class="o">=</span> <span class="n">configDictDType</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
         <span class="n">type_cfg</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
 
@@ -381,7 +450,7 @@
 <a class="viewcode-back" href="../../src.html#src.utils.ValidateConfig.verify_values">[docs]</a>
     <span class="k">def</span> <span class="nf">verify_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Verifying the Datatypes of all the Parameters in Config</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
@@ -399,10 +468,10 @@
 <a class="viewcode-back" href="../../src.html#src.utils.ValidateConfig.verify_main_keys">[docs]</a>
     <span class="k">def</span> <span class="nf">verify_main_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        _summary_</span>
+<span class="sd">        Verifying whether Config has all the required keys or not</span>
 
-<span class="sd">        :param keys: _description_</span>
-<span class="sd">        :type keys: _type_</span>
+<span class="sd">        :param keys: Parent Config Parameters</span>
+<span class="sd">        :type keys: list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
             <span class="n">true_val</span> <span class="o">=</span> <span class="n">MainKeysDict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">algo</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
@@ -439,10 +508,10 @@
 <a class="viewcode-back" href="../../src.html#src.utils.get_logger">[docs]</a>
 <span class="k">def</span> <span class="nf">get_logger</span><span class="p">(</span><span class="n">log_folder</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    _summary_</span>
+<span class="sd">    Initializing Log File</span>
 
-<span class="sd">    :param log_folder: _description_</span>
-<span class="sd">    :type log_folder: _type_</span>
+<span class="sd">    :param log_folder: Path to folder where Log file is added</span>
+<span class="sd">    :type log_folder: str</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">log_folder</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">current_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>

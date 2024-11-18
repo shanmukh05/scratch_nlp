@@ -315,22 +315,28 @@
 <dt class="sig sig-object py" id="src.preprocess.eng2tel.PreprocessSeq2Seq">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.preprocess.eng2tel.</span></span><span class="sig-name descname"><span class="pre">PreprocessSeq2Seq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/eng2tel.html#PreprocessSeq2Seq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.eng2tel.PreprocessSeq2Seq" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Loading Data and Generating Source, target Data for SEQ2SEQ Model Training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.eng2tel.PreprocessSeq2Seq.batched_ids2tokens">
 <span class="sig-name descname"><span class="pre">batched_ids2tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'src'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/eng2tel.html#PreprocessSeq2Seq.batched_ids2tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.eng2tel.PreprocessSeq2Seq.batched_ids2tokens" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Converting sentence of ids to tokens</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>tokens</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em>) – _description_, defaults to “src”</p></li>
+<li><p><strong>tokens</strong> (<em>numpy.ndarray</em>) – Tokens Array, 2D array (num_samples, seq_len)</p></li>
+<li><p><strong>type</strong> (<em>str</em><em>, </em><em>optional</em>) – {‘src’, ‘tgt’} Type of tokens, defaults to “src”</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>List of decoded sentences</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -338,13 +344,13 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.eng2tel.PreprocessSeq2Seq.extract_data">
 <span class="sig-name descname"><span class="pre">extract_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/eng2tel.html#PreprocessSeq2Seq.extract_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.eng2tel.PreprocessSeq2Seq.extract_data" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Extracting Data from csv file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_description_</p>
+<dd class="field-odd"><p>Train and Test DataFrames with Source and Target sentences</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>_type_</p>
+<dd class="field-even"><p>tuple, (pandas.DataFrame, pandas.DataFrame)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -352,16 +358,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.eng2tel.PreprocessSeq2Seq.get_data">
 <span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/eng2tel.html#PreprocessSeq2Seq.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.eng2tel.PreprocessSeq2Seq.get_data" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Generating Source and Target Array of Tokens</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>df</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>df</strong> (<em>pandas.DataFrame</em>) – DataFrame with Source and Target sentences</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>Source and Target Arrays</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples, seq_len])</p>
 </dd>
 </dl>
 </dd></dl>
@@ -369,10 +375,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.eng2tel.PreprocessSeq2Seq.get_vocab">
 <span class="sig-name descname"><span class="pre">get_vocab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/eng2tel.html#PreprocessSeq2Seq.get_vocab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.eng2tel.PreprocessSeq2Seq.get_vocab" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Generates Vocabulary</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>df</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>df</strong> (<em>pandas.DataFrame</em>) – DataFrame with Source and Target sentences</p>
 </dd>
 </dl>
 </dd></dl>
@@ -380,16 +386,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.eng2tel.PreprocessSeq2Seq.preprocess_src">
 <span class="sig-name descname"><span class="pre">preprocess_src</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/eng2tel.html#PreprocessSeq2Seq.preprocess_src"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.eng2tel.PreprocessSeq2Seq.preprocess_src" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Preprocessing Source Sentence</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>text</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Sentence</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>Preprocessed sentence</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -397,16 +403,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.eng2tel.PreprocessSeq2Seq.preprocess_tgt">
 <span class="sig-name descname"><span class="pre">preprocess_tgt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/eng2tel.html#PreprocessSeq2Seq.preprocess_tgt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.eng2tel.PreprocessSeq2Seq.preprocess_tgt" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Preprocessing Target Sentence</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>text</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Sentence</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>Preprocessed sentence</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -420,19 +426,25 @@
 <dt class="sig sig-object py" id="src.preprocess.flickr.PreprocessFlickr">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.preprocess.flickr.</span></span><span class="sig-name descname"><span class="pre">PreprocessFlickr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/flickr.html#PreprocessFlickr"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.flickr.PreprocessFlickr" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Preprocessing Flickr Dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.flickr.PreprocessFlickr.batched_ids2captions">
 <span class="sig-name descname"><span class="pre">batched_ids2captions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/flickr.html#PreprocessFlickr.batched_ids2captions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.flickr.PreprocessFlickr.batched_ids2captions" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Converting sentence of ids to tokens</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>tokens</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>tokens</strong> (<em>numpy.ndarray</em>) – Tokens Array, 2D array (num_samples, seq_len)</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>List of decoded sentences</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -440,13 +452,13 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.flickr.PreprocessFlickr.extract_data">
 <span class="sig-name descname"><span class="pre">extract_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/flickr.html#PreprocessFlickr.extract_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.flickr.PreprocessFlickr.extract_data" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Extracting Image and Captions Data</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_description_</p>
+<dd class="field-odd"><p>Train and Test DataFrames</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>_type_</p>
+<dd class="field-even"><p>tuple (pandas.DataFrame, pandas.DataFrame)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -454,13 +466,13 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.flickr.PreprocessFlickr.get_data">
 <span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/flickr.html#PreprocessFlickr.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.flickr.PreprocessFlickr.get_data" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Preprocessing</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_description_</p>
+<dd class="field-odd"><p>Returns image paths, Train Tokens, (Train, Test Transforms)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>_type_</p>
+<dd class="field-even"><p>(list, numpy.ndarray [num_samples, seq_len], (albumentations.Compose, albumentations.Compose))</p>
 </dd>
 </dl>
 </dd></dl>
@@ -468,13 +480,13 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.flickr.PreprocessFlickr.get_test_data">
 <span class="sig-name descname"><span class="pre">get_test_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/flickr.html#PreprocessFlickr.get_test_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.flickr.PreprocessFlickr.get_test_data" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Generating test Data</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_description_</p>
+<dd class="field-odd"><p>Returns image paths, Test Tokens, Test Transforms</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>_type_</p>
+<dd class="field-even"><p>(list, numpy.ndarray [num_samples, seq_len], albumentations.Compose)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -482,10 +494,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.flickr.PreprocessFlickr.get_vocab">
 <span class="sig-name descname"><span class="pre">get_vocab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/flickr.html#PreprocessFlickr.get_vocab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.flickr.PreprocessFlickr.get_vocab" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Generates Vocabulary</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>train_df</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>train_df</strong> (<em>pandas.DataFrame</em>) – DataFrame with Training Captions</p>
 </dd>
 </dl>
 </dd></dl>
@@ -493,16 +505,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.flickr.PreprocessFlickr.image_transforms">
 <span class="sig-name descname"><span class="pre">image_transforms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/flickr.html#PreprocessFlickr.image_transforms"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.flickr.PreprocessFlickr.image_transforms" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Creating Albumentations Transforms for train or test data</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data_type</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>data_type</strong> (<em>str</em>) – {‘train’, ‘test’}. Type of Data</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>Transforms</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>albumentations.Compose</p>
 </dd>
 </dl>
 </dd></dl>
@@ -510,16 +522,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.flickr.PreprocessFlickr.word_tokens">
 <span class="sig-name descname"><span class="pre">word_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/flickr.html#PreprocessFlickr.word_tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.flickr.PreprocessFlickr.word_tokens" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Coverting Sentences to Tokens</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>df</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>df</strong> (<em>pandas.DataFrame</em>) – Captions DataFrame</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>Tokens array (num_samples, seq_len)</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>numpy.ndarray</p>
 </dd>
 </dl>
 </dd></dl>
@@ -533,17 +545,29 @@
 <dt class="sig sig-object py" id="src.preprocess.imdb_reviews.PreprocessIMDB">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.preprocess.imdb_reviews.</span></span><span class="sig-name descname"><span class="pre">PreprocessIMDB</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explore_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operations</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">randomize</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/imdb_reviews.html#PreprocessIMDB"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.imdb_reviews.PreprocessIMDB" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="src.preprocess.imdb_reviews.PreprocessIMDB.extract_data">
-<span class="sig-name descname"><span class="pre">extract_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explore_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">randomize</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/imdb_reviews.html#PreprocessIMDB.extract_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.imdb_reviews.PreprocessIMDB.extract_data" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<p>Loading and Generating Reviews, labels for IMDB dataset</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>root_path</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>explore_folder</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>num_samples</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>randomize</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>root_path</strong> (<em>str</em>) – Root Folder with all the classes Folders with txt files for each sample or can have txt files</p></li>
+<li><p><strong>explore_folder</strong> (<em>bool</em>) – Whether the root_path has classes folder or txt files</p></li>
+<li><p><strong>num_samples</strong> (<em>int</em>) – How many samples to select from each folder</p></li>
+<li><p><strong>operations</strong> (<em>list</em>) – Any combinations of {‘lcase’, ‘remalpha’, ‘stopwords’, ‘stemming’}. list of preprocessing Operations</p></li>
+<li><p><strong>randomize</strong> (<em>bool</em>) – Select first num_samples or at random</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.preprocess.imdb_reviews.PreprocessIMDB.extract_data">
+<span class="sig-name descname"><span class="pre">extract_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">root_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">explore_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">randomize</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/imdb_reviews.html#PreprocessIMDB.extract_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.imdb_reviews.PreprocessIMDB.extract_data" title="Link to this definition">#</a></dt>
+<dd><p>Extracting data from txt files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>root_path</strong> (<em>str</em>) – Root Folder with all the classes Folders with txt files for each sample or can have txt files</p></li>
+<li><p><strong>explore_folder</strong> (<em>bool</em>) – Whether the root_path has classes folder or txt files</p></li>
+<li><p><strong>num_samples</strong> (<em>int</em>) – How many samples to select from each folder</p></li>
+<li><p><strong>randomize</strong> (<em>bool</em>) – Select first num_samples or at random</p></li>
 </ul>
 </dd>
 </dl>
@@ -552,20 +576,20 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.imdb_reviews.PreprocessIMDB.extract_data_folder">
 <span class="sig-name descname"><span class="pre">extract_data_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fold_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_samples</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">randomize</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/imdb_reviews.html#PreprocessIMDB.extract_data_folder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.imdb_reviews.PreprocessIMDB.extract_data_folder" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Extracting txt data from each folder</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>fold_path</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>num_samples</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>randomize</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>fold_path</strong> (<em>str</em>) – Path to Folder</p></li>
+<li><p><strong>num_samples</strong> (<em>int</em>) – How many samples to select from each folder</p></li>
+<li><p><strong>randomize</strong> (<em>bool</em>) – Select first num_samples or at random</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>List of sentences from the folder</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -573,7 +597,7 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.imdb_reviews.PreprocessIMDB.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/imdb_reviews.html#PreprocessIMDB.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.imdb_reviews.PreprocessIMDB.run" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Preprocessing list of sentences</p>
 </dd></dl>
 
 </dd></dl>
@@ -585,16 +609,22 @@
 <dt class="sig sig-object py" id="src.preprocess.pos.PreprocessPOS">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.preprocess.pos.</span></span><span class="sig-name descname"><span class="pre">PreprocessPOS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/pos.html#PreprocessPOS"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.pos.PreprocessPOS" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Generating POS data from data available in nltk (‘treebank’, ‘brown’, ‘con11’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.pos.PreprocessPOS.extract_data">
 <span class="sig-name descname"><span class="pre">extract_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/pos.html#PreprocessPOS.extract_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.pos.PreprocessPOS.extract_data" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Extracting data from available corpus in nltk</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_description_</p>
+<dd class="field-odd"><p>List of sentences along with POS labels</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>_type_</p>
+<dd class="field-even"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -602,16 +632,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.pos.PreprocessPOS.get_data">
 <span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">corpus</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/pos.html#PreprocessPOS.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.pos.PreprocessPOS.get_data" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Generating Tokens and POS labels from corpus</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>corpus</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>corpus</strong> (<em>list</em>) – List of nltk sentences with POS Labels</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>Tokens and POS Labels</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples, seq_len, num_pos])</p>
 </dd>
 </dl>
 </dd></dl>
@@ -619,10 +649,10 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.pos.PreprocessPOS.get_vocab">
 <span class="sig-name descname"><span class="pre">get_vocab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">corpus</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/pos.html#PreprocessPOS.get_vocab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.pos.PreprocessPOS.get_vocab" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Generates Vocabulary</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>corpus</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>corpus</strong> (<em>list</em>) – List of nltk sentences with POS Labels</p>
 </dd>
 </dl>
 </dd></dl>
@@ -630,16 +660,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.pos.PreprocessPOS.preprocess_corpus">
 <span class="sig-name descname"><span class="pre">preprocess_corpus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">corpus</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/pos.html#PreprocessPOS.preprocess_corpus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.pos.PreprocessPOS.preprocess_corpus" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Preprocessing Sentences</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>corpus</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>corpus</strong> (<em>list</em>) – List of nltk sentences with POS Labels</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>List of sentences, Labels</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>tuple (list, list)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -653,19 +683,25 @@
 <dt class="sig sig-object py" id="src.preprocess.utils.BytePairEncoding">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.preprocess.utils.</span></span><span class="sig-name descname"><span class="pre">BytePairEncoding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#BytePairEncoding"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.BytePairEncoding" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Byte Pair Encoding Algorithm to convert a corpus to tokens</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.BytePairEncoding.build_vocab">
 <span class="sig-name descname"><span class="pre">build_vocab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">words</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#BytePairEncoding.build_vocab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.BytePairEncoding.build_vocab" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Generates Vocabulary after updation of words by merging characters</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>words</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>words</strong> (<em>list</em>) – List of words</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>List of updated words</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -673,16 +709,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.BytePairEncoding.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_ls</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#BytePairEncoding.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.BytePairEncoding.fit" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Fits BPE on List of sentences and Transforms into words</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>text_ls</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>text_ls</strong> (<em>list</em>) – List of sentences</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>List of words</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -690,16 +726,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.BytePairEncoding.get_stats">
 <span class="sig-name descname"><span class="pre">get_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">words</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#BytePairEncoding.get_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.BytePairEncoding.get_stats" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Creates a dictionary with pair of consecutive characters as key and corresponding count in corpus as value</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>words</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>words</strong> (<em>list</em>) – List of words from the corpus</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>Dictionary with pairs of characters and frequency</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -707,19 +743,19 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.BytePairEncoding.merge_chars">
 <span class="sig-name descname"><span class="pre">merge_chars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocab</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#BytePairEncoding.merge_chars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.BytePairEncoding.merge_chars" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Merging characters in a word if it’s concatenation present in vocabulary</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>word</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>vocab</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>word</strong> (<em>str</em>) – Word</p></li>
+<li><p><strong>vocab</strong> (<em>list</em>) – Vocabulary</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>new word with merged characters</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -727,19 +763,19 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.BytePairEncoding.preprocess">
 <span class="sig-name descname"><span class="pre">preprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_ls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#BytePairEncoding.preprocess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.BytePairEncoding.preprocess" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Creating words from list of sentences. Words are created by adding space between each character and adding  &lt;/w&gt; at the end.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>text_ls</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>data</strong> (<em>str</em><em>, </em><em>optional</em>) – _description_, defaults to “train”</p></li>
+<li><p><strong>text_ls</strong> (<em>list</em>) – List od sentences</p></li>
+<li><p><strong>data</strong> (<em>str</em><em>, </em><em>optional</em>) – {‘train’, ‘test’} Type of data, defaults to “train”</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>List of words from all the sentences in one list</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -747,16 +783,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.BytePairEncoding.run_merge">
 <span class="sig-name descname"><span class="pre">run_merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">words</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#BytePairEncoding.run_merge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.BytePairEncoding.run_merge" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Updates vocabulary until desired Vocabulary count is reached</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>words</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>words</strong> (<em>list</em>) – List of words</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>List of updated final words</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -764,16 +800,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.BytePairEncoding.transform">
 <span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_ls</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#BytePairEncoding.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.BytePairEncoding.transform" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Transforms list of sentences into words</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>text_ls</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>text_ls</strong> (<em>list</em>) – List of sentences</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>List of words</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -784,19 +820,25 @@
 <dt class="sig sig-object py" id="src.preprocess.utils.WordPiece">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.preprocess.utils.</span></span><span class="sig-name descname"><span class="pre">WordPiece</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#WordPiece"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.WordPiece" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>WordPiece Tokenization Algorithm to tokenize a corpus and generate Vocabulary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.WordPiece.build_vocab">
 <span class="sig-name descname"><span class="pre">build_vocab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">corpus</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#WordPiece.build_vocab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.WordPiece.build_vocab" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Generates Vocabulary after updation of words by merging characters</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>corpus</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>corpus</strong> (<em>list</em>) – List of words</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>List of updated corpus</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -804,16 +846,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.WordPiece.combine">
 <span class="sig-name descname"><span class="pre">combine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pair</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#WordPiece.combine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.WordPiece.combine" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Combines pair of characters based on their location in a word by removing ##</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>pair</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>pair</strong> (<em>tuple</em>) – Pair of characters</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>Combination of characters</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -821,16 +863,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.WordPiece.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_ls</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#WordPiece.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.WordPiece.fit" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Fits WordPiece on List of sentences and Transforms the words</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>text_ls</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>text_ls</strong> (<em>list</em>) – List of sentences</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>List of words</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -838,19 +880,19 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.WordPiece.get_likelihood">
 <span class="sig-name descname"><span class="pre">get_likelihood</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pair</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pair_freq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#WordPiece.get_likelihood"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.WordPiece.get_likelihood" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Calculates likelihood of two characters being consecutive in a corpus</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pair</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>pair_freq</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>pair</strong> (<em>tuple</em>) – Pair of characters</p></li>
+<li><p><strong>pair_freq</strong> (<em>dict</em>) – Dictionary with pairs of characters and frequency</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>Likelihood (can be a value in [0, 1])</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -858,16 +900,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.WordPiece.get_stats">
 <span class="sig-name descname"><span class="pre">get_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">corpus</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#WordPiece.get_stats"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.WordPiece.get_stats" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Creates a dictionary with pair of consecutive characters as key and corresponding count in corpus as value</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>corpus</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>corpus</strong> (<em>list</em>) – List of words</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>Dictionary with pairs of characters and frequency</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -875,19 +917,19 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.WordPiece.merge_chars">
 <span class="sig-name descname"><span class="pre">merge_chars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocab</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#WordPiece.merge_chars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.WordPiece.merge_chars" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Merging characters in a word if it’s concatenation present in vocabulary</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>word</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>vocab</strong> (<em>_type_</em>) – _description_</p></li>
+<li><p><strong>word</strong> (<em>str</em>) – Word</p></li>
+<li><p><strong>vocab</strong> (<em>list</em>) – Vocabulary</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>new word with merged characters</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -895,19 +937,19 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.WordPiece.preprocess">
 <span class="sig-name descname"><span class="pre">preprocess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_ls</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#WordPiece.preprocess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.WordPiece.preprocess" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Creating words from list of sentences. Words are created by adding ## at start each character (other than first character).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>text_ls</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>data</strong> (<em>str</em><em>, </em><em>optional</em>) – _description_, defaults to “train”</p></li>
+<li><p><strong>text_ls</strong> (<em>list</em>) – List od sentences</p></li>
+<li><p><strong>data</strong> (<em>str</em><em>, </em><em>optional</em>) – {‘train’, ‘test’} Type of data, defaults to “train”</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>List of words from all the sentences in one list. Each word is a list of characters</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -915,16 +957,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.WordPiece.run_merge">
 <span class="sig-name descname"><span class="pre">run_merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">corpus</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#WordPiece.run_merge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.WordPiece.run_merge" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Updates vocabulary until desired Vocabulary count is reached</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>corpus</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>corpus</strong> (<em>list</em>) – List of corpus</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>List of updated final corpus</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -932,16 +974,16 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="src.preprocess.utils.WordPiece.transform">
 <span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_ls</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#WordPiece.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.WordPiece.transform" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Transforms list of sentences into words</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>text_ls</strong> (<em>_type_</em>) – _description_</p>
+<dd class="field-odd"><p><strong>text_ls</strong> (<em>list</em>) – List of sentences</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>List of words</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -951,19 +993,19 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="src.preprocess.utils.preprocess_text">
 <span class="sig-prename descclassname"><span class="pre">src.preprocess.utils.</span></span><span class="sig-name descname"><span class="pre">preprocess_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/preprocess/utils.html#preprocess_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.preprocess.utils.preprocess_text" title="Link to this definition">#</a></dt>
-<dd><p>_summary_</p>
+<dd><p>Preprocesses Text</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>text</strong> (<em>_type_</em>) – _description_</p></li>
-<li><p><strong>operations</strong> (<em>_type_</em><em>, </em><em>optional</em>) – _description_, defaults to None</p></li>
+<li><p><strong>text</strong> (<em>str</em>) – string to preprocess</p></li>
+<li><p><strong>operations</strong> (<em>list</em><em>, </em><em>optional</em>) – List of operations from {‘lcase’, ‘remalpha’, ‘stopwords’, ‘stemming’}, defaults to None</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>_description_</p>
+<dd class="field-even"><p>Preprocessed text</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>_type_</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
