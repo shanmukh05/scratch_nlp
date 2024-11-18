@@ -83,12 +83,117 @@ Features
 Implementation Details
 ----------------------
 
-========= ==== ============ ====== =======
-Algorithm Task Tokenization Output Dataset
-========= ==== ============ ====== =======
-========= ==== ============ ====== =======
+.. raw:: html
 
-\| **BOW** \| Text Representation \| Preprocessed words \|
+   <table>
+
+.. raw:: html
+
+   <thead>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <th>
+
+Algorithm
+
+.. raw:: html
+
+   </th>
+
+.. raw:: html
+
+   <th>
+
+Task
+
+.. raw:: html
+
+   </th>
+
+.. raw:: html
+
+   <th>
+
+Tokenization
+
+.. raw:: html
+
+   </th>
+
+.. raw:: html
+
+   <th>
+
+Output
+
+.. raw:: html
+
+   </th>
+
+.. raw:: html
+
+   <th>
+
+Dataset
+
+.. raw:: html
+
+   </th>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   </thead>
+
+.. raw:: html
+
+   <tbody>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+BOW
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Text Representation
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Preprocessed words
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
 
 .. raw:: html
 
@@ -138,8 +243,61 @@ Wordcloud png
 
    </ul>
 
-\| IMDB Reviews \| Data \| \| **Ngram** \| Text Representation \|
-Preprocessed Words \|
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+IMDB Reviews
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+Ngram
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Text Representation
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Preprocessed Words
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
 
 .. raw:: html
 
@@ -199,11 +357,61 @@ Wordcloud png
 
    </ul>
 
-::
+.. raw:: html
 
-    | IMDB Reviews     | Data     |
+   </td>
 
-\| **TF-IDF** \| Text Representation \| Preprocessed words \|
+.. raw:: html
+
+   <td>
+
+IMDB Reviews
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+TF-IDF
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Text Representation
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Preprocessed words
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
 
 .. raw:: html
 
@@ -253,8 +461,61 @@ IDF csv
 
    </ul>
 
-\| IMDB Reviews \| \| **HMM** \| Text Representation \| Preprocessed
-words \|
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+IMDB Reviews
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+HMM
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Text Representation
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Preprocessed words
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
 
 .. raw:: html
 
@@ -314,8 +575,61 @@ Transition Matrix csv, png
 
    </ul>
 
-\| IMDB Reviews \| \| **Word2Vec** \| Text Representation \|
-Preprocessed words \|
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+IMDB Reviews
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+Word2Vec
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Text Representation
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Preprocessed words
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
 
 .. raw:: html
 
@@ -355,8 +669,61 @@ Word Embeddings TSNE html
 
    </ul>
 
-\| IMDB Reviews \| \| **GloVe** \| Text Representation \| Preprocessed
-words \|
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+IMDB Reviews
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+GloVe
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Text Representation
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Preprocessed words
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
 
 .. raw:: html
 
@@ -406,8 +773,61 @@ Top K Cooccurence Matrix png
 
    </ul>
 
-\| IMDB Reviews \| \| **RNN** \| Sentiment Classification \|
-Preprocessed words \|
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+IMDB Reviews
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+RNN
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Sentiment Classification
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Preprocessed words
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
 
 .. raw:: html
 
@@ -467,8 +887,61 @@ Training History png
 
    </ul>
 
-\| IMDB Reviews \| \| **LSTM** \| Image Captioning \| Preprocessed words
-\|
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+IMDB Reviews
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+LSTM
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Image Captioning
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Preprocessed words
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
 
 .. raw:: html
 
@@ -518,7 +991,61 @@ Training History png
 
    </ul>
 
-\| Flickr 8k \| \| **GRU** \| POS Tagging \| Preprocessed words \|
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Flickr 8k
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+GRU
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+POS Tagging
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Preprocessed words
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
 
 .. raw:: html
 
@@ -588,8 +1115,61 @@ Training History png
 
    </ul>
 
-\| NLTK Treebank, Broown, Conll2000 \| \| **Seq2Seq + Attention** \|
-Machine Translation \| Tokenization \|
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+NLTK Treebank, Broown, Conll2000
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+Seq2Seq + Attention
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Machine Translation
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Tokenization
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
 
 .. raw:: html
 
@@ -649,8 +1229,61 @@ Training History png
 
    </ul>
 
-\| English to Telugu Translation \| \| **Transformer** \| Lyrics
-Generation \| BytePairEncoding \|
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+English to Telugu Translation
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+Transformer
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Lyrics Generation
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+BytePairEncoding
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
 
 .. raw:: html
 
@@ -710,8 +1343,61 @@ Training History png
 
    </ul>
 
-\| Genius Lyrics \| \| **BERT** \| NSP Pretraining, QA Finetuning \|
-WordPiece \|
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Genius Lyrics
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+BERT
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+NSP Pretraining, QA Finetuning
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+WordPiece
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
 
 .. raw:: html
 
@@ -771,8 +1457,61 @@ Training History png (pretrain, finetune)
 
    </ul>
 
-\| Wiki en, SQuAD v1 \| \| **GPT-2** \| Sentence Completition \|
-BytePairEncoding \|
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Wiki en, SQuAD v1
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   <tr>
+
+.. raw:: html
+
+   <td>
+
+GPT-2
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+Sentence Completition
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+BytePairEncoding
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
 
 .. raw:: html
 
@@ -832,7 +1571,31 @@ Training History png
 
    </ul>
 
-\| LAMBADA \|
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   <td>
+
+LAMBADA
+
+.. raw:: html
+
+   </td>
+
+.. raw:: html
+
+   </tr>
+
+.. raw:: html
+
+   </tbody>
+
+.. raw:: html
+
+   </table>
 
 Examples
 ========

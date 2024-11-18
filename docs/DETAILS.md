@@ -73,21 +73,109 @@ Install dependencies
 
 ## Implementation Details
 
-| Algorithm | Task | Tokenization | Output | Dataset |
-|----------|----------|----------|----------|----------|
-| **BOW**    | Text Representation | Preprocessed words | <ul><li>Text Label, Vector npy files</li><li>Top K Vocab Frequency Histogram png</li><li>Vocab frequency csv</li><li>Wordcloud png</li></ul> | IMDB Reviews | Data     |
-| **Ngram**   | Text Representation     | Preprocessed Words     | <ul><li>Text Label, Vector npy files</li><li>Top K Vocab Frequency Histogram png</li><li>Top K ngrams Piechart ong</li><li>Vocab frequency csv</li><li>Wordcloud png</li></ul>     | IMDB Reviews     | Data     |
-| **TF-IDF**   | Text Representation | Preprocessed words | <ul><li>Text Label, Vector npy files</li><li>TF PCA Pairplot png</li><li>TF-IDF PCA Pairplot png</li><li>IDF csv</li></ul> | IMDB Reviews |
-| **HMM**   | Text Representation | Preprocessed words | <ul><li>Data Analysis png (sent len, POS tags count)</li><li>Emission Matrix TSNE html</li><li>Emission matrix csv</li><li>Test Predictions conf matrix, clf report png</li><li>Transition Matrix csv, png</li></ul> | IMDB Reviews |
-| **Word2Vec**    | Text Representation | Preprocessed words | <ul><li>Best Model pt</li><li>Training History json</li><li>Word Embeddings TSNE html</li></ul> | IMDB Reviews |
-| **GloVe**   | Text Representation | Preprocessed words | <ul><li>Best Model pt</li><li>Training History json</li><li>Word Embeddings TSNE html</li><li>Top K Cooccurence Matrix png</li></ul> | IMDB Reviews |
-| **RNN**    | Sentiment Classification | Preprocessed words | <ul><li>Best Model pt</li><li>Training History json</li><li>Word Embeddings TSNE html</li><li>Confusion Matrix png</li><li>Training History png</li></ul> | IMDB Reviews |
-| **LSTM**    | Image Captioning | Preprocessed words | <ul><li>Best Model pt</li><li>Training History json</li><li>Word Embeddings TSNE html</li><li>Training History png</li></ul> | Flickr 8k |
-| **GRU**    | POS Tagging | Preprocessed words | <ul><li>Best Model pt</li><li>Training History json</li><li>Word Embeddings TSNE html</li><li>Confusion Matrix png</li><li>Test predictions csv</li><li>Training History png</li></ul> | NLTK Treebank, Broown, Conll2000 |
-| **Seq2Seq + Attention**   | Machine Translation | Tokenization | <ul><li>Best Model pt</li><li>Training History json</li><li>Source, Target Word Embeddings TSNE html</li><li>Test predictions csv</li><li>Training History png</li></ul> | English to Telugu Translation |
-| **Transformer**   | Lyrics Generation | BytePairEncoding | <ul><li>Best Model pt</li><li>Training History json</li><li>Token Embeddings TSNE html</li><li>Test predictions csv</li><li>Training History png</li></ul> | Genius Lyrics |
-| **BERT**   | NSP Pretraining, QA Finetuning | WordPiece | <ul><li>Best Model pt (pretrain, finetune)</li><li>Training History json (pretrain, finetune)</li><li>Token Embeddings TSNE html</li><li>Finetune Test predictions csv</li><li>Training History png (pretrain, finetune)</li></ul> | Wiki en, SQuAD v1 |
-| **GPT-2**   | Sentence Completition | BytePairEncoding | <ul><li>Best Model pt</li><li>Training History json</li><li>Token Embeddings TSNE html</li><li>Test predictions csv</li><li>Training History png</li></ul> | LAMBADA |
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Task</th>
+<th>Tokenization</th>
+<th>Output</th>
+<th>Dataset</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>BOW</strong></td>
+<td>Text Representation</td>
+<td>Preprocessed words</td>
+<td><ul><li>Text Label, Vector npy files</li><li>Top K Vocab Frequency Histogram png</li><li>Vocab frequency csv</li><li>Wordcloud png</li></ul></td>
+<td>IMDB Reviews</td>
+</tr>
+<tr>
+<td><strong>Ngram</strong></td>
+<td>Text Representation</td>
+<td>Preprocessed Words</td>
+<td><ul><li>Text Label, Vector npy files</li><li>Top K Vocab Frequency Histogram png</li><li>Top K ngrams Piechart ong</li><li>Vocab frequency csv</li><li>Wordcloud png</li></ul></td>
+<td>IMDB Reviews</td>
+</tr>
+<tr>
+<td><strong>TF-IDF</strong></td>
+<td>Text Representation</td>
+<td>Preprocessed words</td>
+<td><ul><li>Text Label, Vector npy files</li><li>TF PCA Pairplot png</li><li>TF-IDF PCA Pairplot png</li><li>IDF csv</li></ul></td>
+<td>IMDB Reviews</td>
+</tr>
+<tr>
+<td><strong>HMM</strong></td>
+<td>Text Representation</td>
+<td>Preprocessed words</td>
+<td><ul><li>Data Analysis png (sent len, POS tags count)</li><li>Emission Matrix TSNE html</li><li>Emission matrix csv</li><li>Test Predictions conf matrix, clf report png</li><li>Transition Matrix csv, png</li></ul></td>
+<td>IMDB Reviews</td>
+</tr>
+<tr>
+<td><strong>Word2Vec</strong></td>
+<td>Text Representation</td>
+<td>Preprocessed words</td>
+<td><ul><li>Best Model pt</li><li>Training History json</li><li>Word Embeddings TSNE html</li></ul></td>
+<td>IMDB Reviews</td>
+</tr>
+<tr>
+<td><strong>GloVe</strong></td>
+<td>Text Representation</td>
+<td>Preprocessed words</td>
+<td><ul><li>Best Model pt</li><li>Training History json</li><li>Word Embeddings TSNE html</li><li>Top K Cooccurence Matrix png</li></ul></td>
+<td>IMDB Reviews</td>
+</tr>
+<tr>
+<td><strong>RNN</strong></td>
+<td>Sentiment Classification</td>
+<td>Preprocessed words</td>
+<td><ul><li>Best Model pt</li><li>Training History json</li><li>Word Embeddings TSNE html</li><li>Confusion Matrix png</li><li>Training History png</li></ul></td>
+<td>IMDB Reviews</td>
+</tr>
+<tr>
+<td><strong>LSTM</strong></td>
+<td>Image Captioning</td>
+<td>Preprocessed words</td>
+<td><ul><li>Best Model pt</li><li>Training History json</li><li>Word Embeddings TSNE html</li><li>Training History png</li></ul></td>
+<td>Flickr 8k</td>
+</tr>
+<tr>
+<td><strong>GRU</strong></td>
+<td>POS Tagging</td>
+<td>Preprocessed words</td>
+<td><ul><li>Best Model pt</li><li>Training History json</li><li>Word Embeddings TSNE html</li><li>Confusion Matrix png</li><li>Test predictions csv</li><li>Training History png</li></ul></td>
+<td>NLTK Treebank, Broown, Conll2000</td>
+</tr>
+<tr>
+<td><strong>Seq2Seq + Attention</strong></td>
+<td>Machine Translation</td>
+<td>Tokenization</td>
+<td><ul><li>Best Model pt</li><li>Training History json</li><li>Source, Target Word Embeddings TSNE html</li><li>Test predictions csv</li><li>Training History png</li></ul></td>
+<td>English to Telugu Translation</td>
+</tr>
+<tr>
+<td><strong>Transformer</strong></td>
+<td>Lyrics Generation</td>
+<td>BytePairEncoding</td>
+<td><ul><li>Best Model pt</li><li>Training History json</li><li>Token Embeddings TSNE html</li><li>Test predictions csv</li><li>Training History png</li></ul></td>
+<td>Genius Lyrics</td>
+</tr>
+<tr>
+<td><strong>BERT</strong></td>
+<td>NSP Pretraining, QA Finetuning</td>
+<td>WordPiece</td>
+<td><ul><li>Best Model pt (pretrain, finetune)</li><li>Training History json (pretrain, finetune)</li><li>Token Embeddings TSNE html</li><li>Finetune Test predictions csv</li><li>Training History png (pretrain, finetune)</li></ul></td>
+<td>Wiki en, SQuAD v1</td>
+</tr>
+<tr>
+<td><strong>GPT-2</strong></td>
+<td>Sentence Completition</td>
+<td>BytePairEncoding</td>
+<td><ul><li>Best Model pt</li><li>Training History json</li><li>Token Embeddings TSNE html</li><li>Test predictions csv</li><li>Training History png</li></ul></td>
+<td>LAMBADA</td>
+</tr>
+</tbody></table>
+
 
 
 # Examples
