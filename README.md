@@ -98,6 +98,14 @@ Install dependencies
   - Text Generation
 
 ### Implementation Details
+<style>
+td {
+    border: solid 2px lightgrey;
+}
+th {
+    border: solid 2px lightgrey;
+}
+</style>
 
 <table>
 <thead>

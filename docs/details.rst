@@ -85,6 +85,17 @@ Implementation Details
 
 .. raw:: html
 
+   <style>
+   td {
+       border: solid 2px lightgrey;
+   }
+   th {
+       border: solid 2px lightgrey;
+   }
+   </style>
+
+.. raw:: html
+
    <table>
 
 .. raw:: html
