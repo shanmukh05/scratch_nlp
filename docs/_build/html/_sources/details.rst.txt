@@ -1662,6 +1662,12 @@ IIT Kharagpur.
 Connect with me
 ---------------
 
+.. figure:: https://raw.githubusercontent.com/shanmukh05/scratch_nlp/main/assets/connect.png
+   :alt: Logo
+   :width: 200px
+   :target: https://linktr.ee/shanmukh05
+
+
 Lessons Learned
 ===============
 
