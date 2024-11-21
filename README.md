@@ -4,31 +4,30 @@
 [![Build Status](https://travis-ci.org/yourusername/yourlibraryname.svg?branch=master)](https://travis-ci.org/yourusername/yourlibraryname)
 [![Coverage Status](https://coveralls.io/repos/github/yourusername/yourlibraryname/badge.svg?branch=master)](https://coveralls.io/github/yourusername/yourlibraryname?branch=master)
 
-# Scratch NLP
+# Scratch NLP 🧠
 
 Library with foundational NLP Algorithms implemented from scratch using PyTorch.
 
-## Table of Contents
+## Table of Contents 📋
 
-- [Documentation](#documentation)
-- [Installation](#installation)
-- [Run Locally](#run-locally)
-- [Features](#features)
-- [Examples](#examples)
-- [Contributing](#contributing)
-- [Acknowledgements](#acknowledgements)
-- [About Me](#about-me)
-- [Lessons Learned](#lessons-learned)
-- [License](#license)
-- [Feedback](#feedback)
+- [Documentation](#documentation-📝)
+- [Installation](#installation-⬇️)
+- [Features](#features-🛠️)
+- [Examples](#examples-🌟)
+- [Contributing](#contributing-🤝)
+- [Acknowledgements](#acknowledgements-💡)
+- [About Me](#about-me-👤)
+- [Lessons Learned](#lessons-learned-📌)
+- [License](#license-⚖️)
+- [Feedback](#feedback-📣)
 
 
-## Documentation
+## Documentation 📝
 
 [Documentation](https://shanmukh05.github.io/scratch_nlp/)
 
 
-## Installation
+## Installation ⬇️
 
 ### Install using pip
 
@@ -51,7 +50,7 @@ Install dependencies
 ```
 
 
-## Features
+## Features 🛠️
 
 - Algorithms
   - Bag of Words
@@ -204,7 +203,7 @@ Install dependencies
 
 
 
-## Examples
+## Examples 🌟
 
 Run Train and Inference directly through import
 ```python
@@ -224,26 +223,26 @@ Run through CLI
   python main.py --config_path '<config_path>' --algo '<algo name>' --log_folder '<output folder>'
 ```
 
-## Contributing
+## Contributing 🤝
 
 Contributions are always welcome!
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for ways to get started.
 
-## Acknowledgements
+## Acknowledgements 💡
 
-I have referred to sa many online resources to create this project. I'm adding all the resources to [RESOURCES.md](RESOURCES.md). Thanks to all who has created those blogs/code/datasets.
+I have referred to so many online resources to create this project. I'm adding all the resources to [RESOURCES.md](RESOURCES.md). Thanks to all who has created those blogs/code/datasets 😊.
 
 Thanks to [CS224N](https://web.stanford.edu/class/cs224n/) course which gave me motivation to start this project
 
-## About Me
+## About Me 👤
 I am Shanmukha Sainath, working as AI Engineer at KLA Corporation. I have done my Bachelors from Department of Electronics and Electrical Communication Engineering department with Minor in Computer Science Engineering and Micro in Artificial Intelligence and Applications from IIT Kharagpur. 
 
 ### Connect with me
 
 <a href="https://linktr.ee/shanmukh05" target="blank"><img src="https://raw.githubusercontent.com/shanmukh05/scratch_nlp/main/assets/connect.png" alt="@shanmukh05" width="200"/></a>
 
-## Lessons Learned
+## Lessons Learned 📌
 
 Most of the things present in this project are pretty new to me. I'm listing down my major learnings when creating this project
 
@@ -254,10 +253,10 @@ Most of the things present in this project are pretty new to me. I'm listing dow
 - GitHub pages
 - PIP packaging       
 
-## License
+## License ⚖️
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
-## Feedback
+## Feedback 📣
 
 If you have any feedback, please reach out to me at venkatashanmukhasainathg@gmail.com
