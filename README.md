@@ -1,7 +1,5 @@
 ![Logo](https://raw.githubusercontent.com/shanmukh05/scratch_nlp/main/assets/logo.png)
 
-[![PyPI version](https://badge.fury.io/py/scratch_nlp.svg)](https://badge.fury.io/py/scratch_nlp)
-
 # Scratch NLP 🧠
 
 Library with foundational NLP Algorithms implemented from scratch using PyTorch.
