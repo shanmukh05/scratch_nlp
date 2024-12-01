@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "scratch_nlp"
+name = "ScratchNLP"
 version = "1.0.0"
 description = "Library with NLP Algorithms implemented from scratch"
 readme = "README.md"

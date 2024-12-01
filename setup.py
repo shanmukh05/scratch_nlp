@@ -7,7 +7,7 @@ with open("requirements.txt", "r") as f:
     requirements = f.read().splitlines()
 
 setup(
-    name="scratch_nlp",                    
+    name="ScratchNLP",                    
     version="1.0.0",                            
     author="Shanmukha Sainath",                         
     author_email="venkatashanmukhasainathg@gmail.com",     
