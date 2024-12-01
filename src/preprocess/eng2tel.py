@@ -8,11 +8,12 @@ from collections import Counter
 
 class PreprocessSeq2Seq:
     """
-    Loading Data and Generating Source, target Data for SEQ2SEQ Model Training. 
+    Loading Data and Generating Source, target Data for SEQ2SEQ Model Training.
 
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
 
@@ -63,7 +64,7 @@ class PreprocessSeq2Seq:
 
     def get_vocab(self, df):
         """
-        Generates Vocabulary 
+        Generates Vocabulary
 
         :param df: DataFrame with Source and Target sentences
         :type df: pandas.DataFrame

@@ -18,6 +18,7 @@ class LSTMDataset(Dataset):
     :param tokens: Captions tokens, defaults to None
     :type tokens: list, optional
     """
+
     def __init__(self, paths, transforms, tokens=None):
         self.paths = paths
         self.tokens = tokens

@@ -22,7 +22,8 @@ class BERTPretrainTrainer(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
-    def __init__(self, model, optimizer, config_dict):    
+
+    def __init__(self, model, optimizer, config_dict):
         super(BERTPretrainTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
 
@@ -39,7 +40,7 @@ class BERTPretrainTrainer(nn.Module):
         :param epoch: Epoch number
         :type epoch: int
         :return: Train Losses (Train Loss, Train masked tokens loss, Train NSP loss)
-        :rtype: tuple (torch.float32, torch.flooat32, torch.float32) 
+        :rtype: tuple (torch.float32, torch.flooat32, torch.float32)
         """
         self.model.train()
         total_loss, total_clf_loss, total_nsp_loss, num_instances = 0, 0, 0, 0
@@ -81,7 +82,7 @@ class BERTPretrainTrainer(nn.Module):
         :param data_loader: Validation Data Loader
         :type data_loader: torch.utils.data.Dataloader
         :return: Validation Losses (Validation Loss, Validation masked tokens loss, Validation NSP loss)
-        :rtype: tuple (torch.float32, torch.flooat32, torch.float32) 
+        :rtype: tuple (torch.float32, torch.flooat32, torch.float32)
         """
         self.model.eval()
         total_loss, total_clf_loss, total_nsp_loss, num_instances = 0, 0, 0, 0
@@ -203,13 +204,13 @@ class BERTPretrainTrainer(nn.Module):
 
     def calc_loss(self, tokens_pred, nsp_pred, tokens_true, nsp_labels, tokens_mask):
         """
-        Calculates Training Loss components 
+        Calculates Training Loss components
 
         :param tokens_pred: Predicted Tokens
         :type tokens_pred: torch.Tensor (batch_size, seq_len, num_vocab)
         :param nsp_pred: Predicted NSP Label
         :type nsp_pred: torch.Tensor (batch_size,)
-        :param tokens_true: True tokens 
+        :param tokens_true: True tokens
         :type tokens_true: torch.Tensor (batch_size, seq_len)
         :param nsp_labels: NSP labels
         :type nsp_labels: torch.Tensor (batch_size,)

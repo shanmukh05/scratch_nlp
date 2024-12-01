@@ -22,6 +22,7 @@ class RNNCell(nn.Module):
     :param out_x_dim: Output vector dimension
     :type out_x_dim: int
     """
+
     def __init__(self, h_dim, inp_x_dim, out_x_dim):
         super(RNNCell, self).__init__()
 
@@ -54,6 +55,7 @@ class RNNModel(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(RNNModel, self).__init__()
 
@@ -132,8 +134,9 @@ class RNNTrainer(nn.Module):
     :param optimizer: Optimizer
     :type optimizer: torch.optim
     :param config_dict: Config Params Dictionary
-    :type config_dict: dict 
+    :type config_dict: dict
     """
+
     def __init__(self, model, optimizer, config_dict):
         super(RNNTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)

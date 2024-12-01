@@ -37,7 +37,7 @@ setup(
     },
     project_urls={                               # Additional URLs about your project
         "Bug Tracker": "https://github.com/shanmukh05/scratch_nlp/issues",
-        "Documentation": "https://your_project.readthedocs.io/",
+        "Documentation": "https://shanmukh05.github.io/scratch_nlp/",
         "Source Code": "https://github.com/shanmukh05/scratch_nlp",
     },
 )

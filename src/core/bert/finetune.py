@@ -15,13 +15,14 @@ class BERTFinetuneTrainer(nn.Module):
     """
     BERT Finetune Model trainer
 
-    :param model: BERT Finetune model 
+    :param model: BERT Finetune model
     :type model: torch.nn.Module
     :param optimizer: Optimizer
     :type optimizer: torch.optim
     :param config_dict: Config Params Dictionary
-    :type config_dict: dict 
+    :type config_dict: dict
     """
+
     def __init__(self, model, optimizer, config_dict):
         super(BERTFinetuneTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
@@ -118,7 +119,7 @@ class BERTFinetuneTrainer(nn.Module):
     @torch.no_grad()
     def predict(self, data_loader):
         """
-        Runs inference on Input Data 
+        Runs inference on Input Data
 
         :param data_loader: Infer Data loader
         :type data_loader: torch.utils.data.DataLoader

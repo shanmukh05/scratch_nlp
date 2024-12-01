@@ -18,8 +18,9 @@ class MultiHeadAttention(nn.Module):
     Multi head Attention layer
 
     :param config_dict: Config Params Dictionary
-    :type config_dict: dict 
+    :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(MultiHeadAttention, self).__init__()
 
@@ -95,6 +96,7 @@ class PositionalEncoding(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(PositionalEncoding, self).__init__()
 
@@ -129,6 +131,7 @@ class FeedForward(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(FeedForward, self).__init__()
 
@@ -161,6 +164,7 @@ class EncoderLayer(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(EncoderLayer, self).__init__()
         dropout = config_dict["model"]["dropout"]
@@ -200,6 +204,7 @@ class DecoderLayer(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(DecoderLayer, self).__init__()
         dropout = config_dict["model"]["dropout"]
@@ -248,6 +253,7 @@ class TransformerModel(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(TransformerModel, self).__init__()
 
@@ -306,8 +312,9 @@ class TransformerTrainer(nn.Module):
     :param optimizer: Optimizer
     :type optimizer: torch.optim
     :param config_dict: Config Params Dictionary
-    :type config_dict: dict 
+    :type config_dict: dict
     """
+
     def __init__(self, model, optimizer, config_dict):
         super(TransformerTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)

@@ -14,6 +14,7 @@ class Node:
     :param right: Right nodes, defaults to None
     :type right: list, optional
     """
+
     def __init__(self, word_idx, freq, left=None, right=None):
         self.word_idx = word_idx
         self.freq = freq
@@ -30,6 +31,7 @@ class HuffmanBTree:
     :param vocab_freq_dict: Vocabulary Frequency Dictionary
     :type vocab_freq_dict: dict
     """
+
     def __init__(self, vocab_freq_dict):
         self.logger = logging.getLogger(__name__)
         self.vocab = list(vocab_freq_dict.keys())

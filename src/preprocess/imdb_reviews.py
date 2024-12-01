@@ -22,6 +22,7 @@ class PreprocessIMDB:
     :param randomize: Select first num_samples or at random
     :type randomize: bool
     """
+
     def __init__(self, root_path, explore_folder, num_samples, operations, randomize):
         self.logger = logging.getLogger(__name__)
         self.extract_data(root_path, explore_folder, num_samples, randomize)

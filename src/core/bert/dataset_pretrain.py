@@ -16,6 +16,7 @@ class PreprocessBERTPretrain:
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
 
@@ -162,6 +163,7 @@ class BERTPretrainDataset(Dataset):
     :param word2id: Words to Ids mapping
     :type word2id: dict
     """
+
     def __init__(self, text_tokens, nsp_labels, config_dict, word2id):
         self.text_tokens = text_tokens
         self.nsp_labels = nsp_labels
@@ -191,7 +193,7 @@ class BERTPretrainDataset(Dataset):
 
     def __getitem__(self, idx):
         """
-        Returns a masked data sample 
+        Returns a masked data sample
 
         :param idx: Id of the sample
         :type idx: int

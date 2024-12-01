@@ -22,6 +22,7 @@ class HMM:
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
@@ -40,7 +41,7 @@ class HMM:
         """
         Fits HMM algo on preprocessed text
 
-        :param X: List of sentences 
+        :param X: List of sentences
         :type X: list
         :param y: Labels
         :type y: list
@@ -117,7 +118,7 @@ class HMM:
 
     def evaluate(self, Y, YP):
         """
-        Evaluation metrics 
+        Evaluation metrics
 
         :param Y: True Labels
         :type Y: list

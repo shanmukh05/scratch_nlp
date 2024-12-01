@@ -23,6 +23,7 @@ class BERT:
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
         self.config_dict = config_dict
@@ -165,7 +166,7 @@ class BERT:
 
         :param pretrain_model: Pretrain BERT model
         :type pretrain_model: torch.nn.Module
-        :param finetune_model: Finetune BERT model 
+        :param finetune_model: Finetune BERT model
         :type finetune_model: torch.nn.Module
         :return: Finetune BERT model with Pretrained weights
         :rtype: torch.nn.Module

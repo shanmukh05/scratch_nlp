@@ -21,6 +21,7 @@ class EncoderLSTMCell(nn.Module):
     :param inp_x_dim: Input vector dimension
     :type inp_x_dim: int
     """
+
     def __init__(self, h_dim, inp_x_dim):
         super(EncoderLSTMCell, self).__init__()
 
@@ -72,6 +73,7 @@ class DecoderLSTMCell(nn.Module):
     :param out_x_dim: Output vector dimension
     :type out_x_dim: int
     """
+
     def __init__(self, h_dim, inp_x_dim, out_x_dim):
         super(DecoderLSTMCell, self).__init__()
 
@@ -122,6 +124,7 @@ class Seq2SeqEncoder(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(Seq2SeqEncoder, self).__init__()
 
@@ -206,6 +209,7 @@ class Seq2SeqAttention(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(Seq2SeqAttention, self).__init__()
 
@@ -244,6 +248,7 @@ class Seq2SeqDecoder(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(Seq2SeqDecoder, self).__init__()
 
@@ -315,6 +320,7 @@ class Seq2SeqModel(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(Seq2SeqModel, self).__init__()
 
@@ -347,8 +353,9 @@ class Seq2SeqTrainer(nn.Module):
     :param optimizer: Optimizer
     :type optimizer: torch.optim
     :param config_dict: Config Params Dictionary
-    :type config_dict: dict 
+    :type config_dict: dict
     """
+
     def __init__(self, model, optimizer, config_dict):
         super(Seq2SeqTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)

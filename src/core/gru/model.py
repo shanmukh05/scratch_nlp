@@ -23,6 +23,7 @@ class GRUCell(nn.Module):
     :param out_x_dim: Output vector dimension
     :type out_x_dim: int
     """
+
     def __init__(self, h_dim, inp_x_dim, out_x_dim):
         super(GRUCell, self).__init__()
 
@@ -66,6 +67,7 @@ class GRUModel(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(GRUModel, self).__init__()
 
@@ -126,8 +128,9 @@ class GRUTrainer(nn.Module):
     :param optimizer: Optimizer
     :type optimizer: torch.optim
     :param config_dict: Config Params Dictionary
-    :type config_dict: dict 
+    :type config_dict: dict
     """
+
     def __init__(self, model, optimizer, config_dict):
         super(GRUTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)

@@ -7,7 +7,8 @@ from sklearn.preprocessing import OneHotEncoder
 from .utils import preprocess_text
 
 import nltk
-nltk.download('treebank')
+
+nltk.download("treebank")
 nltk.download("brown")
 nltk.download("conll2000")
 
@@ -26,6 +27,7 @@ class PreprocessPOS:
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
 
@@ -45,7 +47,7 @@ class PreprocessPOS:
 
         :param corpus: List of nltk sentences with POS Labels
         :type corpus: list
-        :return: Tokens and POS Labels 
+        :return: Tokens and POS Labels
         :rtype: tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples, seq_len, num_pos])
         """
         X, y = self.preprocess_corpus(corpus)

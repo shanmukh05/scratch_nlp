@@ -16,6 +16,7 @@ class Word2VecModel(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(Word2VecModel, self).__init__()
 
@@ -77,8 +78,9 @@ class Word2VecTrainer(nn.Module):
     :param optimizer: Optimizer
     :type optimizer: torch.optim
     :param config_dict: Config Params Dictionary
-    :type config_dict: dict 
+    :type config_dict: dict
     """
+
     def __init__(self, model, optimizer, config_dict):
         super(Word2VecTrainer, self).__init__()
 

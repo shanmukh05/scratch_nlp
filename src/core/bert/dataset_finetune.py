@@ -20,6 +20,7 @@ class PreprocessBERTFinetune:
     :param word2id: Words to Ids mapping
     :type word2id: dict
     """
+
     def __init__(self, config_dict, wordpiece, word2id):
         self.logger = logging.getLogger(__name__)
 

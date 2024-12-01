@@ -21,6 +21,7 @@ class DecoderLayer(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(DecoderLayer, self).__init__()
 
@@ -59,8 +60,9 @@ class GPTModel(nn.Module):
     GPT Architecture
 
     :param config_dict: Config Params Dictionary
-    :type config_dict: dict 
+    :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(GPTModel, self).__init__()
 
@@ -84,7 +86,7 @@ class GPTModel(nn.Module):
 
     def forward(self, tokens):
         """
-        Forward propogation 
+        Forward propogation
 
         :param tokens: Input tokens
         :type tokens: torch.Tensor (num_samples, seq_len)
@@ -132,8 +134,9 @@ class GPTTrainer(nn.Module):
     :param optimizer: Optimizer
     :type optimizer: torch.optim
     :param config_dict: Config Params Dictionary
-    :type config_dict: dict 
+    :type config_dict: dict
     """
+
     def __init__(self, model, optimizer, config_dict):
         super(GPTTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)

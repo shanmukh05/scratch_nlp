@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 def load_config(config_path):
     """
-    Loading YAML Config file as a Dictionary 
+    Loading YAML Config file as a Dictionary
 
     :param config_path: Path to Config File
     :type config_path: str
@@ -29,6 +29,7 @@ def load_config(config_path):
 
     logging.info("Config File Loaded")
     return config_dict
+
 
 def set_seed(seed):
     """
@@ -62,7 +63,7 @@ class ValidateConfig:
 
     def run_verify(self):
         """
-        Config Params Keys and Values Verification 
+        Config Params Keys and Values Verification
         """
         logger.info("Validating Config File")
         self.verify_main_keys(self.config_dict.keys())
@@ -76,7 +77,7 @@ class ValidateConfig:
         :type key: str
         :param val: Param value
         :type val: float
-        """        
+        """
         pass
 
     def check_int(self, key, val):
@@ -87,7 +88,7 @@ class ValidateConfig:
         :type key: str
         :param val: Param value
         :type val: int
-        """       
+        """
         pass
 
     def check_string(self, key, val):
@@ -98,7 +99,7 @@ class ValidateConfig:
         :type key: str
         :param val: Param value
         :type val: str
-        """       
+        """
         pass
 
     def check_paths(self, key, val):
@@ -109,7 +110,7 @@ class ValidateConfig:
         :type key: str
         :param val: Param value
         :type val: str
-        """       
+        """
         pass
 
     def check_list(self, key, val):
@@ -120,7 +121,7 @@ class ValidateConfig:
         :type key: str
         :param val: Param value
         :type val: list
-        """  
+        """
         pass
 
     def compare_dtype(self, key, val):
@@ -131,7 +132,7 @@ class ValidateConfig:
         :type key: str
         :param val: Param value
         :type val: float/int/str/list
-        """      
+        """
         type_abs = configDictDType[key]
         type_cfg = type(val)
 

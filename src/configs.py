@@ -1,6 +1,7 @@
 """
 All the Config Parameters that are used in the lubrary with corresponding Data Type
 """
+
 configDictDType = {
     ## paths
     "input_file": str,

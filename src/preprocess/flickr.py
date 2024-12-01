@@ -16,6 +16,7 @@ class PreprocessFlickr:
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
 
@@ -24,7 +25,7 @@ class PreprocessFlickr:
 
     def get_data(self):
         """
-        Preprocessing 
+        Preprocessing
 
         :return: Returns image paths, Train Tokens, (Train, Test Transforms)
         :rtype: (list, numpy.ndarray [num_samples, seq_len], (albumentations.Compose, albumentations.Compose))
@@ -54,7 +55,7 @@ class PreprocessFlickr:
 
     def extract_data(self):
         """
-        Extracting Image and Captions Data 
+        Extracting Image and Captions Data
 
         :return: Train and Test DataFrames
         :rtype: tuple (pandas.DataFrame, pandas.DataFrame)

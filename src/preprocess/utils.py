@@ -43,6 +43,7 @@ class BytePairEncoding:
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
 
@@ -115,7 +116,7 @@ class BytePairEncoding:
 
     def preprocess(self, text_ls, data="train"):
         """
-        Creating words from list of sentences. Words are created by adding space between each character and adding  </w> at the end. 
+        Creating words from list of sentences. Words are created by adding space between each character and adding  </w> at the end.
 
         :param text_ls: List od sentences
         :type text_ls: list
@@ -205,6 +206,7 @@ class WordPiece:
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
 
@@ -268,13 +270,13 @@ class WordPiece:
 
     def preprocess(self, text_ls, data="train"):
         """
-        Creating words from list of sentences. Words are created by adding ## at start each character (other than first character). 
+        Creating words from list of sentences. Words are created by adding ## at start each character (other than first character).
 
         :param text_ls: List od sentences
         :type text_ls: list
         :param data: {'train', 'test'} Type of data, defaults to "train"
         :type data: str, optional
-        :return: List of words from all the sentences in one list. Each word is a list of characters 
+        :return: List of words from all the sentences in one list. Each word is a list of characters
         :rtype: list
         """
         words = " ".join(text_ls).split()
@@ -297,7 +299,7 @@ class WordPiece:
         """
         Creates a dictionary with pair of consecutive characters as key and corresponding count in corpus as value
 
-        :param corpus: List of words 
+        :param corpus: List of words
         :type corpus: list
         :return: Dictionary with pairs of characters and frequency
         :rtype: dict

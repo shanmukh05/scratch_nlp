@@ -16,6 +16,7 @@ class GloVeModel(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(GloVeModel, self).__init__()
 
@@ -59,8 +60,9 @@ class GloVeTrainer(nn.Module):
     :param optimizer: Optimizer
     :type optimizer: torch.optim
     :param config_dict: Config Params Dictionary
-    :type config_dict: dict 
+    :type config_dict: dict
     """
+
     def __init__(self, model, optimizer, config_dict):
         super(GloVeTrainer, self).__init__()
 

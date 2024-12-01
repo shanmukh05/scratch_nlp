@@ -13,6 +13,7 @@ class BERTPretrainModel(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(BERTPretrainModel, self).__init__()
 
@@ -34,7 +35,7 @@ class BERTPretrainModel(nn.Module):
 
     def forward(self, tokens):
         """
-        Forward propogation 
+        Forward propogation
 
         :param tokens: Input tokens
         :type tokens: torch.Tensor (num_samples, seq_len)
@@ -62,6 +63,7 @@ class BERTFinetuneModel(nn.Module):
     :param config_dict: Config Params Dictionary
     :type config_dict: dict
     """
+
     def __init__(self, config_dict):
         super(BERTFinetuneModel, self).__init__()
 

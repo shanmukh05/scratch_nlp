@@ -50,7 +50,12 @@ parser.add_argument(
     "-L", "--log_folder", type=str, required=True, help="Path to Log Folder"
 )
 parser.add_argument(
-    "-S", "--seed", type=int, default=2024, required=False, help="Seed to Reproduce the results"
+    "-S",
+    "--seed",
+    type=int,
+    default=2024,
+    required=False,
+    help="Seed to Reproduce the results",
 )
 
 args = parser.parse_args()

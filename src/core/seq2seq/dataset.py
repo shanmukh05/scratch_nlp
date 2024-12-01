@@ -3,9 +3,7 @@ from sklearn.model_selection import train_test_split
 from torch.utils.data import TensorDataset, DataLoader
 
 
-def create_dataloader(
-    X, y=None, val_split=0.2, batch_size=32, seed=2024, data="train"
-):
+def create_dataloader(X, y=None, val_split=0.2, batch_size=32, seed=2024, data="train"):
     """
     Creates Train, Validation and Test DataLoader
 
