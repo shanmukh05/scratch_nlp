@@ -7,35 +7,34 @@ with open("requirements.txt", "r") as f:
     requirements = f.read().splitlines()
 
 setup(
-    name="scratch_nlp",                    # Required
-    version="1.0.0",                             # Required
-    author="Shanmukha Sainath",                          # Optional
-    author_email="venkatashanmukhasainathg@gmail.com",       # Optional
-    description="Library with NLP Algorithms implemented from scratch",  # Optional
-    long_description=long_description,           # Optional
-    long_description_content_type="text/markdown",  # Optional (use "text/markdown" if README.md is in markdown)
-    url="https://github.com/shanmukh05/scratch_nlp",   # Optional
-    packages=find_packages(),                    # Automatically find and include all packages in your project
-    include_package_data=True,                   # Include other files specified in MANIFEST.in
-    install_requires=requirements,                        # Required dependencies
-    extras_require={                             # Optional dependencies for development or testing
+    name="scratch_nlp",                    
+    version="1.0.0",                            
+    author="Shanmukha Sainath",                         
+    author_email="venkatashanmukhasainathg@gmail.com",     
+    description="Library with NLP Algorithms implemented from scratch", 
+    long_description=long_description,           
+    long_description_content_type="text/markdown",  
+    url="https://github.com/shanmukh05/scratch_nlp",  
+    packages=find_packages(),                    
+    include_package_data=True,                  
+    install_requires=requirements,                       
+    extras_require={                          
         "dev": [
-            # "pytest>=6.0",
             "black",
         ],
     },
-    classifiers=[                                # Optional classifiers
+    classifiers=[                               
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.12",                     # Specify the Python versions you support
-    entry_points={                               # Optional console scripts
+    python_requires=">=3.12",                     
+    entry_points={                              
         "console_scripts": [
             "your_command=src:main",
         ],
     },
-    project_urls={                               # Additional URLs about your project
+    project_urls={                              
         "Bug Tracker": "https://github.com/shanmukh05/scratch_nlp/issues",
         "Documentation": "https://shanmukh05.github.io/scratch_nlp/",
         "Source Code": "https://github.com/shanmukh05/scratch_nlp",
