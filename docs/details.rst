@@ -596,7 +596,7 @@ Transition Matrix csv, png
 
    <td>
 
-IMDB Reviews
+POS Tagging
 
 .. raw:: html
 

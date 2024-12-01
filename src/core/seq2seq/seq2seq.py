@@ -12,10 +12,10 @@ from plot_utils import plot_embed, plot_history
 
 class Seq2Seq:
     """
-    _summary_
+    A class to run Seq2Seq data preprocessing, training and inference
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -27,10 +27,10 @@ class Seq2Seq:
 
     def run(self):
         """
-        _summary_
+        Runs Seq2Seq Training and saves output
 
-        :return: _description_
-        :rtype: _type_
+        :return: Training history
+        :rtype: dict
         """
         self.seq2seq_ds = PreprocessSeq2Seq(self.config_dict)
         tokenSrc, tokenTgt = self.seq2seq_ds.get_data(self.seq2seq_ds.df)
@@ -50,10 +50,10 @@ class Seq2Seq:
 
     def run_infer(self):
         """
-        _summary_
+        Runs inference
 
-        :return: _description_
-        :rtype: _type_
+        :return: True source, True target, predicted target tokens
+        :rtype: tuple (list, list, list)
         """
         tokens_src, tokens_tgt = self.seq2seq_ds.get_data(self.seq2seq_ds.test_df)
         test_loader = create_dataloader(
@@ -71,7 +71,7 @@ class Seq2Seq:
 
     def save_output(self):
         """
-        _summary_
+        Saves Training and Inference results
         """
         output_folder = self.config_dict["paths"]["output_folder"]
 

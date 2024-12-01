@@ -11,10 +11,10 @@ from plot_utils import plot_embed
 
 class Word2Vec:
     """
-    _summary_
+    A class to run Word2Vec data preprocessing, training and inference
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ class Word2Vec:
 
     def run(self):
         """
-        _summary_
+        Runs Word2Vec Training and saves output
         """
         self.cbow_ds = Word2VecDataset(self.config_dict)
         l_cxt, r_cxt, l_lbl, r_lbl = self.cbow_ds.make_pairs()
@@ -46,12 +46,12 @@ class Word2Vec:
 
     def get_embeddings(self, sentence):
         """
-        _summary_
+        Outputs Word embeddings
 
-        :param sentence: _description_
-        :type sentence: _type_
-        :return: _description_
-        :rtype: _type_
+        :param sentence: Input sentence
+        :type sentence: str
+        :return: Word embeddings
+        :rtype: torch.Tensor (seq_len, embed_dim)
         """
         operations = self.config_dict["preprocess"]["operations"]
         sentence = preprocess_text(sentence, operations)
@@ -65,7 +65,7 @@ class Word2Vec:
 
     def save_output(self):
         """
-        _summary_
+        Saves Training and Inference results
         """
         output_folder = self.config_dict["paths"]["output_folder"]
         self.logger.info(f"Saving Outputs {output_folder}")

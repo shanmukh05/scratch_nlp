@@ -13,14 +13,14 @@ import torch.nn.functional as F
 
 class BERTFinetuneTrainer(nn.Module):
     """
-    _summary_
+    BERT Finetune Model trainer
 
-    :param model: _description_
-    :type model: _type_
-    :param optimizer: _description_
-    :type optimizer: _type_
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param model: BERT Finetune model 
+    :type model: torch.nn.Module
+    :param optimizer: Optimizer
+    :type optimizer: torch.optim
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict 
     """
     def __init__(self, model, optimizer, config_dict):
         super(BERTFinetuneTrainer, self).__init__()
@@ -32,14 +32,14 @@ class BERTFinetuneTrainer(nn.Module):
 
     def train_one_epoch(self, data_loader, epoch):
         """
-        _summary_
+        Train step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :param epoch: _description_
-        :type epoch: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Train Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :param epoch: Epoch number
+        :type epoch: int
+        :return: Train Losses (Train Loss, Train Start id loss, Train End id loss)
+        :rtype: tuple (torch.float32, torch.float32, torch.float32)
         """
         self.model.train()
         total_loss, total_start_loss, total_end_loss, num_instances = 0, 0, 0, 0
@@ -79,12 +79,12 @@ class BERTFinetuneTrainer(nn.Module):
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
         """
-        _summary_
+        Validation step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Validation Data Loader
+        :type data_loader: torch,.utils.data.DataLoader
+        :return: Validation Losses
+        :rtype: tuple (Validation Loss, Validation Start id loss, Validation End id loss)
         """
         self.model.eval()
         total_loss, total_start_loss, total_end_loss, num_instances = 0, 0, 0, 0
@@ -118,12 +118,12 @@ class BERTFinetuneTrainer(nn.Module):
     @torch.no_grad()
     def predict(self, data_loader):
         """
-        _summary_
+        Runs inference on Input Data 
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Infer Data loader
+        :type data_loader: torch.utils.data.DataLoader
+        :return: Labels, Predictions (start ids labels, end ids labels, encoded inputs)
+        :rtype: tuple (numpy.ndarray [num_samples,], numpy.ndarray [num_samples,], numpy.ndarray [seq_len, num_samples])
         """
         self.model.eval()
         y_start_ids, y_end_ids = [], []
@@ -151,14 +151,14 @@ class BERTFinetuneTrainer(nn.Module):
 
     def fit(self, train_loader, val_loader):
         """
-        _summary_
+        Fits the model on dataset. Runs training and Validation steps for given epochs and saves best model based on the evaluation metric
 
-        :param train_loader: _description_
-        :type train_loader: _type_
-        :param val_loader: _description_
-        :type val_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param train_loader: Train Data loader
+        :type train_loader: torch.utils.data.DataLoader
+        :param val_loader: Validaion Data Loader
+        :type val_loader: torch.utils.data.DataLoader
+        :return: Training History
+        :rtype: dict
         """
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
@@ -209,18 +209,18 @@ class BERTFinetuneTrainer(nn.Module):
 
     def calc_loss(self, start_ids_prob, end_ids_prob, start_ids, end_ids):
         """
-        _summary_
+        NLL loss for start and end ids predictions
 
-        :param start_ids_prob: _description_
-        :type start_ids_prob: _type_
-        :param end_ids_prob: _description_
-        :type end_ids_prob: _type_
-        :param start_ids: _description_
-        :type start_ids: _type_
-        :param end_ids: _description_
-        :type end_ids: _type_
-        :return: _description_
-        :rtype: _type_
+        :param start_ids_prob: Predicted probabilities of start ids
+        :type start_ids_prob: torch.Tensor (batch_size, num_vocab)
+        :param end_ids_prob: predicted probabilities of end ids
+        :type end_ids_prob: torch.Tensor (batch_size, num_vocab)
+        :param start_ids: True start ids
+        :type start_ids: torch.tensor (batch_size)
+        :param end_ids: True end ids
+        :type end_ids: torch.tensor (batch_size)
+        :return: NLL Loss of start, end ids
+        :rtype: tuple (torch.float32, torch.float32)
         """
         loss_fn = nn.NLLLoss()
 

@@ -11,10 +11,10 @@ from plot_utils import plot_embed, plot_history
 
 class Transformer:
     """
-    _summary_
+    A class to run Transformer data preprocessing, training and inference
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -27,7 +27,7 @@ class Transformer:
 
     def run(self):
         """
-        _summary_
+        Runs Transformer Training and saves output
         """
         self.transformer_ds = PreprocessTransformer(self.config_dict)
         tokens = self.transformer_ds.get_data()
@@ -46,10 +46,10 @@ class Transformer:
 
     def run_infer(self):
         """
-        _summary_
+        Runs inference
 
-        :return: _description_
-        :rtype: _type_
+        :return: True and Predicted tokens
+        :rtype: tuple (list, list)
         """
         sents, tokens_pred = self.trainer.predict(self.test_loader)
         sents = self.transformer_ds.batched_ids2tokens(sents)
@@ -60,7 +60,7 @@ class Transformer:
 
     def save_output(self):
         """
-        _summary_
+        Saves Training and Inference results
         """
         output_folder = self.config_dict["paths"]["output_folder"]
 

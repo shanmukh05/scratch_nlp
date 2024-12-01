@@ -9,10 +9,10 @@ from plot_utils import plot_pca_pairplot
 
 class TFIDF(BOW):
     """
-    _summary_
+    A class to run TFIDF data preprocessing, training and inference
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ class TFIDF(BOW):
 
     def run(self):
         """
-        _summary_
+        Runs TF-IDF Fit, Transform and saves output
         """
         self.preprocess()
         X, y = self.fit_transform()
@@ -29,12 +29,12 @@ class TFIDF(BOW):
 
     def fit(self, text_ls=None, y=None):
         """
-        _summary_
+        Fits BOW algo on preprocessed text
 
-        :param text_ls: _description_, defaults to None
-        :type text_ls: _type_, optional
-        :param y: _description_, defaults to None
-        :type y: _type_, optional
+        :param text_ls: List of preprocessec strings, defaults to None
+        :type text_ls: list, optional
+        :param y: Labels, defaults to None
+        :type y: list, optional
         """
         self.logger.info("Fitting TF-IDF to Extracted Data")
         if text_ls is None:
@@ -48,14 +48,14 @@ class TFIDF(BOW):
 
     def fit_transform(self, text_ls=None, y=None):
         """
-        _summary_
+        Fits and Transforms preprocessed text
 
-        :param text_ls: _description_, defaults to None
-        :type text_ls: _type_, optional
-        :param y: _description_, defaults to None
-        :type y: _type_, optional
-        :return: _description_
-        :rtype: _type_
+        :param text_ls: List of preprocessec strings, defaults to None
+        :type text_ls: list, optional
+        :param y: Labels, defaults to None
+        :type y: list, optional
+        :return: Word vectors, Labels
+        :rtype: tuple (numpy.ndarray [num_samples, num_vocab], numpy.ndarray [num_samples, num_vocab])
         """
         if text_ls is None:
             text_ls, y = self.text_ls, self.y
@@ -65,14 +65,14 @@ class TFIDF(BOW):
 
     def transform(self, text_ls=None, y=None):
         """
-        _summary_
+        Transforms preprocessed text
 
-        :param text_ls: _description_, defaults to None
-        :type text_ls: _type_, optional
-        :param y: _description_, defaults to None
-        :type y: _type_, optional
-        :return: _description_
-        :rtype: _type_
+        :param text_ls: List of preprocessec strings, defaults to None
+        :type text_ls: list, optional
+        :param y: Labels, defaults to None
+        :type y: list, optional
+        :return: Word vectors, Labels
+        :rtype: tuple (numpy.ndarray [num_samples, num_vocab], numpy.ndarray [num_samples, num_vocab])
         """
         self.logger.info("Transforming Txt Data into Vectors")
         if text_ls is None:
@@ -86,12 +86,12 @@ class TFIDF(BOW):
 
     def get_tf(self, text_ls):
         """
-        _summary_
+        Creates Term Frequency array
 
-        :param text_ls: _description_
-        :type text_ls: _type_
-        :return: _description_
-        :rtype: _type_
+        :param text_ls: List of preprocessec strings
+        :type text_ls: list
+        :return: Term Frequency array
+        :rtype: numpy.ndarray (num_vocab, num_samples)
         """
         """
             Binary
@@ -125,12 +125,12 @@ class TFIDF(BOW):
 
     def get_idf(self, text_ls):
         """
-        _summary_
+        Creates Inverse Document Frequency array
 
-        :param text_ls: _description_
-        :type text_ls: _type_
-        :return: _description_
-        :rtype: _type_
+        :param text_ls: List of preprocessec strings
+        :type text_ls: list
+        :return: Inverse Document Frequency array
+        :rtype: numpy.ndarray (num_vocab,)
         """
         """
             Unary
@@ -163,12 +163,12 @@ class TFIDF(BOW):
 
     def save_output(self, X, y):
         """
-        _summary_
+        Saves Training and Inference results
 
-        :param X: _description_
-        :type X: _type_
-        :param y: _description_
-        :type y: _type_
+        :param X: Word vectors
+        :type X: numpy.ndarray (num_samples, num_vocab)
+        :param y: Labels, defaults to None
+        :type y: list, optional
         """
         self.logger.info("Saving Vectors and Plots into Output Folder")
         output_folder = self.config_dict["paths"]["output_folder"]

@@ -11,10 +11,10 @@ import torch.nn as nn
 
 class GloVeModel(nn.Module):
     """
-    _summary_
+    GloVe Model
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(GloVeModel, self).__init__()
@@ -29,14 +29,14 @@ class GloVeModel(nn.Module):
 
     def forward(self, ctr, cxt):
         """
-        _summary_
+        Forward propogation
 
-        :param ctr: _description_
-        :type ctr: _type_
-        :param cxt: _description_
-        :type cxt: _type_
-        :return: _description_
-        :rtype: _type_
+        :param ctr: Center tokens
+        :type ctr: torch.Tensor (batch_size,)
+        :param cxt: Context tokens
+        :type cxt: torch.Tensor (batch_size,)
+        :return: Center, Context Embeddings and Biases
+        :rtype: tuple (torch.Tensor [batch_size, embed_dim], torch.Tensor [batch_size, embed_dim],torch.Tensor [batch_size, 1],torch.Tensor [batch_size, 1],)
         """
         ctr = ctr.to(dtype=torch.long)
         cxt = cxt.to(dtype=torch.long)
@@ -52,14 +52,14 @@ class GloVeModel(nn.Module):
 
 class GloVeTrainer(nn.Module):
     """
-    _summary_
+    GloVe Trainer
 
-    :param model: _description_
-    :type model: _type_
-    :param optimizer: _description_
-    :type optimizer: _type_
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param model: Seq2Seq model
+    :type model: torch.nn.Module
+    :param optimizer: Optimizer
+    :type optimizer: torch.optim
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict 
     """
     def __init__(self, model, optimizer, config_dict):
         super(GloVeTrainer, self).__init__()
@@ -75,14 +75,14 @@ class GloVeTrainer(nn.Module):
 
     def train_one_epoch(self, data_loader, epoch):
         """
-        _summary_
+        Train step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :param epoch: _description_
-        :type epoch: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Train Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :param epoch: Epoch number
+        :type epoch: int
+        :return: Train Loss
+        :rtype: torch.float32
         """
         self.model.train()
         total_loss, num_instances = 0, 0
@@ -112,12 +112,12 @@ class GloVeTrainer(nn.Module):
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
         """
-        _summary_
+        Validation step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Validation Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :return: Validation Loss
+        :rtype: torch.float32
         """
         self.model.eval()
         total_loss, num_instances = 0, 0
@@ -140,14 +140,14 @@ class GloVeTrainer(nn.Module):
 
     def fit(self, train_loader, val_loader):
         """
-        _summary_
+        Fits the model on dataset. Runs training and Validation steps for given epochs and saves best model based on the evaluation metric
 
-        :param train_loader: _description_
-        :type train_loader: _type_
-        :param val_loader: _description_
-        :type val_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param train_loader: Train Data loader
+        :type train_loader: torch.utils.data.DataLoader
+        :param val_loader: Validaion Data Loader
+        :type val_loader: torch.utils.data.DataLoader
+        :return: Training History
+        :rtype: dict
         """
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
@@ -190,20 +190,20 @@ class GloVeTrainer(nn.Module):
 
     def loss_fn(self, ctr_embed, cxt_embed, ctr_bias, cxt_bias, count):
         """
-        _summary_
+        GloVe loss
 
-        :param ctr_embed: _description_
-        :type ctr_embed: _type_
-        :param cxt_embed: _description_
-        :type cxt_embed: _type_
-        :param ctr_bias: _description_
-        :type ctr_bias: _type_
-        :param cxt_bias: _description_
-        :type cxt_bias: _type_
-        :param count: _description_
-        :type count: _type_
-        :return: _description_
-        :rtype: _type_
+        :param ctr_embed: Center embedding
+        :type ctr_embed: torch.Tensor (batch_size, embed_dim)
+        :param cxt_embed: Context embedding
+        :type cxt_embed: torch.Tensor (batch_size, embed_dim)
+        :param ctr_bias: Center Bias
+        :type ctr_bias: torch.Tensor (batch_size, 1)
+        :param cxt_bias: Context Bias
+        :type cxt_bias: torch.Tensor (batch_size, 1)
+        :param count: Cooccurence matrix element for (center, context)
+        :type count: float
+        :return: Loss
+        :rtype: torch.float32
         """
         factor = torch.pow(count / self.x_max, self.alpha)
         factor[factor > 1] = 1

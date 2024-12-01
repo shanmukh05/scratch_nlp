@@ -9,14 +9,14 @@ from torch.utils.data import Dataset, DataLoader
 
 class LSTMDataset(Dataset):
     """
-    _summary_
+    LSTM Dataset
 
-    :param paths: _description_
-    :type paths: _type_
-    :param transforms: _description_
-    :type transforms: _type_
-    :param tokens: _description_, defaults to None
-    :type tokens: _type_, optional
+    :param paths: Path to images
+    :type paths: list
+    :param transforms: Image transforms
+    :type transforms: albumentations.Compose
+    :param tokens: Captions tokens, defaults to None
+    :type tokens: list, optional
     """
     def __init__(self, paths, transforms, tokens=None):
         self.paths = paths
@@ -25,21 +25,21 @@ class LSTMDataset(Dataset):
 
     def __len__(self):
         """
-        _summary_
+        Returns number of samples
 
-        :return: _description_
-        :rtype: _type_
+        :return: Number of samples
+        :rtype: int
         """
         return len(self.paths)
 
     def __getitem__(self, idx):
         """
-        _summary_
+        Returns sample with preprocessed image and caption tokens
 
-        :param idx: _description_
-        :type idx: _type_
-        :return: _description_
-        :rtype: _type_
+        :param idx: Id of the sample
+        :type idx: int
+        :return: Preprocessed image and caption tokens
+        :rtype: tuple (torch.Tensor [num_samples, num_channels, h_dim, w_dim], torch.Tensor [num_samples, seq_len])
         """
         image = cv2.imread(self.paths[idx])
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -58,29 +58,29 @@ def create_dataloader(
     val_split=0.2,
     batch_size=32,
     seed=2024,
-    data_type="train",
+    data="train",
 ):
     """
-    _summary_
+    Creates Train, Validation and Test DataLoader
 
-    :param paths: _description_
-    :type paths: _type_
-    :param tokens: _description_, defaults to None
-    :type tokens: _type_, optional
-    :param transforms: _description_, defaults to None
-    :type transforms: _type_, optional
-    :param val_split: _description_, defaults to 0.2
+    :param paths: Image paths
+    :type paths: list
+    :param tokens: List of tokens, defaults to None
+    :type tokens: list, optional
+    :param transforms: Image transforms, defaults to None
+    :type transforms: albumentations.Compose, optional
+    :param val_split: validation split, defaults to 0.2
     :type val_split: float, optional
-    :param batch_size: _description_, defaults to 32
+    :param batch_size: Batch size, defaults to 32
     :type batch_size: int, optional
-    :param seed: _description_, defaults to 2024
+    :param seed: Seed, defaults to 2024
     :type seed: int, optional
-    :param data_type: _description_, defaults to "train"
-    :type data_type: str, optional
-    :return: _description_
-    :rtype: _type_
+    :param data: Type of data, defaults to "train"
+    :type data: str, optional
+    :return: Train, Val / Test dataloaders
+    :rtype: tuple (torch.utils.data.DataLoader, torch.utils.data.DataLoader) / torch.utils.data.DataLoader
     """
-    if data_type == "train":
+    if data == "train":
         train_paths, val_paths, train_tokens, val_tokens = train_test_split(
             paths, tokens, test_size=val_split, random_state=seed
         )

@@ -3,16 +3,16 @@ import logging
 
 class Node:
     """
-    _summary_
+    A class to initialize Node in a Huffman tree
 
-    :param word_idx: _description_
-    :type word_idx: _type_
-    :param freq: _description_
-    :type freq: _type_
-    :param left: _description_, defaults to None
-    :type left: _type_, optional
-    :param right: _description_, defaults to None
-    :type right: _type_, optional
+    :param word_idx: Word Id
+    :type word_idx: int
+    :param freq: Frequency of node
+    :type freq: int
+    :param left: Left nodes, defaults to None
+    :type left: list, optional
+    :param right: Right nodes, defaults to None
+    :type right: list, optional
     """
     def __init__(self, word_idx, freq, left=None, right=None):
         self.word_idx = word_idx
@@ -25,10 +25,10 @@ class Node:
 
 class HuffmanBTree:
     """
-    _summary_
+    Creates Huffman Binary Tree to perform Softmax
 
-    :param vocab_freq_dict: _description_
-    :type vocab_freq_dict: _type_
+    :param vocab_freq_dict: Vocabulary Frequency Dictionary
+    :type vocab_freq_dict: dict
     """
     def __init__(self, vocab_freq_dict):
         self.logger = logging.getLogger(__name__)
@@ -44,7 +44,7 @@ class HuffmanBTree:
 
     def construct_tree(self):
         """
-        _summary_
+        Constructs Huffman Binary Tree
         """
         node_list = []
         for w, f in zip(self.vocab, self.freq):
@@ -69,14 +69,14 @@ class HuffmanBTree:
 
     def generate_huffman_code(self, tree, code, path):
         """
-        _summary_
+        Generates Huffman code for vocabulary
 
-        :param tree: _description_
-        :type tree: _type_
-        :param code: _description_
-        :type code: _type_
-        :param path: _description_
-        :type path: _type_
+        :param tree: Node object that initialized HuffmanTree
+        :type tree: Node
+        :param code: Binary code for each vocab
+        :type code: list
+        :param path: Path for each vocab wrto Node Id
+        :type path: list
         """
         if tree.left is None and tree.right is None:
             self.word_code[tree.word_idx] = code
@@ -87,7 +87,7 @@ class HuffmanBTree:
 
     def separate_left_right_path(self):
         """
-        _summary_
+        Separates Left and Right paths
         """
         for widx, code, path in zip(
             self.word_code.keys(), self.word_code.values(), self.word_path.values()

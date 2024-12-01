@@ -9,10 +9,10 @@ from plot_utils import plot_topk_freq, plot_wordcloud, plot_ngram_pie_chart
 
 class NGRAM(BOW):
     """
-    _summary_
+    A class to run NGRAM data preprocessing, training and inference
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ class NGRAM(BOW):
 
     def run(self):
         """
-        _summary_
+        Runs NGRAM Fit, Transform and saves output
         """
         self.preprocess()
         X, y = self.fit_transform()
@@ -30,12 +30,12 @@ class NGRAM(BOW):
 
     def fit(self, text_ls=None, y=None):
         """
-        _summary_
+        Fits NGRAM algo on preprocessed text
 
-        :param text_ls: _description_, defaults to None
-        :type text_ls: _type_, optional
-        :param y: _description_, defaults to None
-        :type y: _type_, optional
+        :param text_ls: List of preprocessec strings, defaults to None
+        :type text_ls: list, optional
+        :param y: Labels, defaults to None
+        :type y: list, optional
         """
         self.logger.info("Fitting NGRAM to Extracted Data")
         if text_ls is None:
@@ -52,14 +52,14 @@ class NGRAM(BOW):
 
     def fit_transform(self, text_ls=None, y=None):
         """
-        _summary_
+        Fits and Transforms preprocessed text
 
-        :param text_ls: _description_, defaults to None
-        :type text_ls: _type_, optional
-        :param y: _description_, defaults to None
-        :type y: _type_, optional
-        :return: _description_
-        :rtype: _type_
+        :param text_ls: List of preprocessec strings, defaults to None
+        :type text_ls: list, optional
+        :param y: Labels, defaults to None
+        :type y: list, optional
+        :return: Word vectors, Labels
+        :rtype: tuple (numpy.ndarray [num_samples, num_vocab], numpy.ndarray [num_samples, num_vocab])
         """
         if text_ls is None:
             text_ls, y = self.text_ls, self.y
@@ -69,14 +69,14 @@ class NGRAM(BOW):
 
     def transform(self, text_ls=None, y=None):
         """
-        _summary_
+        Transforms preprocessed text
 
-        :param text_ls: _description_, defaults to None
-        :type text_ls: _type_, optional
-        :param y: _description_, defaults to None
-        :type y: _type_, optional
-        :return: _description_
-        :rtype: _type_
+        :param text_ls: List of preprocessec strings, defaults to None
+        :type text_ls: list, optional
+        :param y: Labels, defaults to None
+        :type y: list, optional
+        :return: Word vectors, Labels
+        :rtype: tuple (numpy.ndarray [num_samples, num_vocab], numpy.ndarray [num_samples, num_vocab])
         """
         self.logger.info("Transforming Txt Data into Vectors")
         if text_ls is None:
@@ -96,12 +96,12 @@ class NGRAM(BOW):
 
     def save_output(self, X, y):
         """
-        _summary_
+        Saves Training and Inference results
 
-        :param X: _description_
-        :type X: _type_
-        :param y: _description_
-        :type y: _type_
+        :param X: Word vectors
+        :type X: numpy.ndarray (num_samples, num_vocab)
+        :param y: Labels, defaults to None
+        :type y: list, optional
         """
         self.logger.info("Saving Vectors and Plots into Output Folder")
         output_folder = self.config_dict["paths"]["output_folder"]

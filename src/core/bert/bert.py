@@ -18,10 +18,10 @@ from plot_utils import plot_embed, plot_history
 
 class BERT:
     """
-    _summary_
+    A class to run BERT data preprocessing, training and inference
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -29,7 +29,7 @@ class BERT:
 
     def run(self):
         """
-        _summary_
+        Runs BERT pretrain and finetune stages and saves output
         """
         self.trainer_pretrain, self.pretrain_history = self.run_pretrain()
         self.model_pretrain = self.trainer_pretrain.model
@@ -41,10 +41,10 @@ class BERT:
 
     def run_pretrain(self):
         """
-        _summary_
+        Pretraining stage of BERT
 
-        :return: _description_
-        :rtype: _type_
+        :return: BERT Pretrain Trainer and Training History
+        :rtype: tuple (torch.nn.Module, dict)
         """
         val_split = self.config_dict["dataset"]["val_split"]
         test_split = self.config_dict["dataset"]["test_split"]
@@ -81,10 +81,10 @@ class BERT:
 
     def run_finetune(self):
         """
-        _summary_
+        Finetuning stage of BERT
 
-        :return: _description_
-        :rtype: _type_
+        :return: BERT Fientune Trainer and Training History
+        :rtype: tuple (torch.nn.Module, dict)
         """
         val_split = self.config_dict["finetune"]["dataset"]["val_split"]
         test_split = self.config_dict["finetune"]["dataset"]["test_split"]
@@ -121,10 +121,10 @@ class BERT:
 
     def run_infer_finetune(self):
         """
-        _summary_
+        Runs inference using Finetuned BERT
 
-        :return: _description_
-        :rtype: _type_
+        :return: True and Predicted start, end ids
+        :rtype: tuple (numpy.ndarray [num_samples,], numpy.ndarray [num_samples,], numpy.ndarray [num_samples,], numpy.ndarray [num_samples,])
         """
         start_ids, end_ids, enc_outputs = self.trainer_finetune.predict(
             self.test_loader
@@ -161,14 +161,14 @@ class BERT:
 
     def load_pretrain_weights(self, pretrain_model, finetune_model):
         """
-        _summary_
+        Copies pretrain weights to finetune BERT model object
 
-        :param pretrain_model: _description_
-        :type pretrain_model: _type_
-        :param finetune_model: _description_
-        :type finetune_model: _type_
-        :return: _description_
-        :rtype: _type_
+        :param pretrain_model: Pretrain BERT model
+        :type pretrain_model: torch.nn.Module
+        :param finetune_model: Finetune BERT model 
+        :type finetune_model: torch.nn.Module
+        :return: Finetune BERT model with Pretrained weights
+        :rtype: torch.nn.Module
         """
         for i, layer in enumerate(pretrain_model.encoder_layers):
             finetune_model.encoder_layers[i].load_state_dict(layer.state_dict())
@@ -181,7 +181,7 @@ class BERT:
 
     def save_output(self):
         """
-        _summary_
+        Saves Training and Inference results
         """
         output_folder = self.config_dict["paths"]["output_folder"]
 

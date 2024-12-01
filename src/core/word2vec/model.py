@@ -11,10 +11,10 @@ from collections import defaultdict
 
 class Word2VecModel(nn.Module):
     """
-    _summary_
+    Word2Vec Model
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(Word2VecModel, self).__init__()
@@ -27,18 +27,18 @@ class Word2VecModel(nn.Module):
 
     def forward(self, l_cxt, r_cxt, l_lbl, r_lbl):
         """
-        _summary_
+        Forward propogation
 
-        :param l_cxt: _description_
-        :type l_cxt: _type_
-        :param r_cxt: _description_
-        :type r_cxt: _type_
-        :param l_lbl: _description_
-        :type l_lbl: _type_
-        :param r_lbl: _description_
-        :type r_lbl: _type_
-        :return: _description_
-        :rtype: _type_
+        :param l_cxt: Left context
+        :type l_cxt: torch.Tensor (batch_size,)
+        :param r_cxt: Right context
+        :type r_cxt: torch.Tensor (batch_size,)
+        :param l_lbl: Left label
+        :type l_lbl: torch.Tensor (batch_size,)
+        :param r_lbl: Right label
+        :type r_lbl: torch.Tensor (batch_size,)
+        :return: Loss
+        :rtype: torch.float32
         """
         l_cxt_emb = self.compute_cxt_embed(l_cxt)
         r_cxt_emb = self.compute_cxt_embed(r_cxt)
@@ -57,12 +57,12 @@ class Word2VecModel(nn.Module):
 
     def compute_cxt_embed(self, cxt):
         """
-        _summary_
+        Computes context embedding vector
 
-        :param cxt: _description_
-        :type cxt: _type_
-        :return: _description_
-        :rtype: _type_
+        :param cxt: Context vector
+        :type cxt: torch.Tensor (batch_size, context_len)
+        :return: Label embedding
+        :rtype: torch.Tensor (batch_size, embed_dim)
         """
         lbl_emb = self.cxt_embedding(torch.LongTensor(cxt))
         return torch.mean(lbl_emb, dim=1)
@@ -70,14 +70,14 @@ class Word2VecModel(nn.Module):
 
 class Word2VecTrainer(nn.Module):
     """
-    _summary_
+    Word2Vec Trainer
 
-    :param model: _description_
-    :type model: _type_
-    :param optimizer: _description_
-    :type optimizer: _type_
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param model: Word2Vec model
+    :type model: torch.nn.Module
+    :param optimizer: Optimizer
+    :type optimizer: torch.optim
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict 
     """
     def __init__(self, model, optimizer, config_dict):
         super(Word2VecTrainer, self).__init__()
@@ -90,14 +90,14 @@ class Word2VecTrainer(nn.Module):
 
     def train_one_epoch(self, data_loader, epoch):
         """
-        _summary_
+        Train step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :param epoch: _description_
-        :type epoch: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Train Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :param epoch: Epoch number
+        :type epoch: int
+        :return: Train Losse
+        :rtype: torch.float32
         """
         self.model.train()
         total_loss, num_instances = 0, 0
@@ -139,12 +139,12 @@ class Word2VecTrainer(nn.Module):
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
         """
-        _summary_
+        Validation step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Validation Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :return: Validation Loss
+        :rtype: torch.float32
         """
         self.model.eval()
         total_loss, num_instances = 0, 0
@@ -179,14 +179,14 @@ class Word2VecTrainer(nn.Module):
 
     def fit(self, train_loader, val_loader):
         """
-        _summary_
+        Fits the model on dataset. Runs training and Validation steps for given epochs and saves best model based on the evaluation metric
 
-        :param train_loader: _description_
-        :type train_loader: _type_
-        :param val_loader: _description_
-        :type val_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param train_loader: Train Data loader
+        :type train_loader: torch.utils.data.DataLoader
+        :param val_loader: Validaion Data Loader
+        :type val_loader: torch.utils.data.DataLoader
+        :return: Training History
+        :rtype: dict
         """
         logger = logging.getLogger(__name__)
         num_epochs = self.config_dict["train"]["epochs"]

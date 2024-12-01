@@ -12,10 +12,10 @@ from plot_utils import plot_embed, plot_history, plot_conf_matrix
 
 class GRU:
     """
-    _summary_
+    A class to run GRU data preprocessing, training and inference
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -27,7 +27,7 @@ class GRU:
 
     def run(self):
         """
-        _summary_
+        Runs GRU Training and saves output
         """
         self.gru_ds = PreprocessPOS(self.config_dict)
         words, tags = self.gru_ds.get_data(self.gru_ds.corpus)
@@ -48,10 +48,10 @@ class GRU:
 
     def run_infer(self):
         """
-        _summary_
+        Runs inference
 
-        :return: _description_
-        :rtype: _type_
+        :return: True and Predicted labels
+        :rtype: tuple (torch.Tensor [num_samples, seq_len], torch.Tensor [num_samples, seq_len])
         """
         test_words, test_tags = self.gru_ds.get_data(self.gru_ds.test_corpus)
         test_tags = test_tags.argmax(-1).flatten()
@@ -65,7 +65,7 @@ class GRU:
 
     def save_output(self):
         """
-        _summary_
+        Saves Training and Inference results
         """
         output_folder = self.config_dict["paths"]["output_folder"]
 

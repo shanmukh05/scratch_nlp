@@ -13,10 +13,10 @@ from .huffman import HuffmanBTree
 
 class Word2VecDataset:
     """
-    _summary_
+    Word2Vec Dataset
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -32,7 +32,7 @@ class Word2VecDataset:
 
     def preprocess(self):
         """
-        _summary_
+        Preprocessed extracted data
         """
         root_path = self.config_dict["paths"]["input_folder"]
         explore_folder = self.config_dict["dataset"]["explore_folder"]
@@ -49,7 +49,7 @@ class Word2VecDataset:
 
     def get_vocab(self):
         """
-        _summary_
+        Generates vocabulary from from preprocessed text
         """
         self.vocab_freq = {}
 
@@ -83,10 +83,10 @@ class Word2VecDataset:
 
     def make_pairs(self):
         """
-        _summary_
+        Creates Left and Right context and Labels using Huffman binary tree
 
-        :return: _description_
-        :rtype: _type_
+        :return: Left, Right Context, Left, Right Label
+        :rtype: tuple (list, list, list, list)
         """
         self.context = self.config_dict["dataset"]["context"]
         left_cxt_huff, right_cxt_huff, left_lbl_huff, right_lbl_huff = [], [], [], []
@@ -114,27 +114,27 @@ class Word2VecDataset:
 
 
 def create_dataloader(
-    left_cxt, right_cxt, left_lbl, right_lbl, val_split, batch_size, seed
+    left_cxt, right_cxt, left_lbl, right_lbl, val_split=0.2, batch_size=32, seed=2024
 ):
     """
-    _summary_
+    Creates Train, Validation left and Right DataLoader
 
-    :param left_cxt: _description_
-    :type left_cxt: _type_
-    :param right_cxt: _description_
-    :type right_cxt: _type_
-    :param left_lbl: _description_
-    :type left_lbl: _type_
-    :param right_lbl: _description_
-    :type right_lbl: _type_
-    :param val_split: _description_
-    :type val_split: _type_
-    :param batch_size: _description_
-    :type batch_size: _type_
-    :param seed: _description_
-    :type seed: _type_
-    :return: _description_
-    :rtype: _type_
+    :param left_cxt: Left context
+    :type left_cxt: list
+    :param right_cxt: Right context
+    :type right_cxt: list
+    :param left_lbl: Left label
+    :type left_lbl: list
+    :param right_lbl: Right label
+    :type right_lbl: list
+    :param val_split: validation split, defaults to 0.2
+    :type val_split: float
+    :param batch_size: Batch size, defaults to 32
+    :type batch_size: int
+    :param seed: Seed, defaults to 2024
+    :type seed: int, optional
+    :return: train, val left and right dataloader
+    :rtype: tuple (torch.utils.data.DataLoader, torch.utils.data.DataLoader, torch.utils.data.DataLoader, torch.utils.data.DataLoader)
     """
     logger = logging.getLogger(__name__)
     train_left_cxt, val_left_cxt, train_left_lbl, val_left_lbl = train_test_split(

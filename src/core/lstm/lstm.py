@@ -12,10 +12,10 @@ from plot_utils import plot_history, plot_embed
 
 class LSTM:
     """
-    _summary_
+    A class to run LSTM data preprocessing, training and inference
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -27,7 +27,7 @@ class LSTM:
 
     def run(self):
         """
-        _summary_
+        Runs LSTM Training and saves output
         """
         self.lstm_ds = PreprocessFlickr(self.config_dict)
         train_paths, train_tokens, transforms = self.lstm_ds.get_data()
@@ -52,10 +52,10 @@ class LSTM:
 
     def run_infer(self):
         """
-        _summary_
+        Runs inference
 
-        :return: _description_
-        :rtype: _type_
+        :return: Test image paths, True captions, Predicted captions
+        :rtype: tuple (list, list, list)
         """
         test_paths, test_tokens, transforms = self.lstm_ds.get_test_data()
         test_loader = create_dataloader(
@@ -78,7 +78,7 @@ class LSTM:
 
     def save_output(self):
         """
-        _summary_
+        Saves Training and Inference results
         """
         output_folder = self.config_dict["paths"]["output_folder"]
 

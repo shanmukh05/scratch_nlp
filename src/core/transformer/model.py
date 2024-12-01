@@ -15,10 +15,10 @@ from metrics import TextGenerationMetrics
 
 class MultiHeadAttention(nn.Module):
     """
-    _summary_
+    Multi head Attention layer
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict 
     """
     def __init__(self, config_dict):
         super(MultiHeadAttention, self).__init__()
@@ -35,18 +35,18 @@ class MultiHeadAttention(nn.Module):
 
     def forward(self, Q, K, V, mask=False):
         """
-        _summary_
+        Forward propogation
 
-        :param Q: _description_
-        :type Q: _type_
-        :param K: _description_
-        :type K: _type_
-        :param V: _description_
-        :type V: _type_
-        :param mask: _description_, defaults to False
+        :param Q: Query matrix
+        :type Q: torch.Tensor (batch_size, seq_len, d_model)
+        :param K: Key matrix
+        :type K: torch.Tensor (batch_size, seq_len, d_model)
+        :param V: Value matrix
+        :type V: torch.Tensor (batch_size, seq_len, d_model)
+        :param mask: Whether to mask future tokens or not, defaults to False
         :type mask: bool, optional
-        :return: _description_
-        :rtype: _type_
+        :return: Attention output
+        :rtype: torch.Tensor (batch_size, seq_len, d_model)
         """
         batch_size = Q.size(0)
         Q = Q.view(batch_size, self.seq_len, self.num_heads, self.d_qkv).transpose(1, 2)
@@ -62,20 +62,20 @@ class MultiHeadAttention(nn.Module):
 
         return attn_qkv
 
-    def _scaled_dotproduct_attention(self, Q, K, V, mask=None):
+    def _scaled_dotproduct_attention(self, Q, K, V, mask=False):
         """
-        _summary_
+        Scaled Dot Product Attention
 
-        :param Q: _description_
-        :type Q: _type_
-        :param K: _description_
-        :type K: _type_
-        :param V: _description_
-        :type V: _type_
-        :param mask: _description_, defaults to None
-        :type mask: _type_, optional
-        :return: _description_
-        :rtype: _type_
+        :param Q: Query matrix
+        :type Q: torch.Tensor (batch_size, seq_len, num_heads, d_qkv)
+        :param K: Key matrix
+        :type K: torch.Tensor (batch_size, seq_len, num_heads, d_qkv)
+        :param V: Value matrix
+        :type V: torch.Tensor (batch_size, seq_len, num_heads, d_qkv)
+        :param mask: Whether to mask future tokens or not, defaults to None
+        :type mask: bool, optional
+        :return: Attention output
+        :rtype: torch.Tensor (batch_size, seq_len, num_heads, d_qkv)
         """
         matmul = torch.matmul(Q, K.transpose(-1, -2))
         if mask:
@@ -90,10 +90,10 @@ class MultiHeadAttention(nn.Module):
 
 class PositionalEncoding(nn.Module):
     """
-    _summary_
+    Positional Encoding
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(PositionalEncoding, self).__init__()
@@ -110,12 +110,12 @@ class PositionalEncoding(nn.Module):
 
     def forward(self, x):
         """
-        _summary_
+        Forward Propogation
 
-        :param x: _description_
-        :type x: _type_
-        :return: _description_
-        :rtype: _type_
+        :param x: Text token embeddings
+        :type x: torch.Tensor (bathc_size, seq_len, d_model)
+        :return: Text token embeddings with positional encoding
+        :rtype: torch.Tensor (bathc_size, seq_len, d_model)
         """
         x = x + self.pe
 
@@ -124,10 +124,10 @@ class PositionalEncoding(nn.Module):
 
 class FeedForward(nn.Module):
     """
-    _summary_
+    FeedForward Layer
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(FeedForward, self).__init__()
@@ -140,12 +140,12 @@ class FeedForward(nn.Module):
 
     def forward(self, x):
         """
-        _summary_
+        Forward Propogation
 
-        :param x: _description_
-        :type x: _type_
-        :return: _description_
-        :rtype: _type_
+        :param x: Inptut tensor
+        :type x: torch.Tensor (bathc_size, seq_len, d_model)
+        :return: Output tensor
+        :rtype: torch.Tensor (bathc_size, seq_len, d_model)
         """
         x = self.fc1(x)
         x = self.fc2(x)
@@ -156,10 +156,10 @@ class FeedForward(nn.Module):
 
 class EncoderLayer(nn.Module):
     """
-    _summary_
+    Encoder layer
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(EncoderLayer, self).__init__()
@@ -178,12 +178,12 @@ class EncoderLayer(nn.Module):
 
     def forward(self, src):
         """
-        _summary_
+        Forward propogation
 
-        :param src: _description_
-        :type src: _type_
-        :return: _description_
-        :rtype: _type_
+        :param src: Input tensor
+        :type src: torch.Tensor (batch_size, seq_len, d_model)
+        :return: Output tensor
+        :rtype: torch.Tensor (batch_size, seq_len, d_model)
         """
         attn_output = self.mh_self_attn(src, src, src)
         output = self.layer_norm1(src + self.dropout1(attn_output))
@@ -195,10 +195,10 @@ class EncoderLayer(nn.Module):
 
 class DecoderLayer(nn.Module):
     """
-    _summary_
+    Decoder layer
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(DecoderLayer, self).__init__()
@@ -220,14 +220,14 @@ class DecoderLayer(nn.Module):
 
     def forward(self, enc_output, tgt):
         """
-        _summary_
+        Forward Propogation
 
-        :param enc_output: _description_
-        :type enc_output: _type_
-        :param tgt: _description_
-        :type tgt: _type_
-        :return: _description_
-        :rtype: _type_
+        :param enc_output: Output of encoder layers
+        :type enc_output: torch.Tensor (batch_size, seq_len, d_model)
+        :param tgt: Target tokens
+        :type tgt: torch.Tensor (batch_size, seq_len, d_model)
+        :return: Output of decoder
+        :rtype: torch.Tensor (batch_size, seq_len, d_model)
         """
         masked_attn_output = self.mh_masked_self_attn(tgt, tgt, tgt, True)
         output = self.layer_norm1(tgt + self.dropout1(masked_attn_output))
@@ -243,10 +243,10 @@ class DecoderLayer(nn.Module):
 
 class TransformerModel(nn.Module):
     """
-    _summary_
+    Transformer architecture
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(TransformerModel, self).__init__()
@@ -271,14 +271,14 @@ class TransformerModel(nn.Module):
 
     def forward(self, src, tgt):
         """
-        _summary_
+        Forward propogation
 
-        :param src: _description_
-        :type src: _type_
-        :param tgt: _description_
-        :type tgt: _type_
-        :return: _description_
-        :rtype: _type_
+        :param src: Source tokens
+        :type src: torch.Tensor (batch_size, seq_len)
+        :param tgt: Target tokens
+        :type tgt: torch.Tensor (batch_size, seq_len)
+        :return: Predicted tokens
+        :rtype: torch.Tensor (batch_size, seq_len, num_vocab)
         """
         src_embed = self.dropout1(self.positional_encoding(self.src_embed_layer(src)))
         tgt_embed = self.dropout2(self.positional_encoding(self.tgt_embed_layer(tgt)))
@@ -299,14 +299,14 @@ class TransformerModel(nn.Module):
 
 class TransformerTrainer(nn.Module):
     """
-    _summary_
+    Transformer Trainer
 
-    :param model: _description_
-    :type model: _type_
-    :param optimizer: _description_
-    :type optimizer: _type_
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param model: Transformer model
+    :type model: torch.nn.Module
+    :param optimizer: Optimizer
+    :type optimizer: torch.optim
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict 
     """
     def __init__(self, model, optimizer, config_dict):
         super(TransformerTrainer, self).__init__()
@@ -320,14 +320,14 @@ class TransformerTrainer(nn.Module):
 
     def train_one_epoch(self, data_loader, epoch):
         """
-        _summary_
+        Train step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :param epoch: _description_
-        :type epoch: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Train Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :param epoch: Epoch number
+        :type epoch: int
+        :return: Train Losse, Train Metrics
+        :rtype: tuple (torch.float32, dict)
         """
         self.model.train()
         total_loss, num_instances = 0, 0
@@ -368,12 +368,12 @@ class TransformerTrainer(nn.Module):
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
         """
-        _summary_
+        Validation step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Validation Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :return: Validation Losse, Validation Metrics
+        :rtype: tuple (torch.float32, dict)
         """
         self.model.eval()
         total_loss, num_instances = 0, 0
@@ -408,12 +408,12 @@ class TransformerTrainer(nn.Module):
     @torch.no_grad()
     def predict(self, data_loader):
         """
-        _summary_
+        Runs inference to predict a shifted sentence
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Infer Data loader
+        :type data_loader: torch.utils.data.DataLoader
+        :return: True tokens, Predicted tokens
+        :rtype: tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples, seq_len, num_vocab])
         """
         self.model.eval()
         y_pred, sents = [], []
@@ -438,14 +438,14 @@ class TransformerTrainer(nn.Module):
 
     def fit(self, train_loader, val_loader):
         """
-        _summary_
+        Fits the model on dataset. Runs training and Validation steps for given epochs and saves best model based on the evaluation metric
 
-        :param train_loader: _description_
-        :type train_loader: _type_
-        :param val_loader: _description_
-        :type val_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param train_loader: Train Data loader
+        :type train_loader: torch.utils.data.DataLoader
+        :param val_loader: Validaion Data Loader
+        :type val_loader: torch.utils.data.DataLoader
+        :return: Training History
+        :rtype: dict
         """
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
@@ -497,14 +497,14 @@ class TransformerTrainer(nn.Module):
 
     def calc_loss(self, y_pred, y_true):
         """
-        _summary_
+        Crossentropy loss for predicted tokens
 
-        :param y_pred: _description_
-        :type y_pred: _type_
-        :param y_true: _description_
-        :type y_true: _type_
-        :return: _description_
-        :rtype: _type_
+        :param y_pred: Predicted tokens
+        :type y_pred: torch.Tensor (batch_size, seq_len, num_vocab)
+        :param y_true: True tokens
+        :type y_true: torch.Tensor (batch_size, seq_len)
+        :return: BCE Loss
+        :rtype: torch.float32
         """
         y_pred = torch.flatten(y_pred, end_dim=1)
 

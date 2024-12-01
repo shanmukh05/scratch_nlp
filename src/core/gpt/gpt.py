@@ -11,10 +11,10 @@ from plot_utils import plot_embed, plot_history
 
 class GPT:
     """
-    _summary_
+    A class to run GPT data preprocessing, training and inference
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -26,7 +26,7 @@ class GPT:
 
     def run(self):
         """
-        _summary_
+        Runs GPT Training and saves output
         """
         self.gpt_ds = PreprocessGPT(self.config_dict)
         tokens = self.gpt_ds.get_data()
@@ -45,10 +45,10 @@ class GPT:
 
     def run_infer(self):
         """
-        _summary_
+        Runs inference
 
-        :return: _description_
-        :rtype: _type_
+        :return: True and Predicted tokens
+        :rtype: tuple (list, list)
         """
         tokens = self.gpt_ds.get_test_data()
 
@@ -64,7 +64,7 @@ class GPT:
 
     def save_output(self):
         """
-        _summary_
+        Saves Training and Inference results
         """
         output_folder = self.config_dict["paths"]["output_folder"]
 

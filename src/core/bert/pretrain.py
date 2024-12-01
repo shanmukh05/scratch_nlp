@@ -13,15 +13,15 @@ import torch.nn.functional as F
 
 class BERTPretrainTrainer(nn.Module):
     """
-    _summary_
+    BERT Pretrain Model trainer
 
-    :param model: _description_
-    :type model: _type_
-    :param optimizer: _description_
-    :type optimizer: _type_
-    :param config_dict: _description_
-    :type config_dict: _type_
-    """    
+    :param model: BERT Pretrain model
+    :type model: torch.nn.Module
+    :param optimizer: Optimizer
+    :type optimizer: torch.optim
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
+    """
     def __init__(self, model, optimizer, config_dict):    
         super(BERTPretrainTrainer, self).__init__()
         self.logger = logging.getLogger(__name__)
@@ -32,14 +32,14 @@ class BERTPretrainTrainer(nn.Module):
 
     def train_one_epoch(self, data_loader, epoch):
         """
-        _summary_
+        Train step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :param epoch: _description_
-        :type epoch: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Train Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :param epoch: Epoch number
+        :type epoch: int
+        :return: Train Losses (Train Loss, Train masked tokens loss, Train NSP loss)
+        :rtype: tuple (torch.float32, torch.flooat32, torch.float32) 
         """
         self.model.train()
         total_loss, total_clf_loss, total_nsp_loss, num_instances = 0, 0, 0, 0
@@ -76,12 +76,12 @@ class BERTPretrainTrainer(nn.Module):
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
         """
-        _summary_
+        Validation step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Validation Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :return: Validation Losses (Validation Loss, Validation masked tokens loss, Validation NSP loss)
+        :rtype: tuple (torch.float32, torch.flooat32, torch.float32) 
         """
         self.model.eval()
         total_loss, total_clf_loss, total_nsp_loss, num_instances = 0, 0, 0, 0
@@ -112,12 +112,12 @@ class BERTPretrainTrainer(nn.Module):
     @torch.no_grad()
     def predict(self, data_loader):
         """
-        _summary_
+        Runs inference on input data
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Infer Data loader
+        :type data_loader: torch.utils.data.DataLoader
+        :return: Labels, Predictions (True tokens, NSP Labels, Predicton tokens, NSP Predictions)
+        :rtype: tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples,], numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples,])
         """
         self.model.eval()
         y_tokens_pred, y_tokens_true = [], []
@@ -145,14 +145,14 @@ class BERTPretrainTrainer(nn.Module):
 
     def fit(self, train_loader, val_loader):
         """
-        _summary_
+        Fits the model on dataset. Runs training and Validation steps for given epochs and saves best model based on the evaluation metric
 
-        :param train_loader: _description_
-        :type train_loader: _type_
-        :param val_loader: _description_
-        :type val_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param train_loader: Train Data loader
+        :type train_loader: torch.utils.data.DataLoader
+        :param val_loader: Validaion Data Loader
+        :type val_loader: torch.utils.data.DataLoader
+        :return: Training History
+        :rtype: dict
         """
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
@@ -203,20 +203,20 @@ class BERTPretrainTrainer(nn.Module):
 
     def calc_loss(self, tokens_pred, nsp_pred, tokens_true, nsp_labels, tokens_mask):
         """
-        _summary_
+        Calculates Training Loss components 
 
-        :param tokens_pred: _description_
-        :type tokens_pred: _type_
-        :param nsp_pred: _description_
-        :type nsp_pred: _type_
-        :param tokens_true: _description_
-        :type tokens_true: _type_
-        :param nsp_labels: _description_
-        :type nsp_labels: _type_
-        :param tokens_mask: _description_
-        :type tokens_mask: _type_
-        :return: _description_
-        :rtype: _type_
+        :param tokens_pred: Predicted Tokens
+        :type tokens_pred: torch.Tensor (batch_size, seq_len, num_vocab)
+        :param nsp_pred: Predicted NSP Label
+        :type nsp_pred: torch.Tensor (batch_size,)
+        :param tokens_true: True tokens 
+        :type tokens_true: torch.Tensor (batch_size, seq_len)
+        :param nsp_labels: NSP labels
+        :type nsp_labels: torch.Tensor (batch_size,)
+        :param tokens_mask: Tokens mask
+        :type tokens_mask: torch.Tensor (batch_size, seq_len)
+        :return: Masked word prediction Cross Entropy loss, NSP classification loss
+        :rtype: tuple (torch.float32, torch.float32)
         """
         num_vocab = self.config_dict["dataset"]["num_vocab"]
         nsp_loss_fn = nn.BCELoss()

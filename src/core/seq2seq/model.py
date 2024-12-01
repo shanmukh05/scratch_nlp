@@ -14,12 +14,12 @@ from metrics import TextGenerationMetrics
 
 class EncoderLSTMCell(nn.Module):
     """
-    _summary_
+    Encoder LSTM Cell
 
-    :param h_dim: _description_
-    :type h_dim: _type_
-    :param inp_x_dim: _description_
-    :type inp_x_dim: _type_
+    :param h_dim: Hidden state vector dimension
+    :type h_dim: int
+    :param inp_x_dim: Input vector dimension
+    :type inp_x_dim: int
     """
     def __init__(self, h_dim, inp_x_dim):
         super(EncoderLSTMCell, self).__init__()
@@ -38,16 +38,16 @@ class EncoderLSTMCell(nn.Module):
 
     def forward(self, ht_1, ct_1, xt):
         """
-        _summary_
+        Forward propogation
 
-        :param ht_1: _description_
-        :type ht_1: _type_
-        :param ct_1: _description_
-        :type ct_1: _type_
-        :param xt: _description_
-        :type xt: _type_
-        :return: _description_
-        :rtype: _type_
+        :param ht_1: Hidden state vector
+        :type ht_1: torch.Tensor (batch_size, h_dim)
+        :param ct_1: Cell stae vector
+        :type ct_1: torch.Tensor (batch_size, h_dim)
+        :param xt: Input vector
+        :type xt: torch.Tensor (batch_size, embed_dim)
+        :return: New hidden, cell states
+        :rtype: tuple (torch.Tensor [batch_size, h_dim], torch.Tensor [batch_size, h_dim])
         """
         ft = nn.Sigmoid()(self.wf_dense(ht_1) + self.uf_dense(xt))
         it = nn.Sigmoid()(self.wi_dense(ht_1) + self.ui_dense(xt))
@@ -63,14 +63,14 @@ class EncoderLSTMCell(nn.Module):
 ### LSTM Cell
 class DecoderLSTMCell(nn.Module):
     """
-    _summary_
+    Decode LSTM cell
 
-    :param h_dim: _description_
-    :type h_dim: _type_
-    :param inp_x_dim: _description_
-    :type inp_x_dim: _type_
-    :param out_x_dim: _description_
-    :type out_x_dim: _type_
+    :param h_dim: Hidden state vector dimension
+    :type h_dim: int
+    :param inp_x_dim: Input vector dimension
+    :type inp_x_dim: int
+    :param out_x_dim: Output vector dimension
+    :type out_x_dim: int
     """
     def __init__(self, h_dim, inp_x_dim, out_x_dim):
         super(DecoderLSTMCell, self).__init__()
@@ -91,16 +91,16 @@ class DecoderLSTMCell(nn.Module):
 
     def forward(self, ht_1, ct_1, xt):
         """
-        _summary_
+        Forward propogation
 
-        :param ht_1: _description_
-        :type ht_1: _type_
-        :param ct_1: _description_
-        :type ct_1: _type_
-        :param xt: _description_
-        :type xt: _type_
-        :return: _description_
-        :rtype: _type_
+        :param ht_1: Hidden state vector
+        :type ht_1: torch.Tensor (batch_size, h_dim)
+        :param ct_1: Cell stae vector
+        :type ct_1: torch.Tensor (batch_size, h_dim)
+        :param xt: Input vector
+        :type xt: torch.Tensor (batch_size, embed_dim)
+        :return: New hidden, cell states, output
+        :rtype: tuple (torch.Tensor [batch_size, h_dim], torch.Tensor [batch_size, h_dim], torch.Tensor [batch_size, out_dim])
         """
         ft = nn.Sigmoid()(self.wf_dense(ht_1) + self.uf_dense(xt))
         it = nn.Sigmoid()(self.wi_dense(ht_1) + self.ui_dense(xt))
@@ -117,10 +117,10 @@ class DecoderLSTMCell(nn.Module):
 
 class Seq2SeqEncoder(nn.Module):
     """
-    _summary_
+    Seq2Seq Encoder
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(Seq2SeqEncoder, self).__init__()
@@ -146,12 +146,12 @@ class Seq2SeqEncoder(nn.Module):
 
     def forward(self, src):
         """
-        _summary_
+        Forward propogation
 
-        :param src: _description_
-        :type src: _type_
-        :return: _description_
-        :rtype: _type_
+        :param src: Source tokens
+        :type src: torch.Tensor (batch_size, seq_len)
+        :return: Predicted tokens, Hidden states
+        :rtype: tuple (torch.Tensor [batch_size, seq_len, out_dim], torch.Tensor [batch_size, 2*h_dim])
         """
         self.num_samples = src.size(0)
 
@@ -186,10 +186,10 @@ class Seq2SeqEncoder(nn.Module):
 
     def init_hidden(self):
         """
-        _summary_
+        Initialized hidden states
 
-        :return: _description_
-        :rtype: _type_
+        :return: List of hidden states
+        :rtype: list
         """
         hts = [
             nn.init.kaiming_uniform_(torch.empty(self.num_samples, dim))
@@ -201,10 +201,10 @@ class Seq2SeqEncoder(nn.Module):
 
 class Seq2SeqAttention(nn.Module):
     """
-    _summary_
+    Seq2Seq Attention layer
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(Seq2SeqAttention, self).__init__()
@@ -219,14 +219,14 @@ class Seq2SeqAttention(nn.Module):
 
     def forward(self, si_1, yts):
         """
-        _summary_
+        Forward Propogation
 
-        :param si_1: _description_
-        :type si_1: _type_
-        :param yts: _description_
-        :type yts: _type_
-        :return: _description_
-        :rtype: _type_
+        :param si_1: Hidden state vector of decoder layer
+        :type si_1: torch.Tensor (batch_size, 2*h_dim)
+        :param yts: Encoder output vectors
+        :type yts: torch.tensor (batch_size, seq_len, out_dim)
+        :return: Attention weights, New hidden state vector
+        :rtype: tuple (torch.Tensor [batch_size, seq_len], torch.Tensor [batch_size, 2*h_dim])
         """
         eij = self.attn_weights(self.si_dense(si_1.unsqueeze(1)) + self.yi_dense(yts))
         eij = eij.squeeze(2).unsqueeze(1)
@@ -239,10 +239,10 @@ class Seq2SeqAttention(nn.Module):
 
 class Seq2SeqDecoder(nn.Module):
     """
-    _summary_
+    Seq2Seq Decoder
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(Seq2SeqDecoder, self).__init__()
@@ -263,16 +263,16 @@ class Seq2SeqDecoder(nn.Module):
 
     def forward(self, encoder_yts, encoder_h, tgt=None):
         """
-        _summary_
+        Forward propogation
 
-        :param encoder_yts: _description_
-        :type encoder_yts: _type_
-        :param encoder_h: _description_
-        :type encoder_h: _type_
-        :param tgt: _description_, defaults to None
-        :type tgt: _type_, optional
-        :return: _description_
-        :rtype: _type_
+        :param encoder_yts: Encoder Output vectors
+        :type encoder_yts: torch.Tensor (batch_size, seq_len, out_dim)
+        :param encoder_h: Encoder final hidden vectors
+        :type encoder_h: torch.Tensor (batch_size, seq_len, 2*h_dim)
+        :param tgt: Target vectors, defaults to None
+        :type tgt: torch.Tensor (batch_size, seq_len), optional
+        :return: Final predictions, Attention weights
+        :rtype: tuple (torch.Tensor [batch_size, seq_len, num_tgt_vocab], list)
         """
         batch_size = encoder_yts.size(0)
 
@@ -310,10 +310,10 @@ class Seq2SeqDecoder(nn.Module):
 
 class Seq2SeqModel(nn.Module):
     """
-    _summary_
+    Seq2Seq Model Architecture
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(Seq2SeqModel, self).__init__()
@@ -323,14 +323,14 @@ class Seq2SeqModel(nn.Module):
 
     def forward(self, src, tgt=None):
         """
-        _summary_
+        Forward propogation
 
-        :param src: _description_
-        :type src: _type_
-        :param tgt: _description_, defaults to None
-        :type tgt: _type_, optional
-        :return: _description_
-        :rtype: _type_
+        :param src: Source tokens
+        :type src: torch.Tensor (batch_size, seq_len)
+        :param tgt: _Target tokens, defaults to None
+        :type tgt: torch.Tensor (batch_size, seq_len), optional
+        :return: Final predictions, Attention weights
+        :rtype: tuple (torch.Tensor [batch_size, seq_len, num_tgt_vocab], list)
         """
         encoder_yts, encoder_h = self.encoder(src)
         tgt_probs, attn_weights = self.decoder(encoder_yts, encoder_h, tgt)
@@ -340,14 +340,14 @@ class Seq2SeqModel(nn.Module):
 
 class Seq2SeqTrainer(nn.Module):
     """
-    _summary_
+    Seq2Seq Trainer
 
-    :param model: _description_
-    :type model: _type_
-    :param optimizer: _description_
-    :type optimizer: _type_
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param model: Seq2Seq model
+    :type model: torch.nn.Module
+    :param optimizer: Optimizer
+    :type optimizer: torch.optim
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict 
     """
     def __init__(self, model, optimizer, config_dict):
         super(Seq2SeqTrainer, self).__init__()
@@ -361,14 +361,14 @@ class Seq2SeqTrainer(nn.Module):
 
     def train_one_epoch(self, data_loader, epoch):
         """
-        _summary_
+        Train step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :param epoch: _description_
-        :type epoch: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Train Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :param epoch: Epoch number
+        :type epoch: int
+        :return: Train Loss, Train Metrics
+        :rtype: tuple (torch.float32, dict)
         """
         self.model.train()
         total_loss, num_instances = 0, 0
@@ -407,12 +407,12 @@ class Seq2SeqTrainer(nn.Module):
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
         """
-        _summary_
+        Validation step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Validation Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :return: Validation Loss, Validation Metrics
+        :rtype: tuple (torch.float32, dict)
         """
         self.model.eval()
         total_loss, num_instances = 0, 0
@@ -445,12 +445,12 @@ class Seq2SeqTrainer(nn.Module):
     @torch.no_grad()
     def predict(self, data_loader):
         """
-        _summary_
+        Runs inference to predict a translation of soruce sentence
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Infer Data loader
+        :type data_loader: torch.utils.data.DataLoader
+        :return: Predicted tokens
+        :rtype: numpy.ndarray (num_samples, seq_len, num_tgt_vocab)
         """
         self.model.eval()
         y_pred = []
@@ -469,14 +469,14 @@ class Seq2SeqTrainer(nn.Module):
 
     def fit(self, train_loader, val_loader):
         """
-        _summary_
+        Fits the model on dataset. Runs training and Validation steps for given epochs and saves best model based on the evaluation metric
 
-        :param train_loader: _description_
-        :type train_loader: _type_
-        :param val_loader: _description_
-        :type val_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param train_loader: Train Data loader
+        :type train_loader: torch.utils.data.DataLoader
+        :param val_loader: Validaion Data Loader
+        :type val_loader: torch.utils.data.DataLoader
+        :return: Training History
+        :rtype: dict
         """
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
@@ -528,14 +528,14 @@ class Seq2SeqTrainer(nn.Module):
 
     def calc_loss(self, y_pred, y_true):
         """
-        _summary_
+        Crossentropy loss for predicted tokens
 
-        :param y_pred: _description_
-        :type y_pred: _type_
-        :param y_true: _description_
-        :type y_true: _type_
-        :return: _description_
-        :rtype: _type_
+        :param y_pred: Predicted tokens
+        :type y_pred: torch.Tensor (batch_size, seq_len, num_vocab)
+        :param y_true: True tokens
+        :type y_true: torch.Tensor (batch_size, seq_len)
+        :return: BCE Loss
+        :rtype: torch.float32
         """
         y_pred = torch.flatten(y_pred, end_dim=1)
 

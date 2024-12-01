@@ -16,10 +16,10 @@ from metrics import TextGenerationMetrics
 
 class DecoderLayer(nn.Module):
     """
-    _summary_
+    GPT Decoder layer
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(DecoderLayer, self).__init__()
@@ -37,12 +37,12 @@ class DecoderLayer(nn.Module):
 
     def forward(self, tokens):
         """
-        _summary_
+        Forward propogation
 
-        :param tokens: _description_
-        :type tokens: _type_
-        :return: _description_
-        :rtype: _type_
+        :param tokens: Input tokens
+        :type tokens: torch.Tensor (num_samples, seq_len)
+        :return: Decoder output
+        :rtype: torch.Tensor (num_samples, seq_len, d_ff)
         """
         tokens = self.layer_norm(tokens)
         masked_attn_output = self.mh_masked_self_attn(tokens, tokens, tokens, True)
@@ -56,10 +56,10 @@ class DecoderLayer(nn.Module):
 
 class GPTModel(nn.Module):
     """
-    _summary_
+    GPT Architecture
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict 
     """
     def __init__(self, config_dict):
         super(GPTModel, self).__init__()
@@ -84,12 +84,12 @@ class GPTModel(nn.Module):
 
     def forward(self, tokens):
         """
-        _summary_
+        Forward propogation 
 
-        :param tokens: _description_
-        :type tokens: _type_
-        :return: _description_
-        :rtype: _type_
+        :param tokens: Input tokens
+        :type tokens: torch.Tensor (num_samples, seq_len)
+        :return: probability of Generated Tokens
+        :rtype: torch.Tensor (num_samples, seq_len, num_vocab)
         """
         embeds = self.dropout(self.positional_encoding(self.embed_layer(tokens)))
 
@@ -104,12 +104,12 @@ class GPTModel(nn.Module):
 
     def generate(self, tokens):
         """
-        _summary_
+        Generate Tokens
 
-        :param tokens: _description_
-        :type tokens: _type_
-        :return: _description_
-        :rtype: _type_
+        :param tokens: Input tokens
+        :type tokens: torch.Tensor (num_samples, seq_len + num_pred_tokens)
+        :return: Generated tokens
+        :rtype: torch.Tensor (num_samples, seq_len + num_pred_tokens)
         """
         tokens_pred = torch.zeros_like(tokens)
         tokens_pred[:, : self.seq_len] = tokens[:, : self.seq_len]
@@ -125,14 +125,14 @@ class GPTModel(nn.Module):
 
 class GPTTrainer(nn.Module):
     """
-    _summary_
+    GPT Trainer
 
-    :param model: _description_
-    :type model: _type_
-    :param optimizer: _description_
-    :type optimizer: _type_
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param model: GPT model
+    :type model: torch.nn.Module
+    :param optimizer: Optimizer
+    :type optimizer: torch.optim
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict 
     """
     def __init__(self, model, optimizer, config_dict):
         super(GPTTrainer, self).__init__()
@@ -146,14 +146,14 @@ class GPTTrainer(nn.Module):
 
     def train_one_epoch(self, data_loader, epoch):
         """
-        _summary_
+        Train step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :param epoch: _description_
-        :type epoch: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Train Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :param epoch: Epoch number
+        :type epoch: int
+        :return: Train Losse, Train Metrics
+        :rtype: tuple (torch.float32, dict)
         """
         self.model.train()
         total_loss, num_instances = 0, 0
@@ -194,12 +194,12 @@ class GPTTrainer(nn.Module):
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
         """
-        _summary_
+        Validation step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Validation Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :return: Validation Losse, Validation Metrics
+        :rtype: tuple (torch.float32, dict)
         """
         self.model.eval()
         total_loss, num_instances = 0, 0
@@ -234,12 +234,12 @@ class GPTTrainer(nn.Module):
     @torch.no_grad()
     def predict(self, data_loader):
         """
-        _summary_
+        Runs inference to predict a shifted sentence
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Infer Data loader
+        :type data_loader: torch.utils.data.DataLoader
+        :return: True tokens, Predicted tokens
+        :rtype: tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples, seq_len, num_vocab])
         """
         self.model.eval()
         y_pred, sents = [], []
@@ -265,12 +265,12 @@ class GPTTrainer(nn.Module):
     @torch.no_grad()
     def generate(self, data_loader):
         """
-        _summary_
+        Runs inference to generate new text
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Infer Data loader
+        :type data_loader: torch.utils.data.DataLoader
+        :return: True tokens, Generated tokens
+        :rtype: tuple (numpy.ndarray [num_samples, seq_len + num_pred_tokens], numpy.ndarray [num_samples, seq_len + num_pred_tokens])
         """
         self.model.eval()
         y_true, y_pred = [], []
@@ -292,14 +292,14 @@ class GPTTrainer(nn.Module):
 
     def fit(self, train_loader, val_loader):
         """
-        _summary_
+        Fits the model on dataset. Runs training and Validation steps for given epochs and saves best model based on the evaluation metric
 
-        :param train_loader: _description_
-        :type train_loader: _type_
-        :param val_loader: _description_
-        :type val_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param train_loader: Train Data loader
+        :type train_loader: torch.utils.data.DataLoader
+        :param val_loader: Validaion Data Loader
+        :type val_loader: torch.utils.data.DataLoader
+        :return: Training History
+        :rtype: dict
         """
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]
@@ -351,14 +351,14 @@ class GPTTrainer(nn.Module):
 
     def calc_loss(self, y_pred, y_true):
         """
-        _summary_
+        Crossentropy loss for predicted tokens
 
-        :param y_pred: _description_
-        :type y_pred: _type_
-        :param y_true: _description_
-        :type y_true: _type_
-        :return: _description_
-        :rtype: _type_
+        :param y_pred: Predicted tokens
+        :type y_pred: torch.Tensor (batch_size, seq_len, num_vocab)
+        :param y_true: True tokens
+        :type y_true: torch.Tensor (batch_size, seq_len)
+        :return: BCE Loss
+        :rtype: torch.float32
         """
         y_pred = torch.flatten(y_pred, end_dim=1)
 

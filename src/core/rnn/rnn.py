@@ -12,10 +12,10 @@ from plot_utils import plot_embed, plot_history, plot_conf_matrix
 
 class RNN:
     """
-    _summary_
+    A class to run RNN data preprocessing, training and inference
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -23,7 +23,7 @@ class RNN:
 
     def run(self):
         """
-        _summary_
+        Runs Seq2Seq Training and saves output
         """
         self.rnn_ds = RNNDataset(self.config_dict)
         X, y = self.rnn_ds.get_data()
@@ -46,10 +46,10 @@ class RNN:
 
     def run_infer(self):
         """
-        _summary_
+        Runs inference
 
-        :return: _description_
-        :rtype: _type_
+        :return: True and predicted captions
+        :rtype: tuple (torch.Tensor [batch_size, seq_len, num_classes], torch.Tensor [batch_size, seq_len, num_classes])
         """
         test_x, y_true = self.rnn_ds.get_test_data()
         test_ds = TensorDataset(torch.Tensor(test_x))
@@ -68,7 +68,7 @@ class RNN:
 
     def save_output(self):
         """
-        _summary_
+        Saves Training and Inference results
         """
         output_folder = self.config_dict["paths"]["output_folder"]
 

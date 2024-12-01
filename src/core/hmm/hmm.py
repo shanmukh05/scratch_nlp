@@ -17,10 +17,10 @@ from plot_utils import (
 
 class HMM:
     """
-    _summary_
+    A class to run HMM data preprocessing, training and inference
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -28,7 +28,7 @@ class HMM:
 
     def run(self):
         """
-        _summary_
+        Runs HMM Fit, Transform and saves output
         """
         trainX, testX, trainY, testY = self.preprocess()
         self.fit(trainX, trainY)
@@ -38,12 +38,12 @@ class HMM:
 
     def fit(self, X, y):
         """
-        _summary_
+        Fits HMM algo on preprocessed text
 
-        :param X: _description_
-        :type X: _type_
-        :param y: _description_
-        :type y: _type_
+        :param X: List of sentences 
+        :type X: list
+        :param y: Labels
+        :type y: list
         """
         if X is None or y is None:
             self.logger.error("X/&y is/are missing in fit() function")
@@ -76,12 +76,12 @@ class HMM:
 
     def predict(self, X):
         """
-        _summary_
+        Predicts labels for text
 
-        :param X: _description_
-        :type X: _type_
-        :return: _description_
-        :rtype: _type_
+        :param X: List of sentences
+        :type X: list
+        :return: Prediction labels
+        :rtype: list
         """
         if X is None:
             self.logger.error("X is missing in predict() function")
@@ -117,14 +117,14 @@ class HMM:
 
     def evaluate(self, Y, YP):
         """
-        _summary_
+        Evaluation metrics 
 
-        :param Y: _description_
-        :type Y: _type_
-        :param YP: _description_
-        :type YP: _type_
-        :return: _description_
-        :rtype: _type_
+        :param Y: True Labels
+        :type Y: list
+        :param YP: Prediction labels
+        :type YP: list
+        :return: Metrics Dictionary (clf_report, conf_matrix)
+        :rtype: dict
         """
         metric_dict = {}
 
@@ -142,10 +142,10 @@ class HMM:
 
     def preprocess(self):
         """
-        _summary_
+        Extracts POS words and tags
 
-        :return: _description_
-        :rtype: _type_
+        :return: Train, Test Worda nd POS tags
+        :rtype: tuple (list, list, list, list)
         """
         num_samples = self.config_dict["dataset"]["num_samples"]
         seed = self.config_dict["dataset"]["seed"]
@@ -162,12 +162,12 @@ class HMM:
 
     def save_output(self, data, metric_dict):
         """
-        _summary_
+        Saves Training and Inference results
 
-        :param data: _description_
-        :type data: _type_
-        :param metric_dict: _description_
-        :type metric_dict: _type_
+        :param data: Train and Test data
+        :type data: tuple (list, list, list, list)
+        :param metric_dict: Classification metrics (clf_report, conf_matrix)
+        :type metric_dict: dict
         """
         self.logger.info("Saving Vectors and Plots into Output Folder")
         output_folder = self.config_dict["paths"]["output_folder"]

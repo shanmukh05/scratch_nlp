@@ -9,10 +9,10 @@ from core.word2vec.dataset import Word2VecDataset
 
 class GloVeDataset(Word2VecDataset):
     """
-    _summary_
+    GloVe Dataset
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -28,10 +28,10 @@ class GloVeDataset(Word2VecDataset):
 
     def get_data(self):
         """
-        _summary_
+        Generates Coccurence Matrix
 
-        :return: _description_
-        :rtype: _type_
+        :return: Center, Context words and Co-occurence matrix
+        :rtype: tuple (numpy.ndarray [num_samples, ], numpy.ndarray [num_samples, ], numpy.ndarray [num_samples, ])
         """
         self.cooccur_mat = np.zeros((1 + self.num_vocab, 1 + self.num_vocab))
 
@@ -56,24 +56,24 @@ class GloVeDataset(Word2VecDataset):
         return X_ctr, X_cxt, X_cnt
 
 
-def create_dataloader(X_ctr, X_cxt, X_count, val_split, batch_size, seed):
+def create_dataloader(X_ctr, X_cxt, X_count, val_split=0.2, batch_size=32, seed=2024):
     """
-    _summary_
+    Creates Train, Validation DataLoader
 
-    :param X_ctr: _description_
-    :type X_ctr: _type_
-    :param X_cxt: _description_
-    :type X_cxt: _type_
-    :param X_count: _description_
-    :type X_count: _type_
-    :param val_split: _description_
-    :type val_split: _type_
-    :param batch_size: _description_
-    :type batch_size: _type_
-    :param seed: _description_
-    :type seed: _type_
-    :return: _description_
-    :rtype: _type_
+    :param X_ctr: Center words
+    :type X_ctr: numpy.ndarray (num_samples, )
+    :param X_cxt: Context words
+    :type X_cxt: numpy.ndarray (num_samples, )
+    :param X_count: Co-occurence matrix elements
+    :type X_count: numpy.ndarray (num_samples, )
+    :param val_split: validation split, defaults to 0.2
+    :type val_split: float, optional
+    :param batch_size: Batch size, defaults to 32
+    :type batch_size: int, optional
+    :param seed: Seed, defaults to 2024
+    :type seed: int, optional
+    :return: Train, Val dataloaders
+    :rtype: tuple (torch.utils.data.DataLoader, torch.utils.data.DataLoader)
     """
     train_ctr, val_ctr, train_cxt, val_cxt, train_count, val_count = train_test_split(
         X_ctr, X_cxt, X_count, test_size=val_split, random_state=seed

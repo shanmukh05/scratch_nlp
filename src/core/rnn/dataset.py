@@ -11,10 +11,10 @@ from core.word2vec.dataset import Word2VecDataset
 
 class RNNDataset(Word2VecDataset):
     """
-    _summary_
+    RNN Dataset
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         self.logger = logging.getLogger(__name__)
@@ -26,10 +26,10 @@ class RNNDataset(Word2VecDataset):
 
     def get_data(self):
         """
-        _summary_
+        Generates tokens and labels from extracted data
 
-        :return: _description_
-        :rtype: _type_
+        :return: Input tokens, Labels
+        :rtype: tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples, num_classes])
         """
         self.word2id["<PAD>"] = len(self.word2id)
         self.id2word[len(self.id2word)] = "<PAD>"
@@ -44,10 +44,10 @@ class RNNDataset(Word2VecDataset):
 
     def get_test_data(self):
         """
-        _summary_
+        Generates test tokens and labels from extracted data
 
-        :return: _description_
-        :rtype: _type_
+        :return: Input tokens, Labels
+        :rtype: tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples, num_classes])
         """
         root_path = self.config_dict["paths"]["test_folder"]
         explore_folder = self.config_dict["dataset"]["explore_folder"]
@@ -69,12 +69,12 @@ class RNNDataset(Word2VecDataset):
 
     def pad_slice_text(self, text_ls):
         """
-        _summary_
+        Pads and slices text to seq_len tokens
 
-        :param text_ls: _description_
-        :type text_ls: _type_
-        :return: _description_
-        :rtype: _type_
+        :param text_ls: List of text samples
+        :type text_ls: list
+        :return: list of preprocessed text
+        :rtype: list
         """
         seq_len = self.config_dict["dataset"]["seq_len"]
         X = []
@@ -93,22 +93,22 @@ class RNNDataset(Word2VecDataset):
         return X
 
 
-def create_dataloader(X, y, val_split, batch_size, seed):
+def create_dataloader(X, y, val_split=0.2, batch_size=32, seed=2024):
     """
-    _summary_
+    Creates Train, Validation DataLoader
 
-    :param X: _description_
-    :type X: _type_
-    :param y: _description_
-    :type y: _type_
-    :param val_split: _description_
-    :type val_split: _type_
-    :param batch_size: _description_
-    :type batch_size: _type_
-    :param seed: _description_
-    :type seed: _type_
-    :return: _description_
-    :rtype: _type_
+    :param X: Input tokens
+    :type X: torch.Tensor (num_samples, seq_len)
+    :param y: Output Labels
+    :type y: torch.Tensor (num_samples, num_classes)
+    :param val_split: validation split, defaults to 0.2
+    :type val_split: float, optional
+    :param batch_size: Batch size, defaults to 32
+    :type batch_size: int, optional
+    :param seed: Seed, defaults to 2024
+    :type seed: int, optional
+    :return: Train, Val dataloaders
+    :rtype: tuple (torch.utils.data.DataLoader, torch.utils.data.DataLoader)
     """
     train_x, val_x, train_y, val_y = train_test_split(
         X, y, test_size=val_split, random_state=seed

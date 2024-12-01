@@ -11,14 +11,14 @@ from preprocess.utils import preprocess_text
 
 class PreprocessBERTFinetune:
     """
-    _summary_
+    A class to preprocess BERT Finetuning Data
 
-    :param config_dict: _description_
-    :type config_dict: _type_
-    :param wordpiece: _description_
-    :type wordpiece: _type_
-    :param word2id: _description_
-    :type word2id: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
+    :param wordpiece: WordPiece class
+    :type wordpiece: src.preprocess.WordPiece
+    :param word2id: Words to Ids mapping
+    :type word2id: dict
     """
     def __init__(self, config_dict, wordpiece, word2id):
         self.logger = logging.getLogger(__name__)
@@ -34,10 +34,10 @@ class PreprocessBERTFinetune:
 
     def get_data(self):
         """
-        _summary_
+        Converts extracted data into tokens with start, end ids of answers along with the topics of each sample
 
-        :return: _description_
-        :rtype: _type_
+        :return: Finetuning Data (tokens, start ids, end ids, topics)
+        :rtype: tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples,], numpy.ndarray [num_samples,] , numpy.ndarray [num_samples,])
         """
         df = self.extract_data()
 
@@ -117,12 +117,12 @@ class PreprocessBERTFinetune:
 
     def preprocess_text(self, text):
         """
-        _summary_
+        Preprocesses text
 
-        :param text: _description_
-        :type text: _type_
-        :return: _description_
-        :rtype: _type_
+        :param text: Raw Input string
+        :type text: str
+        :return: Preprocessed string
+        :rtype: str
         """
         text = preprocess_text(text, self.operations)
 
@@ -130,12 +130,12 @@ class PreprocessBERTFinetune:
 
     def batched_ids2tokens(self, tokens):
         """
-        _summary_
+        Converting sentence of ids to tokens
 
-        :param tokens: _description_
-        :type tokens: _type_
-        :return: _description_
-        :rtype: _type_
+        :param tokens: Tokens Array, 2D array (num_samples, seq_len)
+        :type tokens: numpy.ndarray
+        :return: List of decoded sentences
+        :rtype: list
         """
         func = lambda x: self.id2word[x]
         vect_func = np.vectorize(func)
@@ -164,10 +164,10 @@ class PreprocessBERTFinetune:
 
     def extract_data(self):
         """
-        _summary_
+        Extracts data from SQuAD v1 JSON file
 
-        :return: _description_
-        :rtype: _type_
+        :return: Finetuning Data (Topic, Context, Question, Answer Start ID, Num words in an answer)
+        :rtype: pandas.DataFrame
         """
         with open(self.input_path, "r") as f:
             data = json.load(f)
@@ -232,26 +232,26 @@ def create_data_loader_finetune(
     seed=2024,
 ):
     """
-    _summary_
+    Creates PyTorch DataLoaders for Finetuning data
 
-    :param tokens: _description_
-    :type tokens: _type_
-    :param start_ids: _description_
-    :type start_ids: _type_
-    :param end_ids: _description_
-    :type end_ids: _type_
-    :param topics: _description_
-    :type topics: _type_
-    :param val_split: _description_, defaults to 0.2
+    :param tokens: Input tokens
+    :type tokens: torch.Tensor
+    :param start_ids: Start ids of Prediction
+    :type start_ids: torch.Tensor
+    :param end_ids: End ids of Prediction
+    :type end_ids: torch.Tensor
+    :param topics: Topic type of data samples
+    :type topics: torch.Tensor
+    :param val_split: validation split, defaults to 0.2
     :type val_split: float, optional
-    :param test_split: _description_, defaults to 0.2
+    :param test_split: Test split, defaults to 0.2
     :type test_split: float, optional
-    :param batch_size: _description_, defaults to 32
+    :param batch_size: Batch size, defaults to 32
     :type batch_size: int, optional
-    :param seed: _description_, defaults to 2024
+    :param seed: Seed, defaults to 2024
     :type seed: int, optional
-    :return: _description_
-    :rtype: _type_
+    :return: Train, Val and Test dataloaders
+    :rtype: tuple (torch.utils.data.DataLoader, torch.utils.data.DataLoader,torch.utils.data.DataLoader)
     """
     (
         train_tokens,

@@ -13,14 +13,14 @@ from metrics import ClassificationMetrics
 ### RNN Cell
 class RNNCell(nn.Module):
     """
-    _summary_
+    RNN Cell
 
-    :param h_dim: _description_
-    :type h_dim: _type_
-    :param inp_x_dim: _description_
-    :type inp_x_dim: _type_
-    :param out_x_dim: _description_
-    :type out_x_dim: _type_
+    :param h_dim: Hidden state vector dimension
+    :type h_dim: int
+    :param inp_x_dim: Input vector dimension
+    :type inp_x_dim: int
+    :param out_x_dim: Output vector dimension
+    :type out_x_dim: int
     """
     def __init__(self, h_dim, inp_x_dim, out_x_dim):
         super(RNNCell, self).__init__()
@@ -32,14 +32,14 @@ class RNNCell(nn.Module):
 
     def forward(self, ht_1, xt):
         """
-        _summary_
+        Forward propogation
 
-        :param ht_1: _description_
-        :type ht_1: _type_
-        :param xt: _description_
-        :type xt: _type_
-        :return: _description_
-        :rtype: _type_
+        :param ht_1: Hidden state vector
+        :type ht_1: torch.Tensor (batch_size, h_dim)
+        :param xt: Input vector
+        :type xt: torch.Tensor (batch_size, embed_dim)
+        :return: New hidden states, output
+        :rtype: tuple (torch.Tensor [batch_size, h_dim], torch.Tensor [batch_size, out_dim])
         """
         ht = nn.Tanh()(self.hh_dense(ht_1) + self.hx_dense(xt))
         yt = self.xh_dense(ht)
@@ -49,10 +49,10 @@ class RNNCell(nn.Module):
 ### Stacked RNN
 class RNNModel(nn.Module):
     """
-    _summary_
+    RNN Architecture
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(RNNModel, self).__init__()
@@ -76,12 +76,12 @@ class RNNModel(nn.Module):
 
     def forward(self, X):
         """
-        _summary_
+        Forward propogation
 
-        :param X: _description_
-        :type X: _type_
-        :return: _description_
-        :rtype: _type_
+        :param X: Input tokens
+        :type X: torch.Tensor (batch_size, seq_len)
+        :return: Prediction labels
+        :rtype: torch.Tensor (batch_size, num_classes)
         """
         x_embed = self.embed_layer(X.to(torch.long))
         self.num_samples = x_embed.size(0)
@@ -110,10 +110,10 @@ class RNNModel(nn.Module):
 
     def init_hidden(self):
         """
-        _summary_
+        Initialized hidden states
 
-        :return: _description_
-        :rtype: _type_
+        :return: List of hidden states
+        :rtype: list
         """
         hts = [
             nn.init.kaiming_uniform_(torch.empty(self.num_samples, dim))
@@ -125,14 +125,14 @@ class RNNModel(nn.Module):
 
 class RNNTrainer(nn.Module):
     """
-    _summary_
+    RNN Trainer
 
-    :param model: _description_
-    :type model: _type_
-    :param optimizer: _description_
-    :type optimizer: _type_
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param model: RNN model
+    :type model: torch.nn.Module
+    :param optimizer: Optimizer
+    :type optimizer: torch.optim
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict 
     """
     def __init__(self, model, optimizer, config_dict):
         super(RNNTrainer, self).__init__()
@@ -148,14 +148,14 @@ class RNNTrainer(nn.Module):
 
     def train_one_epoch(self, data_loader, epoch):
         """
-        _summary_
+        Train step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :param epoch: _description_
-        :type epoch: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Train Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :param epoch: Epoch number
+        :type epoch: int
+        :return: Train Losse, Train Metrics
+        :rtype: tuple (torch.float32, dict)
         """
         self.model.train()
         total_loss, num_instances = 0, 0
@@ -193,12 +193,12 @@ class RNNTrainer(nn.Module):
     @torch.no_grad()
     def val_one_epoch(self, data_loader):
         """
-        _summary_
+        Validation step
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Validation Data Loader
+        :type data_loader: torch.utils.data.Dataloader
+        :return: Validation Losse, Validation Metrics
+        :rtype: tuple (torch.float32, dict)
         """
         self.model.eval()
         total_loss, num_instances = 0, 0
@@ -230,12 +230,12 @@ class RNNTrainer(nn.Module):
     @torch.no_grad()
     def predict(self, data_loader):
         """
-        _summary_
+        Runs inference to predict a translation of soruce sentence
 
-        :param data_loader: _description_
-        :type data_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param data_loader: Infer Data loader
+        :type data_loader: torch.utils.data.DataLoader
+        :return: Predicted tokens
+        :rtype: numpy.ndarray (num_samples, num_classes)
         """
         self.model.eval()
         y_pred = []
@@ -254,14 +254,14 @@ class RNNTrainer(nn.Module):
 
     def fit(self, train_loader, val_loader):
         """
-        _summary_
+        Fits the model on dataset. Runs training and Validation steps for given epochs and saves best model based on the evaluation metric
 
-        :param train_loader: _description_
-        :type train_loader: _type_
-        :param val_loader: _description_
-        :type val_loader: _type_
-        :return: _description_
-        :rtype: _type_
+        :param train_loader: Train Data loader
+        :type train_loader: torch.utils.data.DataLoader
+        :param val_loader: Validaion Data Loader
+        :type val_loader: torch.utils.data.DataLoader
+        :return: Training History
+        :rtype: dict
         """
         num_epochs = self.config_dict["train"]["epochs"]
         output_folder = self.config_dict["paths"]["output_folder"]

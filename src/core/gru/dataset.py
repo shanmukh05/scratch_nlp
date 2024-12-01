@@ -4,27 +4,27 @@ from torch.utils.data import TensorDataset, DataLoader
 
 
 def create_dataloader(
-    X, y=None, val_split=0.2, batch_size=32, seed=2024, data_type="train"
+    X, y=None, val_split=0.2, batch_size=32, seed=2024, data="train"
 ):
     """
-    _summary_
+    Creates Train, Validation and Test DataLoader
 
-    :param X: _description_
-    :type X: _type_
-    :param y: _description_, defaults to None
-    :type y: _type_, optional
-    :param val_split: _description_, defaults to 0.2
+    :param X: Input source tokens
+    :type X: torch.Tensor (num_samples, seq_len)
+    :param y: Input target tokens, defaults to None
+    :type y: torch.Tensor (num_samples, seq_len), optional
+    :param val_split: validation split, defaults to 0.2
     :type val_split: float, optional
-    :param batch_size: _description_, defaults to 32
+    :param batch_size: Batch size, defaults to 32
     :type batch_size: int, optional
-    :param seed: _description_, defaults to 2024
+    :param seed: Seed, defaults to 2024
     :type seed: int, optional
-    :param data_type: _description_, defaults to "train"
-    :type data_type: str, optional
-    :return: _description_
-    :rtype: _type_
+    :param data: Type of data, defaults to "train"
+    :type data: str, optional
+    :return: Train, Val / Test dataloaders
+    :rtype: tuple (torch.utils.data.DataLoader, torch.utils.data.DataLoader) / torch.utils.data.DataLoader
     """
-    if data_type == "train":
+    if data == "train":
         train_X, val_X, train_y, val_y = train_test_split(
             X, y, test_size=val_split, random_state=seed
         )

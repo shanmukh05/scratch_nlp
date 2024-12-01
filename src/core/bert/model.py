@@ -8,10 +8,10 @@ from core.transformer.model import EncoderLayer, PositionalEncoding
 
 class BERTPretrainModel(nn.Module):
     """
-    _summary_
+    BERT Pretrain Model
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(BERTPretrainModel, self).__init__()
@@ -34,12 +34,12 @@ class BERTPretrainModel(nn.Module):
 
     def forward(self, tokens):
         """
-        _summary_
+        Forward propogation 
 
-        :param tokens: _description_
-        :type tokens: _type_
-        :return: _description_
-        :rtype: _type_
+        :param tokens: Input tokens
+        :type tokens: torch.Tensor (num_samples, seq_len)
+        :return: Predicted Tokens, NSP output
+        :rtype: tuple (torch.Tensor [num_samples, seq_len, num_vocab], torch.Tensor [num_samples,])
         """
         tokens_embed = self.dropout(self.positional_encoding(self.embed_layer(tokens)))
 
@@ -57,10 +57,10 @@ class BERTPretrainModel(nn.Module):
 
 class BERTFinetuneModel(nn.Module):
     """
-    _summary_
+    BERT Finetune Model
 
-    :param config_dict: _description_
-    :type config_dict: _type_
+    :param config_dict: Config Params Dictionary
+    :type config_dict: dict
     """
     def __init__(self, config_dict):
         super(BERTFinetuneModel, self).__init__()
@@ -85,12 +85,12 @@ class BERTFinetuneModel(nn.Module):
 
     def forward(self, tokens):
         """
-        _summary_
+        Forward propogation
 
-        :param tokens: _description_
-        :type tokens: _type_
-        :return: _description_
-        :rtype: _type_
+        :param tokens: Input tokens
+        :type tokens: torch.Tensor (num_samples, seq_len)
+        :return: Encoded Inputs, Start and End ids probs
+        :rtype: tuple (torch.Tensor [num_samples, seq_len, d_model], torch.Tensor [num_samples,], torch.Tensor [num_samples,])
         """
         tokens_embed = self.dropout(self.positional_encoding(self.embed_layer(tokens)))
 
