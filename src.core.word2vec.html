@@ -1,0 +1,755 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>src.core.word2vec package &#8212; Scratch NLP 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src.core.word2vec';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Scratch NLP 1.0.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="details.html">
+    Documentation
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="details.html">
+    Documentation
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="src.core.html">src.core package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="src.core.bert.html">src.core.bert package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.bow.html">src.core.bow package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.glove.html">src.core.glove package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.gpt.html">src.core.gpt package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.gru.html">src.core.gru package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.hmm.html">src.core.hmm package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.lstm.html">src.core.lstm package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.ngram.html">src.core.ngram package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.rnn.html">src.core.rnn package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.seq2seq.html">src.core.seq2seq package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.tfidf.html">src.core.tfidf package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.transformer.html">src.core.transformer package</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">src.core.word2vec package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="src.preprocess.html">src.preprocess package</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src.core.word2vec package</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="src-core-word2vec-package">
+<h1>src.core.word2vec package<a class="headerlink" href="#src-core-word2vec-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-src.core.word2vec.dataset">
+<span id="src-core-word2vec-dataset-module"></span><h2>src.core.word2vec.dataset module<a class="headerlink" href="#module-src.core.word2vec.dataset" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.word2vec.dataset.Word2VecDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.word2vec.dataset.</span></span><span class="sig-name descname"><span class="pre">Word2VecDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/dataset.html#Word2VecDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.dataset.Word2VecDataset" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Word2Vec Dataset</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.word2vec.dataset.Word2VecDataset.get_vocab">
+<span class="sig-name descname"><span class="pre">get_vocab</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/dataset.html#Word2VecDataset.get_vocab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.dataset.Word2VecDataset.get_vocab" title="Link to this definition">#</a></dt>
+<dd><p>Generates vocabulary from from preprocessed text</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.word2vec.dataset.Word2VecDataset.make_pairs">
+<span class="sig-name descname"><span class="pre">make_pairs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/dataset.html#Word2VecDataset.make_pairs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.dataset.Word2VecDataset.make_pairs" title="Link to this definition">#</a></dt>
+<dd><p>Creates Left and Right context and Labels using Huffman binary tree</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Left, Right Context, Left, Right Label</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple (list, list, list, list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.word2vec.dataset.Word2VecDataset.preprocess">
+<span class="sig-name descname"><span class="pre">preprocess</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/dataset.html#Word2VecDataset.preprocess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.dataset.Word2VecDataset.preprocess" title="Link to this definition">#</a></dt>
+<dd><p>Preprocessed extracted data</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.core.word2vec.dataset.create_dataloader">
+<span class="sig-prename descclassname"><span class="pre">src.core.word2vec.dataset.</span></span><span class="sig-name descname"><span class="pre">create_dataloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">left_cxt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_cxt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_lbl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_lbl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2024</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/dataset.html#create_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.dataset.create_dataloader" title="Link to this definition">#</a></dt>
+<dd><p>Creates Train, Validation left and Right DataLoader</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>left_cxt</strong> (<em>list</em>) – Left context</p></li>
+<li><p><strong>right_cxt</strong> (<em>list</em>) – Right context</p></li>
+<li><p><strong>left_lbl</strong> (<em>list</em>) – Left label</p></li>
+<li><p><strong>right_lbl</strong> (<em>list</em>) – Right label</p></li>
+<li><p><strong>val_split</strong> (<em>float</em>) – validation split, defaults to 0.2</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em>) – Batch size, defaults to 32</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed, defaults to 2024</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>train, val left and right dataloader</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.utils.data.DataLoader, torch.utils.data.DataLoader, torch.utils.data.DataLoader, torch.utils.data.DataLoader)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.core.word2vec.huffman">
+<span id="src-core-word2vec-huffman-module"></span><h2>src.core.word2vec.huffman module<a class="headerlink" href="#module-src.core.word2vec.huffman" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.word2vec.huffman.HuffmanBTree">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.word2vec.huffman.</span></span><span class="sig-name descname"><span class="pre">HuffmanBTree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab_freq_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/huffman.html#HuffmanBTree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.huffman.HuffmanBTree" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Creates Huffman Binary Tree to perform Softmax</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vocab_freq_dict</strong> (<em>dict</em>) – Vocabulary Frequency Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.word2vec.huffman.HuffmanBTree.construct_tree">
+<span class="sig-name descname"><span class="pre">construct_tree</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/huffman.html#HuffmanBTree.construct_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.huffman.HuffmanBTree.construct_tree" title="Link to this definition">#</a></dt>
+<dd><p>Constructs Huffman Binary Tree</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.word2vec.huffman.HuffmanBTree.generate_huffman_code">
+<span class="sig-name descname"><span class="pre">generate_huffman_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/huffman.html#HuffmanBTree.generate_huffman_code"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.huffman.HuffmanBTree.generate_huffman_code" title="Link to this definition">#</a></dt>
+<dd><p>Generates Huffman code for vocabulary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tree</strong> (<a class="reference internal" href="#src.core.word2vec.huffman.Node" title="src.core.word2vec.huffman.Node"><em>Node</em></a>) – Node object that initialized HuffmanTree</p></li>
+<li><p><strong>code</strong> (<em>list</em>) – Binary code for each vocab</p></li>
+<li><p><strong>path</strong> (<em>list</em>) – Path for each vocab wrto Node Id</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.word2vec.huffman.HuffmanBTree.separate_left_right_path">
+<span class="sig-name descname"><span class="pre">separate_left_right_path</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/huffman.html#HuffmanBTree.separate_left_right_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.huffman.HuffmanBTree.separate_left_right_path" title="Link to this definition">#</a></dt>
+<dd><p>Separates Left and Right paths</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.word2vec.huffman.Node">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.word2vec.huffman.</span></span><span class="sig-name descname"><span class="pre">Node</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/huffman.html#Node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.huffman.Node" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to initialize Node in a Huffman tree</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>word_idx</strong> (<em>int</em>) – Word Id</p></li>
+<li><p><strong>freq</strong> (<em>int</em>) – Frequency of node</p></li>
+<li><p><strong>left</strong> (<em>list</em><em>, </em><em>optional</em>) – Left nodes, defaults to None</p></li>
+<li><p><strong>right</strong> (<em>list</em><em>, </em><em>optional</em>) – Right nodes, defaults to None</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.core.word2vec.model">
+<span id="src-core-word2vec-model-module"></span><h2>src.core.word2vec.model module<a class="headerlink" href="#module-src.core.word2vec.model" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.word2vec.model.Word2VecModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.word2vec.model.</span></span><span class="sig-name descname"><span class="pre">Word2VecModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/model.html#Word2VecModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.model.Word2VecModel" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Word2Vec Model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.word2vec.model.Word2VecModel.compute_cxt_embed">
+<span class="sig-name descname"><span class="pre">compute_cxt_embed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cxt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/model.html#Word2VecModel.compute_cxt_embed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.model.Word2VecModel.compute_cxt_embed" title="Link to this definition">#</a></dt>
+<dd><p>Computes context embedding vector</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cxt</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>context_len</em><em>)</em>) – Context vector</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Label embedding</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor (batch_size, embed_dim)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.word2vec.model.Word2VecModel.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l_cxt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_cxt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l_lbl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_lbl</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/model.html#Word2VecModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.model.Word2VecModel.forward" title="Link to this definition">#</a></dt>
+<dd><p>Forward propogation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>l_cxt</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>,</em><em>)</em>) – Left context</p></li>
+<li><p><strong>r_cxt</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>,</em><em>)</em>) – Right context</p></li>
+<li><p><strong>l_lbl</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>,</em><em>)</em>) – Left label</p></li>
+<li><p><strong>r_lbl</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>,</em><em>)</em>) – Right label</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Loss</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.float32</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.word2vec.model.Word2VecTrainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.word2vec.model.</span></span><span class="sig-name descname"><span class="pre">Word2VecTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/model.html#Word2VecTrainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.model.Word2VecTrainer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Word2Vec Trainer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – Word2Vec model</p></li>
+<li><p><strong>optimizer</strong> (<em>torch.optim</em>) – Optimizer</p></li>
+<li><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.word2vec.model.Word2VecTrainer.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/model.html#Word2VecTrainer.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.model.Word2VecTrainer.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fits the model on dataset. Runs training and Validation steps for given epochs and saves best model based on the evaluation metric</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Train Data loader</p></li>
+<li><p><strong>val_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Validaion Data Loader</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Training History</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.word2vec.model.Word2VecTrainer.train_one_epoch">
+<span class="sig-name descname"><span class="pre">train_one_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/model.html#Word2VecTrainer.train_one_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.model.Word2VecTrainer.train_one_epoch" title="Link to this definition">#</a></dt>
+<dd><p>Train step</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_loader</strong> (<em>torch.utils.data.Dataloader</em>) – Train Data Loader</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>) – Epoch number</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Train Losse</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.float32</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.word2vec.model.Word2VecTrainer.val_one_epoch">
+<span class="sig-name descname"><span class="pre">val_one_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/model.html#Word2VecTrainer.val_one_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.model.Word2VecTrainer.val_one_epoch" title="Link to this definition">#</a></dt>
+<dd><p>Validation step</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_loader</strong> (<em>torch.utils.data.Dataloader</em>) – Validation Data Loader</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Validation Loss</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.float32</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.core.word2vec.word2vec">
+<span id="src-core-word2vec-word2vec-module"></span><h2>src.core.word2vec.word2vec module<a class="headerlink" href="#module-src.core.word2vec.word2vec" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.word2vec.word2vec.Word2Vec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.word2vec.word2vec.</span></span><span class="sig-name descname"><span class="pre">Word2Vec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/word2vec.html#Word2Vec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.word2vec.Word2Vec" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to run Word2Vec data preprocessing, training and inference</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.word2vec.word2vec.Word2Vec.get_embeddings">
+<span class="sig-name descname"><span class="pre">get_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sentence</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/word2vec.html#Word2Vec.get_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.word2vec.Word2Vec.get_embeddings" title="Link to this definition">#</a></dt>
+<dd><p>Outputs Word embeddings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sentence</strong> (<em>str</em>) – Input sentence</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Word embeddings</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor (seq_len, embed_dim)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.word2vec.word2vec.Word2Vec.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/word2vec.html#Word2Vec.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.word2vec.Word2Vec.run" title="Link to this definition">#</a></dt>
+<dd><p>Runs Word2Vec Training and saves output</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.word2vec.word2vec.Word2Vec.save_output">
+<span class="sig-name descname"><span class="pre">save_output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/word2vec/word2vec.html#Word2Vec.save_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.word2vec.word2vec.Word2Vec.save_output" title="Link to this definition">#</a></dt>
+<dd><p>Saves Training and Inference results</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.core.word2vec">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.core.word2vec" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.word2vec.dataset">src.core.word2vec.dataset module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.dataset.Word2VecDataset"><code class="docutils literal notranslate"><span class="pre">Word2VecDataset</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.dataset.Word2VecDataset.get_vocab"><code class="docutils literal notranslate"><span class="pre">Word2VecDataset.get_vocab()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.dataset.Word2VecDataset.make_pairs"><code class="docutils literal notranslate"><span class="pre">Word2VecDataset.make_pairs()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.dataset.Word2VecDataset.preprocess"><code class="docutils literal notranslate"><span class="pre">Word2VecDataset.preprocess()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.dataset.create_dataloader"><code class="docutils literal notranslate"><span class="pre">create_dataloader()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.word2vec.huffman">src.core.word2vec.huffman module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.huffman.HuffmanBTree"><code class="docutils literal notranslate"><span class="pre">HuffmanBTree</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.huffman.HuffmanBTree.construct_tree"><code class="docutils literal notranslate"><span class="pre">HuffmanBTree.construct_tree()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.huffman.HuffmanBTree.generate_huffman_code"><code class="docutils literal notranslate"><span class="pre">HuffmanBTree.generate_huffman_code()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.huffman.HuffmanBTree.separate_left_right_path"><code class="docutils literal notranslate"><span class="pre">HuffmanBTree.separate_left_right_path()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.huffman.Node"><code class="docutils literal notranslate"><span class="pre">Node</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.word2vec.model">src.core.word2vec.model module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.model.Word2VecModel"><code class="docutils literal notranslate"><span class="pre">Word2VecModel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.model.Word2VecModel.compute_cxt_embed"><code class="docutils literal notranslate"><span class="pre">Word2VecModel.compute_cxt_embed()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.model.Word2VecModel.forward"><code class="docutils literal notranslate"><span class="pre">Word2VecModel.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.model.Word2VecTrainer"><code class="docutils literal notranslate"><span class="pre">Word2VecTrainer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.model.Word2VecTrainer.fit"><code class="docutils literal notranslate"><span class="pre">Word2VecTrainer.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.model.Word2VecTrainer.train_one_epoch"><code class="docutils literal notranslate"><span class="pre">Word2VecTrainer.train_one_epoch()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.model.Word2VecTrainer.val_one_epoch"><code class="docutils literal notranslate"><span class="pre">Word2VecTrainer.val_one_epoch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.word2vec.word2vec">src.core.word2vec.word2vec module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.word2vec.Word2Vec"><code class="docutils literal notranslate"><span class="pre">Word2Vec</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.word2vec.Word2Vec.get_embeddings"><code class="docutils literal notranslate"><span class="pre">Word2Vec.get_embeddings()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.word2vec.Word2Vec.run"><code class="docutils literal notranslate"><span class="pre">Word2Vec.run()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.word2vec.word2vec.Word2Vec.save_output"><code class="docutils literal notranslate"><span class="pre">Word2Vec.save_output()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.word2vec">Module contents</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/src.core.word2vec.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Shanmukha Sainath.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

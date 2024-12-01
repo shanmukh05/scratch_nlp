@@ -1,0 +1,867 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>src.core.seq2seq package &#8212; Scratch NLP 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src.core.seq2seq';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Scratch NLP 1.0.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="details.html">
+    Documentation
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="details.html">
+    Documentation
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="src.core.html">src.core package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="src.core.bert.html">src.core.bert package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.bow.html">src.core.bow package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.glove.html">src.core.glove package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.gpt.html">src.core.gpt package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.gru.html">src.core.gru package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.hmm.html">src.core.hmm package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.lstm.html">src.core.lstm package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.ngram.html">src.core.ngram package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.rnn.html">src.core.rnn package</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">src.core.seq2seq package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.tfidf.html">src.core.tfidf package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.transformer.html">src.core.transformer package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.word2vec.html">src.core.word2vec package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="src.preprocess.html">src.preprocess package</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src.core.seq2seq package</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="src-core-seq2seq-package">
+<h1>src.core.seq2seq package<a class="headerlink" href="#src-core-seq2seq-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-src.core.seq2seq.dataset">
+<span id="src-core-seq2seq-dataset-module"></span><h2>src.core.seq2seq.dataset module<a class="headerlink" href="#module-src.core.seq2seq.dataset" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.core.seq2seq.dataset.create_dataloader">
+<span class="sig-prename descclassname"><span class="pre">src.core.seq2seq.dataset.</span></span><span class="sig-name descname"><span class="pre">create_dataloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2024</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'train'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/dataset.html#create_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.dataset.create_dataloader" title="Link to this definition">#</a></dt>
+<dd><p>Creates Train, Validation and Test DataLoader</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>torch.Tensor</em><em> (</em><em>num_samples</em><em>, </em><em>seq_len</em><em>)</em>) – Input source tokens</p></li>
+<li><p><strong>y</strong> (<em>torch.Tensor</em><em> (</em><em>num_samples</em><em>, </em><em>seq_len</em><em>)</em><em>, </em><em>optional</em>) – Input target tokens, defaults to None</p></li>
+<li><p><strong>val_split</strong> (<em>float</em><em>, </em><em>optional</em>) – validation split, defaults to 0.2</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Batch size, defaults to 32</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed, defaults to 2024</p></li>
+<li><p><strong>data</strong> (<em>str</em><em>, </em><em>optional</em>) – Type of data, defaults to “train”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Train, Val / Test dataloaders</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.utils.data.DataLoader, torch.utils.data.DataLoader) / torch.utils.data.DataLoader</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.core.seq2seq.model">
+<span id="src-core-seq2seq-model-module"></span><h2>src.core.seq2seq.model module<a class="headerlink" href="#module-src.core.seq2seq.model" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.DecoderLSTMCell">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.seq2seq.model.</span></span><span class="sig-name descname"><span class="pre">DecoderLSTMCell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inp_x_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_x_dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#DecoderLSTMCell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.DecoderLSTMCell" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Decode LSTM cell</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h_dim</strong> (<em>int</em>) – Hidden state vector dimension</p></li>
+<li><p><strong>inp_x_dim</strong> (<em>int</em>) – Input vector dimension</p></li>
+<li><p><strong>out_x_dim</strong> (<em>int</em>) – Output vector dimension</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.DecoderLSTMCell.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ht_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ct_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#DecoderLSTMCell.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.DecoderLSTMCell.forward" title="Link to this definition">#</a></dt>
+<dd><p>Forward propogation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ht_1</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>h_dim</em><em>)</em>) – Hidden state vector</p></li>
+<li><p><strong>ct_1</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>h_dim</em><em>)</em>) – Cell stae vector</p></li>
+<li><p><strong>xt</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>embed_dim</em><em>)</em>) – Input vector</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New hidden, cell states, output</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.Tensor [batch_size, h_dim], torch.Tensor [batch_size, h_dim], torch.Tensor [batch_size, out_dim])</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.EncoderLSTMCell">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.seq2seq.model.</span></span><span class="sig-name descname"><span class="pre">EncoderLSTMCell</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">h_dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inp_x_dim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#EncoderLSTMCell"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.EncoderLSTMCell" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Encoder LSTM Cell</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>h_dim</strong> (<em>int</em>) – Hidden state vector dimension</p></li>
+<li><p><strong>inp_x_dim</strong> (<em>int</em>) – Input vector dimension</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.EncoderLSTMCell.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ht_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ct_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xt</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#EncoderLSTMCell.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.EncoderLSTMCell.forward" title="Link to this definition">#</a></dt>
+<dd><p>Forward propogation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ht_1</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>h_dim</em><em>)</em>) – Hidden state vector</p></li>
+<li><p><strong>ct_1</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>h_dim</em><em>)</em>) – Cell stae vector</p></li>
+<li><p><strong>xt</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>embed_dim</em><em>)</em>) – Input vector</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>New hidden, cell states</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.Tensor [batch_size, h_dim], torch.Tensor [batch_size, h_dim])</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqAttention">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.seq2seq.model.</span></span><span class="sig-name descname"><span class="pre">Seq2SeqAttention</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqAttention"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqAttention" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Seq2Seq Attention layer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqAttention.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">si_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yts</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqAttention.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqAttention.forward" title="Link to this definition">#</a></dt>
+<dd><p>Forward Propogation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>si_1</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>2*h_dim</em><em>)</em>) – Hidden state vector of decoder layer</p></li>
+<li><p><strong>yts</strong> (<em>torch.tensor</em><em> (</em><em>batch_size</em><em>, </em><em>seq_len</em><em>, </em><em>out_dim</em><em>)</em>) – Encoder output vectors</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Attention weights, New hidden state vector</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.Tensor [batch_size, seq_len], torch.Tensor [batch_size, 2*h_dim])</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqDecoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.seq2seq.model.</span></span><span class="sig-name descname"><span class="pre">Seq2SeqDecoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqDecoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqDecoder" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Seq2Seq Decoder</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqDecoder.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder_yts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tgt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqDecoder.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqDecoder.forward" title="Link to this definition">#</a></dt>
+<dd><p>Forward propogation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>encoder_yts</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>seq_len</em><em>, </em><em>out_dim</em><em>)</em>) – Encoder Output vectors</p></li>
+<li><p><strong>encoder_h</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>seq_len</em><em>, </em><em>2*h_dim</em><em>)</em>) – Encoder final hidden vectors</p></li>
+<li><p><strong>tgt</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>seq_len</em><em>)</em><em>, </em><em>optional</em>) – Target vectors, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Final predictions, Attention weights</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.Tensor [batch_size, seq_len, num_tgt_vocab], list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqEncoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.seq2seq.model.</span></span><span class="sig-name descname"><span class="pre">Seq2SeqEncoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqEncoder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqEncoder" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Seq2Seq Encoder</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqEncoder.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqEncoder.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqEncoder.forward" title="Link to this definition">#</a></dt>
+<dd><p>Forward propogation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>src</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>seq_len</em><em>)</em>) – Source tokens</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Predicted tokens, Hidden states</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.Tensor [batch_size, seq_len, out_dim], torch.Tensor [batch_size, 2*h_dim])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqEncoder.init_hidden">
+<span class="sig-name descname"><span class="pre">init_hidden</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqEncoder.init_hidden"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqEncoder.init_hidden" title="Link to this definition">#</a></dt>
+<dd><p>Initialized hidden states</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of hidden states</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.seq2seq.model.</span></span><span class="sig-name descname"><span class="pre">Seq2SeqModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqModel" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Seq2Seq Model Architecture</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqModel.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tgt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqModel.forward" title="Link to this definition">#</a></dt>
+<dd><p>Forward propogation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>seq_len</em><em>)</em>) – Source tokens</p></li>
+<li><p><strong>tgt</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>seq_len</em><em>)</em><em>, </em><em>optional</em>) – _Target tokens, defaults to None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Final predictions, Attention weights</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.Tensor [batch_size, seq_len, num_tgt_vocab], list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqTrainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.seq2seq.model.</span></span><span class="sig-name descname"><span class="pre">Seq2SeqTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqTrainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqTrainer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Seq2Seq Trainer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – Seq2Seq model</p></li>
+<li><p><strong>optimizer</strong> (<em>torch.optim</em>) – Optimizer</p></li>
+<li><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqTrainer.calc_loss">
+<span class="sig-name descname"><span class="pre">calc_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqTrainer.calc_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqTrainer.calc_loss" title="Link to this definition">#</a></dt>
+<dd><p>Crossentropy loss for predicted tokens</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_pred</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>seq_len</em><em>, </em><em>num_vocab</em><em>)</em>) – Predicted tokens</p></li>
+<li><p><strong>y_true</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>seq_len</em><em>)</em>) – True tokens</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>BCE Loss</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.float32</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqTrainer.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqTrainer.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqTrainer.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fits the model on dataset. Runs training and Validation steps for given epochs and saves best model based on the evaluation metric</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Train Data loader</p></li>
+<li><p><strong>val_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Validaion Data Loader</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Training History</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqTrainer.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqTrainer.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqTrainer.predict" title="Link to this definition">#</a></dt>
+<dd><p>Runs inference to predict a translation of soruce sentence</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Infer Data loader</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Predicted tokens</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>numpy.ndarray (num_samples, seq_len, num_tgt_vocab)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqTrainer.train_one_epoch">
+<span class="sig-name descname"><span class="pre">train_one_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqTrainer.train_one_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqTrainer.train_one_epoch" title="Link to this definition">#</a></dt>
+<dd><p>Train step</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_loader</strong> (<em>torch.utils.data.Dataloader</em>) – Train Data Loader</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>) – Epoch number</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Train Loss, Train Metrics</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.float32, dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.model.Seq2SeqTrainer.val_one_epoch">
+<span class="sig-name descname"><span class="pre">val_one_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/model.html#Seq2SeqTrainer.val_one_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.model.Seq2SeqTrainer.val_one_epoch" title="Link to this definition">#</a></dt>
+<dd><p>Validation step</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_loader</strong> (<em>torch.utils.data.Dataloader</em>) – Validation Data Loader</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Validation Loss, Validation Metrics</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.float32, dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.core.seq2seq.seq2seq">
+<span id="src-core-seq2seq-seq2seq-module"></span><h2>src.core.seq2seq.seq2seq module<a class="headerlink" href="#module-src.core.seq2seq.seq2seq" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.seq2seq.seq2seq.Seq2Seq">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.seq2seq.seq2seq.</span></span><span class="sig-name descname"><span class="pre">Seq2Seq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/seq2seq.html#Seq2Seq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.seq2seq.Seq2Seq" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to run Seq2Seq data preprocessing, training and inference</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.seq2seq.Seq2Seq.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/seq2seq.html#Seq2Seq.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.seq2seq.Seq2Seq.run" title="Link to this definition">#</a></dt>
+<dd><p>Runs Seq2Seq Training and saves output</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Training history</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.seq2seq.Seq2Seq.run_infer">
+<span class="sig-name descname"><span class="pre">run_infer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/seq2seq.html#Seq2Seq.run_infer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.seq2seq.Seq2Seq.run_infer" title="Link to this definition">#</a></dt>
+<dd><p>Runs inference</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True source, True target, predicted target tokens</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple (list, list, list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.seq2seq.seq2seq.Seq2Seq.save_output">
+<span class="sig-name descname"><span class="pre">save_output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/seq2seq/seq2seq.html#Seq2Seq.save_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.seq2seq.seq2seq.Seq2Seq.save_output" title="Link to this definition">#</a></dt>
+<dd><p>Saves Training and Inference results</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.core.seq2seq">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.core.seq2seq" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.seq2seq.dataset">src.core.seq2seq.dataset module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.dataset.create_dataloader"><code class="docutils literal notranslate"><span class="pre">create_dataloader()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.seq2seq.model">src.core.seq2seq.model module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.DecoderLSTMCell"><code class="docutils literal notranslate"><span class="pre">DecoderLSTMCell</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.DecoderLSTMCell.forward"><code class="docutils literal notranslate"><span class="pre">DecoderLSTMCell.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.EncoderLSTMCell"><code class="docutils literal notranslate"><span class="pre">EncoderLSTMCell</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.EncoderLSTMCell.forward"><code class="docutils literal notranslate"><span class="pre">EncoderLSTMCell.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqAttention"><code class="docutils literal notranslate"><span class="pre">Seq2SeqAttention</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqAttention.forward"><code class="docutils literal notranslate"><span class="pre">Seq2SeqAttention.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqDecoder"><code class="docutils literal notranslate"><span class="pre">Seq2SeqDecoder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqDecoder.forward"><code class="docutils literal notranslate"><span class="pre">Seq2SeqDecoder.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqEncoder"><code class="docutils literal notranslate"><span class="pre">Seq2SeqEncoder</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqEncoder.forward"><code class="docutils literal notranslate"><span class="pre">Seq2SeqEncoder.forward()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqEncoder.init_hidden"><code class="docutils literal notranslate"><span class="pre">Seq2SeqEncoder.init_hidden()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqModel"><code class="docutils literal notranslate"><span class="pre">Seq2SeqModel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqModel.forward"><code class="docutils literal notranslate"><span class="pre">Seq2SeqModel.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqTrainer"><code class="docutils literal notranslate"><span class="pre">Seq2SeqTrainer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqTrainer.calc_loss"><code class="docutils literal notranslate"><span class="pre">Seq2SeqTrainer.calc_loss()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqTrainer.fit"><code class="docutils literal notranslate"><span class="pre">Seq2SeqTrainer.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqTrainer.predict"><code class="docutils literal notranslate"><span class="pre">Seq2SeqTrainer.predict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqTrainer.train_one_epoch"><code class="docutils literal notranslate"><span class="pre">Seq2SeqTrainer.train_one_epoch()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.model.Seq2SeqTrainer.val_one_epoch"><code class="docutils literal notranslate"><span class="pre">Seq2SeqTrainer.val_one_epoch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.seq2seq.seq2seq">src.core.seq2seq.seq2seq module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.seq2seq.Seq2Seq"><code class="docutils literal notranslate"><span class="pre">Seq2Seq</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.seq2seq.Seq2Seq.run"><code class="docutils literal notranslate"><span class="pre">Seq2Seq.run()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.seq2seq.Seq2Seq.run_infer"><code class="docutils literal notranslate"><span class="pre">Seq2Seq.run_infer()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.seq2seq.seq2seq.Seq2Seq.save_output"><code class="docutils literal notranslate"><span class="pre">Seq2Seq.save_output()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.seq2seq">Module contents</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/src.core.seq2seq.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Shanmukha Sainath.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

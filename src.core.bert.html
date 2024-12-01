@@ -1,0 +1,1098 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>src.core.bert package &#8212; Scratch NLP 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src.core.bert';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Scratch NLP 1.0.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="details.html">
+    Documentation
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="details.html">
+    Documentation
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="src.core.html">src.core package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">src.core.bert package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.bow.html">src.core.bow package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.glove.html">src.core.glove package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.gpt.html">src.core.gpt package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.gru.html">src.core.gru package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.hmm.html">src.core.hmm package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.lstm.html">src.core.lstm package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.ngram.html">src.core.ngram package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.rnn.html">src.core.rnn package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.seq2seq.html">src.core.seq2seq package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.tfidf.html">src.core.tfidf package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.transformer.html">src.core.transformer package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.word2vec.html">src.core.word2vec package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="src.preprocess.html">src.preprocess package</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src.core.bert package</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="src-core-bert-package">
+<h1>src.core.bert package<a class="headerlink" href="#src-core-bert-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-src.core.bert.bert">
+<span id="src-core-bert-bert-module"></span><h2>src.core.bert.bert module<a class="headerlink" href="#module-src.core.bert.bert" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.bert.bert.BERT">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.bert.bert.</span></span><span class="sig-name descname"><span class="pre">BERT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/bert.html#BERT"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.bert.BERT" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to run BERT data preprocessing, training and inference</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.bert.BERT.load_pretrain_weights">
+<span class="sig-name descname"><span class="pre">load_pretrain_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pretrain_model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">finetune_model</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/bert.html#BERT.load_pretrain_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.bert.BERT.load_pretrain_weights" title="Link to this definition">#</a></dt>
+<dd><p>Copies pretrain weights to finetune BERT model object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pretrain_model</strong> (<em>torch.nn.Module</em>) – Pretrain BERT model</p></li>
+<li><p><strong>finetune_model</strong> (<em>torch.nn.Module</em>) – Finetune BERT model</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Finetune BERT model with Pretrained weights</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.bert.BERT.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/bert.html#BERT.run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.bert.BERT.run" title="Link to this definition">#</a></dt>
+<dd><p>Runs BERT pretrain and finetune stages and saves output</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.bert.BERT.run_finetune">
+<span class="sig-name descname"><span class="pre">run_finetune</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/bert.html#BERT.run_finetune"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.bert.BERT.run_finetune" title="Link to this definition">#</a></dt>
+<dd><p>Finetuning stage of BERT</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BERT Fientune Trainer and Training History</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple (torch.nn.Module, dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.bert.BERT.run_infer_finetune">
+<span class="sig-name descname"><span class="pre">run_infer_finetune</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/bert.html#BERT.run_infer_finetune"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.bert.BERT.run_infer_finetune" title="Link to this definition">#</a></dt>
+<dd><p>Runs inference using Finetuned BERT</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True and Predicted start, end ids</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple (numpy.ndarray [num_samples,], numpy.ndarray [num_samples,], numpy.ndarray [num_samples,], numpy.ndarray [num_samples,])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.bert.BERT.run_pretrain">
+<span class="sig-name descname"><span class="pre">run_pretrain</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/bert.html#BERT.run_pretrain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.bert.BERT.run_pretrain" title="Link to this definition">#</a></dt>
+<dd><p>Pretraining stage of BERT</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>BERT Pretrain Trainer and Training History</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple (torch.nn.Module, dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.bert.BERT.save_output">
+<span class="sig-name descname"><span class="pre">save_output</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/bert.html#BERT.save_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.bert.BERT.save_output" title="Link to this definition">#</a></dt>
+<dd><p>Saves Training and Inference results</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.core.bert.dataset_finetune">
+<span id="src-core-bert-dataset-finetune-module"></span><h2>src.core.bert.dataset_finetune module<a class="headerlink" href="#module-src.core.bert.dataset_finetune" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.bert.dataset_finetune.PreprocessBERTFinetune">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.bert.dataset_finetune.</span></span><span class="sig-name descname"><span class="pre">PreprocessBERTFinetune</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wordpiece</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">word2id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/dataset_finetune.html#PreprocessBERTFinetune"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.dataset_finetune.PreprocessBERTFinetune" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to preprocess BERT Finetuning Data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p></li>
+<li><p><strong>wordpiece</strong> (<em>src.preprocess.WordPiece</em>) – WordPiece class</p></li>
+<li><p><strong>word2id</strong> (<em>dict</em>) – Words to Ids mapping</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.dataset_finetune.PreprocessBERTFinetune.batched_ids2tokens">
+<span class="sig-name descname"><span class="pre">batched_ids2tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/dataset_finetune.html#PreprocessBERTFinetune.batched_ids2tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.dataset_finetune.PreprocessBERTFinetune.batched_ids2tokens" title="Link to this definition">#</a></dt>
+<dd><p>Converting sentence of ids to tokens</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokens</strong> (<em>numpy.ndarray</em>) – Tokens Array, 2D array (num_samples, seq_len)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of decoded sentences</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.dataset_finetune.PreprocessBERTFinetune.extract_data">
+<span class="sig-name descname"><span class="pre">extract_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/dataset_finetune.html#PreprocessBERTFinetune.extract_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.dataset_finetune.PreprocessBERTFinetune.extract_data" title="Link to this definition">#</a></dt>
+<dd><p>Extracts data from SQuAD v1 JSON file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Finetuning Data (Topic, Context, Question, Answer Start ID, Num words in an answer)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.dataset_finetune.PreprocessBERTFinetune.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/dataset_finetune.html#PreprocessBERTFinetune.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.dataset_finetune.PreprocessBERTFinetune.get_data" title="Link to this definition">#</a></dt>
+<dd><p>Converts extracted data into tokens with start, end ids of answers along with the topics of each sample</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Finetuning Data (tokens, start ids, end ids, topics)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples,], numpy.ndarray [num_samples,] , numpy.ndarray [num_samples,])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.dataset_finetune.PreprocessBERTFinetune.preprocess_text">
+<span class="sig-name descname"><span class="pre">preprocess_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/dataset_finetune.html#PreprocessBERTFinetune.preprocess_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.dataset_finetune.PreprocessBERTFinetune.preprocess_text" title="Link to this definition">#</a></dt>
+<dd><p>Preprocesses text</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Raw Input string</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Preprocessed string</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.core.bert.dataset_finetune.create_data_loader_finetune">
+<span class="sig-prename descclassname"><span class="pre">src.core.bert.dataset_finetune.</span></span><span class="sig-name descname"><span class="pre">create_data_loader_finetune</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2024</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/dataset_finetune.html#create_data_loader_finetune"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.dataset_finetune.create_data_loader_finetune" title="Link to this definition">#</a></dt>
+<dd><p>Creates PyTorch DataLoaders for Finetuning data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tokens</strong> (<em>torch.Tensor</em>) – Input tokens</p></li>
+<li><p><strong>start_ids</strong> (<em>torch.Tensor</em>) – Start ids of Prediction</p></li>
+<li><p><strong>end_ids</strong> (<em>torch.Tensor</em>) – End ids of Prediction</p></li>
+<li><p><strong>topics</strong> (<em>torch.Tensor</em>) – Topic type of data samples</p></li>
+<li><p><strong>val_split</strong> (<em>float</em><em>, </em><em>optional</em>) – validation split, defaults to 0.2</p></li>
+<li><p><strong>test_split</strong> (<em>float</em><em>, </em><em>optional</em>) – Test split, defaults to 0.2</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Batch size, defaults to 32</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed, defaults to 2024</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Train, Val and Test dataloaders</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.utils.data.DataLoader, torch.utils.data.DataLoader,torch.utils.data.DataLoader)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.core.bert.dataset_pretrain">
+<span id="src-core-bert-dataset-pretrain-module"></span><h2>src.core.bert.dataset_pretrain module<a class="headerlink" href="#module-src.core.bert.dataset_pretrain" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.bert.dataset_pretrain.BERTPretrainDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.bert.dataset_pretrain.</span></span><span class="sig-name descname"><span class="pre">BERTPretrainDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_tokens</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsp_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">word2id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/dataset_pretrain.html#BERTPretrainDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.dataset_pretrain.BERTPretrainDataset" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
+<p>A class to generate BERT NSP training formatted dataset from preprocessed strings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text_tokens</strong> (<em>numpy.ndarray</em><em> (</em><em>num_samples</em><em>, </em><em>seq_len</em><em>)</em>) – Preprocessed text tokens</p></li>
+<li><p><strong>nsp_labels</strong> (<em>numpy.ndarray</em><em> (</em><em>n um_samples</em><em>,</em><em>)</em>) – NSP labels</p></li>
+<li><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p></li>
+<li><p><strong>word2id</strong> (<em>dict</em>) – Words to Ids mapping</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.bert.dataset_pretrain.PreprocessBERTPretrain">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.bert.dataset_pretrain.</span></span><span class="sig-name descname"><span class="pre">PreprocessBERTPretrain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/dataset_pretrain.html#PreprocessBERTPretrain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.dataset_pretrain.PreprocessBERTPretrain" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to preprocess BERT Pretraining data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.dataset_pretrain.PreprocessBERTPretrain.batched_ids2tokens">
+<span class="sig-name descname"><span class="pre">batched_ids2tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/dataset_pretrain.html#PreprocessBERTPretrain.batched_ids2tokens"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.dataset_pretrain.PreprocessBERTPretrain.batched_ids2tokens" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.dataset_pretrain.PreprocessBERTPretrain.extract_data">
+<span class="sig-name descname"><span class="pre">extract_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/dataset_pretrain.html#PreprocessBERTPretrain.extract_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.dataset_pretrain.PreprocessBERTPretrain.extract_data" title="Link to this definition">#</a></dt>
+<dd><p>Extracts data from Wiki en csv file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of raw strimgs</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.dataset_pretrain.PreprocessBERTPretrain.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/dataset_pretrain.html#PreprocessBERTPretrain.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.dataset_pretrain.PreprocessBERTPretrain.get_data" title="Link to this definition">#</a></dt>
+<dd><p>Converts extracted data into tokens and Next Sentence Prediction labels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Pretraining Data (tokens, nsp labels)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples,])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.dataset_pretrain.PreprocessBERTPretrain.get_vocab">
+<span class="sig-name descname"><span class="pre">get_vocab</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_ls</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/dataset_pretrain.html#PreprocessBERTPretrain.get_vocab"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.dataset_pretrain.PreprocessBERTPretrain.get_vocab" title="Link to this definition">#</a></dt>
+<dd><p>Generates Vocabulary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text_ls</strong> (<em>list</em>) – List of preprocessed strings</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Corpus generated by WordPiece</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.dataset_pretrain.PreprocessBERTPretrain.preprocess_text">
+<span class="sig-name descname"><span class="pre">preprocess_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text_ls</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/dataset_pretrain.html#PreprocessBERTPretrain.preprocess_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.dataset_pretrain.PreprocessBERTPretrain.preprocess_text" title="Link to this definition">#</a></dt>
+<dd><p>Preprocesses list of strings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text_ls</strong> (<em>list</em>) – List of Raw strings</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of preprocssed strings</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.core.bert.dataset_pretrain.create_dataloader_pretrain">
+<span class="sig-prename descclassname"><span class="pre">src.core.bert.dataset_pretrain.</span></span><span class="sig-name descname"><span class="pre">create_dataloader_pretrain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">word2id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_split</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2024</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/dataset_pretrain.html#create_dataloader_pretrain"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.dataset_pretrain.create_dataloader_pretrain" title="Link to this definition">#</a></dt>
+<dd><p>Creates PyTorch DataLoader for Pretraining data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy.ndarray</em><em> (</em><em>num_samples</em><em>, </em><em>seq_len</em><em>)</em>) – Masked Input text tokens</p></li>
+<li><p><strong>y</strong> (<em>numpy.ndarray</em><em> (</em><em>num_samples</em><em>,</em><em>)</em>) – NSP labels</p></li>
+<li><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p></li>
+<li><p><strong>word2id</strong> (<em>dict</em>) – Words to Ids mapping</p></li>
+<li><p><strong>val_split</strong> (<em>float</em><em>, </em><em>optional</em>) – validation split, defaults to 0.2</p></li>
+<li><p><strong>test_split</strong> (<em>float</em><em>, </em><em>optional</em>) – Test split, defaults to 0.2</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Batch size, defaults to 32</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Seed, defaults to 2024</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Train, Val and Test dataloaders</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.utils.data.DataLoader, torch.utils.data.DataLoader,torch.utils.data.DataLoader)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.core.bert.finetune">
+<span id="src-core-bert-finetune-module"></span><h2>src.core.bert.finetune module<a class="headerlink" href="#module-src.core.bert.finetune" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.bert.finetune.BERTFinetuneTrainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.bert.finetune.</span></span><span class="sig-name descname"><span class="pre">BERTFinetuneTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/finetune.html#BERTFinetuneTrainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.finetune.BERTFinetuneTrainer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>BERT Finetune Model trainer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – BERT Finetune model</p></li>
+<li><p><strong>optimizer</strong> (<em>torch.optim</em>) – Optimizer</p></li>
+<li><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.finetune.BERTFinetuneTrainer.calc_loss">
+<span class="sig-name descname"><span class="pre">calc_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_ids_prob</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_ids_prob</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_ids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_ids</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/finetune.html#BERTFinetuneTrainer.calc_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.finetune.BERTFinetuneTrainer.calc_loss" title="Link to this definition">#</a></dt>
+<dd><p>NLL loss for start and end ids predictions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_ids_prob</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>num_vocab</em><em>)</em>) – Predicted probabilities of start ids</p></li>
+<li><p><strong>end_ids_prob</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>num_vocab</em><em>)</em>) – predicted probabilities of end ids</p></li>
+<li><p><strong>start_ids</strong> (<em>torch.tensor</em><em> (</em><em>batch_size</em><em>)</em>) – True start ids</p></li>
+<li><p><strong>end_ids</strong> (<em>torch.tensor</em><em> (</em><em>batch_size</em><em>)</em>) – True end ids</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>NLL Loss of start, end ids</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.float32, torch.float32)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.finetune.BERTFinetuneTrainer.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/finetune.html#BERTFinetuneTrainer.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.finetune.BERTFinetuneTrainer.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fits the model on dataset. Runs training and Validation steps for given epochs and saves best model based on the evaluation metric</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Train Data loader</p></li>
+<li><p><strong>val_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Validaion Data Loader</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Training History</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.finetune.BERTFinetuneTrainer.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/finetune.html#BERTFinetuneTrainer.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.finetune.BERTFinetuneTrainer.predict" title="Link to this definition">#</a></dt>
+<dd><p>Runs inference on Input Data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Infer Data loader</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Labels, Predictions (start ids labels, end ids labels, encoded inputs)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (numpy.ndarray [num_samples,], numpy.ndarray [num_samples,], numpy.ndarray [seq_len, num_samples])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.finetune.BERTFinetuneTrainer.train_one_epoch">
+<span class="sig-name descname"><span class="pre">train_one_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/finetune.html#BERTFinetuneTrainer.train_one_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.finetune.BERTFinetuneTrainer.train_one_epoch" title="Link to this definition">#</a></dt>
+<dd><p>Train step</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_loader</strong> (<em>torch.utils.data.Dataloader</em>) – Train Data Loader</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>) – Epoch number</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Train Losses (Train Loss, Train Start id loss, Train End id loss)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.float32, torch.float32, torch.float32)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.finetune.BERTFinetuneTrainer.val_one_epoch">
+<span class="sig-name descname"><span class="pre">val_one_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/finetune.html#BERTFinetuneTrainer.val_one_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.finetune.BERTFinetuneTrainer.val_one_epoch" title="Link to this definition">#</a></dt>
+<dd><p>Validation step</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_loader</strong> (<em>torch</em><em>,</em><em>.utils.data.DataLoader</em>) – Validation Data Loader</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Validation Losses</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (Validation Loss, Validation Start id loss, Validation End id loss)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.core.bert.model">
+<span id="src-core-bert-model-module"></span><h2>src.core.bert.model module<a class="headerlink" href="#module-src.core.bert.model" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.bert.model.BERTFinetuneModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.bert.model.</span></span><span class="sig-name descname"><span class="pre">BERTFinetuneModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/model.html#BERTFinetuneModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.model.BERTFinetuneModel" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>BERT Finetune Model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.model.BERTFinetuneModel.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/model.html#BERTFinetuneModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.model.BERTFinetuneModel.forward" title="Link to this definition">#</a></dt>
+<dd><p>Forward propogation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokens</strong> (<em>torch.Tensor</em><em> (</em><em>num_samples</em><em>, </em><em>seq_len</em><em>)</em>) – Input tokens</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Encoded Inputs, Start and End ids probs</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.Tensor [num_samples, seq_len, d_model], torch.Tensor [num_samples,], torch.Tensor [num_samples,])</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.bert.model.BERTPretrainModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.bert.model.</span></span><span class="sig-name descname"><span class="pre">BERTPretrainModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/model.html#BERTPretrainModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.model.BERTPretrainModel" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>BERT Pretrain Model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.model.BERTPretrainModel.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/model.html#BERTPretrainModel.forward"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.model.BERTPretrainModel.forward" title="Link to this definition">#</a></dt>
+<dd><p>Forward propogation</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokens</strong> (<em>torch.Tensor</em><em> (</em><em>num_samples</em><em>, </em><em>seq_len</em><em>)</em>) – Input tokens</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Predicted Tokens, NSP output</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.Tensor [num_samples, seq_len, num_vocab], torch.Tensor [num_samples,])</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.core.bert.pretrain">
+<span id="src-core-bert-pretrain-module"></span><h2>src.core.bert.pretrain module<a class="headerlink" href="#module-src.core.bert.pretrain" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.core.bert.pretrain.BERTPretrainTrainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.core.bert.pretrain.</span></span><span class="sig-name descname"><span class="pre">BERTPretrainTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/pretrain.html#BERTPretrainTrainer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.pretrain.BERTPretrainTrainer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>BERT Pretrain Model trainer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – BERT Pretrain model</p></li>
+<li><p><strong>optimizer</strong> (<em>torch.optim</em>) – Optimizer</p></li>
+<li><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.pretrain.BERTPretrainTrainer.calc_loss">
+<span class="sig-name descname"><span class="pre">calc_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsp_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokens_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nsp_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokens_mask</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/pretrain.html#BERTPretrainTrainer.calc_loss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.pretrain.BERTPretrainTrainer.calc_loss" title="Link to this definition">#</a></dt>
+<dd><p>Calculates Training Loss components</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tokens_pred</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>seq_len</em><em>, </em><em>num_vocab</em><em>)</em>) – Predicted Tokens</p></li>
+<li><p><strong>nsp_pred</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>,</em><em>)</em>) – Predicted NSP Label</p></li>
+<li><p><strong>tokens_true</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>seq_len</em><em>)</em>) – True tokens</p></li>
+<li><p><strong>nsp_labels</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>,</em><em>)</em>) – NSP labels</p></li>
+<li><p><strong>tokens_mask</strong> (<em>torch.Tensor</em><em> (</em><em>batch_size</em><em>, </em><em>seq_len</em><em>)</em>) – Tokens mask</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Masked word prediction Cross Entropy loss, NSP classification loss</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.float32, torch.float32)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.pretrain.BERTPretrainTrainer.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/pretrain.html#BERTPretrainTrainer.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.pretrain.BERTPretrainTrainer.fit" title="Link to this definition">#</a></dt>
+<dd><p>Fits the model on dataset. Runs training and Validation steps for given epochs and saves best model based on the evaluation metric</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Train Data loader</p></li>
+<li><p><strong>val_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Validaion Data Loader</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Training History</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.pretrain.BERTPretrainTrainer.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/pretrain.html#BERTPretrainTrainer.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.pretrain.BERTPretrainTrainer.predict" title="Link to this definition">#</a></dt>
+<dd><p>Runs inference on input data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_loader</strong> (<em>torch.utils.data.DataLoader</em>) – Infer Data loader</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Labels, Predictions (True tokens, NSP Labels, Predicton tokens, NSP Predictions)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples,], numpy.ndarray [num_samples, seq_len], numpy.ndarray [num_samples,])</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.pretrain.BERTPretrainTrainer.train_one_epoch">
+<span class="sig-name descname"><span class="pre">train_one_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/pretrain.html#BERTPretrainTrainer.train_one_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.pretrain.BERTPretrainTrainer.train_one_epoch" title="Link to this definition">#</a></dt>
+<dd><p>Train step</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_loader</strong> (<em>torch.utils.data.Dataloader</em>) – Train Data Loader</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>) – Epoch number</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Train Losses (Train Loss, Train masked tokens loss, Train NSP loss)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.float32, torch.flooat32, torch.float32)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.core.bert.pretrain.BERTPretrainTrainer.val_one_epoch">
+<span class="sig-name descname"><span class="pre">val_one_epoch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_loader</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/core/bert/pretrain.html#BERTPretrainTrainer.val_one_epoch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.core.bert.pretrain.BERTPretrainTrainer.val_one_epoch" title="Link to this definition">#</a></dt>
+<dd><p>Validation step</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>data_loader</strong> (<em>torch.utils.data.Dataloader</em>) – Validation Data Loader</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Validation Losses (Validation Loss, Validation masked tokens loss, Validation NSP loss)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple (torch.float32, torch.flooat32, torch.float32)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.core.bert">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src.core.bert" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.bert.bert">src.core.bert.bert module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.bert.BERT"><code class="docutils literal notranslate"><span class="pre">BERT</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.bert.BERT.load_pretrain_weights"><code class="docutils literal notranslate"><span class="pre">BERT.load_pretrain_weights()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.bert.BERT.run"><code class="docutils literal notranslate"><span class="pre">BERT.run()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.bert.BERT.run_finetune"><code class="docutils literal notranslate"><span class="pre">BERT.run_finetune()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.bert.BERT.run_infer_finetune"><code class="docutils literal notranslate"><span class="pre">BERT.run_infer_finetune()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.bert.BERT.run_pretrain"><code class="docutils literal notranslate"><span class="pre">BERT.run_pretrain()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.bert.BERT.save_output"><code class="docutils literal notranslate"><span class="pre">BERT.save_output()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.bert.dataset_finetune">src.core.bert.dataset_finetune module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.dataset_finetune.PreprocessBERTFinetune"><code class="docutils literal notranslate"><span class="pre">PreprocessBERTFinetune</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.dataset_finetune.PreprocessBERTFinetune.batched_ids2tokens"><code class="docutils literal notranslate"><span class="pre">PreprocessBERTFinetune.batched_ids2tokens()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.dataset_finetune.PreprocessBERTFinetune.extract_data"><code class="docutils literal notranslate"><span class="pre">PreprocessBERTFinetune.extract_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.dataset_finetune.PreprocessBERTFinetune.get_data"><code class="docutils literal notranslate"><span class="pre">PreprocessBERTFinetune.get_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.dataset_finetune.PreprocessBERTFinetune.preprocess_text"><code class="docutils literal notranslate"><span class="pre">PreprocessBERTFinetune.preprocess_text()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.dataset_finetune.create_data_loader_finetune"><code class="docutils literal notranslate"><span class="pre">create_data_loader_finetune()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.bert.dataset_pretrain">src.core.bert.dataset_pretrain module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.dataset_pretrain.BERTPretrainDataset"><code class="docutils literal notranslate"><span class="pre">BERTPretrainDataset</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.dataset_pretrain.PreprocessBERTPretrain"><code class="docutils literal notranslate"><span class="pre">PreprocessBERTPretrain</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.dataset_pretrain.PreprocessBERTPretrain.batched_ids2tokens"><code class="docutils literal notranslate"><span class="pre">PreprocessBERTPretrain.batched_ids2tokens()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.dataset_pretrain.PreprocessBERTPretrain.extract_data"><code class="docutils literal notranslate"><span class="pre">PreprocessBERTPretrain.extract_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.dataset_pretrain.PreprocessBERTPretrain.get_data"><code class="docutils literal notranslate"><span class="pre">PreprocessBERTPretrain.get_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.dataset_pretrain.PreprocessBERTPretrain.get_vocab"><code class="docutils literal notranslate"><span class="pre">PreprocessBERTPretrain.get_vocab()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.dataset_pretrain.PreprocessBERTPretrain.preprocess_text"><code class="docutils literal notranslate"><span class="pre">PreprocessBERTPretrain.preprocess_text()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.dataset_pretrain.create_dataloader_pretrain"><code class="docutils literal notranslate"><span class="pre">create_dataloader_pretrain()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.bert.finetune">src.core.bert.finetune module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.finetune.BERTFinetuneTrainer"><code class="docutils literal notranslate"><span class="pre">BERTFinetuneTrainer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.finetune.BERTFinetuneTrainer.calc_loss"><code class="docutils literal notranslate"><span class="pre">BERTFinetuneTrainer.calc_loss()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.finetune.BERTFinetuneTrainer.fit"><code class="docutils literal notranslate"><span class="pre">BERTFinetuneTrainer.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.finetune.BERTFinetuneTrainer.predict"><code class="docutils literal notranslate"><span class="pre">BERTFinetuneTrainer.predict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.finetune.BERTFinetuneTrainer.train_one_epoch"><code class="docutils literal notranslate"><span class="pre">BERTFinetuneTrainer.train_one_epoch()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.finetune.BERTFinetuneTrainer.val_one_epoch"><code class="docutils literal notranslate"><span class="pre">BERTFinetuneTrainer.val_one_epoch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.bert.model">src.core.bert.model module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.model.BERTFinetuneModel"><code class="docutils literal notranslate"><span class="pre">BERTFinetuneModel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.model.BERTFinetuneModel.forward"><code class="docutils literal notranslate"><span class="pre">BERTFinetuneModel.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.model.BERTPretrainModel"><code class="docutils literal notranslate"><span class="pre">BERTPretrainModel</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.model.BERTPretrainModel.forward"><code class="docutils literal notranslate"><span class="pre">BERTPretrainModel.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.bert.pretrain">src.core.bert.pretrain module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.pretrain.BERTPretrainTrainer"><code class="docutils literal notranslate"><span class="pre">BERTPretrainTrainer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.pretrain.BERTPretrainTrainer.calc_loss"><code class="docutils literal notranslate"><span class="pre">BERTPretrainTrainer.calc_loss()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.pretrain.BERTPretrainTrainer.fit"><code class="docutils literal notranslate"><span class="pre">BERTPretrainTrainer.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.pretrain.BERTPretrainTrainer.predict"><code class="docutils literal notranslate"><span class="pre">BERTPretrainTrainer.predict()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.pretrain.BERTPretrainTrainer.train_one_epoch"><code class="docutils literal notranslate"><span class="pre">BERTPretrainTrainer.train_one_epoch()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.core.bert.pretrain.BERTPretrainTrainer.val_one_epoch"><code class="docutils literal notranslate"><span class="pre">BERTPretrainTrainer.val_one_epoch()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.core.bert">Module contents</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/src.core.bert.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Shanmukha Sainath.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

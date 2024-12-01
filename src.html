@@ -1,0 +1,1208 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>src package &#8212; Scratch NLP 1.0.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=362ab14a" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'src';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Scratch NLP 1.0.0 documentation</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="details.html">
+    Documentation
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="details.html">
+    Documentation
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="src.core.html">src.core package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.core.bert.html">src.core.bert package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.bow.html">src.core.bow package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.glove.html">src.core.glove package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.gpt.html">src.core.gpt package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.gru.html">src.core.gru package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.hmm.html">src.core.hmm package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.lstm.html">src.core.lstm package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.ngram.html">src.core.ngram package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.rnn.html">src.core.rnn package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.seq2seq.html">src.core.seq2seq package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.tfidf.html">src.core.tfidf package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.transformer.html">src.core.transformer package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.word2vec.html">src.core.word2vec package</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="src.preprocess.html">src.preprocess package</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">src package</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="src-package">
+<h1>src package<a class="headerlink" href="#src-package" title="Link to this heading">#</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="src.core.html">src.core package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.core.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.core.bert.html">src.core.bert package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.core.bert.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.bert.html#module-src.core.bert.bert">src.core.bert.bert module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.bert.html#module-src.core.bert.dataset_finetune">src.core.bert.dataset_finetune module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.bert.html#module-src.core.bert.dataset_pretrain">src.core.bert.dataset_pretrain module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.bert.html#module-src.core.bert.finetune">src.core.bert.finetune module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.bert.html#module-src.core.bert.model">src.core.bert.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.bert.html#module-src.core.bert.pretrain">src.core.bert.pretrain module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.bert.html#module-src.core.bert">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.core.bow.html">src.core.bow package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.core.bow.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.bow.html#module-src.core.bow.bow">src.core.bow.bow module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.bow.html#module-src.core.bow">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.core.glove.html">src.core.glove package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.core.glove.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.glove.html#module-src.core.glove.dataset">src.core.glove.dataset module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.glove.html#module-src.core.glove.glove">src.core.glove.glove module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.glove.html#module-src.core.glove.model">src.core.glove.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.glove.html#module-src.core.glove">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.core.gpt.html">src.core.gpt package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.core.gpt.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.gpt.html#module-src.core.gpt.dataset">src.core.gpt.dataset module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.gpt.html#module-src.core.gpt.gpt">src.core.gpt.gpt module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.gpt.html#module-src.core.gpt.model">src.core.gpt.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.gpt.html#module-src.core.gpt">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.core.gru.html">src.core.gru package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.core.gru.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.gru.html#module-src.core.gru.dataset">src.core.gru.dataset module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.gru.html#module-src.core.gru.gru">src.core.gru.gru module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.gru.html#module-src.core.gru.model">src.core.gru.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.gru.html#module-src.core.gru">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.core.hmm.html">src.core.hmm package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.core.hmm.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.hmm.html#module-src.core.hmm.hmm">src.core.hmm.hmm module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.hmm.html#module-src.core.hmm">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.core.lstm.html">src.core.lstm package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.core.lstm.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.lstm.html#module-src.core.lstm.dataset">src.core.lstm.dataset module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.lstm.html#module-src.core.lstm.lstm">src.core.lstm.lstm module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.lstm.html#module-src.core.lstm.model">src.core.lstm.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.lstm.html#module-src.core.lstm">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.core.ngram.html">src.core.ngram package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.core.ngram.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.ngram.html#module-src.core.ngram.ngram">src.core.ngram.ngram module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.ngram.html#module-src.core.ngram">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.core.rnn.html">src.core.rnn package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.core.rnn.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.rnn.html#module-src.core.rnn.dataset">src.core.rnn.dataset module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.rnn.html#module-src.core.rnn.model">src.core.rnn.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.rnn.html#module-src.core.rnn.rnn">src.core.rnn.rnn module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.rnn.html#module-src.core.rnn">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.core.seq2seq.html">src.core.seq2seq package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.core.seq2seq.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.seq2seq.html#module-src.core.seq2seq.dataset">src.core.seq2seq.dataset module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.seq2seq.html#module-src.core.seq2seq.model">src.core.seq2seq.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.seq2seq.html#module-src.core.seq2seq.seq2seq">src.core.seq2seq.seq2seq module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.seq2seq.html#module-src.core.seq2seq">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.core.tfidf.html">src.core.tfidf package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.core.tfidf.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.tfidf.html#module-src.core.tfidf.tfidf">src.core.tfidf.tfidf module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.tfidf.html#module-src.core.tfidf">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.core.transformer.html">src.core.transformer package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.core.transformer.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.transformer.html#module-src.core.transformer.dataset">src.core.transformer.dataset module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.transformer.html#module-src.core.transformer.model">src.core.transformer.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.transformer.html#module-src.core.transformer.transformer">src.core.transformer.transformer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.transformer.html#module-src.core.transformer">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.core.word2vec.html">src.core.word2vec package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.core.word2vec.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.word2vec.html#module-src.core.word2vec.dataset">src.core.word2vec.dataset module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.word2vec.html#module-src.core.word2vec.huffman">src.core.word2vec.huffman module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.word2vec.html#module-src.core.word2vec.model">src.core.word2vec.model module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.word2vec.html#module-src.core.word2vec.word2vec">src.core.word2vec.word2vec module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.core.word2vec.html#module-src.core.word2vec">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.core.html#module-src.core">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.preprocess.html">src.preprocess package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.preprocess.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.preprocess.html#module-src.preprocess.eng2tel">src.preprocess.eng2tel module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.preprocess.html#src.preprocess.eng2tel.PreprocessSeq2Seq"><code class="docutils literal notranslate"><span class="pre">PreprocessSeq2Seq</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.eng2tel.PreprocessSeq2Seq.batched_ids2tokens"><code class="docutils literal notranslate"><span class="pre">PreprocessSeq2Seq.batched_ids2tokens()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.eng2tel.PreprocessSeq2Seq.extract_data"><code class="docutils literal notranslate"><span class="pre">PreprocessSeq2Seq.extract_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.eng2tel.PreprocessSeq2Seq.get_data"><code class="docutils literal notranslate"><span class="pre">PreprocessSeq2Seq.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.eng2tel.PreprocessSeq2Seq.get_vocab"><code class="docutils literal notranslate"><span class="pre">PreprocessSeq2Seq.get_vocab()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.eng2tel.PreprocessSeq2Seq.preprocess_src"><code class="docutils literal notranslate"><span class="pre">PreprocessSeq2Seq.preprocess_src()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.eng2tel.PreprocessSeq2Seq.preprocess_tgt"><code class="docutils literal notranslate"><span class="pre">PreprocessSeq2Seq.preprocess_tgt()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.preprocess.html#module-src.preprocess.flickr">src.preprocess.flickr module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.preprocess.html#src.preprocess.flickr.PreprocessFlickr"><code class="docutils literal notranslate"><span class="pre">PreprocessFlickr</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.flickr.PreprocessFlickr.batched_ids2captions"><code class="docutils literal notranslate"><span class="pre">PreprocessFlickr.batched_ids2captions()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.flickr.PreprocessFlickr.extract_data"><code class="docutils literal notranslate"><span class="pre">PreprocessFlickr.extract_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.flickr.PreprocessFlickr.get_data"><code class="docutils literal notranslate"><span class="pre">PreprocessFlickr.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.flickr.PreprocessFlickr.get_test_data"><code class="docutils literal notranslate"><span class="pre">PreprocessFlickr.get_test_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.flickr.PreprocessFlickr.get_vocab"><code class="docutils literal notranslate"><span class="pre">PreprocessFlickr.get_vocab()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.flickr.PreprocessFlickr.image_transforms"><code class="docutils literal notranslate"><span class="pre">PreprocessFlickr.image_transforms()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.flickr.PreprocessFlickr.word_tokens"><code class="docutils literal notranslate"><span class="pre">PreprocessFlickr.word_tokens()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.preprocess.html#module-src.preprocess.imdb_reviews">src.preprocess.imdb_reviews module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.preprocess.html#src.preprocess.imdb_reviews.PreprocessIMDB"><code class="docutils literal notranslate"><span class="pre">PreprocessIMDB</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.imdb_reviews.PreprocessIMDB.extract_data"><code class="docutils literal notranslate"><span class="pre">PreprocessIMDB.extract_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.imdb_reviews.PreprocessIMDB.extract_data_folder"><code class="docutils literal notranslate"><span class="pre">PreprocessIMDB.extract_data_folder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.imdb_reviews.PreprocessIMDB.run"><code class="docutils literal notranslate"><span class="pre">PreprocessIMDB.run()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.preprocess.html#module-src.preprocess.pos">src.preprocess.pos module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.preprocess.html#src.preprocess.pos.PreprocessPOS"><code class="docutils literal notranslate"><span class="pre">PreprocessPOS</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.pos.PreprocessPOS.extract_data"><code class="docutils literal notranslate"><span class="pre">PreprocessPOS.extract_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.pos.PreprocessPOS.get_data"><code class="docutils literal notranslate"><span class="pre">PreprocessPOS.get_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.pos.PreprocessPOS.get_vocab"><code class="docutils literal notranslate"><span class="pre">PreprocessPOS.get_vocab()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.pos.PreprocessPOS.preprocess_corpus"><code class="docutils literal notranslate"><span class="pre">PreprocessPOS.preprocess_corpus()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.preprocess.html#module-src.preprocess.utils">src.preprocess.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.BytePairEncoding"><code class="docutils literal notranslate"><span class="pre">BytePairEncoding</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.BytePairEncoding.build_vocab"><code class="docutils literal notranslate"><span class="pre">BytePairEncoding.build_vocab()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.BytePairEncoding.fit"><code class="docutils literal notranslate"><span class="pre">BytePairEncoding.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.BytePairEncoding.get_stats"><code class="docutils literal notranslate"><span class="pre">BytePairEncoding.get_stats()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.BytePairEncoding.merge_chars"><code class="docutils literal notranslate"><span class="pre">BytePairEncoding.merge_chars()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.BytePairEncoding.preprocess"><code class="docutils literal notranslate"><span class="pre">BytePairEncoding.preprocess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.BytePairEncoding.run_merge"><code class="docutils literal notranslate"><span class="pre">BytePairEncoding.run_merge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.BytePairEncoding.transform"><code class="docutils literal notranslate"><span class="pre">BytePairEncoding.transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.WordPiece"><code class="docutils literal notranslate"><span class="pre">WordPiece</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.WordPiece.build_vocab"><code class="docutils literal notranslate"><span class="pre">WordPiece.build_vocab()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.WordPiece.combine"><code class="docutils literal notranslate"><span class="pre">WordPiece.combine()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.WordPiece.fit"><code class="docutils literal notranslate"><span class="pre">WordPiece.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.WordPiece.get_likelihood"><code class="docutils literal notranslate"><span class="pre">WordPiece.get_likelihood()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.WordPiece.get_stats"><code class="docutils literal notranslate"><span class="pre">WordPiece.get_stats()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.WordPiece.merge_chars"><code class="docutils literal notranslate"><span class="pre">WordPiece.merge_chars()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.WordPiece.preprocess"><code class="docutils literal notranslate"><span class="pre">WordPiece.preprocess()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.WordPiece.run_merge"><code class="docutils literal notranslate"><span class="pre">WordPiece.run_merge()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.WordPiece.transform"><code class="docutils literal notranslate"><span class="pre">WordPiece.transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="src.preprocess.html#src.preprocess.utils.preprocess_text"><code class="docutils literal notranslate"><span class="pre">preprocess_text()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.preprocess.html#module-src.preprocess">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-src.configs">
+<span id="src-configs-module"></span><h2>src.configs module<a class="headerlink" href="#module-src.configs" title="Link to this heading">#</a></h2>
+<p>All the Config Parameters that are used in the lubrary with corresponding Data Type</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="src.configs.configDictDType">
+<span class="sig-prename descclassname"><span class="pre">src.configs.</span></span><span class="sig-name descname"><span class="pre">configDictDType</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'alpha':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'batch_size':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'bleu_n':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'captions_file':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'clf_dim':</span> <span class="pre">&lt;class</span> <span class="pre">'list'&gt;,</span> <span class="pre">'context':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'d_ff':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'d_model':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'decoder_y_dim':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'device':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'dropout':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'embed_dim':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'encoder_h_dim':</span> <span class="pre">&lt;class</span> <span class="pre">'list'&gt;,</span> <span class="pre">'encoder_x_dim':</span> <span class="pre">&lt;class</span> <span class="pre">'list'&gt;,</span> <span class="pre">'epochs':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'eval_metric':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'explore_folder':</span> <span class="pre">&lt;class</span> <span class="pre">'bool'&gt;,</span> <span class="pre">'h_dim':</span> <span class="pre">&lt;class</span> <span class="pre">'list'&gt;,</span> <span class="pre">'idf_mode':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'image_backbone':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'image_dim':</span> <span class="pre">&lt;class</span> <span class="pre">'list'&gt;,</span> <span class="pre">'image_folder':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'input_file':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'input_folder':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'lr':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'mask':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'next':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'ngram':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'num_classes':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'num_extra_tokens':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'num_heads':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'num_layers':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'num_samples':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'num_sents_per_doc':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'num_src_vocab':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'num_tgt_vocab':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'num_topics':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'num_vocab':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'operations':</span> <span class="pre">&lt;class</span> <span class="pre">'list'&gt;,</span> <span class="pre">'output_folder':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'output_label':</span> <span class="pre">&lt;class</span> <span class="pre">'bool'&gt;,</span> <span class="pre">'predict_tokens':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'prediction':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'pretrain_weights':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'random':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'random_lines':</span> <span class="pre">&lt;class</span> <span class="pre">'bool'&gt;,</span> <span class="pre">'randomize':</span> <span class="pre">&lt;class</span> <span class="pre">'bool'&gt;,</span> <span class="pre">'rouge_n_n':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'rouge_s_n':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'seed':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'seq_len':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'test_corpus':</span> <span class="pre">&lt;class</span> <span class="pre">'list'&gt;,</span> <span class="pre">'test_file':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'test_folder':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'test_samples':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'test_size':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'test_split':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'tf_mode':</span> <span class="pre">&lt;class</span> <span class="pre">'str'&gt;,</span> <span class="pre">'train_corpus':</span> <span class="pre">&lt;class</span> <span class="pre">'list'&gt;,</span> <span class="pre">'train_samples':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;,</span> <span class="pre">'val_split':</span> <span class="pre">&lt;class</span> <span class="pre">'float'&gt;,</span> <span class="pre">'visualize':</span> <span class="pre">&lt;class</span> <span class="pre">'bool'&gt;,</span> <span class="pre">'x_dim':</span> <span class="pre">&lt;class</span> <span class="pre">'list'&gt;,</span> <span class="pre">'x_max':</span> <span class="pre">&lt;class</span> <span class="pre">'int'&gt;}</span></em><a class="headerlink" href="#src.configs.configDictDType" title="Link to this definition">#</a></dt>
+<dd><p>Config Parameters Segregated for each algorithm and it’s Parent Parameters.</p>
+<dl>
+<dt>Format:</dt><dd><dl class="simple">
+<dt>‘Algo’: {</dt><dd></dd>
+</dl>
+<p>}</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="src-main-module">
+<h2>src.main module<a class="headerlink" href="#src-main-module" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-src.metrics">
+<span id="src-metrics-module"></span><h2>src.metrics module<a class="headerlink" href="#module-src.metrics" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.metrics.ClassificationMetrics">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.metrics.</span></span><span class="sig-name descname"><span class="pre">ClassificationMetrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/metrics.html#ClassificationMetrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.metrics.ClassificationMetrics" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Metrics for Classification Task.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.metrics.ClassificationMetrics.get_metrics">
+<span class="sig-name descname"><span class="pre">get_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">references</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_names</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/metrics.html#ClassificationMetrics.get_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.metrics.ClassificationMetrics.get_metrics" title="Link to this definition">#</a></dt>
+<dd><p>Function that returns Metrics using References, Predictions and Class Labels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>references</strong> (<em>numpy.ndarray</em>) – References, 1D array (num_samples,)</p></li>
+<li><p><strong>predictions</strong> (<em>numpy.ndarray</em>) – Predictions, 2D array (num_samples, num_classes) with Probabilities</p></li>
+<li><p><strong>target_names</strong> (<em>list</em>) – Class Labels</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Metrics Dictionary</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.metrics.TextGenerationMetrics">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.metrics.</span></span><span class="sig-name descname"><span class="pre">TextGenerationMetrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/metrics.html#TextGenerationMetrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.metrics.TextGenerationMetrics" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Metrics for Text Generation Task.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.metrics.TextGenerationMetrics.bleu_score">
+<span class="sig-name descname"><span class="pre">bleu_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">references</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/metrics.html#TextGenerationMetrics.bleu_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.metrics.TextGenerationMetrics.bleu_score" title="Link to this definition">#</a></dt>
+<dd><p>BLEU Score</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>references</strong> (<em>numpy.ndarray</em>) – References, 2D array (num_samples, seq_len)</p></li>
+<li><p><strong>predictions</strong> (<em>numpy.ndarray</em>) – Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities</p></li>
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – Max number of N gram, defaults to 4</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>BLEU score</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.metrics.TextGenerationMetrics.cider_score">
+<span class="sig-name descname"><span class="pre">cider_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">references</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/metrics.html#TextGenerationMetrics.cider_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.metrics.TextGenerationMetrics.cider_score" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.metrics.TextGenerationMetrics.get_metrics">
+<span class="sig-name descname"><span class="pre">get_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">references</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/metrics.html#TextGenerationMetrics.get_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.metrics.TextGenerationMetrics.get_metrics" title="Link to this definition">#</a></dt>
+<dd><p>Function that returns Metrics using References, Predictions and Class Labels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>references</strong> (<em>numpy.ndarray</em>) – References, 2D array (num_samples, seq_len)</p></li>
+<li><p><strong>predictions</strong> (<em>numpy.ndarray</em>) – Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Metrics Dictionary</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.metrics.TextGenerationMetrics.meteor_score">
+<span class="sig-name descname"><span class="pre">meteor_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">references</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/metrics.html#TextGenerationMetrics.meteor_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.metrics.TextGenerationMetrics.meteor_score" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.metrics.TextGenerationMetrics.perplexity_score">
+<span class="sig-name descname"><span class="pre">perplexity_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/metrics.html#TextGenerationMetrics.perplexity_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.metrics.TextGenerationMetrics.perplexity_score" title="Link to this definition">#</a></dt>
+<dd><p>Perplixity Score</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>predictions</strong> (<em>numpy.ndarray</em>) – Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Perplixity Score</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.metrics.TextGenerationMetrics.rouge_l_score">
+<span class="sig-name descname"><span class="pre">rouge_l_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">references</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/metrics.html#TextGenerationMetrics.rouge_l_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.metrics.TextGenerationMetrics.rouge_l_score" title="Link to this definition">#</a></dt>
+<dd><p>ROUGE L Score</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>references</strong> (<em>numpy.ndarray</em>) – References, 2D array (num_samples, seq_len)</p></li>
+<li><p><strong>predictions</strong> (<em>numpy.ndarray</em>) – Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ROUGE L score</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.metrics.TextGenerationMetrics.rouge_n_score">
+<span class="sig-name descname"><span class="pre">rouge_n_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">references</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/metrics.html#TextGenerationMetrics.rouge_n_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.metrics.TextGenerationMetrics.rouge_n_score" title="Link to this definition">#</a></dt>
+<dd><p>ROUGE N Score</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>references</strong> (<em>numpy.ndarray</em>) – References, 3D array (num_samples, seq_len)</p></li>
+<li><p><strong>predictions</strong> (<em>numpy.ndarray</em>) – Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities</p></li>
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – Max number of N gram, defaults to 4</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ROUGE N score</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.metrics.TextGenerationMetrics.rouge_s_score">
+<span class="sig-name descname"><span class="pre">rouge_s_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">references</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/metrics.html#TextGenerationMetrics.rouge_s_score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.metrics.TextGenerationMetrics.rouge_s_score" title="Link to this definition">#</a></dt>
+<dd><p>ROUGE S Score</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>references</strong> (<em>numpy.ndarray</em>) – References, 2D array (num_samples, seq_len)</p></li>
+<li><p><strong>predictions</strong> (<em>numpy.ndarray</em>) – Predictions, 3D array (num_samples, seq_len, num_vocab) with Probabilities</p></li>
+<li><p><strong>n</strong> (<em>int</em><em>, </em><em>optional</em>) – Max number of N gram, defaults to 4</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>ROUGE S score</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.plot_utils">
+<span id="src-plot-utils-module"></span><h2>src.plot_utils module<a class="headerlink" href="#module-src.plot_utils" title="Link to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.plot_utils.pca_emission_matrix">
+<span class="sig-prename descclassname"><span class="pre">src.plot_utils.</span></span><span class="sig-name descname"><span class="pre">pca_emission_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">em_matrix_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/plot_utils.html#pca_emission_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.plot_utils.pca_emission_matrix" title="Link to this definition">#</a></dt>
+<dd><p>TSNE of Emission Matrix. Used in HMM</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>em_matrix_df</strong> (<em>pandas.DataFrame</em>) – DataFrame of Emission Matrix</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – Path to saving Scatter plot as HTML file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.plot_utils.plot_conf_matrix">
+<span class="sig-prename descclassname"><span class="pre">src.plot_utils.</span></span><span class="sig-name descname"><span class="pre">plot_conf_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/plot_utils.html#plot_conf_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.plot_utils.plot_conf_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Confusion Matrix of True Labels vs Prediction Labels. Used in GRU, RNN</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>list</em>) – True Labels</p></li>
+<li><p><strong>y_pred</strong> (<em>list</em>) – Prediction labels</p></li>
+<li><p><strong>classes</strong> (<em>list</em>) – List of classes</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – Path to saving Confusion Matrix png file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.plot_utils.plot_embed">
+<span class="sig-prename descclassname"><span class="pre">src.plot_utils.</span></span><span class="sig-name descname"><span class="pre">plot_embed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embeds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Word</span> <span class="pre">Embeddings</span> <span class="pre">TSNE'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/plot_utils.html#plot_embed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.plot_utils.plot_embed" title="Link to this definition">#</a></dt>
+<dd><p>3D TSNE of Word Embeddings from Embedding Matrix Layer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>embeds</strong> (<em>numpy.ndarray</em>) – Embeddings Array (num_samples, embed_dim)</p></li>
+<li><p><strong>vocab</strong> (<em>list</em>) – Vocabulary</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – Path to saving Scatter plot as HTML file</p></li>
+<li><p><strong>fname</strong> (<em>str</em><em>, </em><em>optional</em>) – Filename, defaults to “Word Embeddings TSNE”</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.plot_utils.plot_hist_dataset">
+<span class="sig-prename descclassname"><span class="pre">src.plot_utils.</span></span><span class="sig-name descname"><span class="pre">plot_hist_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/plot_utils.html#plot_hist_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.plot_utils.plot_hist_dataset" title="Link to this definition">#</a></dt>
+<dd><p>Plotting KDE plot of Sentence Length and Histogram of POS tag of each token. Used in HMM</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>tuple</em><em> of </em><em>(</em><em>numpy.ndarray</em><em> [</em><em>num_samples</em><em>, </em><em>seq_len</em><em>]</em><em>, </em><em>numpy.ndarray</em><em> [</em><em>num_samples</em><em>, </em><em>seq_len</em><em>]</em><em>, </em><em>numpy.ndarray</em><em> [</em><em>num_samples</em><em>, </em><em>]</em><em>, </em><em>numpy.ndarray</em><em> [</em><em>num_samples</em><em>, </em><em>]</em><em>)</em>) – Tuple of Train X, Test X, Train y, Test y</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – Path to saving Data Analysis png file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.plot_utils.plot_history">
+<span class="sig-prename descclassname"><span class="pre">src.plot_utils.</span></span><span class="sig-name descname"><span class="pre">plot_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">history</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'History'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/plot_utils.html#plot_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.plot_utils.plot_history" title="Link to this definition">#</a></dt>
+<dd><p>Training History with Loss, Metrics tracked during Training</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>history</strong> (<em>dict</em>) – History Dictionary</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – Path to saving History png file</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Filename, defaults to “History”</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.plot_utils.plot_ngram_pie_chart">
+<span class="sig-prename descclassname"><span class="pre">src.plot_utils.</span></span><span class="sig-name descname"><span class="pre">plot_ngram_pie_chart</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/plot_utils.html#plot_ngram_pie_chart"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.plot_utils.plot_ngram_pie_chart" title="Link to this definition">#</a></dt>
+<dd><p>Pie Chart Top K frequent Ngrams. Used in NGRAM</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab_df</strong> (<em>pandas.DataFrame</em>) – DataFrame of Ngrams and their Frequency in Corpus</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – Number of terms in a Vocab (N of Ngram)</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – Path to saving Pie Chart png file</p></li>
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of Ngrams to plot, defaults to 20</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.plot_utils.plot_pca_pairplot">
+<span class="sig-prename descclassname"><span class="pre">src.plot_utils.</span></span><span class="sig-name descname"><span class="pre">plot_pca_pairplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_pcs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'TFIDF</span> <span class="pre">PCA</span> <span class="pre">Pairplot'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/plot_utils.html#plot_pca_pairplot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.plot_utils.plot_pca_pairplot" title="Link to this definition">#</a></dt>
+<dd><p>Pairplot of Features Colored by Labels. Used in TFIDF</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>numpy.ndarray</em>) – Feature 2D array (num_samples, num_features)</p></li>
+<li><p><strong>y</strong> (<em>numpy.ndarray</em>) – Labels array, (num_samples, )</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – Path to saving pairplot png file</p></li>
+<li><p><strong>num_pcs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of Features to Plot, defaults to 6</p></li>
+<li><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Filename, defaults to “TFIDF PCA Pairplot”</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.plot_utils.plot_topk_cooccur_matrix">
+<span class="sig-prename descclassname"><span class="pre">src.plot_utils.</span></span><span class="sig-name descname"><span class="pre">plot_topk_cooccur_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cooccur_mat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/plot_utils.html#plot_topk_cooccur_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.plot_utils.plot_topk_cooccur_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Coocurence Matrix of Tokens in GloVe Model. Used in GLOVE</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cooccur_mat</strong> (<em>numpy.ndarray</em>) – CoOccurence Matrix</p></li>
+<li><p><strong>vocab</strong> (<em>list</em>) – List of Vocabulary</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – Path to saving Coocurence matrix png file</p></li>
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of Vocab to plot, defaults to 20</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.plot_utils.plot_topk_freq">
+<span class="sig-prename descclassname"><span class="pre">src.plot_utils.</span></span><span class="sig-name descname"><span class="pre">plot_topk_freq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab_freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/plot_utils.html#plot_topk_freq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.plot_utils.plot_topk_freq" title="Link to this definition">#</a></dt>
+<dd><p>Histogram of Top K frequent Vocabulary in the corpus. Used in NGRAM, BOW</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab_freq</strong> (<em>dict</em>) – Vocabulary Frequency in the Corpus</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – Path to saving Histogram png file</p></li>
+<li><p><strong>k</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of Vocab to plot, defaults to 10</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.plot_utils.plot_transition_matrix">
+<span class="sig-prename descclassname"><span class="pre">src.plot_utils.</span></span><span class="sig-name descname"><span class="pre">plot_transition_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trans_matrix_df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/plot_utils.html#plot_transition_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.plot_utils.plot_transition_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Heatmap of Transmission Matrix. Used in HMM</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>trans_matrix_df</strong> (<em>pandas.DataFrame</em>) – DataFrame of Transmission Matrix</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – Path to saving Heatmap png file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.plot_utils.plot_wordcloud">
+<span class="sig-prename descclassname"><span class="pre">src.plot_utils.</span></span><span class="sig-name descname"><span class="pre">plot_wordcloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab_freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/plot_utils.html#plot_wordcloud"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.plot_utils.plot_wordcloud" title="Link to this definition">#</a></dt>
+<dd><p>Generating Word Cloud Plot. Used in NGRAM, BOW</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab_freq</strong> (<em>dict</em>) – Vocabulary Frequency in the Corpus</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – Path to saving Wordcloud png file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.plot_utils.viz_metrics">
+<span class="sig-prename descclassname"><span class="pre">src.plot_utils.</span></span><span class="sig-name descname"><span class="pre">viz_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/plot_utils.html#viz_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.plot_utils.viz_metrics" title="Link to this definition">#</a></dt>
+<dd><p>Visualizing Confusion Matrix and Classification Report Metrics. Used in HMM</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metric_dict</strong> (<em>dict</em>) – Metrics Dictionary with conf_matrix and clf_report as keys</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – Path to saving Metrics png file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src.utils">
+<span id="src-utils-module"></span><h2>src.utils module<a class="headerlink" href="#module-src.utils" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.utils.ValidateConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.utils.</span></span><span class="sig-name descname"><span class="pre">ValidateConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#ValidateConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.ValidateConfig" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Validating Config File</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config_dict</strong> (<em>dict</em>) – Config Params Dictionary</p></li>
+<li><p><strong>algo</strong> (<em>str</em>) – Name of the Algorithm</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.ValidateConfig.check_float">
+<span class="sig-name descname"><span class="pre">check_float</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#ValidateConfig.check_float"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.ValidateConfig.check_float" title="Link to this definition">#</a></dt>
+<dd><p>To check whether given key whose value is float has a valid value or not</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – Param Key</p></li>
+<li><p><strong>val</strong> (<em>float</em>) – Param value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.ValidateConfig.check_int">
+<span class="sig-name descname"><span class="pre">check_int</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#ValidateConfig.check_int"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.ValidateConfig.check_int" title="Link to this definition">#</a></dt>
+<dd><p>To check whether given key whose value is int has a valid value or not</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – Param Key</p></li>
+<li><p><strong>val</strong> (<em>int</em>) – Param value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.ValidateConfig.check_list">
+<span class="sig-name descname"><span class="pre">check_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#ValidateConfig.check_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.ValidateConfig.check_list" title="Link to this definition">#</a></dt>
+<dd><p>To check whether given key whose value is list has a valid value or not</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – Param Key</p></li>
+<li><p><strong>val</strong> (<em>list</em>) – Param value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.ValidateConfig.check_paths">
+<span class="sig-name descname"><span class="pre">check_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#ValidateConfig.check_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.ValidateConfig.check_paths" title="Link to this definition">#</a></dt>
+<dd><p>To check whether given key whose value is a filepath has a valid value or not</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – Param Key</p></li>
+<li><p><strong>val</strong> (<em>str</em>) – Param value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.ValidateConfig.check_string">
+<span class="sig-name descname"><span class="pre">check_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#ValidateConfig.check_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.ValidateConfig.check_string" title="Link to this definition">#</a></dt>
+<dd><p>To check whether given key whose value is str has a valid value or not</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – Param Key</p></li>
+<li><p><strong>val</strong> (<em>str</em>) – Param value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.ValidateConfig.compare_dtype">
+<span class="sig-name descname"><span class="pre">compare_dtype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#ValidateConfig.compare_dtype"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.ValidateConfig.compare_dtype" title="Link to this definition">#</a></dt>
+<dd><p>To check whether given key whose value has a valid dtype or not</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – Param Key</p></li>
+<li><p><strong>val</strong> (<em>float/int/str/list</em>) – Param value</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.ValidateConfig.run_verify">
+<span class="sig-name descname"><span class="pre">run_verify</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#ValidateConfig.run_verify"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.ValidateConfig.run_verify" title="Link to this definition">#</a></dt>
+<dd><p>Config Params Keys and Values Verification</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.ValidateConfig.verify_main_keys">
+<span class="sig-name descname"><span class="pre">verify_main_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#ValidateConfig.verify_main_keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.ValidateConfig.verify_main_keys" title="Link to this definition">#</a></dt>
+<dd><p>Verifying whether Config has all the required keys or not</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>keys</strong> (<em>list</em>) – Parent Config Parameters</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.ValidateConfig.verify_values">
+<span class="sig-name descname"><span class="pre">verify_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#ValidateConfig.verify_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.ValidateConfig.verify_values" title="Link to this definition">#</a></dt>
+<dd><p>Verifying the Datatypes of all the Parameters in Config</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.get_logger">
+<span class="sig-prename descclassname"><span class="pre">src.utils.</span></span><span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_folder</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#get_logger"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.get_logger" title="Link to this definition">#</a></dt>
+<dd><p>Initializing Log File</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>log_folder</strong> (<em>str</em>) – Path to folder where Log file is added</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.load_config">
+<span class="sig-prename descclassname"><span class="pre">src.utils.</span></span><span class="sig-name descname"><span class="pre">load_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#load_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.load_config" title="Link to this definition">#</a></dt>
+<dd><p>Loading YAML Config file as a Dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config_path</strong> (<em>str</em>) – Path to Config File</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Config Params Dictionary</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.set_seed">
+<span class="sig-prename descclassname"><span class="pre">src.utils.</span></span><span class="sig-name descname"><span class="pre">set_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils.html#set_seed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.utils.set_seed" title="Link to this definition">#</a></dt>
+<dd><p>Setting seed across Libraries to reproduce results</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>int</em>) – Seed value</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.configs">src.configs module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.configs.configDictDType"><code class="docutils literal notranslate"><span class="pre">configDictDType</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#src-main-module">src.main module</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.metrics">src.metrics module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.metrics.ClassificationMetrics"><code class="docutils literal notranslate"><span class="pre">ClassificationMetrics</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.metrics.ClassificationMetrics.get_metrics"><code class="docutils literal notranslate"><span class="pre">ClassificationMetrics.get_metrics()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.metrics.TextGenerationMetrics"><code class="docutils literal notranslate"><span class="pre">TextGenerationMetrics</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.metrics.TextGenerationMetrics.bleu_score"><code class="docutils literal notranslate"><span class="pre">TextGenerationMetrics.bleu_score()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.metrics.TextGenerationMetrics.cider_score"><code class="docutils literal notranslate"><span class="pre">TextGenerationMetrics.cider_score()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.metrics.TextGenerationMetrics.get_metrics"><code class="docutils literal notranslate"><span class="pre">TextGenerationMetrics.get_metrics()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.metrics.TextGenerationMetrics.meteor_score"><code class="docutils literal notranslate"><span class="pre">TextGenerationMetrics.meteor_score()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.metrics.TextGenerationMetrics.perplexity_score"><code class="docutils literal notranslate"><span class="pre">TextGenerationMetrics.perplexity_score()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.metrics.TextGenerationMetrics.rouge_l_score"><code class="docutils literal notranslate"><span class="pre">TextGenerationMetrics.rouge_l_score()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.metrics.TextGenerationMetrics.rouge_n_score"><code class="docutils literal notranslate"><span class="pre">TextGenerationMetrics.rouge_n_score()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.metrics.TextGenerationMetrics.rouge_s_score"><code class="docutils literal notranslate"><span class="pre">TextGenerationMetrics.rouge_s_score()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.plot_utils">src.plot_utils module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.plot_utils.pca_emission_matrix"><code class="docutils literal notranslate"><span class="pre">pca_emission_matrix()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.plot_utils.plot_conf_matrix"><code class="docutils literal notranslate"><span class="pre">plot_conf_matrix()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.plot_utils.plot_embed"><code class="docutils literal notranslate"><span class="pre">plot_embed()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.plot_utils.plot_hist_dataset"><code class="docutils literal notranslate"><span class="pre">plot_hist_dataset()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.plot_utils.plot_history"><code class="docutils literal notranslate"><span class="pre">plot_history()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.plot_utils.plot_ngram_pie_chart"><code class="docutils literal notranslate"><span class="pre">plot_ngram_pie_chart()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.plot_utils.plot_pca_pairplot"><code class="docutils literal notranslate"><span class="pre">plot_pca_pairplot()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.plot_utils.plot_topk_cooccur_matrix"><code class="docutils literal notranslate"><span class="pre">plot_topk_cooccur_matrix()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.plot_utils.plot_topk_freq"><code class="docutils literal notranslate"><span class="pre">plot_topk_freq()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.plot_utils.plot_transition_matrix"><code class="docutils literal notranslate"><span class="pre">plot_transition_matrix()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.plot_utils.plot_wordcloud"><code class="docutils literal notranslate"><span class="pre">plot_wordcloud()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.plot_utils.viz_metrics"><code class="docutils literal notranslate"><span class="pre">viz_metrics()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src.utils">src.utils module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.utils.ValidateConfig"><code class="docutils literal notranslate"><span class="pre">ValidateConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.utils.ValidateConfig.check_float"><code class="docutils literal notranslate"><span class="pre">ValidateConfig.check_float()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.utils.ValidateConfig.check_int"><code class="docutils literal notranslate"><span class="pre">ValidateConfig.check_int()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.utils.ValidateConfig.check_list"><code class="docutils literal notranslate"><span class="pre">ValidateConfig.check_list()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.utils.ValidateConfig.check_paths"><code class="docutils literal notranslate"><span class="pre">ValidateConfig.check_paths()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.utils.ValidateConfig.check_string"><code class="docutils literal notranslate"><span class="pre">ValidateConfig.check_string()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.utils.ValidateConfig.compare_dtype"><code class="docutils literal notranslate"><span class="pre">ValidateConfig.compare_dtype()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.utils.ValidateConfig.run_verify"><code class="docutils literal notranslate"><span class="pre">ValidateConfig.run_verify()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.utils.ValidateConfig.verify_main_keys"><code class="docutils literal notranslate"><span class="pre">ValidateConfig.verify_main_keys()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#src.utils.ValidateConfig.verify_values"><code class="docutils literal notranslate"><span class="pre">ValidateConfig.verify_values()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.utils.get_logger"><code class="docutils literal notranslate"><span class="pre">get_logger()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.utils.load_config"><code class="docutils literal notranslate"><span class="pre">load_config()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#src.utils.set_seed"><code class="docutils literal notranslate"><span class="pre">set_seed()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-src">Module contents</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/src.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024, Shanmukha Sainath.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
