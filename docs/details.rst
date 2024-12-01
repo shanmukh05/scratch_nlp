@@ -11,7 +11,7 @@ Install using pip
 
 .. code:: bash
 
-      pip install scratch-nlp
+      pip install ScratchNLP
 
 Install Manually for development
 --------------------------------
