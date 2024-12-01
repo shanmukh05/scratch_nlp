@@ -1,8 +1,6 @@
 ![Logo](https://raw.githubusercontent.com/shanmukh05/scratch_nlp/main/assets/logo.png)
 
-[![PyPI version](https://badge.fury.io/py/yourlibraryname.svg)](https://badge.fury.io/py/yourlibraryname)
-[![Build Status](https://travis-ci.org/yourusername/yourlibraryname.svg?branch=master)](https://travis-ci.org/yourusername/yourlibraryname)
-[![Coverage Status](https://coveralls.io/repos/github/yourusername/yourlibraryname/badge.svg?branch=master)](https://coveralls.io/github/yourusername/yourlibraryname?branch=master)
+[![PyPI version](https://badge.fury.io/py/scratch_nlp.svg)](https://badge.fury.io/py/scratch_nlp)
 
 # Scratch NLP 🧠
 
