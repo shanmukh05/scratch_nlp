@@ -28,7 +28,7 @@ Library with foundational NLP Algorithms implemented from scratch using PyTorch.
 ### Install using pip
 
 ```bash
-   pip install scratch-nlp
+   pip install ScratchNLP
 ```
     
 ### Install Manually for development

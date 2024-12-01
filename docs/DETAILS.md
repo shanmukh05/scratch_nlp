@@ -7,7 +7,7 @@
 ## Install using pip
 
 ```bash
-   pip install scratch-nlp
+   pip install ScratchNLP
 ```
     
 ## Install Manually for development
