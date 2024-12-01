@@ -510,7 +510,7 @@ HMM
 
    <td>
 
-Text Representation
+POS Tagging
 
 .. raw:: html
 
@@ -596,7 +596,7 @@ Transition Matrix csv, png
 
    <td>
 
-POS Tagging
+NLTK Treebank
 
 .. raw:: html
 

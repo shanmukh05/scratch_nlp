@@ -106,10 +106,10 @@ Install dependencies
 </tr>
 <tr>
 <td><strong>HMM</strong></td>
-<td>Text Representation</td>
+<td>POS Tagging</td>
 <td>Preprocessed words</td>
 <td><ul><li>Data Analysis png (sent len, POS tags count)</li><li>Emission Matrix TSNE html</li><li>Emission matrix csv</li><li>Test Predictions conf matrix, clf report png</li><li>Transition Matrix csv, png</li></ul></td>
-<td>POS Tagging</td>
+<td>NLTK Treebank</td>
 </tr>
 <tr>
 <td><strong>Word2Vec</strong></td>
